@@ -1,0 +1,2384 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Huellitas | Equipo</title>
+<link rel="stylesheet" href="huellitas.css">
+</head>
+
+<body>
+<nav class="site-nav">
+    <a class="brand" href="pagina.html" aria-label="Ir al inicio">
+        <img src="assets/imagenes/logo.png" alt="Logo de Huellitas">
+        <span>Huellitas</span>
+    </a>
+
+    <div class="nav-links" aria-label="Navegaci&oacute;n principal">
+        <a class="nav-link" href="pagina.html">Inicio</a>
+        <a class="nav-link" href="jueguitos.html">Juegos</a>
+        <a class="nav-link" href="directorio.html">Directorio</a>
+        <a class="nav-link" href="areas.html">&Aacute;reas</a>
+        <a class="nav-link" href="domesticos.html">Mascotas</a>
+        <a class="nav-link" href="leyes.html">Leyes</a>
+        <a class="nav-link active" href="equipo.html">Equipo</a>
+        <a class="nav-link" href="presentacion.html">Presentaci&oacute;n</a>
+        <a class="nav-link" href="adopcion_huellitas.html">Adopciones</a>
+        <a class="nav-link" href="adoptar.html">Adoptar</a>
+    </div>
+
+    <div class="nav-actions">
+        <button class="icon-button" type="button" data-theme-toggle onclick="toggleDark()" aria-label="Cambiar modo">&#9790;</button>
+        <a class="button-link secondary" href="directorio.html">Directorio</a>
+    </div>
+</nav>
+
+<main>
+    <header class="hero topic-header team-header">
+        <div class="hero-inner">
+            <span class="eyebrow">CECyTEM Tultitl&aacute;n - Grupo 404</span>
+            <h1>Equipo Huellitas</h1>
+            <p>Proyecto escolar creado para promover cuidado animal, adopci&oacute;n responsable, protecci&oacute;n de h&aacute;bitats y conciencia ambiental.</p>
+
+            <div class="hero-actions">
+                <button type="button" onclick="document.getElementById('equipo').scrollIntoView({behavior:'smooth'})">Ver proyecto</button>
+                <a class="button-link secondary" href="directorio.html">Solicitudes de adopci&oacute;n</a>
+            </div>
+        </div>
+    </header>
+
+    <section class="section logo-showcase-section">
+        <div class="logo-showcase">
+            <img src="assets/imagenes/logo.png" alt="Logo de Huellitas">
+            <div>
+                <span class="eyebrow">Identidad del proyecto</span>
+                <h2>Huellitas</h2>
+                <p>Este logo representa el cuidado, la adopci&oacute;n responsable y el trabajo del grupo 404 para crear conciencia animal desde CECyTEM Tultitl&aacute;n.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section team-gallery-section">
+        <div class="section-title">
+            <h2>Nuestro proyecto en im&aacute;genes</h2>
+            <p>Trabajo escolar realizado por el Equipo Huellitas con ayuda y acompa&ntilde;amiento de la profesora Karla Carrasco.</p>
+        </div>
+
+        <div class="team-carousel" data-team-carousel>
+            <button class="carousel-control carousel-prev" type="button" data-carousel-prev aria-label="Imagen anterior">&#10094;</button>
+
+            <div class="carousel-track">
+                <figure class="carousel-slide active">
+                    <img src="assets/imagenes/imagen2.jpeg" alt="Organigrama del equipo Huellitas">
+                    <figcaption>Organigrama del equipo y roles principales.</figcaption>
+                </figure>
+
+                <figure class="carousel-slide">
+                    <img src="assets/imagenes/imagen3.jpeg" alt="Plantel CECyTEM Tultitlan">
+                    <figcaption>CECyTEM Plantel Tultitl&aacute;n, espacio donde nace el proyecto.</figcaption>
+                </figure>
+            </div>
+
+            <button class="carousel-control carousel-next" type="button" data-carousel-next aria-label="Imagen siguiente">&#10095;</button>
+
+            <div class="carousel-dots" aria-label="Controles del carrusel">
+                <button class="active" type="button" data-carousel-dot="0" aria-label="Ver imagen 1"></button>
+                <button type="button" data-carousel-dot="1" aria-label="Ver imagen 2"></button>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="equipo">
+        <div class="section-title">
+            <h2>Nuestra misi&oacute;n</h2>
+            <p>Informar y motivar a la comunidad escolar para cuidar mejor a los animales y reconocer la importancia de los refugios, las leyes y las &aacute;reas naturales.</p>
+        </div>
+
+        <div class="topic-grid">
+            <article class="feature-panel">
+                <h3>Investigaci&oacute;n</h3>
+                <p>Reunimos informaci&oacute;n sobre &aacute;reas naturales, animales dom&eacute;sticos y leyes de protecci&oacute;n.</p>
+            </article>
+
+            <article class="feature-panel">
+                <h3>Directorio</h3>
+                <p>Organizamos centros de apoyo con buscador, filtros, mapa visual y formulario de inter&eacute;s.</p>
+            </article>
+
+            <article class="feature-panel">
+                <h3>Interactividad</h3>
+                <p>Agregamos juegos y recursos para aprender de forma m&aacute;s din&aacute;mica.</p>
+            </article>
+
+            <article class="feature-panel">
+                <h3>Conciencia</h3>
+                <p>Buscamos que adoptar, cuidar y proteger sea una decisi&oacute;n responsable, no una moda pasajera.</p>
+            </article>
+        </div>
+    </section>
+
+    <section class="section admin-login-section" id="adminGate">
+        <div class="admin-lock-card">
+            <div>
+                <span class="eyebrow">Acceso privado</span>
+                <h2>Modo administrador</h2>
+                <p>Entra como administrador para revisar solicitudes, citas, reportes, mensajes y mascotas registradas.</p>
+            </div>
+            <form id="adminAccessForm" class="admin-access-form">
+                <label for="adminPassword">Contrase&ntilde;a admin</label>
+                <input id="adminPassword" type="password" placeholder="Contrase&ntilde;a" autocomplete="off">
+                <button type="submit">Entrar al panel</button>
+                <p class="form-note" id="adminAccessFeedback">Acceso reservado. Ingresa la clave del equipo.</p>
+            </form>
+        </div>
+    </section>
+
+    <section class="section admin-overview-section admin-protected" hidden>
+        <div class="section-title">
+            <h2>Panel admin</h2>
+            <p>Resumen r&aacute;pido para revisar actividad, mascotas registradas y pendientes del proyecto.</p>
+        </div>
+
+        <div class="admin-dashboard">
+            <article class="impact-card">
+                <span>Solicitudes</span>
+                <strong id="adminRequests">0</strong>
+                <p>Registros de adopci&oacute;n.</p>
+            </article>
+            <article class="impact-card">
+                <span>Reportes pendientes</span>
+                <strong id="adminReports">0</strong>
+                <p>Recibidos o en revisi&oacute;n.</p>
+            </article>
+            <article class="impact-card">
+                <span>Mascotas agregadas</span>
+                <strong id="adminPets">0</strong>
+                <p>Fichas creadas por el equipo.</p>
+            </article>
+            <article class="impact-card">
+                <span>Mejor puntaje</span>
+                <strong id="adminBestScore">0</strong>
+                <p>Marca m&aacute;s alta en juegos.</p>
+            </article>
+        </div>
+
+        <div class="admin-command-bar">
+            <button type="button" onclick="cargarDemoPresentacion()">Cargar demo</button>
+            <button class="secondary" type="button" onclick="limpiarDemoPresentacion()">Limpiar demo</button>
+            <button class="secondary" type="button" onclick="exportarRespaldoHuellitas()">Exportar respaldo</button>
+            <button class="secondary" type="button" onclick="seleccionarRespaldoHuellitas()">Importar respaldo</button>
+            <button class="secondary" type="button" onclick="restaurarDatosBase()">Restaurar base</button>
+            <button class="secondary danger-action" type="button" onclick="reiniciarSitioCompleto()">Reiniciar sitio</button>
+            <button class="secondary" type="button" onclick="abrirFlujoSistema()">Flujo del sistema</button>
+            <button class="secondary" type="button" onclick="actualizarTodoAdmin()">Actualizar datos</button>
+            <a class="button-link secondary" href="mi_adopcion.html">Ver Mi adopci&oacute;n</a>
+            <input id="backupFileInput" type="file" accept="application/json" hidden onchange="importarRespaldoHuellitas(event)">
+        </div>
+
+        <div class="admin-insights-grid">
+            <article class="admin-visual-panel">
+                <div class="status-line">
+                    <strong>Solicitudes por estado</strong>
+                    <span id="adminChartRequestsTotal">0</span>
+                </div>
+                <div class="admin-bars" id="adminRequestBars"></div>
+            </article>
+            <article class="admin-visual-panel">
+                <div class="status-line">
+                    <strong>Operaci&oacute;n de hoy</strong>
+                    <span>Resumen</span>
+                </div>
+                <div class="admin-kpi-list">
+                    <span><b id="adminKpiPendingReports">0</b> reportes pendientes</span>
+                    <span><b id="adminKpiAvailablePets">0</b> mascotas disponibles</span>
+                    <span><b id="adminKpiUnreadMessages">0</b> mensajes sin responder</span>
+                    <span><b id="adminKpiAppointments">0</b> citas programadas</span>
+                </div>
+            </article>
+            <article class="admin-visual-panel system-status-panel">
+                <div class="status-line">
+                    <strong>Estado del sistema</strong>
+                    <span id="systemStatusScore">0/5</span>
+                </div>
+                <div class="system-status-list" id="systemStatusList"></div>
+            </article>
+        </div>
+
+        <div class="admin-filter-bar" aria-label="Filtros del panel admin">
+            <button class="filter-button active" type="button" data-admin-filter="todo">Todo</button>
+            <button class="filter-button" type="button" data-admin-filter="mascotas">Mascotas</button>
+            <button class="filter-button" type="button" data-admin-filter="solicitudes">Solicitudes</button>
+            <button class="filter-button" type="button" data-admin-filter="citas">Citas</button>
+            <button class="filter-button" type="button" data-admin-filter="reportes">Reportes</button>
+            <button class="filter-button" type="button" data-admin-filter="mensajes">Mensajes</button>
+            <button class="filter-button" type="button" data-admin-filter="centros">Centros</button>
+            <button class="filter-button" type="button" data-admin-filter="puntajes">Puntajes</button>
+            <button class="filter-button" type="button" data-admin-filter="manual">Manual</button>
+            <button class="filter-button danger" type="button" onclick="salirAdmin()">Salir admin</button>
+        </div>
+    </section>
+
+    <section class="section admin-section admin-protected" data-admin-section="mascotas" hidden>
+        <div class="section-title">
+            <h2>Agregar mascota nueva</h2>
+            <p>Crea una ficha de adopci&oacute;n. Aparecer&aacute; autom&aacute;ticamente en la galer&iacute;a y podr&aacute; salir en el match.</p>
+        </div>
+
+        <div class="feature-band">
+            <form class="team-panel feature-panel contact-form" id="petAdminForm">
+                <div class="form-grid">
+                    <div>
+                        <label for="petAdminName">Nombre</label>
+                        <input id="petAdminName" required placeholder="Ej. Luna">
+                    </div>
+
+                    <div>
+                        <label for="petAdminType">Tipo</label>
+                        <select id="petAdminType" required>
+                            <option>Perro</option>
+                            <option>Gato</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="petAdminAge">Edad</label>
+                        <input id="petAdminAge" required placeholder="Ej. 2 a&ntilde;os">
+                    </div>
+
+                    <div>
+                        <label for="petAdminStatus">Estado</label>
+                        <select id="petAdminStatus" required>
+                            <option>Disponible</option>
+                            <option>En proceso</option>
+                            <option>Adoptada</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="petAdminEnergy">Energ&iacute;a</label>
+                        <select id="petAdminEnergy" required>
+                            <option value="calma">Tranquila</option>
+                            <option value="medio">Media</option>
+                            <option value="activo">Activa</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="petAdminHome">Espacio ideal</label>
+                        <select id="petAdminHome" required>
+                            <option value="departamento">Departamento</option>
+                            <option value="casa">Casa</option>
+                            <option value="patio">Casa con patio</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="petAdminRoutine">Compa&ntilde;&iacute;a ideal</label>
+                        <select id="petAdminRoutine" required>
+                            <option value="solo">Puede estar ratos solo</option>
+                            <option value="acompanado">Mejor acompa&ntilde;ado</option>
+                            <option value="familia">Ideal para familia</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="petAdminPhoto">Foto</label>
+                        <input id="petAdminPhoto" type="file" accept="image/*">
+                    </div>
+                </div>
+
+                <label for="petAdminPersonality">Personalidad</label>
+                <input id="petAdminPersonality" required placeholder="Ej. cari&ntilde;osa, curiosa, juguetona">
+
+                <label for="petAdminStory">Historia breve</label>
+                <textarea id="petAdminStory" required placeholder="Cuenta por qu&eacute; busca hogar y qu&eacute; cuidados necesita."></textarea>
+
+                <div class="section-actions left">
+                    <button type="submit">Guardar mascota</button>
+                    <button class="secondary" type="reset">Limpiar</button>
+                </div>
+                <p class="form-note" id="petAdminFeedback"></p>
+            </form>
+
+            <div class="team-panel feature-panel">
+                <h2>Mascotas del equipo</h2>
+                <p>Administra estado, revisa fichas y elimina registros de prueba.</p>
+                <div class="saved-list pet-admin-list" id="mascotasGuardadas"></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section admin-section admin-protected" data-admin-section="solicitudes" hidden>
+        <div class="feature-band">
+            <div class="team-panel feature-panel">
+                <h2>Datos del proyecto</h2>
+                <ul class="tip-list">
+                    <li>Escuela: CECyTEM Tultitl&aacute;n.</li>
+                    <li>Grupo: 404.</li>
+                    <li>Proyecto: Huellitas.</li>
+                    <li>Tema: protecci&oacute;n animal y adopci&oacute;n responsable.</li>
+                    <li>Asesor&iacute;a: profesora Karla Carrasco.</li>
+                </ul>
+                <div class="section-actions">
+                    <a class="button-link" href="Proyecto.pdf" download="Acerca de nosotros.pdf">Descargar Acerca de nosotros</a>
+                </div>
+            </div>
+
+            <div class="team-panel feature-panel">
+                <h2>Solicitudes guardadas</h2>
+                <p>Cuando alguien usa el formulario de adopci&oacute;n, la solicitud se guarda en este navegador y aparece aqu&iacute;.</p>
+                <div class="saved-list" id="solicitudesGuardadas"></div>
+                <div class="section-actions">
+                    <button type="button" onclick="cargarSolicitudes()">Actualizar</button>
+                    <button class="secondary" type="button" onclick="limpiarSolicitudes()">Limpiar guardadas</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section admin-section admin-protected" data-admin-section="citas" hidden>
+        <div class="team-panel feature-panel">
+            <div class="status-line">
+                <div>
+                    <h2>Calendario de citas</h2>
+                    <p>Representaci&oacute;n visual de las citas programadas desde las solicitudes.</p>
+                </div>
+                <button type="button" onclick="cargarCalendarioAdmin()">Actualizar</button>
+            </div>
+            <div class="admin-calendar" id="adminCalendar"></div>
+        </div>
+    </section>
+
+    <section class="section admin-section admin-protected" data-admin-section="mensajes" hidden>
+        <div class="team-panel feature-panel">
+            <h2>Mensajes de contacto</h2>
+            <p>Los mensajes enviados desde Inicio tambi&eacute;n se guardan en este navegador.</p>
+            <div class="saved-list" id="mensajesGuardados"></div>
+            <div class="section-actions">
+                <button type="button" onclick="cargarMensajes()">Actualizar mensajes</button>
+                <button class="secondary" type="button" onclick="limpiarMensajes()">Limpiar mensajes</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="section admin-section admin-protected" data-admin-section="reportes" hidden>
+        <div class="team-panel feature-panel">
+            <h2>Seguimiento de reportes</h2>
+            <p>Cada reporte queda con estado: recibido, en revisi&oacute;n o atendido. El equipo puede actualizarlo desde aqu&iacute;.</p>
+            <div class="saved-list" id="reportesGuardados"></div>
+            <div class="section-actions">
+                <button type="button" onclick="cargarReportes()">Actualizar reportes</button>
+                <button class="secondary" type="button" onclick="limpiarReportes()">Limpiar reportes</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="section admin-section admin-protected" data-admin-section="centros" hidden>
+        <div class="team-panel feature-panel">
+            <h2>Aprobar centros</h2>
+            <p>Revisa centros candidatos antes de mostrarlos como aprobados por el equipo.</p>
+            <div class="saved-list" id="centrosRevision"></div>
+            <div class="section-actions">
+                <button type="button" onclick="cargarCentrosRevision()">Actualizar centros</button>
+                <button class="secondary" type="button" onclick="crearCentroDemo()">Agregar centro demo</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="section admin-section admin-protected" data-admin-section="puntajes" hidden>
+        <div class="team-panel feature-panel">
+            <h2>Puntajes de juegos</h2>
+            <p>La tabla toma los mejores puntajes guardados por cada usuario que juega en este navegador.</p>
+            <div class="saved-list" id="puntajesGuardados"></div>
+            <div class="section-actions">
+                <button type="button" onclick="cargarPuntajes()">Actualizar puntajes</button>
+                <button class="secondary" type="button" onclick="limpiarPuntajes()">Limpiar puntajes</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="section admin-section admin-protected" data-admin-section="manual" hidden>
+        <div class="team-panel feature-panel">
+            <span class="eyebrow">Flujo del sistema</span>
+            <h2>C&oacute;mo funciona Huellitas</h2>
+            <div class="manual-flow-grid">
+                <article>
+                    <strong>1. Solicitud registrada</strong>
+                    <span>Entra a Adopciones, hace match, guarda favoritos y llena la solicitud.</span>
+                </article>
+                <article>
+                    <strong>2. Revisi&oacute;n admin</strong>
+                    <span>En Panel admin cambia el estado: enviada, revisando, aprobada o rechazada.</span>
+                </article>
+                <article>
+                    <strong>3. Cita programada</strong>
+                    <span>El admin pone fecha, hora y lugar. Se ve en calendario y en Mi adopci&oacute;n.</span>
+                </article>
+                <article>
+                    <strong>4. Mensajes y avisos</strong>
+                    <span>El buz&oacute;n conecta al usuario con el equipo y manda notificaciones.</span>
+                </article>
+                <article>
+                    <strong>5. Datos guardados</strong>
+                    <span>Con el servidor abierto, todo queda en data/huellitas-db.json.</span>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section admin-protected" hidden>
+        <div class="section-actions">
+            <a class="button-link" href="directorio.html">Ir al directorio</a>
+            <a class="button-link secondary" href="jueguitos.html">Ir a juegos</a>
+            <a class="button-link secondary" href="pagina.html">Volver al inicio</a>
+        </div>
+    </section>
+</main>
+
+<footer class="site-footer">
+    <strong>HUELLITAS &#128062;</strong>
+    <span>Proyecto escolar de CECyTEM Tultitl&aacute;n - Grupo 404 - Equipo Huellitas</span>
+</footer>
+
+<script>
+const solicitudesGuardadas = document.getElementById("solicitudesGuardadas");
+const mensajesGuardados = document.getElementById("mensajesGuardados");
+const reportesGuardados = document.getElementById("reportesGuardados");
+const puntajesGuardados = document.getElementById("puntajesGuardados");
+const mascotasGuardadas = document.getElementById("mascotasGuardadas");
+const centrosRevision = document.getElementById("centrosRevision");
+const adminCalendar = document.getElementById("adminCalendar");
+const petAdminForm = document.getElementById("petAdminForm");
+const petAdminFeedback = document.getElementById("petAdminFeedback");
+const systemStatusList = document.getElementById("systemStatusList");
+const systemStatusScore = document.getElementById("systemStatusScore");
+const backupFileInput = document.getElementById("backupFileInput");
+const adminPetStorageKey = "huellitasMascotasExtra";
+const adminAccessKey = "huellitasAdminActivo";
+const adminPasswordDemo = String.fromCharCode(104, 117, 101, 108, 108, 105, 116, 97, 115, 52, 48, 52);
+const mailboxStorageKey = "huellitasBuzon";
+const centersReviewKey = "huellitasCentrosRevision";
+const protectedBackupKeys = ["huellitasAdminActivo", "huellitasToken"];
+const baseSettings = {
+    accent: "verde",
+    language: "es",
+    music: true,
+    musicVolume: 0.16,
+    sfx: true,
+    sfxVolume: 0.42,
+    navCompact: true,
+    view: "normal"
+};
+let slideActual = 0;
+let adminInicializado = false;
+
+function escapeHtml(texto) {
+    return String(texto || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+function leerJsonSeguro(key, fallback) {
+    try {
+        return JSON.parse(localStorage.getItem(key)) || fallback;
+    } catch (error) {
+        return fallback;
+    }
+}
+
+function guardarJson(key, value) {
+    localStorage.setItem(key, JSON.stringify(value));
+}
+
+function mostrarAdminToast(titulo, mensaje) {
+    const toast = document.createElement("div");
+    toast.className = "badge-toast";
+    toast.innerHTML = '<strong>' + escapeHtml(titulo || "Huellitas Admin") + '</strong><span>' + escapeHtml(mensaje || "Acci&oacute;n completada.") + '</span>';
+    document.body.appendChild(toast);
+
+    window.requestAnimationFrame(() => toast.classList.add("visible"));
+    window.setTimeout(() => {
+        toast.classList.remove("visible");
+        window.setTimeout(() => toast.remove(), 260);
+    }, 2600);
+}
+
+function confirmarAccion(opciones) {
+    const config = Object.assign({
+        titulo: "Confirmar acci&oacute;n",
+        mensaje: "Esta acci&oacute;n modificar&aacute; informaci&oacute;n guardada.",
+        confirmar: "Confirmar",
+        cancelar: "Cancelar",
+        peligro: false
+    }, opciones || {});
+
+    return new Promise((resolve) => {
+        const backdrop = document.createElement("div");
+        backdrop.className = "confirm-backdrop";
+        backdrop.innerHTML = [
+            '<div class="confirm-card" role="dialog" aria-modal="true" aria-label="' + escapeHtml(config.titulo) + '">',
+            '<h3>' + escapeHtml(config.titulo) + '</h3>',
+            '<p>' + escapeHtml(config.mensaje) + '</p>',
+            '<div class="confirm-actions">',
+            '<button class="secondary" type="button" data-confirm-cancel>' + escapeHtml(config.cancelar) + '</button>',
+            '<button class="' + (config.peligro ? "danger" : "") + '" type="button" data-confirm-ok>' + escapeHtml(config.confirmar) + '</button>',
+            '</div>',
+            '</div>'
+        ].join("");
+
+        function close(result) {
+            backdrop.remove();
+            resolve(result);
+        }
+
+        backdrop.addEventListener("click", (event) => {
+            if (event.target === backdrop || event.target.hasAttribute("data-confirm-cancel")) {
+                close(false);
+            }
+
+            if (event.target.hasAttribute("data-confirm-ok")) {
+                close(true);
+            }
+        });
+
+        document.body.appendChild(backdrop);
+    });
+}
+
+function requiereAdmin() {
+    if (tieneAccesoAdmin()) {
+        return true;
+    }
+
+    aplicarAccesoAdmin();
+    mostrarAdminToast("Acceso admin requerido", "Inicia sesi&oacute;n admin para modificar datos.");
+    return false;
+}
+
+function esFechaAnteriorHoy(fecha) {
+    if (!fecha) {
+        return true;
+    }
+
+    const hoy = new Date();
+    hoy.setHours(0, 0, 0, 0);
+    const fechaElegida = new Date(fecha + "T00:00:00");
+    return fechaElegida < hoy;
+}
+
+function mezclarPorId(localItems, serverItems) {
+    const map = new Map();
+
+    (Array.isArray(localItems) ? localItems : []).forEach((item, index) => {
+        map.set(item && item.id ? item.id : "local-" + index, item);
+    });
+
+    (Array.isArray(serverItems) ? serverItems : []).forEach((item, index) => {
+        const id = item && item.id ? item.id : "server-" + index;
+        map.set(id, Object.assign({}, map.get(id) || {}, item));
+    });
+
+    return Array.from(map.values());
+}
+
+async function apiPostAdmin(path, payload) {
+    if (!window.huellitasApi || !window.huellitasApi.enabled) {
+        return null;
+    }
+
+    try {
+        return await window.huellitasApi.request(path, {
+            method: "POST",
+            body: JSON.stringify(payload || {})
+        });
+    } catch (error) {
+        console.warn(error.message);
+        return null;
+    }
+}
+
+async function apiGetAdmin(path) {
+    if (!window.huellitasApi || !window.huellitasApi.enabled) {
+        return null;
+    }
+
+    try {
+        return await window.huellitasApi.request(path);
+    } catch (error) {
+        console.warn(error.message);
+        return null;
+    }
+}
+
+function esLlaveHuellitas(key) {
+    return key === "usuarios" || key === "sesion" || key.indexOf("huellitas") === 0;
+}
+
+function obtenerLlavesHuellitas() {
+    const keys = [];
+
+    for (let index = 0; index < localStorage.length; index += 1) {
+        const key = localStorage.key(index);
+
+        if (key && esLlaveHuellitas(key)) {
+            keys.push(key);
+        }
+    }
+
+    return keys;
+}
+
+function exportarDatosLocales() {
+    return obtenerLlavesHuellitas().reduce((acc, key) => {
+        if (!protectedBackupKeys.includes(key)) {
+            acc[key] = localStorage.getItem(key);
+        }
+
+        return acc;
+    }, {});
+}
+
+function limpiarDatosLocalesApp(opciones) {
+    const config = Object.assign({
+        preservarUsuarios: false,
+        preservarSesion: false,
+        preservarAdmin: false,
+        preservarToken: false
+    }, opciones || {});
+
+    obtenerLlavesHuellitas().forEach((key) => {
+        if (config.preservarUsuarios && key === "usuarios") {
+            return;
+        }
+
+        if (config.preservarSesion && key === "sesion") {
+            return;
+        }
+
+        if (config.preservarAdmin && key === adminAccessKey) {
+            return;
+        }
+
+        if (config.preservarToken && key === "huellitasToken") {
+            return;
+        }
+
+        localStorage.removeItem(key);
+    });
+}
+
+function emitirEventosDatos() {
+    ["huellitas:adoptionsChanged", "huellitas:reportsChanged", "huellitas:mailboxChanged", "huellitas:notificationsChanged", "huellitas:petsChanged", "huellitas:favoritesChanged", "huellitas:badgesChanged"].forEach((eventName) => {
+        window.dispatchEvent(new CustomEvent(eventName));
+    });
+}
+
+function guardarArchivoJson(nombre, data) {
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = nombre;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    window.setTimeout(() => URL.revokeObjectURL(url), 800);
+}
+
+function nombreRespaldo() {
+    const stamp = new Date().toISOString().slice(0, 16).replace(/[-:T]/g, "");
+    return "huellitas-respaldo-" + stamp + ".json";
+}
+
+function restaurarDatosLocales(datos) {
+    Object.keys(datos || {}).forEach((key) => {
+        if (protectedBackupKeys.includes(key)) {
+            return;
+        }
+
+        localStorage.setItem(key, String(datos[key]));
+    });
+}
+
+function estadoSlug(estado) {
+    return String(estado || "")
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/\s+/g, "-");
+}
+
+function etiquetaEstado(estado) {
+    const etiquetas = {
+        "En revision": "En revisi&oacute;n"
+    };
+
+    return etiquetas[estado] || estado || "Enviada";
+}
+
+function notificarLocal(notificacion) {
+    if (window.huellitasNotify) {
+        window.huellitasNotify(notificacion);
+        return;
+    }
+
+    const notificaciones = leerJsonSeguro("huellitasNotificaciones", []);
+    notificaciones.unshift(Object.assign({
+        id: "noti-" + Date.now(),
+        fecha: new Date().toLocaleString("es-MX"),
+        read: false
+    }, notificacion));
+    guardarJson("huellitasNotificaciones", notificaciones.slice(0, 40));
+}
+
+function guardarMensajeBuzon(mensaje) {
+    const mensajes = leerJsonSeguro(mailboxStorageKey, []);
+    const item = Object.assign({
+        id: "msg-" + Date.now(),
+        fecha: new Date().toLocaleString("es-MX")
+    }, mensaje);
+
+    mensajes.unshift(item);
+    guardarJson(mailboxStorageKey, mensajes);
+    window.dispatchEvent(new CustomEvent("huellitas:mailboxChanged"));
+    apiPostAdmin("/api/mailbox", item);
+    return item;
+}
+
+function obtenerMascotasExtra() {
+    return leerJsonSeguro(adminPetStorageKey, []);
+}
+
+function guardarMascotasExtra(mascotas) {
+    localStorage.setItem(adminPetStorageKey, JSON.stringify(mascotas));
+    window.dispatchEvent(new CustomEvent("huellitas:petsChanged"));
+}
+
+function archivoADataUrl(file) {
+    return new Promise((resolve) => {
+        if (!file) {
+            resolve("");
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = () => resolve("");
+        reader.readAsDataURL(file);
+    });
+}
+
+function tieneAccesoAdmin() {
+    return sessionStorage.getItem(adminAccessKey) === "true";
+}
+
+function aplicarAccesoAdmin() {
+    const activo = tieneAccesoAdmin();
+    const gate = document.getElementById("adminGate");
+
+    document.querySelectorAll(".admin-protected").forEach((section) => {
+        section.hidden = !activo;
+    });
+
+    if (gate) {
+        gate.hidden = activo;
+    }
+
+    if (activo) {
+        inicializarPanelAdmin();
+    }
+}
+
+function prepararAccesoAdmin() {
+    const form = document.getElementById("adminAccessForm");
+    const feedback = document.getElementById("adminAccessFeedback");
+
+    if (!form) {
+        return;
+    }
+
+    form.addEventListener("submit", (event) => {
+        event.preventDefault();
+
+        if (document.getElementById("adminPassword").value === adminPasswordDemo) {
+            sessionStorage.setItem(adminAccessKey, "true");
+            feedback.textContent = "Acceso concedido.";
+            aplicarAccesoAdmin();
+        } else {
+            feedback.textContent = "Clave incorrecta. Intenta de nuevo.";
+        }
+    });
+}
+
+function salirAdmin() {
+    sessionStorage.removeItem(adminAccessKey);
+    aplicarAccesoAdmin();
+    mostrarAdminToast("Sesi&oacute;n admin cerrada", "El panel volvi&oacute; al modo privado.");
+    document.getElementById("adminGate").scrollIntoView({ behavior: "smooth" });
+}
+
+function estadoMascotaClase(estado) {
+    return "pet-status-" + String(estado || "Disponible").toLowerCase().replace(/\s+/g, "-");
+}
+
+function cargarMascotas() {
+    const mascotas = obtenerMascotasExtra();
+
+    if (!mascotas.length) {
+        mascotasGuardadas.innerHTML = '<div class="empty-state"><strong>A&uacute;n no hay mascotas agregadas.</strong><span>Registra una ficha para mostrarla en adopciones y match.</span><a class="empty-action" href="#petAdminForm">Agregar mascota</a></div>';
+        actualizarAdminResumen();
+        return;
+    }
+
+    mascotasGuardadas.innerHTML = mascotas.map((mascota) => {
+        return [
+            '<article class="saved-item pet-admin-item">',
+            '<img src="' + escapeHtml(mascota.imagen || "assets/imagenes/logo.png") + '" alt="Foto de ' + escapeHtml(mascota.nombre) + '">',
+            '<div>',
+            '<div class="status-line">',
+            '<strong>' + escapeHtml(mascota.nombre) + ' - ' + escapeHtml(mascota.tipo) + '</strong>',
+            '<span class="status-badge ' + estadoMascotaClase(mascota.estado) + '">' + escapeHtml(mascota.estado) + '</span>',
+            '</div>',
+            '<span>Edad: ' + escapeHtml(mascota.edad) + '</span>',
+            '<span>Personalidad: ' + escapeHtml(mascota.personalidad) + '</span>',
+            '<span>Fecha: ' + escapeHtml(mascota.fecha) + '</span>',
+            '<div class="status-actions">',
+            '<button class="status-action' + (mascota.estado === "Disponible" ? " active" : "") + '" type="button" onclick="cambiarEstadoMascota(\'' + mascota.id + '\', \'Disponible\')">Disponible</button>',
+            '<button class="status-action' + (mascota.estado === "En proceso" ? " active" : "") + '" type="button" onclick="cambiarEstadoMascota(\'' + mascota.id + '\', \'En proceso\')">En proceso</button>',
+            '<button class="status-action' + (mascota.estado === "Adoptada" ? " active" : "") + '" type="button" onclick="cambiarEstadoMascota(\'' + mascota.id + '\', \'Adoptada\')">Adoptada</button>',
+            '<button class="status-action danger" type="button" onclick="eliminarMascota(\'' + mascota.id + '\')">Eliminar</button>',
+            '</div>',
+            '</div>',
+            '</article>'
+        ].join("");
+    }).join("");
+
+    actualizarAdminResumen();
+}
+
+function cambiarEstadoMascota(id, estado) {
+    if (!requiereAdmin()) {
+        return;
+    }
+
+    const mascotas = obtenerMascotasExtra().map((mascota) => {
+        if (mascota.id !== id) {
+            return mascota;
+        }
+
+        return Object.assign({}, mascota, {
+            estado: estado,
+            actualizado: new Date().toLocaleString("es-MX")
+        });
+    });
+
+    guardarMascotasExtra(mascotas);
+    apiPostAdmin("/api/pets/status", { id: id, estado: estado });
+    mostrarAdminToast("Estado actualizado", "La mascota qued&oacute; como " + estado + ".");
+    cargarMascotas();
+}
+
+async function eliminarMascota(id) {
+    if (!requiereAdmin()) {
+        return;
+    }
+
+    const ok = await confirmarAccion({
+        titulo: "Eliminar mascota",
+        mensaje: "La ficha se quitar&aacute; del panel admin y de las adopciones extra. Esta acci&oacute;n no afecta las mascotas base.",
+        confirmar: "Eliminar",
+        peligro: true
+    });
+
+    if (!ok) {
+        return;
+    }
+
+    const mascotas = obtenerMascotasExtra().filter((mascota) => mascota.id !== id);
+    guardarMascotasExtra(mascotas);
+    apiPostAdmin("/api/pets/delete", { id: id });
+    mostrarAdminToast("Mascota eliminada", "La ficha fue retirada correctamente.");
+    cargarMascotas();
+}
+
+async function guardarMascotaDesdeFormulario(event) {
+    event.preventDefault();
+
+    if (!requiereAdmin()) {
+        return;
+    }
+
+    const file = document.getElementById("petAdminPhoto").files[0];
+    const imagen = await archivoADataUrl(file);
+    const nombre = document.getElementById("petAdminName").value.trim();
+    const tipo = document.getElementById("petAdminType").value;
+
+    if (!nombre || document.getElementById("petAdminPersonality").value.trim().length < 4) {
+        petAdminFeedback.className = "form-note error";
+        petAdminFeedback.textContent = "Completa nombre y personalidad para registrar la mascota.";
+        return;
+    }
+
+    const mascota = {
+        id: "pet-" + Date.now(),
+        nombre: nombre,
+        tipo: tipo,
+        edad: document.getElementById("petAdminAge").value.trim(),
+        estado: document.getElementById("petAdminStatus").value,
+        energia: document.getElementById("petAdminEnergy").value,
+        espacio: document.getElementById("petAdminHome").value,
+        rutina: document.getElementById("petAdminRoutine").value,
+        personalidad: document.getElementById("petAdminPersonality").value.trim(),
+        historia: document.getElementById("petAdminStory").value.trim(),
+        imagen: imagen || (tipo === "Gato" ? "assets/imagenes/1000107795.jpg" : "assets/imagenes/1000107801.jpg"),
+        fecha: new Date().toLocaleString("es-MX")
+    };
+    const mascotas = obtenerMascotasExtra();
+
+    mascotas.unshift(mascota);
+    guardarMascotasExtra(mascotas);
+    apiPostAdmin("/api/pets", mascota);
+    notificarLocal({
+        id: "new-pet-" + mascota.id,
+        title: "Nueva mascota disponible",
+        body: mascota.nombre + " fue agregada a adopciones.",
+        href: "adopcion_huellitas.html#mascotas",
+        kind: "pet"
+    });
+    petAdminForm.reset();
+    petAdminFeedback.className = "form-note success";
+    petAdminFeedback.textContent = mascota.nombre + " se agreg&oacute; a la galer&iacute;a de adopci&oacute;n.";
+    mostrarAdminToast("Mascota agregada", mascota.nombre + " ya aparece en adopciones.");
+    cargarMascotas();
+}
+
+function normalizarSolicitud(solicitud, index) {
+    const fecha = solicitud.fecha || new Date().toLocaleString("es-MX");
+    const estado = solicitud.estado || "Enviada";
+
+    return Object.assign({}, solicitud, {
+        id: solicitud.id || "solicitud-" + index + "-" + String(fecha).replace(/\W/g, ""),
+        fecha: fecha,
+        estado: estado,
+        profileId: solicitud.profileId || solicitud.correo || solicitud.nombre || "visitante",
+        historial: Array.isArray(solicitud.historial) && solicitud.historial.length
+            ? solicitud.historial
+            : [{ estado: estado, fecha: fecha }],
+        cita: solicitud.cita || null
+    });
+}
+
+function obtenerSolicitudes() {
+    return leerJsonSeguro("huellitasSolicitudesAdopcion", []).map(normalizarSolicitud);
+}
+
+function guardarSolicitudes(solicitudes) {
+    guardarJson("huellitasSolicitudesAdopcion", solicitudes);
+    window.dispatchEvent(new CustomEvent("huellitas:adoptionsChanged"));
+}
+
+function botonesEstadoSolicitud(solicitud) {
+    return ["Enviada", "Revisando", "Aprobada", "Rechazada", "Cita programada"].map((estado) => {
+        const activo = solicitud.estado === estado ? " active" : "";
+        return '<button class="status-action' + activo + '" type="button" onclick="cambiarEstadoSolicitud(\'' + solicitud.id + '\', \'' + estado + '\')">' + etiquetaEstado(estado) + '</button>';
+    }).join("");
+}
+
+function lineaSolicitud(solicitud) {
+    return '<div class="request-timeline">' + ["Enviada", "Revisando", "Aprobada", "Rechazada", "Cita programada"].map((estado) => {
+        const activo = solicitud.estado === estado || (solicitud.historial || []).some((item) => item.estado === estado);
+        return '<span class="' + (activo ? "active" : "") + '">' + etiquetaEstado(estado) + '</span>';
+    }).join("") + '</div>';
+}
+
+function cargarSolicitudes() {
+    const solicitudes = obtenerSolicitudes();
+
+    if (solicitudes.length === 0) {
+        solicitudesGuardadas.innerHTML = '<div class="empty-state"><strong>A&uacute;n no hay solicitudes.</strong><span>Cuando un usuario adopte, podr&aacute;s revisar su proceso aqu&iacute;.</span><a class="empty-action" href="adoptar.html#solicitud">Crear solicitud de prueba</a></div>';
+        actualizarAdminResumen();
+        return;
+    }
+
+    guardarSolicitudes(solicitudes);
+    solicitudesGuardadas.innerHTML = solicitudes.map((solicitud) => {
+        const cita = solicitud.cita || {};
+
+        return [
+            '<article class="saved-item adoption-request-admin">',
+            '<div class="status-line">',
+            '<strong>' + escapeHtml(solicitud.nombre) + ' - ' + escapeHtml(solicitud.mascotaNombre || solicitud.mascota) + '</strong>',
+            '<span class="status-badge status-' + estadoSlug(solicitud.estado) + '">' + etiquetaEstado(solicitud.estado) + '</span>',
+            '</div>',
+            '<span>Centro: ' + escapeHtml(solicitud.centro) + '</span>',
+            '<span>Tel&eacute;fono: ' + escapeHtml(solicitud.telefono) + '</span>',
+            '<span>Correo: ' + escapeHtml(solicitud.correo) + '</span>',
+            '<span>Fecha: ' + escapeHtml(solicitud.fecha) + '</span>',
+            '<span>Checklist: ' + escapeHtml(solicitud.checklist || 0) + '%</span>',
+            lineaSolicitud(solicitud),
+            '<div class="status-actions">' + botonesEstadoSolicitud(solicitud) + '</div>',
+            '<div class="admin-appointment-row">',
+            '<input type="date" id="citaFecha-' + solicitud.id + '" value="' + escapeHtml(cita.fecha || "") + '">',
+            '<input type="time" id="citaHora-' + solicitud.id + '" value="' + escapeHtml(cita.hora || "") + '">',
+            '<input id="citaLugar-' + solicitud.id + '" placeholder="Lugar o centro" value="' + escapeHtml(cita.lugar || solicitud.centro || "") + '">',
+            '<button type="button" onclick="guardarCitaSolicitud(\'' + solicitud.id + '\')">Guardar cita</button>',
+            '</div>',
+            '<div class="section-actions left">',
+            '<button class="secondary" type="button" onclick="exportarSolicitudPDF(\'' + solicitud.id + '\')">Exportar solicitud</button>',
+            '</div>',
+            '</article>'
+        ].join("");
+    }).join("");
+
+    actualizarAdminResumen();
+}
+
+async function limpiarSolicitudes() {
+    if (!requiereAdmin()) {
+        return;
+    }
+
+    const ok = await confirmarAccion({
+        titulo: "Limpiar solicitudes",
+        mensaje: "Se borrar&aacute;n las solicitudes guardadas en este navegador. La base del servidor no se modifica desde este bot&oacute;n.",
+        confirmar: "Limpiar",
+        peligro: true
+    });
+
+    if (!ok) {
+        return;
+    }
+
+    localStorage.removeItem("huellitasSolicitudesAdopcion");
+    mostrarAdminToast("Solicitudes limpias", "La lista local qued&oacute; vac&iacute;a.");
+    cargarSolicitudes();
+}
+
+function cambiarEstadoSolicitud(id, estado) {
+    if (!requiereAdmin()) {
+        return;
+    }
+
+    let actualizo = false;
+    const solicitudes = obtenerSolicitudes().map((solicitud) => {
+        if (solicitud.id !== id) {
+            return solicitud;
+        }
+
+        if (solicitud.estado === estado) {
+            return solicitud;
+        }
+
+        const fecha = new Date().toLocaleString("es-MX");
+        const actualizada = Object.assign({}, solicitud, {
+            estado: estado,
+            historial: (solicitud.historial || []).concat([{ estado: estado, fecha: fecha }])
+        });
+        actualizo = true;
+
+        guardarMensajeBuzon({
+            id: "msg-adoption-" + actualizada.id + "-" + estadoSlug(estado),
+            profileId: actualizada.profileId,
+            nombre: actualizada.nombre,
+            correo: actualizada.correo,
+            from: "admin",
+            mensaje: "Tu solicitud ahora esta en estado: " + etiquetaEstado(estado).replace(/<[^>]+>/g, "") + ".",
+            readByAdmin: true,
+            readByUser: false
+        });
+        notificarLocal({
+            id: "adoption-" + actualizada.id + "-" + estadoSlug(estado),
+            profileId: actualizada.profileId,
+            title: "Solicitud " + etiquetaEstado(estado).replace(/<[^>]+>/g, ""),
+            body: "El equipo actualizo tu solicitud de adopcion.",
+            href: "mi_adopcion.html",
+            kind: "adoption"
+        });
+
+        return actualizada;
+    });
+
+    if (!actualizo) {
+        mostrarAdminToast("Sin cambios", "La solicitud ya estaba en ese estado.");
+        return;
+    }
+
+    guardarSolicitudes(solicitudes);
+    apiPostAdmin("/api/adoptions/status", { id: id, estado: estado });
+    mostrarAdminToast("Estado actualizado", "La solicitud qued&oacute; como " + etiquetaEstado(estado).replace(/<[^>]+>/g, "") + ".");
+    cargarSolicitudes();
+}
+
+function guardarCitaSolicitud(id) {
+    if (!requiereAdmin()) {
+        return;
+    }
+
+    const fechaInput = document.getElementById("citaFecha-" + id);
+    const horaInput = document.getElementById("citaHora-" + id);
+    const lugarInput = document.getElementById("citaLugar-" + id);
+
+    if (!fechaInput.value || !horaInput.value || !lugarInput.value.trim()) {
+        mostrarAdminToast("Cita incompleta", "Agrega fecha, hora y lugar antes de guardar.");
+        return;
+    }
+
+    if (esFechaAnteriorHoy(fechaInput.value)) {
+        mostrarAdminToast("Fecha inv&aacute;lida", "La cita no puede quedar en una fecha pasada.");
+        return;
+    }
+
+    let actualizo = false;
+    const solicitudes = obtenerSolicitudes().map((solicitud) => {
+        if (solicitud.id !== id) {
+            return solicitud;
+        }
+
+        const cita = {
+            fecha: fechaInput.value,
+            hora: horaInput.value,
+            lugar: lugarInput.value.trim()
+        };
+        const mismaCita = solicitud.cita
+            && solicitud.cita.fecha === cita.fecha
+            && solicitud.cita.hora === cita.hora
+            && solicitud.cita.lugar === cita.lugar
+            && solicitud.estado === "Cita programada";
+
+        if (mismaCita) {
+            return solicitud;
+        }
+
+        const actualizada = Object.assign({}, solicitud, {
+            estado: "Cita programada",
+            cita: cita,
+            historial: (solicitud.historial || []).concat([{ estado: "Cita programada", fecha: new Date().toLocaleString("es-MX") }])
+        });
+        actualizo = true;
+
+        guardarMensajeBuzon({
+            id: "msg-cita-" + actualizada.id,
+            profileId: actualizada.profileId,
+            nombre: actualizada.nombre,
+            correo: actualizada.correo,
+            from: "admin",
+            mensaje: "Tu cita quedo programada para " + cita.fecha + " " + cita.hora + " en " + cita.lugar + ".",
+            readByAdmin: true,
+            readByUser: false
+        });
+        notificarLocal({
+            id: "adoption-" + actualizada.id + "-cita",
+            profileId: actualizada.profileId,
+            title: "Cita programada",
+            body: "Tienes una cita de adopcion para " + (actualizada.mascotaNombre || actualizada.mascota) + ".",
+            href: "mi_adopcion.html",
+            kind: "appointment"
+        });
+
+        return actualizada;
+    });
+
+    if (!actualizo) {
+        mostrarAdminToast("Sin cambios", "La cita ya estaba guardada con esos datos.");
+        return;
+    }
+
+    guardarSolicitudes(solicitudes);
+    apiPostAdmin("/api/adoptions/appointment", {
+        id: id,
+        fecha: fechaInput.value,
+        hora: horaInput.value,
+        lugar: lugarInput.value.trim()
+    });
+    mostrarAdminToast("Cita actualizada", "La cita se guard&oacute; y el usuario ver&aacute; el aviso en Mi adopci&oacute;n.");
+    cargarSolicitudes();
+}
+
+function cargarMensajes() {
+    const mensajesContacto = leerJsonSeguro("huellitasMensajesContacto", []).map((mensaje, index) => {
+        return Object.assign({ id: "contacto-" + index, origen: "Contacto" }, mensaje);
+    });
+    const mensajesBuzon = leerJsonSeguro(mailboxStorageKey, []).map((mensaje) => {
+        return Object.assign({ origen: "Buzon" }, mensaje);
+    });
+    const mensajes = mensajesBuzon.concat(mensajesContacto);
+
+    if (mensajes.length === 0) {
+        mensajesGuardados.innerHTML = '<div class="empty-state"><strong>A&uacute;n no hay mensajes.</strong><span>El buz&oacute;n se llenar&aacute; cuando usuarios o centros escriban.</span><a class="empty-action" href="mi_adopcion.html">Abrir Mi adopci&oacute;n</a></div>';
+        return;
+    }
+
+    mensajesGuardados.innerHTML = mensajes.map((mensaje) => {
+        const esBuzon = mensaje.origen === "Buzon";
+
+        return [
+            '<article class="saved-item mailbox-admin-item">',
+            '<div class="status-line">',
+            '<strong>' + escapeHtml(mensaje.origen || mensaje.tipo || "Mensaje") + ' - ' + escapeHtml(mensaje.nombre || "Usuario") + '</strong>',
+            esBuzon ? '<span class="status-badge status-' + (mensaje.from === "admin" ? "atendido" : "recibido") + '">' + (mensaje.from === "admin" ? "Respondido" : "Usuario") + '</span>' : '',
+            '</div>',
+            '<span>Correo: ' + escapeHtml(mensaje.correo) + '</span>',
+            '<span>Fecha: ' + escapeHtml(mensaje.fecha) + '</span>',
+            '<span>Mensaje: ' + escapeHtml(mensaje.mensaje) + '</span>',
+            esBuzon && mensaje.from !== "admin" ? [
+                '<div class="admin-reply-row">',
+                '<input id="reply-' + mensaje.id + '" placeholder="Responder al usuario">',
+                '<button type="button" onclick="responderBuzon(\'' + mensaje.id + '\')">Responder</button>',
+                '</div>'
+            ].join("") : "",
+            '</article>'
+        ].join("");
+    }).join("");
+}
+
+async function limpiarMensajes() {
+    if (!requiereAdmin()) {
+        return;
+    }
+
+    const ok = await confirmarAccion({
+        titulo: "Limpiar mensajes",
+        mensaje: "Se borrar&aacute;n los mensajes locales de contacto y buz&oacute;n en este navegador.",
+        confirmar: "Limpiar",
+        peligro: true
+    });
+
+    if (!ok) {
+        return;
+    }
+
+    localStorage.removeItem("huellitasMensajesContacto");
+    localStorage.removeItem(mailboxStorageKey);
+    window.dispatchEvent(new CustomEvent("huellitas:mailboxChanged"));
+    mostrarAdminToast("Mensajes limpios", "El buz&oacute;n local qued&oacute; vac&iacute;o.");
+    cargarMensajes();
+}
+
+function responderBuzon(id) {
+    if (!requiereAdmin()) {
+        return;
+    }
+
+    const mensajes = leerJsonSeguro(mailboxStorageKey, []);
+    const original = mensajes.find((mensaje) => mensaje.id === id);
+    const input = document.getElementById("reply-" + id);
+
+    if (!original || !input || !input.value.trim()) {
+        mostrarAdminToast("Respuesta vac&iacute;a", "Escribe un mensaje antes de responder.");
+        return;
+    }
+
+    const actualizados = mensajes.map((mensaje) => {
+        if (mensaje.id !== id) {
+            return mensaje;
+        }
+
+        return Object.assign({}, mensaje, { readByAdmin: true });
+    });
+    guardarJson(mailboxStorageKey, actualizados);
+
+    guardarMensajeBuzon({
+        profileId: original.profileId,
+        nombre: original.nombre,
+        correo: original.correo,
+        from: "admin",
+        mensaje: input.value.trim(),
+        readByAdmin: true,
+        readByUser: false
+    });
+    notificarLocal({
+        id: "mail-" + id + "-" + Date.now(),
+        profileId: original.profileId,
+        title: "Nuevo mensaje del equipo",
+        body: input.value.trim(),
+        href: "mi_adopcion.html",
+        kind: "mail"
+    });
+    mostrarAdminToast("Mensaje enviado", "La respuesta qued&oacute; guardada y el usuario recibir&aacute; notificaci&oacute;n.");
+    cargarMensajes();
+}
+
+function obtenerCentrosRevision() {
+    const centros = leerJsonSeguro(centersReviewKey, []);
+
+    if (centros.length) {
+        return centros;
+    }
+
+    return [
+        {
+            id: "centro-demo-1",
+            nombre: "Refugio candidato",
+            zona: "Tultitl&aacute;n",
+            contacto: "pendiente@huellitas.com",
+            estado: "Pendiente",
+            fecha: new Date().toLocaleString("es-MX")
+        }
+    ];
+}
+
+function guardarCentrosRevision(centros) {
+    guardarJson(centersReviewKey, centros);
+}
+
+function cargarCentrosRevision() {
+    const centros = obtenerCentrosRevision();
+
+    if (!centros.length) {
+        centrosRevision.innerHTML = '<div class="empty-state"><strong>No hay centros pendientes.</strong><span>Agrega un centro demo o espera nuevos registros para revisarlos.</span><button class="empty-action" type="button" onclick="crearCentroDemo()">Agregar centro demo</button></div>';
+        return;
+    }
+
+    guardarCentrosRevision(centros);
+    centrosRevision.innerHTML = centros.map((centro) => {
+        return [
+            '<article class="saved-item">',
+            '<div class="status-line">',
+            '<strong>' + escapeHtml(centro.nombre) + '</strong>',
+            '<span class="status-badge status-' + estadoSlug(centro.estado) + '">' + escapeHtml(centro.estado) + '</span>',
+            '</div>',
+            '<span>Zona: ' + escapeHtml(centro.zona) + '</span>',
+            '<span>Contacto: ' + escapeHtml(centro.contacto) + '</span>',
+            '<span>Fecha: ' + escapeHtml(centro.fecha) + '</span>',
+            '<div class="status-actions">',
+            '<button class="status-action' + (centro.estado === "Aprobado" ? " active" : "") + '" type="button" onclick="cambiarEstadoCentro(\'' + centro.id + '\', \'Aprobado\')">Aprobar</button>',
+            '<button class="status-action' + (centro.estado === "Pendiente" ? " active" : "") + '" type="button" onclick="cambiarEstadoCentro(\'' + centro.id + '\', \'Pendiente\')">Pendiente</button>',
+            '<button class="status-action danger' + (centro.estado === "Rechazado" ? " active" : "") + '" type="button" onclick="cambiarEstadoCentro(\'' + centro.id + '\', \'Rechazado\')">Rechazar</button>',
+            '</div>',
+            '</article>'
+        ].join("");
+    }).join("");
+}
+
+function cambiarEstadoCentro(id, estado) {
+    if (!requiereAdmin()) {
+        return;
+    }
+
+    const centros = obtenerCentrosRevision().map((centro) => {
+        if (centro.id !== id) {
+            return centro;
+        }
+
+        return Object.assign({}, centro, {
+            estado: estado,
+            actualizado: new Date().toLocaleString("es-MX")
+        });
+    });
+
+    guardarCentrosRevision(centros);
+    apiPostAdmin("/api/centers/status", { id: id, estado: estado });
+    mostrarAdminToast("Centro actualizado", "El centro qued&oacute; como " + estado + ".");
+    cargarCentrosRevision();
+}
+
+function crearCentroDemo() {
+    if (!requiereAdmin()) {
+        return;
+    }
+
+    const centros = obtenerCentrosRevision();
+
+    centros.unshift({
+        id: "centro-" + Date.now(),
+        nombre: "Centro nuevo " + (centros.length + 1),
+        zona: "Zona por verificar",
+        contacto: "contacto@centro.com",
+        estado: "Pendiente",
+        fecha: new Date().toLocaleString("es-MX")
+    });
+    guardarCentrosRevision(centros);
+    apiPostAdmin("/api/centers", centros[0]);
+    mostrarAdminToast("Centro agregado", "Se agreg&oacute; un centro candidato para revisi&oacute;n.");
+    cargarCentrosRevision();
+}
+
+function normalizarReporte(reporte, index) {
+    const fecha = reporte.fecha || new Date().toLocaleString("es-MX");
+    const estado = reporte.estado || "Recibido";
+
+    return Object.assign({}, reporte, {
+        id: reporte.id || "reporte-" + index + "-" + String(fecha).replace(/\W/g, ""),
+        fecha: fecha,
+        estado: estado,
+        historial: Array.isArray(reporte.historial) && reporte.historial.length
+            ? reporte.historial
+            : [{ estado: estado, fecha: fecha }]
+    });
+}
+
+function obtenerReportes() {
+    return leerJsonSeguro("huellitasReportes", []).map(normalizarReporte);
+}
+
+function guardarReportes(reportes) {
+    localStorage.setItem("huellitasReportes", JSON.stringify(reportes));
+    window.dispatchEvent(new CustomEvent("huellitas:reportsChanged"));
+}
+
+function estadoClase(estado) {
+    return "status-" + String(estado || "Recibido").toLowerCase().replace(/\s+/g, "-");
+}
+
+function botonesEstado(reporte) {
+    return ["Recibido", "En revision", "Atendido"].map((estado) => {
+        const activo = reporte.estado === estado ? " active" : "";
+        const etiqueta = estado === "En revision" ? "En revisi&oacute;n" : estado;
+        return '<button class="status-action' + activo + '" type="button" onclick="cambiarEstadoReporte(\'' + reporte.id + '\', \'' + estado + '\')">' + etiqueta + '</button>';
+    }).join("");
+}
+
+function cargarReportes() {
+    const reportes = obtenerReportes();
+
+    if (reportes.length === 0) {
+        reportesGuardados.innerHTML = '<div class="empty-state"><strong>A&uacute;n no hay reportes.</strong><span>Los reportes aparecer&aacute;n aqu&iacute; con estado y seguimiento.</span><button class="empty-action" type="button" onclick="window.huellitasOpenReport && window.huellitasOpenReport()">Crear reporte</button></div>';
+        actualizarAdminResumen();
+        return;
+    }
+
+    guardarReportes(reportes);
+    reportesGuardados.innerHTML = reportes.map((reporte) => {
+        const estadoTexto = reporte.estado === "En revision" ? "En revisi&oacute;n" : reporte.estado;
+
+        return [
+            '<article class="saved-item report-saved-item">',
+            '<div class="status-line">',
+            '<strong>' + escapeHtml(reporte.tipo || "Reporte") + '</strong>',
+            '<span class="status-badge ' + estadoClase(reporte.estado) + '">' + escapeHtml(estadoTexto) + '</span>',
+            '</div>',
+            '<span>P&aacute;gina: ' + escapeHtml(reporte.pagina || "Sin zona") + '</span>',
+            '<span>Contacto: ' + escapeHtml(reporte.contacto || "Sin contacto") + '</span>',
+            '<span>Fecha: ' + escapeHtml(reporte.fecha) + '</span>',
+            '<span>Mensaje: ' + escapeHtml(reporte.mensaje || "") + '</span>',
+            '<div class="report-timeline">',
+            '<span class="' + (reporte.estado === "Recibido" ? "active" : "") + '">Recibido</span>',
+            '<span class="' + (reporte.estado === "En revision" ? "active" : "") + '">En revisi&oacute;n</span>',
+            '<span class="' + (reporte.estado === "Atendido" ? "active" : "") + '">Atendido</span>',
+            '</div>',
+            '<div class="status-actions">' + botonesEstado(reporte) + '</div>',
+            '<div class="section-actions left">',
+            '<button class="secondary" type="button" onclick="exportarReportePDF(\'' + reporte.id + '\')">Exportar reporte</button>',
+            '</div>',
+            '</article>'
+        ].join("");
+    }).join("");
+    actualizarAdminResumen();
+}
+
+async function cambiarEstadoReporte(id, estado) {
+    if (!requiereAdmin()) {
+        return;
+    }
+
+    let actualizo = false;
+    const reportes = obtenerReportes().map((reporte) => {
+        if (reporte.id !== id) {
+            return reporte;
+        }
+
+        if (reporte.estado === estado) {
+            return reporte;
+        }
+
+        const fecha = new Date().toLocaleString("es-MX");
+        actualizo = true;
+        return Object.assign({}, reporte, {
+            estado: estado,
+            historial: (reporte.historial || []).concat([{ estado: estado, fecha: fecha }])
+        });
+    });
+
+    if (!actualizo) {
+        mostrarAdminToast("Sin cambios", "El reporte ya estaba en ese estado.");
+        return;
+    }
+
+    guardarReportes(reportes);
+    cargarReportes();
+    mostrarAdminToast("Reporte actualizado", "El seguimiento del reporte qued&oacute; actualizado.");
+
+    if (window.huellitasApi && window.huellitasApi.enabled) {
+        try {
+            await window.huellitasApi.request("/api/reports/status", {
+                method: "POST",
+                body: JSON.stringify({ id: id, estado: estado })
+            });
+        } catch (error) {
+            console.warn(error.message);
+        }
+    }
+}
+
+async function limpiarReportes() {
+    if (!requiereAdmin()) {
+        return;
+    }
+
+    const ok = await confirmarAccion({
+        titulo: "Limpiar reportes",
+        mensaje: "Se borrar&aacute;n los reportes guardados localmente en este navegador.",
+        confirmar: "Limpiar",
+        peligro: true
+    });
+
+    if (!ok) {
+        return;
+    }
+
+    localStorage.removeItem("huellitasReportes");
+    mostrarAdminToast("Reportes limpios", "La lista local de reportes qued&oacute; vac&iacute;a.");
+    cargarReportes();
+}
+
+function cargarPuntajes() {
+    const puntajes = leerJsonSeguro("huellitasPuntajesJuego", [])
+        .sort((a, b) => (b.mejorPuntaje || 0) - (a.mejorPuntaje || 0));
+
+    if (puntajes.length === 0) {
+        puntajesGuardados.innerHTML = '<div class="empty-state"><strong>A&uacute;n no hay puntajes.</strong><span>Juega desde Arcade Perruno para llenar esta tabla.</span><a class="empty-action" href="jueguitos.html#arcadePerruno">Ir a juegos</a></div>';
+        actualizarAdminResumen();
+        return;
+    }
+
+    puntajesGuardados.innerHTML = puntajes.map((item, index) => {
+        return [
+            '<article class="saved-item score-admin-item">',
+            '<div class="score-admin-person">',
+            '<img src="' + escapeHtml(item.foto || "assets/imagenes/logo.png") + '" alt="">',
+            '<strong>#' + (index + 1) + ' ' + escapeHtml(item.nombre) + '</strong>',
+            '</div>',
+            '<span>Mejor puntaje: ' + escapeHtml(item.mejorPuntaje) + ' puntos</span>',
+            '<span>Logros: ' + escapeHtml(item.mejoresLogros) + '</span>',
+            '<span>&Uacute;ltima vez: ' + escapeHtml(item.ultimaVez) + '</span>',
+            '</article>'
+        ].join("");
+    }).join("");
+
+    actualizarAdminResumen();
+}
+
+async function limpiarPuntajes() {
+    if (!requiereAdmin()) {
+        return;
+    }
+
+    const ok = await confirmarAccion({
+        titulo: "Limpiar puntajes",
+        mensaje: "Se borrar&aacute;n los puntajes locales de juegos guardados en este navegador.",
+        confirmar: "Limpiar",
+        peligro: true
+    });
+
+    if (!ok) {
+        return;
+    }
+
+    localStorage.removeItem("huellitasPuntajesJuego");
+    mostrarAdminToast("Puntajes limpios", "La tabla local qued&oacute; vac&iacute;a.");
+    cargarPuntajes();
+}
+
+function contarPorEstado(items, key, fallback) {
+    return items.reduce((acc, item) => {
+        const estado = item[key] || fallback;
+        acc[estado] = (acc[estado] || 0) + 1;
+        return acc;
+    }, {});
+}
+
+function renderBarrasAdmin(targetId, counts, order) {
+    const target = document.getElementById(targetId);
+
+    if (!target) {
+        return;
+    }
+
+    const total = Object.keys(counts).reduce((sum, key) => sum + counts[key], 0);
+
+    if (!total) {
+        target.innerHTML = '<div class="empty-state"><strong>Sin datos para graficar.</strong><span>Las barras aparecer&aacute;n cuando existan solicitudes.</span></div>';
+        return;
+    }
+
+    target.innerHTML = order.filter((label) => counts[label]).map((label) => {
+        const value = counts[label] || 0;
+        const percent = Math.round((value / total) * 100);
+
+        return [
+            '<div class="admin-bar-row">',
+            '<div><strong>' + etiquetaEstado(label) + '</strong><span>' + value + ' registro(s)</span></div>',
+            '<b style="--bar-width:' + percent + '%"></b>',
+            '<em>' + percent + '%</em>',
+            '</div>'
+        ].join("");
+    }).join("");
+}
+
+function obtenerCitasAdmin() {
+    return obtenerSolicitudes()
+        .filter((solicitud) => solicitud.cita && solicitud.cita.fecha)
+        .map((solicitud) => ({
+            id: solicitud.id,
+            fecha: solicitud.cita.fecha,
+            hora: solicitud.cita.hora || "",
+            lugar: solicitud.cita.lugar || solicitud.centro || "Huellitas",
+            nombre: solicitud.nombre || "Adoptante",
+            mascota: solicitud.mascotaNombre || solicitud.mascota || "Mascota",
+            estado: solicitud.estado || "Cita programada"
+        }))
+        .sort((a, b) => String(a.fecha + a.hora).localeCompare(String(b.fecha + b.hora)));
+}
+
+function cargarCalendarioAdmin() {
+    if (!adminCalendar) {
+        return;
+    }
+
+    const citas = obtenerCitasAdmin();
+
+    if (!citas.length) {
+        adminCalendar.innerHTML = '<div class="empty-state"><strong>A&uacute;n no hay citas programadas.</strong><span>Agenda una cita desde una solicitud aprobada.</span></div>';
+        return;
+    }
+
+    adminCalendar.innerHTML = citas.map((cita) => {
+        const partes = String(cita.fecha).split("-");
+        const dia = partes.length === 3 ? partes[2] : cita.fecha;
+        const mes = partes.length === 3 ? partes[1] + "/" + partes[0] : "";
+
+        return [
+            '<article class="calendar-day-card">',
+            '<div class="calendar-date"><strong>' + escapeHtml(dia) + '</strong><span>' + escapeHtml(mes) + '</span></div>',
+            '<div>',
+            '<strong>' + escapeHtml(cita.mascota) + '</strong>',
+            '<span>' + escapeHtml(cita.nombre) + '</span>',
+            '<span>' + escapeHtml(cita.hora || "Hora pendiente") + ' - ' + escapeHtml(cita.lugar) + '</span>',
+            '<span class="status-badge status-' + estadoSlug(cita.estado) + '">' + etiquetaEstado(cita.estado) + '</span>',
+            '</div>',
+            '</article>'
+        ].join("");
+    }).join("");
+}
+
+function actualizarGraficasAdmin() {
+    const solicitudes = obtenerSolicitudes();
+    const reportes = obtenerReportes();
+    const mascotas = obtenerMascotasExtra();
+    const mensajes = leerJsonSeguro(mailboxStorageKey, []);
+    const citas = obtenerCitasAdmin();
+    const solicitudesPorEstado = contarPorEstado(solicitudes, "estado", "Enviada");
+    const mascotasDisponibles = mascotas.filter((mascota) => mascota.estado !== "Adoptada").length;
+    const mensajesPendientes = mensajes.filter((mensaje) => mensaje.from !== "admin" && mensaje.readByAdmin !== true).length;
+    const reportesPendientes = reportes.filter((reporte) => reporte.estado !== "Atendido").length;
+
+    renderBarrasAdmin("adminRequestBars", solicitudesPorEstado, ["Enviada", "Revisando", "Aprobada", "Rechazada", "Cita programada"]);
+
+    const totalSolicitudes = document.getElementById("adminChartRequestsTotal");
+    const kpiReports = document.getElementById("adminKpiPendingReports");
+    const kpiPets = document.getElementById("adminKpiAvailablePets");
+    const kpiMessages = document.getElementById("adminKpiUnreadMessages");
+    const kpiAppointments = document.getElementById("adminKpiAppointments");
+
+    if (totalSolicitudes) totalSolicitudes.textContent = solicitudes.length;
+    if (kpiReports) kpiReports.textContent = reportesPendientes;
+    if (kpiPets) kpiPets.textContent = mascotasDisponibles;
+    if (kpiMessages) kpiMessages.textContent = mensajesPendientes;
+    if (kpiAppointments) kpiAppointments.textContent = citas.length;
+    cargarCalendarioAdmin();
+}
+
+function abrirDocumentoImprimible(titulo, contenido) {
+    const ventana = window.open("", "_blank", "width=860,height=900");
+
+    if (!ventana) {
+        alert("Permite ventanas emergentes para exportar.");
+        return;
+    }
+
+    ventana.document.write([
+        '<!doctype html><html lang="es"><head><meta charset="UTF-8"><title>' + escapeHtml(titulo) + '</title>',
+        '<style>',
+        'body{font-family:Arial,sans-serif;margin:32px;color:#2f241f;background:#f7faf5;}',
+        '.sheet{max-width:760px;margin:auto;background:#fff;border:1px solid #dfe8dc;border-radius:14px;padding:28px;}',
+        'h1{margin:0 0 10px;color:#2f6b43;} h2{margin-top:24px;color:#4b352d;}',
+        'p{line-height:1.55;} .row{padding:10px 0;border-bottom:1px solid #edf2ea;}',
+        '.label{display:block;font-size:12px;font-weight:800;text-transform:uppercase;color:#5f9d63;}',
+        '.value{display:block;font-size:16px;font-weight:700;}',
+        '.timeline{display:grid;gap:8px;margin-top:10px;} .timeline span{padding:8px 10px;border-radius:10px;background:#eef7ed;}',
+        '@media print{body{background:#fff;margin:0}.sheet{border:0;border-radius:0;box-shadow:none}}',
+        '</style></head><body><main class="sheet">',
+        contenido,
+        '</main><script>window.onload=function(){window.print();};<\/script></body></html>'
+    ].join(""));
+    ventana.document.close();
+}
+
+function textoPlano(valor) {
+    const textarea = document.createElement("textarea");
+    textarea.innerHTML = String(valor || "");
+    return textarea.value;
+}
+
+function campoImprimible(label, value) {
+    return '<div class="row"><span class="label">' + escapeHtml(textoPlano(label)) + '</span><span class="value">' + escapeHtml(textoPlano(value || "Sin dato")) + '</span></div>';
+}
+
+function exportarSolicitudPDF(id) {
+    const solicitud = obtenerSolicitudes().find((item) => item.id === id);
+
+    if (!solicitud) {
+        return;
+    }
+
+    const cita = solicitud.cita || {};
+    const historial = (solicitud.historial || []).map((item) => '<span>' + etiquetaEstado(item.estado) + ' - ' + escapeHtml(item.fecha) + '</span>').join("");
+    const contenido = [
+        '<h1>Solicitud de adopci&oacute;n</h1>',
+        '<p>Documento generado desde Huellitas para seguimiento del equipo.</p>',
+        campoImprimible("Estado", etiquetaEstado(solicitud.estado).replace(/<[^>]+>/g, "")),
+        campoImprimible("Adoptante", solicitud.nombre),
+        campoImprimible("Correo", solicitud.correo),
+        campoImprimible("Telefono", solicitud.telefono),
+        campoImprimible("Mascota", (solicitud.mascotaNombre || solicitud.mascota)),
+        campoImprimible("Centro", solicitud.centro),
+        campoImprimible("Checklist", (solicitud.checklist || 0) + "%"),
+        campoImprimible("Cita", cita.fecha ? cita.fecha + " " + (cita.hora || "") + " - " + (cita.lugar || "") : "Pendiente"),
+        campoImprimible("Mensaje", solicitud.mensaje),
+        '<h2>Historial</h2><div class="timeline">' + historial + '</div>'
+    ].join("");
+
+    abrirDocumentoImprimible("Solicitud Huellitas", contenido);
+}
+
+function exportarReportePDF(id) {
+    const reporte = obtenerReportes().find((item) => item.id === id);
+
+    if (!reporte) {
+        return;
+    }
+
+    const historial = (reporte.historial || []).map((item) => '<span>' + escapeHtml(item.estado) + ' - ' + escapeHtml(item.fecha) + '</span>').join("");
+    const contenido = [
+        '<h1>Reporte Huellitas</h1>',
+        '<p>Documento generado desde Huellitas para seguimiento de reportes.</p>',
+        campoImprimible("Estado", reporte.estado === "En revision" ? "En revision" : reporte.estado),
+        campoImprimible("Tipo", reporte.tipo),
+        campoImprimible("Pagina o zona", reporte.pagina),
+        campoImprimible("Contacto", reporte.contacto),
+        campoImprimible("Fecha", reporte.fecha),
+        campoImprimible("Mensaje", reporte.mensaje),
+        '<h2>Historial</h2><div class="timeline">' + historial + '</div>'
+    ].join("");
+
+    abrirDocumentoImprimible("Reporte Huellitas", contenido);
+}
+
+function actualizarAdminResumen() {
+    const solicitudes = obtenerSolicitudes();
+    const reportes = obtenerReportes();
+    const mascotas = obtenerMascotasExtra();
+    const puntajes = leerJsonSeguro("huellitasPuntajesJuego", []);
+    const pendientes = reportes.filter((reporte) => reporte.estado !== "Atendido").length;
+    const mejorPuntaje = puntajes.reduce((max, item) => Math.max(max, Number(item.mejorPuntaje || 0)), 0);
+
+    document.getElementById("adminRequests").textContent = solicitudes.length;
+    document.getElementById("adminReports").textContent = pendientes;
+    document.getElementById("adminPets").textContent = mascotas.length;
+    document.getElementById("adminBestScore").textContent = mejorPuntaje;
+    actualizarGraficasAdmin();
+    actualizarEstadoSistema();
+}
+
+function probarDatosLocales() {
+    const key = "huellitasPruebaSistema";
+
+    try {
+        localStorage.setItem(key, "ok");
+        const ok = localStorage.getItem(key) === "ok";
+        localStorage.removeItem(key);
+        return ok;
+    } catch (error) {
+        return false;
+    }
+}
+
+function existeMascotaVirtual() {
+    return obtenerLlavesHuellitas().some((key) => {
+        return key === "huellitasMichiEstado" || key.indexOf("huellitasMichi:") === 0;
+    });
+}
+
+function actualizarEstadoSistema() {
+    if (!systemStatusList || !systemStatusScore) {
+        return;
+    }
+
+    const usuarios = leerJsonSeguro("usuarios", []);
+    const sesion = leerJsonSeguro("sesion", null);
+    const solicitudes = obtenerSolicitudes();
+    const tema = localStorage.getItem("huellitasTema") || "light";
+    const datosOk = probarDatosLocales();
+    const checks = [
+        {
+            label: "Usuarios",
+            detail: usuarios.length ? usuarios.length + " cuenta(s) locales" : (sesion ? "Sesi&oacute;n activa" : "Sin usuarios a&uacute;n"),
+            state: usuarios.length || sesion ? "ok" : "warn"
+        },
+        {
+            label: "Solicitudes",
+            detail: solicitudes.length ? solicitudes.length + " registro(s)" : "Listo para recibir solicitudes",
+            state: solicitudes.length ? "ok" : "warn"
+        },
+        {
+            label: "Mascota virtual",
+            detail: existeMascotaVirtual() ? "Progreso guardado por cuenta" : "Sin progreso todav&iacute;a",
+            state: existeMascotaVirtual() ? "ok" : "warn"
+        },
+        {
+            label: "Modo oscuro",
+            detail: tema === "dark" ? "Activo y sincronizado" : "Modo claro activo",
+            state: "ok"
+        },
+        {
+            label: "Datos locales",
+            detail: datosOk ? "Lectura y guardado correctos" : "El navegador bloque&oacute; el guardado",
+            state: datosOk ? "ok" : "bad"
+        }
+    ];
+    const okCount = checks.filter((check) => check.state === "ok").length;
+
+    systemStatusScore.textContent = okCount + "/" + checks.length;
+    systemStatusList.innerHTML = checks.map((check) => {
+        const badge = check.state === "ok" ? "OK" : (check.state === "bad" ? "Error" : "Atenci&oacute;n");
+
+        return [
+            '<div class="system-status-item ' + check.state + '">',
+            '<span>' + badge + '</span>',
+            '<div><strong>' + check.label + '</strong><small>' + check.detail + '</small></div>',
+            '</div>'
+        ].join("");
+    }).join("");
+}
+
+function filtrarAdmin(filtro) {
+    document.querySelectorAll("[data-admin-filter]").forEach((button) => {
+        button.classList.toggle("active", button.dataset.adminFilter === filtro);
+    });
+
+    document.querySelectorAll("[data-admin-section]").forEach((section) => {
+        section.hidden = filtro !== "todo" && section.dataset.adminSection !== filtro;
+    });
+}
+
+function abrirFlujoSistema() {
+    filtrarAdmin("manual");
+    const manual = document.querySelector('[data-admin-section="manual"]');
+
+    if (manual) {
+        manual.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+}
+
+function prepararAdminFiltros() {
+    document.querySelectorAll("[data-admin-filter]").forEach((button) => {
+        button.addEventListener("click", () => {
+            filtrarAdmin(button.dataset.adminFilter);
+        });
+    });
+}
+
+function pintarSolicitudesServidor(solicitudes) {
+    if (!solicitudes || solicitudes.length === 0) {
+        return;
+    }
+
+    guardarSolicitudes(mezclarPorId(obtenerSolicitudes(), solicitudes.map(normalizarSolicitud)));
+    cargarSolicitudes();
+}
+
+function pintarMensajesServidor(mensajes) {
+    if (!mensajes || mensajes.length === 0) {
+        return;
+    }
+
+    mensajesGuardados.innerHTML = mensajes.map((mensaje) => {
+        return [
+            '<article class="saved-item">',
+            '<strong>' + escapeHtml(mensaje.tipo) + ' - ' + escapeHtml(mensaje.nombre) + '</strong>',
+            '<span>Correo: ' + escapeHtml(mensaje.correo) + '</span>',
+            '<span>Fecha: ' + escapeHtml(mensaje.fecha) + '</span>',
+            '<span>Mensaje: ' + escapeHtml(mensaje.mensaje) + '</span>',
+            '</article>'
+        ].join("");
+    }).join("");
+}
+
+function pintarReportesServidor(reportes) {
+    if (!reportes || reportes.length === 0) {
+        return;
+    }
+
+    const normalizados = reportes.map(normalizarReporte);
+    guardarReportes(mezclarPorId(obtenerReportes(), normalizados));
+    cargarReportes();
+}
+
+function pintarMascotasServidor(mascotas) {
+    if (!mascotas || mascotas.length === 0) {
+        return;
+    }
+
+    guardarMascotasExtra(mezclarPorId(obtenerMascotasExtra(), mascotas));
+    cargarMascotas();
+}
+
+function pintarCentrosServidor(centros) {
+    if (!centros || centros.length === 0) {
+        return;
+    }
+
+    guardarCentrosRevision(mezclarPorId(obtenerCentrosRevision(), centros));
+    cargarCentrosRevision();
+}
+
+function pintarBuzonServidor(mailbox) {
+    if (!mailbox || mailbox.length === 0) {
+        return;
+    }
+
+    guardarJson(mailboxStorageKey, mezclarPorId(leerJsonSeguro(mailboxStorageKey, []), mailbox));
+    cargarMensajes();
+}
+
+function pintarPuntajesServidor(puntajes) {
+    if (!puntajes || puntajes.length === 0) {
+        return;
+    }
+
+    const ordenados = puntajes.sort((a, b) => (b.mejorPuntaje || 0) - (a.mejorPuntaje || 0));
+
+    puntajesGuardados.innerHTML = ordenados.map((item, index) => {
+        return [
+            '<article class="saved-item score-admin-item">',
+            '<div class="score-admin-person">',
+            '<img src="' + escapeHtml(item.foto || "assets/imagenes/logo.png") + '" alt="">',
+            '<strong>#' + (index + 1) + ' ' + escapeHtml(item.nombre) + '</strong>',
+            '</div>',
+            '<span>Mejor puntaje: ' + escapeHtml(item.mejorPuntaje) + ' puntos</span>',
+            '<span>Logros: ' + escapeHtml(item.mejoresLogros) + '</span>',
+            '<span>&Uacute;ltima vez: ' + escapeHtml(item.ultimaVez) + '</span>',
+            '</article>'
+        ].join("");
+    }).join("");
+}
+
+async function cargarDatosServidor() {
+    if (!window.huellitasApi || !window.huellitasApi.enabled) {
+        return;
+    }
+
+    try {
+        const data = await window.huellitasApi.request("/api/team-data");
+        pintarSolicitudesServidor(data.adoptions || []);
+        pintarMensajesServidor(data.messages || []);
+        pintarReportesServidor(data.reports || []);
+        pintarPuntajesServidor(data.scores || []);
+        pintarMascotasServidor(data.pets || []);
+        pintarCentrosServidor(data.centers || []);
+        pintarBuzonServidor(data.mailbox || []);
+        actualizarAdminResumen();
+    } catch (error) {
+        console.warn(error.message);
+    }
+}
+
+async function actualizarTodoAdmin() {
+    cargarSolicitudes();
+    cargarMensajes();
+    cargarReportes();
+    cargarMascotas();
+    cargarCentrosRevision();
+    cargarPuntajes();
+    cargarCalendarioAdmin();
+    await cargarDatosServidor();
+    actualizarAdminResumen();
+}
+
+async function cargarDemoPresentacion() {
+    if (!requiereAdmin()) {
+        return;
+    }
+
+    const data = await apiPostAdmin("/api/demo", {});
+
+    if (!data) {
+        mostrarAdminToast("Servidor no activo", "Abre Huellitas con iniciar-huellitas.bat o localhost para cargar la demo.");
+        return;
+    }
+
+    pintarSolicitudesServidor(data.adoptions || []);
+    pintarMensajesServidor(data.messages || []);
+    pintarReportesServidor(data.reports || []);
+    pintarPuntajesServidor(data.scores || []);
+    pintarMascotasServidor(data.pets || []);
+    pintarCentrosServidor(data.centers || []);
+    pintarBuzonServidor(data.mailbox || []);
+    if (data.notifications) {
+        guardarJson("huellitasNotificaciones", mezclarPorId(leerJsonSeguro("huellitasNotificaciones", []), data.notifications));
+        window.dispatchEvent(new CustomEvent("huellitas:notificationsChanged"));
+    }
+    if (data.favorites) {
+        guardarJson("huellitasFavoritos", Object.assign(leerJsonSeguro("huellitasFavoritos", {}), data.favorites));
+        window.dispatchEvent(new CustomEvent("huellitas:favoritesChanged"));
+    }
+    actualizarAdminResumen();
+    filtrarAdmin("todo");
+    mostrarAdminToast("Demo cargada", "Los datos demo quedaron listos sin duplicarse.");
+}
+
+function esRegistroDemo(item) {
+    const texto = [
+        item && item.id,
+        item && item.profileId,
+        item && item.email,
+        item && item.correo,
+        item && item.nombre
+    ].join(" ").toLowerCase();
+
+    return texto.includes("demo");
+}
+
+function limpiarColeccionDemo(key) {
+    const actual = leerJsonSeguro(key, []);
+
+    if (!Array.isArray(actual)) {
+        return;
+    }
+
+    guardarJson(key, actual.filter((item) => !esRegistroDemo(item)));
+}
+
+function limpiarFavoritosDemo() {
+    const favoritos = leerJsonSeguro("huellitasFavoritos", {});
+    const limpios = {};
+
+    Object.keys(favoritos || {}).forEach((profileId) => {
+        if (String(profileId).toLowerCase().includes("demo")) {
+            return;
+        }
+
+        limpios[profileId] = (favoritos[profileId] || []).filter((item) => !esRegistroDemo(item));
+    });
+
+    guardarJson("huellitasFavoritos", limpios);
+}
+
+async function limpiarDemoPresentacion() {
+    if (!requiereAdmin()) {
+        return;
+    }
+
+    const ok = await confirmarAccion({
+        titulo: "Limpiar datos demo",
+        mensaje: "Se quitar&aacute;n solo los registros demo de solicitudes, reportes, mascotas, centros, mensajes, notificaciones, favoritos y puntajes. Los datos reales se conservan.",
+        confirmar: "Limpiar demo",
+        peligro: true
+    });
+
+    if (!ok) {
+        return;
+    }
+
+    [
+        "huellitasSolicitudesAdopcion",
+        "huellitasReportes",
+        adminPetStorageKey,
+        centersReviewKey,
+        mailboxStorageKey,
+        "huellitasNotificaciones",
+        "huellitasPuntajesJuego"
+    ].forEach(limpiarColeccionDemo);
+    limpiarFavoritosDemo();
+
+    if (window.huellitasApi && window.huellitasApi.enabled) {
+        await apiPostAdmin("/api/demo/reset", {});
+    }
+
+    ["huellitas:adoptionsChanged", "huellitas:reportsChanged", "huellitas:mailboxChanged", "huellitas:notificationsChanged", "huellitas:petsChanged", "huellitas:favoritesChanged"].forEach((eventName) => {
+        window.dispatchEvent(new CustomEvent(eventName));
+    });
+
+    actualizarTodoAdmin();
+    mostrarAdminToast("Demo limpia", "Los registros demo fueron retirados correctamente.");
+}
+
+async function exportarRespaldoHuellitas() {
+    if (!requiereAdmin()) {
+        return;
+    }
+
+    const serverBackup = await apiGetAdmin("/api/backup");
+    const respaldo = {
+        app: "Huellitas",
+        version: 2,
+        exportedAt: new Date().toISOString(),
+        localStorage: exportarDatosLocales(),
+        server: serverBackup && serverBackup.db ? serverBackup.db : null,
+        note: "Respaldo generado desde Panel admin. No incluye la clave admin ni tokens temporales."
+    };
+
+    guardarArchivoJson(nombreRespaldo(), respaldo);
+    actualizarEstadoSistema();
+    mostrarAdminToast("Respaldo exportado", serverBackup && serverBackup.db ? "Se guard&oacute; navegador y base local del servidor." : "Se guardaron los datos locales del navegador.");
+}
+
+function seleccionarRespaldoHuellitas() {
+    if (!requiereAdmin() || !backupFileInput) {
+        return;
+    }
+
+    backupFileInput.value = "";
+    backupFileInput.click();
+}
+
+async function importarRespaldoHuellitas(event) {
+    if (!requiereAdmin()) {
+        return;
+    }
+
+    const file = event && event.target && event.target.files ? event.target.files[0] : null;
+
+    if (!file) {
+        return;
+    }
+
+    try {
+        const text = await file.text();
+        const respaldo = JSON.parse(text);
+
+        if (!respaldo || respaldo.app !== "Huellitas" || !respaldo.localStorage || typeof respaldo.localStorage !== "object") {
+            mostrarAdminToast("Respaldo no v&aacute;lido", "El archivo no parece ser un respaldo de Huellitas.");
+            return;
+        }
+
+        const ok = await confirmarAccion({
+            titulo: "Importar respaldo",
+            mensaje: "Se reemplazar&aacute;n los datos locales de Huellitas con el archivo seleccionado. Si el respaldo trae base del servidor y est&aacute; activo, tambi&eacute;n se restaurar&aacute;.",
+            confirmar: "Importar",
+            peligro: true
+        });
+
+        if (!ok) {
+            return;
+        }
+
+        const adminActivo = localStorage.getItem(adminAccessKey);
+        const token = localStorage.getItem("huellitasToken");
+        limpiarDatosLocalesApp();
+        restaurarDatosLocales(respaldo.localStorage);
+
+        if (adminActivo) {
+            localStorage.setItem(adminAccessKey, adminActivo);
+        }
+
+        if (token) {
+            localStorage.setItem("huellitasToken", token);
+        }
+
+        if (respaldo.server && window.huellitasApi && window.huellitasApi.enabled) {
+            await apiPostAdmin("/api/restore", { db: respaldo.server });
+        }
+
+        if (window.huellitasRefreshSettings) {
+            window.huellitasRefreshSettings();
+        }
+
+        emitirEventosDatos();
+        await actualizarTodoAdmin();
+        mostrarAdminToast("Respaldo importado", "Los datos quedaron restaurados correctamente.");
+    } catch (error) {
+        console.warn(error.message);
+        mostrarAdminToast("No se pudo importar", "Revisa que el archivo sea JSON y venga de Huellitas.");
+    } finally {
+        if (event && event.target) {
+            event.target.value = "";
+        }
+    }
+}
+
+async function restaurarDatosBase() {
+    if (!requiereAdmin()) {
+        return;
+    }
+
+    const ok = await confirmarAccion({
+        titulo: "Restaurar base visual",
+        mensaje: "Se conservar&aacute;n usuarios, sesi&oacute;n actual y acceso admin, pero se limpiar&aacute;n solicitudes, reportes, favoritos, mensajes, puntajes, mascotas extra, notificaciones y progreso de la mascota virtual. La configuraci&oacute;n volver&aacute; al dise&ntilde;o inicial.",
+        confirmar: "Restaurar base",
+        peligro: true
+    });
+
+    if (!ok) {
+        return;
+    }
+
+    const adminActivo = localStorage.getItem(adminAccessKey);
+    const token = localStorage.getItem("huellitasToken");
+
+    limpiarDatosLocalesApp({
+        preservarUsuarios: true,
+        preservarSesion: true,
+        preservarAdmin: true,
+        preservarToken: true
+    });
+
+    localStorage.setItem("huellitasTema", "light");
+    localStorage.setItem("huellitasAjustes", JSON.stringify(baseSettings));
+
+    if (adminActivo) {
+        localStorage.setItem(adminAccessKey, adminActivo);
+    }
+
+    if (token) {
+        localStorage.setItem("huellitasToken", token);
+    }
+
+    if (window.huellitasApi && window.huellitasApi.enabled) {
+        await apiPostAdmin("/api/base", {});
+    }
+
+    if (window.huellitasRefreshSettings) {
+        window.huellitasRefreshSettings();
+    }
+
+    emitirEventosDatos();
+    await actualizarTodoAdmin();
+    mostrarAdminToast("Base restaurada", "La p&aacute;gina qued&oacute; limpia, con usuarios y sesi&oacute;n conservados.");
+}
+
+async function reiniciarSitioCompleto() {
+    if (!requiereAdmin()) {
+        return;
+    }
+
+    const ok = await confirmarAccion({
+        titulo: "Reiniciar todo Huellitas",
+        mensaje: "Se borrar&aacute;n usuarios, sesiones, solicitudes, reportes, citas, favoritos, mensajes, puntajes, mascotas extra, notificaciones y datos de la mascota virtual guardados en este navegador. Si el servidor est&aacute; activo, tambi&eacute;n se limpiar&aacute; la base local.",
+        confirmar: "Reiniciar todo",
+        peligro: true
+    });
+
+    if (!ok) {
+        return;
+    }
+
+    if (window.huellitasApi && window.huellitasApi.enabled) {
+        await apiPostAdmin("/api/reset", {});
+    }
+
+    localStorage.clear();
+    sessionStorage.clear();
+
+    emitirEventosDatos();
+
+    mostrarAdminToast("Sitio reiniciado", "Huellitas qued&oacute; limpio y listo para volver a empezar.");
+
+    window.setTimeout(() => {
+        window.location.href = "pagina.html";
+    }, 900);
+}
+
+function mostrarSlide(index) {
+    const slides = document.querySelectorAll(".carousel-slide");
+    const dots = document.querySelectorAll("[data-carousel-dot]");
+
+    if (slides.length === 0) {
+        return;
+    }
+
+    slideActual = (index + slides.length) % slides.length;
+
+    slides.forEach((slide, slideIndex) => {
+        slide.classList.toggle("active", slideIndex === slideActual);
+    });
+
+    dots.forEach((dot, dotIndex) => {
+        dot.classList.toggle("active", dotIndex === slideActual);
+    });
+}
+
+function prepararCarrusel() {
+    const carrusel = document.querySelector("[data-team-carousel]");
+
+    if (!carrusel) {
+        return;
+    }
+
+    carrusel.querySelector("[data-carousel-prev]").addEventListener("click", () => {
+        mostrarSlide(slideActual - 1);
+    });
+
+    carrusel.querySelector("[data-carousel-next]").addEventListener("click", () => {
+        mostrarSlide(slideActual + 1);
+    });
+
+    carrusel.querySelectorAll("[data-carousel-dot]").forEach((dot) => {
+        dot.addEventListener("click", () => {
+            mostrarSlide(Number(dot.dataset.carouselDot));
+        });
+    });
+}
+
+function inicializarPanelAdmin() {
+    if (adminInicializado) {
+        cargarSolicitudes();
+        cargarMensajes();
+        cargarReportes();
+        cargarMascotas();
+        cargarCentrosRevision();
+        cargarPuntajes();
+        actualizarAdminResumen();
+        return;
+    }
+
+    adminInicializado = true;
+    cargarSolicitudes();
+    cargarMensajes();
+    cargarReportes();
+    cargarMascotas();
+    cargarCentrosRevision();
+    cargarPuntajes();
+    prepararAdminFiltros();
+    actualizarAdminResumen();
+
+    if (petAdminForm) {
+        petAdminForm.addEventListener("submit", guardarMascotaDesdeFormulario);
+    }
+
+    cargarDatosServidor();
+}
+
+prepararCarrusel();
+prepararAccesoAdmin();
+aplicarAccesoAdmin();
+window.addEventListener("load", () => {
+    if (tieneAccesoAdmin()) {
+        actualizarTodoAdmin();
+    }
+});
+["huellitas:adoptionsChanged", "huellitas:reportsChanged", "huellitas:mailboxChanged", "huellitas:petsChanged"].forEach((eventName) => {
+    window.addEventListener(eventName, () => {
+        if (tieneAccesoAdmin()) {
+            actualizarAdminResumen();
+        }
+    });
+});
+</script>
+<script src="huellitas.js"></script>
+</body>
+</html>
+

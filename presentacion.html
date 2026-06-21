@@ -1,0 +1,190 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Huellitas | Presentaci&oacute;n</title>
+<link rel="stylesheet" href="huellitas.css">
+</head>
+
+<body>
+<nav class="site-nav">
+    <a class="brand" href="pagina.html" aria-label="Ir al inicio">
+        <img src="assets/imagenes/logo.png" alt="Logo de Huellitas">
+        <span>Huellitas</span>
+    </a>
+
+    <div class="nav-links" aria-label="Navegaci&oacute;n principal">
+        <a class="nav-link" href="pagina.html">Inicio</a>
+        <a class="nav-link" href="jueguitos.html">Juegos</a>
+        <a class="nav-link" href="directorio.html">Directorio</a>
+        <a class="nav-link" href="areas.html">&Aacute;reas</a>
+        <a class="nav-link" href="domesticos.html">Mascotas</a>
+        <a class="nav-link" href="leyes.html">Leyes</a>
+        <a class="nav-link" href="equipo.html">Equipo</a>
+        <a class="nav-link active" href="presentacion.html">Presentaci&oacute;n</a>
+        <a class="nav-link" href="adopcion_huellitas.html">Adopciones</a>
+        <a class="nav-link" href="adoptar.html">Adoptar</a>
+    </div>
+
+    <div class="nav-actions">
+        <button class="icon-button" type="button" data-theme-toggle onclick="toggleDark()" aria-label="Cambiar modo">&#9790;</button>
+        <a class="button-link secondary" href="equipo.html">Equipo</a>
+    </div>
+</nav>
+
+<main>
+    <header class="hero topic-header presentation-header">
+        <div class="hero-inner">
+            <span class="eyebrow">Resumen del proyecto</span>
+            <h1>Presentaci&oacute;n del proyecto</h1>
+            <p>Vista general del problema que atiende Huellitas, su objetivo, el impacto esperado y las herramientas construidas como grupo con apoyo de la profesora Karla Carrasco.</p>
+
+            <div class="hero-actions">
+                <button type="button" onclick="document.getElementById('resumen').scrollIntoView({behavior:'smooth'})">Ver resumen</button>
+                <button class="secondary" type="button" onclick="document.getElementById('funcionesClave').scrollIntoView({behavior:'smooth'})">Funciones clave</button>
+                <a class="button-link secondary" href="pagina.html">Ir al sitio</a>
+            </div>
+        </div>
+    </header>
+
+    <section class="section" id="resumen">
+        <div class="section-title">
+            <h2>Resumen para clase</h2>
+            <p>CECyTEM Tultitl&aacute;n - Grupo 404 - Equipo Huellitas.</p>
+        </div>
+
+        <div class="topic-grid presentation-steps">
+            <article class="feature-panel">
+                <h3>Problema</h3>
+                <p>Muchas personas quieren ayudar a los animales, pero no siempre conocen cuidados b&aacute;sicos, centros de adopci&oacute;n cercanos, formas de denunciar maltrato o leyes de protecci&oacute;n.</p>
+            </article>
+
+            <article class="feature-panel">
+                <h3>Objetivo</h3>
+                <p>Crear un sitio educativo que re&uacute;na informaci&oacute;n confiable, juegos, directorio, mapa visual y formularios para promover adopci&oacute;n responsable.</p>
+            </article>
+
+            <article class="feature-panel">
+                <h3>Justificaci&oacute;n</h3>
+                <p>La protecci&oacute;n animal tambi&eacute;n requiere conciencia ambiental, respeto por los h&aacute;bitats, tenencia responsable y participaci&oacute;n de la comunidad escolar.</p>
+            </article>
+
+            <article class="feature-panel">
+                <h3>Desarrollo</h3>
+                <p>Dise&ntilde;amos secciones de &aacute;reas naturales, mascotas, leyes, juegos, directorio con filtros, mapa, solicitudes de adopci&oacute;n y ajustes de experiencia.</p>
+            </article>
+
+            <article class="feature-panel">
+                <h3>Impacto</h3>
+                <p>El sitio ayuda a informar, organizar recursos, reforzar el aprendizaje con juegos y motivar acciones sencillas para cuidar mejor a los animales.</p>
+            </article>
+
+            <article class="feature-panel">
+                <h3>Conclusi&oacute;n</h3>
+                <p>Huellitas demuestra que una p&aacute;gina escolar puede informar, conectar recursos y motivar acciones reales para cuidar mejor a los animales.</p>
+            </article>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="presentation-pro">
+            <article class="feature-panel">
+                <span class="eyebrow">Por qu&eacute; importa</span>
+                <h2>Problema y justificaci&oacute;n</h2>
+                <p>El abandono, el maltrato y la falta de informaci&oacute;n sobre cuidados provocan que muchos animales vivan en riesgo. Tambi&eacute;n se afectan los ecosistemas cuando no se respetan las &aacute;reas naturales y las especies que dependen de ellas.</p>
+                <p>Por eso Huellitas combina educaci&oacute;n, directorio, formularios y juegos: la idea es que aprender no se quede en teor&iacute;a, sino que ayude a tomar mejores decisiones.</p>
+            </article>
+
+            <article class="feature-panel impact-panel">
+                <span class="eyebrow">Resultado esperado</span>
+                <h2>Impacto del sitio</h2>
+                <div class="impact-list">
+                    <div><strong>Informar</strong><span>Cuidados, leyes y &aacute;reas naturales.</span></div>
+                    <div><strong>Conectar</strong><span>Centros de apoyo y adopci&oacute;n.</span></div>
+                    <div><strong>Motivar</strong><span>Acciones responsables desde la escuela.</span></div>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="section-title">
+            <h2>Desarrollo del proyecto</h2>
+            <p>As&iacute; se construy&oacute; Huellitas para que sea claro, &uacute;til y f&aacute;cil de consultar.</p>
+        </div>
+
+        <div class="timeline-grid">
+            <article class="feature-panel">
+                <h3>1. Investigaci&oacute;n</h3>
+                <p>Revisamos informaci&oacute;n sobre bienestar animal, adopci&oacute;n, leyes y conservaci&oacute;n de h&aacute;bitats.</p>
+            </article>
+
+            <article class="feature-panel">
+                <h3>2. Organizaci&oacute;n</h3>
+                <p>Dividimos el contenido en inicio, directorio, juegos, mascotas, leyes, &aacute;reas naturales, equipo y presentaci&oacute;n.</p>
+            </article>
+
+            <article class="feature-panel">
+                <h3>3. Interacci&oacute;n</h3>
+                <p>Agregamos filtros, mapa visual, formularios, modo oscuro, ajustes, m&uacute;sica y puntajes de juegos.</p>
+            </article>
+
+            <article class="feature-panel">
+                <h3>4. Organizaci&oacute;n final</h3>
+                <p>Preparamos una versi&oacute;n m&aacute;s ordenada con problema, objetivo, impacto, fuentes, funciones y conclusi&oacute;n.</p>
+            </article>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="section-title">
+            <h2>Fuentes consultadas</h2>
+            <p>Referencias usadas para reforzar la informaci&oacute;n sobre adopci&oacute;n, bienestar animal, &aacute;reas naturales y leyes.</p>
+        </div>
+
+        <div class="source-list source-list-pro">
+            <a href="https://sma.edomex.gob.mx/proteccion-bienestar-animal-estado-mexico" target="_blank" rel="noopener">Secretar&iacute;a del Medio Ambiente del Estado de M&eacute;xico - Protecci&oacute;n y Bienestar Animal</a>
+            <a href="https://www.sedema.cdmx.gob.mx/comunicacion/nota/fomenta-sedema-adopcion-y-tutela-responsable-de-animales-de-compania" target="_blank" rel="noopener">SEDEMA CDMX - Adopci&oacute;n y tutela responsable de animales de compa&ntilde;&iacute;a</a>
+            <a href="https://www.biodiversidad.gob.mx/region/areasprot" target="_blank" rel="noopener">Biodiversidad Mexicana / CONABIO - &Aacute;reas protegidas</a>
+            <a href="https://www.congreso.gob.mx/LeyesBiblio/pdf/LGVS.pdf" target="_blank" rel="noopener">C&aacute;mara de Diputados - Ley General de Vida Silvestre</a>
+            <a href="https://www.diputados.gob.mx/LeyesBiblio/pdf/LGEEPA.pdf" target="_blank" rel="noopener">C&aacute;mara de Diputados - Ley General del Equilibrio Ecol&oacute;gico y la Protecci&oacute;n al Ambiente</a>
+        </div>
+    </section>
+
+    <section class="section" id="funcionesClave">
+        <div class="feature-band">
+            <div class="feature-panel">
+                <span class="eyebrow">Funciones clave</span>
+                <h2>Herramientas principales</h2>
+                <ul class="tip-list">
+                    <li>Inicio con impacto, accesos r&aacute;pidos y notificaciones.</li>
+                    <li>Adopciones con favoritos, match y solicitudes guardadas.</li>
+                    <li>Mi adopci&oacute;n con progreso, cita y mensajes.</li>
+                    <li>Admin con estad&iacute;sticas, calendario, estados y demo.</li>
+                    <li>Juegos con mascota virtual, tienda, recompensas y puntajes.</li>
+                </ul>
+            </div>
+
+            <div class="feature-panel">
+                <h2>Botones r&aacute;pidos</h2>
+                <div class="section-actions">
+                    <a class="button-link" href="adopcion_huellitas.html">Adopciones</a>
+                    <a class="button-link" href="directorio.html">Directorio</a>
+                    <a class="button-link secondary" href="jueguitos.html">Juegos</a>
+                    <a class="button-link secondary" href="equipo.html">Equipo</a>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer class="site-footer">
+    <strong>HUELLITAS &#128062;</strong>
+    <span>Proyecto escolar de CECyTEM Tultitl&aacute;n - Grupo 404 - Equipo Huellitas</span>
+</footer>
+
+<script src="huellitas.js"></script>
+</body>
+</html>
+

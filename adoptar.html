@@ -1,0 +1,442 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Huellitas | Adoptar</title>
+<link rel="stylesheet" href="huellitas.css">
+</head>
+
+<body>
+<nav class="site-nav">
+    <a class="brand" href="pagina.html" aria-label="Ir al inicio">
+        <img src="assets/imagenes/logo.png" alt="Logo de Huellitas">
+        <span>Huellitas</span>
+    </a>
+
+    <div class="nav-links" aria-label="Navegaci&oacute;n principal">
+        <a class="nav-link" href="pagina.html">Inicio</a>
+        <a class="nav-link" href="jueguitos.html">Juegos</a>
+        <a class="nav-link" href="directorio.html">Directorio</a>
+        <a class="nav-link" href="areas.html">&Aacute;reas</a>
+        <a class="nav-link" href="domesticos.html">Mascotas</a>
+        <a class="nav-link" href="leyes.html">Leyes</a>
+        <a class="nav-link" href="equipo.html">Equipo</a>
+        <a class="nav-link" href="presentacion.html">Presentaci&oacute;n</a>
+        <a class="nav-link" href="adopcion_huellitas.html">Adopciones</a>
+        <a class="nav-link active" href="adoptar.html">Adoptar</a>
+    </div>
+
+    <div class="nav-actions">
+        <button class="icon-button" type="button" data-theme-toggle onclick="toggleDark()" aria-label="Cambiar modo">&#9790;</button>
+        <a class="button-link secondary" href="directorio.html">Directorio</a>
+    </div>
+</nav>
+
+<main>
+    <header class="hero adopt-header">
+        <div class="hero-inner">
+            <span class="eyebrow">Solicitud responsable</span>
+            <h1>Estoy listo para adoptar?</h1>
+            <p>Responde el checklist, revisa tu resultado y despu&eacute;s llena la solicitud de adopci&oacute;n para guardarla en Huellitas.</p>
+
+            <div class="hero-actions">
+                <button type="button" onclick="document.getElementById('checklist').scrollIntoView({behavior:'smooth'})">Hacer checklist</button>
+                <a class="button-link secondary" href="adopcion_huellitas.html">Ver mascotas</a>
+                <a class="button-link secondary" href="reglamento.docx" download="Solicitud de adopcion.docx">Descargar solicitud</a>
+            </div>
+        </div>
+    </header>
+
+    <section class="section" id="checklist">
+        <div class="section-title">
+            <h2>Checklist de adopci&oacute;n</h2>
+            <p>Marca lo que ya tienes preparado. El resultado te ayuda a saber si conviene adoptar ahora o prepararte un poco m&aacute;s.</p>
+        </div>
+
+        <div class="adoption-layout">
+            <form class="feature-panel adoption-checklist" id="adoptionChecklist">
+                <label class="check-row"><input type="checkbox" value="12"> Tengo tiempo diario para cuidar, jugar y revisar a mi mascota.</label>
+                <label class="check-row"><input type="checkbox" value="12"> Tengo presupuesto para alimento, vacunas, consultas y emergencias.</label>
+                <label class="check-row"><input type="checkbox" value="12"> Mi casa tiene un espacio seguro, limpio y protegido.</label>
+                <label class="check-row"><input type="checkbox" value="12"> Toda mi familia est&aacute; de acuerdo con adoptar.</label>
+                <label class="check-row"><input type="checkbox" value="12"> Acepto esterilizar, vacunar y no abandonar.</label>
+                <label class="check-row"><input type="checkbox" value="10"> Entiendo que adoptar es un compromiso de muchos a&ntilde;os.</label>
+                <label class="check-row"><input type="checkbox" value="10"> Puedo adaptar mi rutina durante los primeros d&iacute;as.</label>
+                <label class="check-row"><input type="checkbox" value="10"> Estoy dispuesto a seguir recomendaciones del refugio.</label>
+
+                <div class="section-actions">
+                    <button type="button" onclick="calcularChecklist()">Calcular resultado</button>
+                    <button class="secondary" type="reset" onclick="reiniciarChecklist()">Reiniciar</button>
+                </div>
+            </form>
+
+            <aside class="feature-panel checklist-result">
+                <span class="eyebrow">Resultado</span>
+                <h2 id="checklistScore">0%</h2>
+                <p id="checklistMessage">Completa el checklist para saber qu&eacute; tan listo est&aacute;s para adoptar.</p>
+                <div class="barra">
+                    <div class="progreso" id="checklistProgress"></div>
+                </div>
+                <p class="form-note">Si tu resultado es bajo, no significa que no puedas adoptar: significa que todav&iacute;a puedes prepararte mejor.</p>
+            </aside>
+        </div>
+    </section>
+
+    <section class="section" id="solicitud">
+        <div class="section-title">
+            <h2>Solicitud de adopci&oacute;n</h2>
+            <p>Despu&eacute;s del checklist, llena tus datos. La solicitud se guardar&aacute; en este navegador y se preparar&aacute; un correo para el equipo.</p>
+        </div>
+
+        <form class="contacto contact-form" id="adoptPageForm">
+            <div class="form-grid">
+                <div>
+                    <label for="adoptName">Nombre completo</label>
+                    <input id="adoptName" required placeholder="Tu nombre">
+                </div>
+
+                <div>
+                    <label for="adoptEmail">Correo</label>
+                    <input id="adoptEmail" type="email" required placeholder="tu-correo@ejemplo.com">
+                </div>
+
+                <div>
+                    <label for="adoptPhone">Tel&eacute;fono</label>
+                    <input id="adoptPhone" type="tel" required inputmode="tel" minlength="10" placeholder="55 0000 0000">
+                </div>
+
+                <div>
+                    <label for="adoptPetType">Mascota de inter&eacute;s</label>
+                    <select id="adoptPetType" required>
+                        <option value="">Selecciona una opci&oacute;n</option>
+                        <option>Perro</option>
+                        <option>Gato</option>
+                        <option>Cachorro</option>
+                        <option>No estoy seguro</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="adoptPetName">Nombre de la mascota</label>
+                    <input id="adoptPetName" placeholder="Ej. Paloma, Panque, Canelo">
+                </div>
+
+                <div>
+                    <label for="adoptHome">Tipo de vivienda</label>
+                    <select id="adoptHome" required>
+                        <option value="">Selecciona una opci&oacute;n</option>
+                        <option>Casa</option>
+                        <option>Departamento</option>
+                        <option>Casa con patio</option>
+                        <option>Otro</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="adoptTeamEmail">Correo del equipo</label>
+                    <input id="adoptTeamEmail" type="email" required placeholder="equipo404@correo.com">
+                </div>
+            </div>
+
+            <label for="adoptReason">Por qu&eacute; quieres adoptar?</label>
+            <textarea id="adoptReason" required minlength="20" placeholder="Cu&eacute;ntanos tu motivo y c&oacute;mo cuidar&iacute;as a tu mascota."></textarea>
+
+            <div class="section-actions">
+                <button type="submit">Guardar solicitud</button>
+                <a class="button-link secondary" href="directorio.html">Ver centros</a>
+            </div>
+            <p class="form-note" id="adoptFeedback"></p>
+        </form>
+    </section>
+</main>
+
+<footer class="site-footer">
+    <strong>HUELLITAS &#128062;</strong>
+    <span>Proyecto escolar de CECyTEM Tultitl&aacute;n - Grupo 404 - Equipo Huellitas</span>
+</footer>
+
+<script>
+const checklistForm = document.getElementById("adoptionChecklist");
+const checklistScore = document.getElementById("checklistScore");
+const checklistMessage = document.getElementById("checklistMessage");
+const checklistProgress = document.getElementById("checklistProgress");
+const adoptForm = document.getElementById("adoptPageForm");
+const adoptTeamEmail = document.getElementById("adoptTeamEmail");
+const adoptFeedback = document.getElementById("adoptFeedback");
+const adoptPetName = document.getElementById("adoptPetName");
+let ultimoResultadoChecklist = 0;
+
+adoptTeamEmail.value = localStorage.getItem("huellitasCorreoEquipo") || "";
+
+function obtenerSesionAdoptar() {
+    try {
+        return JSON.parse(localStorage.getItem("sesion"));
+    } catch (error) {
+        return null;
+    }
+}
+
+function obtenerPerfilSolicitud() {
+    const usuario = obtenerSesionAdoptar();
+
+    if (usuario && usuario.email) {
+        return usuario.email;
+    }
+
+    let invitadoId = localStorage.getItem("huellitasInvitadoId");
+
+    if (!invitadoId) {
+        invitadoId = "invitado-" + Date.now();
+        localStorage.setItem("huellitasInvitadoId", invitadoId);
+    }
+
+    return invitadoId;
+}
+
+function cargarDatosSesion() {
+    const usuario = obtenerSesionAdoptar();
+
+    if (!usuario) {
+        return;
+    }
+
+    document.getElementById("adoptName").value = usuario.nombre || "";
+    document.getElementById("adoptEmail").value = usuario.email || "";
+}
+
+function cargarMascotaSeleccionada() {
+    const params = new URLSearchParams(window.location.search);
+    const nombreParam = params.get("mascota");
+    const tipoParam = params.get("tipo");
+    let guardada = null;
+
+    try {
+        guardada = JSON.parse(localStorage.getItem("huellitasMascotaInteres"));
+    } catch (error) {
+        guardada = null;
+    }
+
+    const nombre = nombreParam || (guardada && guardada.nombre) || "";
+    const tipo = tipoParam || (guardada && guardada.tipo) || "";
+
+    if (nombre) {
+        adoptPetName.value = nombre;
+    }
+
+    if (tipo) {
+        document.getElementById("adoptPetType").value = tipo;
+    }
+}
+
+function calcularChecklist() {
+    const checks = checklistForm.querySelectorAll("input[type='checkbox']");
+    let total = 0;
+
+    checks.forEach((check) => {
+        if (check.checked) {
+            total += Number(check.value);
+        }
+    });
+
+    ultimoResultadoChecklist = Math.min(100, total);
+    checklistScore.textContent = ultimoResultadoChecklist + "%";
+    checklistProgress.style.width = ultimoResultadoChecklist + "%";
+
+    if (ultimoResultadoChecklist >= 80) {
+        checklistMessage.textContent = "Muy bien: tienes una base responsable para iniciar una adopcion.";
+        if (window.huellitasAwardBadge) {
+            window.huellitasAwardBadge("aliado-adopcion");
+        }
+    } else if (ultimoResultadoChecklist >= 55) {
+        checklistMessage.textContent = "Vas bien, pero conviene preparar algunos puntos antes de adoptar.";
+    } else {
+        checklistMessage.textContent = "Aun conviene prepararte mejor: revisa tiempo, presupuesto, espacio y compromiso familiar.";
+    }
+
+    document.getElementById("solicitud").scrollIntoView({ behavior: "smooth" });
+}
+
+function reiniciarChecklist() {
+    ultimoResultadoChecklist = 0;
+    checklistScore.textContent = "0%";
+    checklistMessage.textContent = "Completa el checklist para saber que tan listo estas para adoptar.";
+    checklistProgress.style.width = "0%";
+}
+
+function guardarSolicitud(solicitud) {
+    const solicitudes = JSON.parse(localStorage.getItem("huellitasSolicitudesAdopcion")) || [];
+    const existentes = solicitudes.filter((item) => item.id !== solicitud.id);
+    localStorage.setItem("huellitasSolicitudesAdopcion", JSON.stringify([solicitud].concat(existentes)));
+    window.dispatchEvent(new CustomEvent("huellitas:adoptionsChanged"));
+}
+
+function guardarMensajeSolicitud(solicitud) {
+    const mensajes = JSON.parse(localStorage.getItem("huellitasBuzon")) || [];
+
+    mensajes.unshift({
+        id: "msg-solicitud-" + solicitud.id,
+        profileId: solicitud.profileId,
+        nombre: solicitud.nombre,
+        correo: solicitud.correo,
+        from: "admin",
+        mensaje: "Tu solicitud fue recibida. El equipo revisar&aacute; tus datos y te avisar&aacute; el siguiente paso.",
+        fecha: solicitud.fecha,
+        readByAdmin: true,
+        readByUser: false
+    });
+
+    localStorage.setItem("huellitasBuzon", JSON.stringify(mensajes));
+    window.dispatchEvent(new CustomEvent("huellitas:mailboxChanged"));
+}
+
+function prepararCorreo(solicitud) {
+    const asunto = "Solicitud de adopcion - Huellitas";
+    const cuerpo = [
+        "Hola Equipo Huellitas.",
+        "",
+        "Envio mi solicitud de adopcion.",
+        "",
+        "Nombre: " + solicitud.nombre,
+        "Correo: " + solicitud.correo,
+        "Telefono: " + solicitud.telefono,
+        "Tipo de mascota: " + solicitud.mascota,
+        "Mascota elegida: " + (solicitud.mascotaNombre || "Sin nombre elegido"),
+        "Vivienda: " + solicitud.vivienda,
+        "Resultado checklist: " + solicitud.checklist + "%",
+        "",
+        "Motivo:",
+        solicitud.mensaje,
+        "",
+        "Fecha: " + solicitud.fecha
+    ].join("\n");
+
+    window.location.href = "mailto:" + solicitud.correoEquipo.replace(/\s/g, "")
+        + "?subject=" + encodeURIComponent(asunto)
+        + "&body=" + encodeURIComponent(cuerpo);
+}
+
+function mostrarFeedbackSolicitud(mensaje, tipo) {
+    adoptFeedback.className = "form-note " + (tipo || "");
+    adoptFeedback.innerHTML = mensaje;
+}
+
+function validarSolicitudAdopcion() {
+    const telefono = document.getElementById("adoptPhone");
+    const motivo = document.getElementById("adoptReason");
+    const digitos = telefono.value.replace(/\D/g, "");
+
+    telefono.setCustomValidity("");
+    motivo.setCustomValidity("");
+
+    if (digitos.length < 10) {
+        telefono.setCustomValidity("Escribe un tel&eacute;fono con al menos 10 d&iacute;gitos.");
+    }
+
+    if (motivo.value.trim().length < 20) {
+        motivo.setCustomValidity("Cu&eacute;ntanos un poco m&aacute;s sobre tu motivo de adopci&oacute;n.");
+    }
+
+    if (!adoptForm.checkValidity()) {
+        adoptForm.reportValidity();
+        mostrarFeedbackSolicitud("Revisa los campos marcados para registrar tu solicitud correctamente.", "error");
+        return false;
+    }
+
+    if (ultimoResultadoChecklist < 55) {
+        mostrarFeedbackSolicitud("Completa el checklist y alcanza al menos 55% para iniciar una solicitud responsable.", "error");
+        document.getElementById("checklist").scrollIntoView({ behavior: "smooth" });
+        return false;
+    }
+
+    return true;
+}
+
+adoptForm.addEventListener("submit", async function(event) {
+    event.preventDefault();
+
+    if (!validarSolicitudAdopcion()) {
+        return;
+    }
+
+    const submitButton = adoptForm.querySelector('button[type="submit"]');
+    submitButton.disabled = true;
+    mostrarFeedbackSolicitud("Registrando solicitud...", "");
+
+    const solicitud = {
+        id: "solicitud-" + Date.now(),
+        profileId: obtenerPerfilSolicitud(),
+        fecha: new Date().toLocaleString("es-MX"),
+        centro: "Checklist Huellitas",
+        ubicacion: "Solicitud desde pagina Adoptar",
+        nombre: document.getElementById("adoptName").value.trim(),
+        correo: document.getElementById("adoptEmail").value.trim(),
+        telefono: document.getElementById("adoptPhone").value.trim(),
+        mascota: document.getElementById("adoptPetType").value,
+        mascotaNombre: adoptPetName.value.trim(),
+        vivienda: document.getElementById("adoptHome").value,
+        correoEquipo: adoptTeamEmail.value.trim(),
+        mensaje: document.getElementById("adoptReason").value.trim(),
+        checklist: ultimoResultadoChecklist,
+        estado: "Enviada",
+        cita: null,
+        historial: [{
+            estado: "Enviada",
+            fecha: new Date().toLocaleString("es-MX")
+        }]
+    };
+
+    localStorage.setItem("huellitasCorreoEquipo", solicitud.correoEquipo);
+    guardarSolicitud(solicitud);
+    guardarMensajeSolicitud(solicitud);
+
+    if (window.huellitasNotify) {
+        window.huellitasNotify({
+            id: "adoption-" + solicitud.id + "-enviada",
+            profileId: solicitud.profileId,
+            title: "Tu solicitud fue recibida",
+            body: "Guardamos tu solicitud para " + (solicitud.mascotaNombre || solicitud.mascota) + ".",
+            href: "mi_adopcion.html",
+            kind: "adoption"
+        });
+    }
+
+    if (window.huellitasAwardBadge) {
+        window.huellitasAwardBadge("aliado-adopcion");
+    }
+
+    if (window.huellitasApi && window.huellitasApi.enabled) {
+        try {
+            const data = await window.huellitasApi.request("/api/adoptions", {
+                method: "POST",
+                body: JSON.stringify(solicitud)
+            });
+
+            adoptFeedback.innerHTML = (data.emailSent
+                ? "Tu solicitud fue registrada correctamente y enviada al equipo."
+                : "Tu solicitud fue registrada correctamente y qued&oacute; lista para revisi&oacute;n.")
+                + ' <a href="mi_adopcion.html">Ver Mi adopci&oacute;n</a>.';
+            adoptForm.reset();
+            submitButton.disabled = false;
+            return;
+        } catch (error) {
+            mostrarFeedbackSolicitud("Tu solicitud fue registrada en este equipo. No se pudo enviar al servidor: " + error.message, "error");
+            submitButton.disabled = false;
+            return;
+        }
+    }
+
+    mostrarFeedbackSolicitud('Tu solicitud fue registrada correctamente. Se abrir&aacute; tu correo con el mensaje preparado. <a href="mi_adopcion.html">Ver Mi adopci&oacute;n</a>.', "success");
+    submitButton.disabled = false;
+    prepararCorreo(solicitud);
+});
+
+window.addEventListener("load", () => {
+    cargarDatosSesion();
+    cargarMascotaSeleccionada();
+});
+</script>
+<script src="huellitas.js"></script>
+</body>
+</html>
+

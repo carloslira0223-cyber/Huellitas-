@@ -1,0 +1,217 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Huellitas | Animales dom&eacute;sticos</title>
+<link rel="stylesheet" href="huellitas.css">
+</head>
+
+<body>
+<nav class="site-nav">
+    <a class="brand" href="pagina.html" aria-label="Ir al inicio">
+        <img src="assets/imagenes/logo.png" alt="Logo de Huellitas">
+        <span>Huellitas</span>
+    </a>
+
+    <div class="nav-links" aria-label="Navegaci&oacute;n principal">
+        <a class="nav-link" href="pagina.html">Inicio</a>
+        <a class="nav-link" href="jueguitos.html">Juegos</a>
+        <a class="nav-link" href="directorio.html">Directorio</a>
+        <a class="nav-link" href="areas.html">&Aacute;reas</a>
+        <a class="nav-link active" href="domesticos.html">Mascotas</a>
+        <a class="nav-link" href="leyes.html">Leyes</a>
+        <a class="nav-link" href="equipo.html">Equipo</a>
+        <a class="nav-link" href="presentacion.html">Presentaci&oacute;n</a>
+        <a class="nav-link" href="adopcion_huellitas.html">Adopciones</a>
+        <a class="nav-link" href="adoptar.html">Adoptar</a>
+    </div>
+
+    <div class="nav-actions">
+        <button class="icon-button" type="button" data-theme-toggle onclick="toggleDark()" aria-label="Cambiar modo">&#9790;</button>
+        <a class="button-link secondary" href="areas.html">&Aacute;reas naturales</a>
+    </div>
+</nav>
+
+<main>
+    <header class="hero topic-header pets-header">
+        <div class="hero-inner">
+            <span class="eyebrow">Cuidado responsable</span>
+            <h1>Animales dom&eacute;sticos</h1>
+            <p>Cuidar una mascota es darle salud, tiempo, espacio, limpieza y cari&ntilde;o. Cada especie necesita atenci&oacute;n distinta para vivir bien.</p>
+
+            <div class="hero-actions">
+                <button type="button" onclick="document.getElementById('mascotas').scrollIntoView({behavior:'smooth'})">Elegir mascota</button>
+                <a class="button-link secondary" href="directorio.html">Ver directorio</a>
+            </div>
+        </div>
+    </header>
+
+    <section class="section info-path-section">
+        <div class="quick-guide-grid pet-care-guide">
+            <article class="guide-card">
+                <span>Salud</span>
+                <h3>Veterinario y vacunas</h3>
+                <p>Agenda revisiones, vacunas, desparasitaci&oacute;n y esterilizaci&oacute;n seg&uacute;n la edad y especie.</p>
+            </article>
+            <article class="guide-card">
+                <span>Rutina</span>
+                <h3>Comida, agua y descanso</h3>
+                <p>La base diaria es alimento adecuado, agua limpia, espacio seguro y horarios estables.</p>
+            </article>
+            <article class="guide-card">
+                <span>V&iacute;nculo</span>
+                <h3>Juego y respeto</h3>
+                <p>El cari&ntilde;o tambi&eacute;n se demuestra con paciencia, enriquecimiento, limpieza y tiempo de calidad.</p>
+            </article>
+        </div>
+    </section>
+
+    <section class="section" id="mascotas">
+        <div class="section-title">
+            <h2>&iquest;Cu&aacute;l es tu tipo de mascota?</h2>
+            <p>Elige una para ver sus consejos o muestra todas para comparar cuidados.</p>
+        </div>
+
+        <div class="pet-chooser" aria-label="Filtro de mascotas">
+            <button class="pet-filter active" type="button" data-pet="todos">Todas</button>
+            <button class="pet-filter" type="button" data-pet="perro">Perro</button>
+            <button class="pet-filter" type="button" data-pet="gato">Gato</button>
+            <button class="pet-filter" type="button" data-pet="tortuga">Tortuga</button>
+            <button class="pet-filter" type="button" data-pet="perico">Perico</button>
+        </div>
+
+        <div class="topic-grid" id="petGrid">
+            <article class="card topic-card pet-card" data-pet="perro">
+                <img src="https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&w=900&q=80" alt="Perros jugando al aire libre">
+                <div class="info">
+                    <h2>Perro</h2>
+                    <div class="tag-row">
+                        <span class="tag">Paseos</span>
+                        <span class="tag">Rutina</span>
+                    </div>
+                    <ul class="tip-list">
+                        <li>Agenda vacunas, desparasitaci&oacute;n y revisiones veterinarias.</li>
+                        <li>Dale paseos diarios con correa, agua y descansos.</li>
+                        <li>Entr&eacute;nalo con paciencia, premios y reglas claras.</li>
+                        <li>Usa placa o identificaci&oacute;n para evitar que se pierda.</li>
+                    </ul>
+                </div>
+            </article>
+
+            <article class="card topic-card pet-card" data-pet="gato">
+                <img src="https://images.unsplash.com/photo-1518791841217-8f162f1e1131?auto=format&fit=crop&w=900&q=80" alt="Gato en casa">
+                <div class="info">
+                    <h2>Gato</h2>
+                    <div class="tag-row">
+                        <span class="tag">Juego</span>
+                        <span class="tag">Espacio seguro</span>
+                    </div>
+                    <ul class="tip-list">
+                        <li>Mant&eacute;n limpio su arenero y ponlo en un lugar tranquilo.</li>
+                        <li>Ofrece juguetes, rascadores y sitios altos para explorar.</li>
+                        <li>Cuida vacunas, desparasitaci&oacute;n y esterilizaci&oacute;n.</li>
+                        <li>Evita que salga sin supervisi&oacute;n para prevenir accidentes.</li>
+                    </ul>
+                </div>
+            </article>
+
+            <article class="card topic-card pet-card" data-pet="tortuga">
+                <img src="https://images.unsplash.com/photo-1591025207163-942350e47db2?auto=format&fit=crop&w=900&q=80" alt="Tortuga en ambiente natural">
+                <div class="info">
+                    <h2>Tortuga</h2>
+                    <div class="tag-row">
+                        <span class="tag">H&aacute;bitat</span>
+                        <span class="tag">Higiene</span>
+                    </div>
+                    <ul class="tip-list">
+                        <li>Prepara un h&aacute;bitat adecuado a su especie, con agua limpia y zona seca.</li>
+                        <li>L&aacute;vate las manos despu&eacute;s de tocarla o limpiar su espacio.</li>
+                        <li>No limpies su tanque en zonas donde preparas comida.</li>
+                        <li>No la liberes en r&iacute;os o parques; puede afectar a otras especies.</li>
+                    </ul>
+                </div>
+            </article>
+
+            <article class="card topic-card pet-card" data-pet="perico">
+                <img src="https://images.unsplash.com/photo-1522926193341-e9ffd686c60f?auto=format&fit=crop&w=900&q=80" alt="Perico de colores">
+                <div class="info">
+                    <h2>Perico</h2>
+                    <div class="tag-row">
+                        <span class="tag">Vuelo</span>
+                        <span class="tag">Compa&ntilde;&iacute;a</span>
+                    </div>
+                    <ul class="tip-list">
+                        <li>Usa una jaula amplia, limpia, con perchas y juguetes seguros.</li>
+                        <li>Consulta a un veterinario aviario sobre dieta equilibrada.</li>
+                        <li>Cambia agua y alimento todos los d&iacute;as.</li>
+                        <li>Evita humo, aerosoles y lugares con corrientes fuertes de aire.</li>
+                    </ul>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="feature-band">
+            <div class="feature-panel">
+                <h2>Regla de oro</h2>
+                <p>Una mascota no es un objeto: necesita alimento adecuado, atenci&oacute;n veterinaria, higiene, ejercicio, identificaci&oacute;n y compa&ntilde;&iacute;a durante toda su vida.</p>
+            </div>
+
+            <div class="feature-panel">
+                <h2>Antes de adoptar</h2>
+                <ul class="tip-list">
+                    <li>Piensa si tienes tiempo, espacio y presupuesto.</li>
+                    <li>Investiga las necesidades reales de la especie.</li>
+                    <li>Acuerda responsabilidades con toda la familia.</li>
+                    <li>Prefiere adoptar de forma responsable y local.</li>
+                </ul>
+                <div class="section-actions">
+                    <a class="button-link" href="leyes.html">Siguiente: leyes</a>
+                    <a class="button-link secondary" href="areas.html">Volver a &aacute;reas</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="section-title">
+            <h2>Fuentes consultadas</h2>
+            <p>Consejos generales para orientaci&oacute;n escolar. Ante dudas de salud, consulta a un veterinario.</p>
+        </div>
+        <div class="source-list">
+            <a href="https://ebusiness.avma.org/files/productdownloads/Responsible-Pet-Ownership-EnglishColor.pdf">AVMA: Responsible Pet Ownership</a>
+            <a href="https://www.cdc.gov/healthy-pets/about/birds.html">CDC: Healthy Pets, Healthy People - Birds</a>
+            <a href="https://www.fda.gov/animal-veterinary/animal-health-literacy/salmonella-and-turtle-safety">FDA: Salmonella and Turtle Safety</a>
+            <a href="https://arav.org/salmonella-and-reptiles-veterinary-guidelines/">ARAV: Salmonella and Reptiles Veterinary Guidelines</a>
+        </div>
+    </section>
+</main>
+
+<footer class="site-footer">
+    <strong>HUELLITAS &#128062;</strong>
+    <span>Proyecto escolar de CECyTEM Tultitl&aacute;n - Grupo 404 - Equipo Huellitas</span>
+</footer>
+
+<script>
+const petButtons = document.querySelectorAll(".pet-filter");
+const petCards = document.querySelectorAll(".pet-card");
+
+petButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+        const selectedPet = button.dataset.pet;
+
+        petButtons.forEach((item) => item.classList.remove("active"));
+        button.classList.add("active");
+
+        petCards.forEach((card) => {
+            card.hidden = selectedPet !== "todos" && card.dataset.pet !== selectedPet;
+        });
+    });
+});
+</script>
+<script src="huellitas.js"></script>
+</body>
+</html>
+

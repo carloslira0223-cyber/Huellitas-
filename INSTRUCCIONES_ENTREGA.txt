@@ -1,0 +1,22 @@
+HUELLITAS - INSTRUCCIONES RAPIDAS
+
+1. Para abrir el proyecto completo:
+   - Da doble clic en iniciar-huellitas.bat
+   - Se abrira http://localhost:3000
+   - No cierres la ventana negra mientras uses la pagina.
+
+2. Si la computadora no tiene Node.js:
+   - El archivo .bat abrira la pagina en modo normal.
+   - En modo normal funcionan el diseno, juegos, directorio y formularios locales.
+   - El login seguro, base de datos del servidor y correos automaticos requieren Node.js.
+
+3. Para enviar correos reales:
+   - Llena server-config.json con el correo del equipo.
+   - Si usas Gmail, usa una contrasena de aplicacion, no la contrasena normal.
+
+4. Para entregar limpio:
+   - La base data/huellitas-db.json se crea sola cuando se inicia el servidor.
+   - Si quieres borrar pruebas, elimina data/huellitas-db.json antes de presentar.
+
+5. Pendiente manual:
+   - Cambiar los telefonos "Por confirmar" del directorio por datos reales.

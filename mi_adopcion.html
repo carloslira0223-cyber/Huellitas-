@@ -1,0 +1,340 @@
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Huellitas | Mi adopci&oacute;n</title>
+<link rel="stylesheet" href="huellitas.css">
+</head>
+
+<body>
+<nav class="site-nav">
+    <a class="brand" href="pagina.html" aria-label="Ir al inicio">
+        <img src="assets/imagenes/logo.png" alt="Logo de Huellitas">
+        <span>Huellitas</span>
+    </a>
+
+    <div class="nav-links" aria-label="Navegaci&oacute;n principal">
+        <a class="nav-link" href="pagina.html">Inicio</a>
+        <a class="nav-link" href="jueguitos.html">Juegos</a>
+        <a class="nav-link" href="directorio.html">Directorio</a>
+        <a class="nav-link" href="areas.html">&Aacute;reas</a>
+        <a class="nav-link" href="domesticos.html">Mascotas</a>
+        <a class="nav-link" href="leyes.html">Leyes</a>
+        <a class="nav-link" href="equipo.html">Equipo</a>
+        <a class="nav-link" href="presentacion.html">Presentaci&oacute;n</a>
+        <a class="nav-link" href="adopcion_huellitas.html">Adopciones</a>
+        <a class="nav-link" href="adoptar.html">Adoptar</a>
+        <a class="nav-link active" href="mi_adopcion.html">Mi adopci&oacute;n</a>
+    </div>
+
+    <div class="nav-actions">
+        <button class="icon-button" type="button" data-theme-toggle onclick="toggleDark()" aria-label="Cambiar modo">&#9790;</button>
+        <a class="button-link secondary" href="adopcion_huellitas.html">Mascotas</a>
+    </div>
+</nav>
+
+<main>
+    <header class="hero my-adoption-hero">
+        <div class="hero-inner">
+            <span class="eyebrow">Seguimiento personal</span>
+            <h1>Mi adopci&oacute;n</h1>
+            <p>Consulta el avance de tu solicitud, revisa tu cita y mant&eacute;n contacto con el equipo Huellitas.</p>
+            <div class="hero-actions">
+                <a class="button-link" href="adopcion_huellitas.html">Ver mascotas</a>
+                <a class="button-link secondary" href="adoptar.html#solicitud">Nueva solicitud</a>
+            </div>
+        </div>
+    </header>
+
+    <section class="section my-adoption-section">
+        <div class="section-title">
+            <h2>Progreso de solicitud</h2>
+            <p>El estado se actualiza cuando el admin revisa, aprueba o agenda una cita.</p>
+        </div>
+
+        <div class="my-adoption-layout">
+            <section class="feature-panel my-adoption-main" id="myAdoptionMain"></section>
+
+            <aside class="feature-panel my-adoption-side">
+                <h2>Mensajes del equipo</h2>
+                <div class="profile-mailbox-list" id="myAdoptionMailbox"></div>
+                <form class="profile-message-form" id="myAdoptionMessageForm">
+                    <label for="myAdoptionMessage">Enviar mensaje</label>
+                    <textarea id="myAdoptionMessage" required placeholder="Hola, quisiera confirmar el siguiente paso."></textarea>
+                    <button type="submit">Enviar mensaje</button>
+                    <p class="form-note" id="myAdoptionMessageFeedback"></p>
+                </form>
+            </aside>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="section-title">
+            <h2>Historial</h2>
+            <p>Todas tus solicitudes guardadas aparecen aqu&iacute; para que no pierdas seguimiento.</p>
+        </div>
+        <div class="saved-list" id="myAdoptionHistory"></div>
+    </section>
+</main>
+
+<footer class="site-footer">
+    <strong>HUELLITAS &#128062;</strong>
+    <span>Proyecto escolar de CECyTEM Tultitl&aacute;n - Grupo 404 - Equipo Huellitas</span>
+</footer>
+
+<script>
+const myAdoptionMain = document.getElementById("myAdoptionMain");
+const myAdoptionMailbox = document.getElementById("myAdoptionMailbox");
+const myAdoptionHistory = document.getElementById("myAdoptionHistory");
+const myAdoptionMessageForm = document.getElementById("myAdoptionMessageForm");
+const myAdoptionMessage = document.getElementById("myAdoptionMessage");
+const myAdoptionMessageFeedback = document.getElementById("myAdoptionMessageFeedback");
+const adoptionStorageKey = "huellitasSolicitudesAdopcion";
+const mailboxStorageKey = "huellitasBuzon";
+
+function escapeHtml(texto) {
+    return String(texto || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+function readJson(key, fallback) {
+    try {
+        return JSON.parse(localStorage.getItem(key)) || fallback;
+    } catch (error) {
+        return fallback;
+    }
+}
+
+function getSession() {
+    try {
+        return JSON.parse(localStorage.getItem("sesion"));
+    } catch (error) {
+        return null;
+    }
+}
+
+function getProfileId() {
+    const usuario = getSession();
+
+    if (usuario && usuario.email) {
+        return usuario.email;
+    }
+
+    let invitadoId = localStorage.getItem("huellitasInvitadoId");
+
+    if (!invitadoId) {
+        invitadoId = "invitado-" + Date.now();
+        localStorage.setItem("huellitasInvitadoId", invitadoId);
+    }
+
+    return invitadoId;
+}
+
+function estadoSlug(estado) {
+    return String(estado || "")
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/\s+/g, "-");
+}
+
+function etiquetaEstado(estado) {
+    const labels = {
+        "En revision": "En revisi&oacute;n"
+    };
+
+    return labels[estado] || estado || "Enviada";
+}
+
+function normalizeRequest(request, index) {
+    const fecha = request.fecha || new Date().toLocaleString("es-MX");
+    const estado = request.estado || "Enviada";
+
+    return Object.assign({}, request, {
+        id: request.id || "solicitud-" + index + "-" + String(fecha).replace(/\W/g, ""),
+        fecha: fecha,
+        estado: estado,
+        historial: Array.isArray(request.historial) && request.historial.length
+            ? request.historial
+            : [{ estado: estado, fecha: fecha }],
+        cita: request.cita || null
+    });
+}
+
+function getUserRequests() {
+    const profileId = getProfileId();
+    const usuario = getSession();
+    const email = usuario && usuario.email;
+
+    return readJson(adoptionStorageKey, [])
+        .map(normalizeRequest)
+        .filter((request) => request.profileId === profileId || (email && request.correo === email))
+        .sort((a, b) => String(b.fecha).localeCompare(String(a.fecha)));
+}
+
+function getUserMailbox() {
+    const profileId = getProfileId();
+    return readJson(mailboxStorageKey, []).filter((message) => message.profileId === profileId);
+}
+
+function renderProgress(request) {
+    const steps = ["Enviada", "Revisando", "Aprobada", "Cita programada"];
+    const historial = request.historial || [];
+
+    return [
+        '<div class="my-adoption-progress">',
+        steps.map((step) => {
+            const active = request.estado === step || historial.some((item) => item.estado === step);
+            return [
+                '<span class="' + (active ? "active" : "") + '">',
+                '<b>' + etiquetaEstado(step) + '</b>',
+                '<small>' + (active ? "Listo" : "Pendiente") + '</small>',
+                '</span>'
+            ].join("");
+        }).join(""),
+        '</div>'
+    ].join("");
+}
+
+function renderMainRequest(requests) {
+    if (!requests.length) {
+        myAdoptionMain.innerHTML = [
+            '<div class="empty-state">',
+            '<h2>A&uacute;n no hay solicitud registrada</h2>',
+            '<p>Explora mascotas, haz match o llena el checklist para iniciar tu proceso.</p>',
+            '<a class="button-link" href="adopcion_huellitas.html">Empezar adopci&oacute;n</a>',
+            '<a class="empty-action secondary" href="adoptar.html#solicitud">Crear solicitud</a>',
+            '</div>'
+        ].join("");
+        return;
+    }
+
+    const request = requests[0];
+    const cita = request.cita || {};
+    const citaTexto = cita.fecha
+        ? cita.fecha + " " + (cita.hora || "") + " en " + (cita.lugar || request.centro || "Huellitas")
+        : "El equipo aun no agenda fecha.";
+
+    myAdoptionMain.innerHTML = [
+        '<div class="status-line">',
+        '<div>',
+        '<span class="eyebrow">Solicitud principal</span>',
+        '<h2>' + escapeHtml(request.mascotaNombre || request.mascota || "Mascota") + '</h2>',
+        '</div>',
+        '<span class="status-badge status-' + estadoSlug(request.estado) + '">' + etiquetaEstado(request.estado) + '</span>',
+        '</div>',
+        renderProgress(request),
+        '<div class="my-adoption-summary-grid">',
+        '<span><b>Adoptante</b>' + escapeHtml(request.nombre || "Sin nombre") + '</span>',
+        '<span><b>Centro</b>' + escapeHtml(request.centro || "Huellitas") + '</span>',
+        '<span><b>Checklist</b>' + escapeHtml(request.checklist || 0) + '%</span>',
+        '<span><b>Fecha</b>' + escapeHtml(request.fecha) + '</span>',
+        '</div>',
+        '<div class="appointment-card">',
+        '<span class="eyebrow">Cita</span>',
+        '<strong>' + escapeHtml(citaTexto) + '</strong>',
+        '<p>Cuando el admin guarde una cita, aparecer&aacute; aqu&iacute; y tambi&eacute;n en el calendario del panel.</p>',
+        '</div>'
+    ].join("");
+}
+
+function renderMailbox(messages) {
+    if (!messages.length) {
+        myAdoptionMailbox.innerHTML = '<div class="empty-state"><strong>Buz&oacute;n listo.</strong><span>Los mensajes del equipo aparecer&aacute;n aqu&iacute;.</span><a class="empty-action secondary" href="adopcion_huellitas.html#mascotas">Explorar mascotas</a></div>';
+        return;
+    }
+
+    myAdoptionMailbox.innerHTML = messages.slice(0, 8).map((message) => {
+        return [
+            '<article class="profile-mini-card mailbox-message ' + (message.from === "admin" ? "from-admin" : "from-user") + '">',
+            '<span>' + (message.from === "admin" ? "Equipo Huellitas" : "T&uacute;") + ' - ' + escapeHtml(message.fecha) + '</span>',
+            '<strong>' + escapeHtml(message.mensaje) + '</strong>',
+            '</article>'
+        ].join("");
+    }).join("");
+}
+
+function renderHistory(requests) {
+    if (!requests.length) {
+        myAdoptionHistory.innerHTML = '<div class="empty-state"><strong>A&uacute;n no hay historial.</strong><span>Cuando registres una solicitud, podr&aacute;s seguirla aqu&iacute;.</span><a class="empty-action" href="adoptar.html#solicitud">Crear solicitud</a></div>';
+        return;
+    }
+
+    myAdoptionHistory.innerHTML = requests.map((request) => {
+        return [
+            '<article class="saved-item">',
+            '<div class="status-line">',
+            '<strong>' + escapeHtml(request.mascotaNombre || request.mascota || "Mascota") + '</strong>',
+            '<span class="status-badge status-' + estadoSlug(request.estado) + '">' + etiquetaEstado(request.estado) + '</span>',
+            '</div>',
+            '<span>Fecha: ' + escapeHtml(request.fecha) + '</span>',
+            '<span>Centro: ' + escapeHtml(request.centro || "Huellitas") + '</span>',
+            '<span>Mensaje: ' + escapeHtml(request.mensaje || "") + '</span>',
+            '</article>'
+        ].join("");
+    }).join("");
+}
+
+function renderMyAdoption() {
+    const requests = getUserRequests();
+    renderMainRequest(requests);
+    renderMailbox(getUserMailbox());
+    renderHistory(requests);
+}
+
+myAdoptionMessageForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    const usuario = getSession() || {};
+    const texto = myAdoptionMessage.value.trim();
+
+    if (texto.length < 5) {
+        myAdoptionMessageFeedback.className = "form-note error";
+        myAdoptionMessageFeedback.textContent = "Escribe un mensaje un poco m&aacute;s claro para el equipo.";
+        return;
+    }
+
+    const message = {
+        id: "msg-mi-adopcion-" + Date.now(),
+        profileId: getProfileId(),
+        nombre: usuario.nombre || "Visitante",
+        correo: usuario.email || "",
+        from: "usuario",
+        mensaje: texto,
+        fecha: new Date().toLocaleString("es-MX"),
+        readByAdmin: false,
+        readByUser: true
+    };
+    const messages = readJson(mailboxStorageKey, []);
+
+    messages.unshift(message);
+    localStorage.setItem(mailboxStorageKey, JSON.stringify(messages));
+
+    if (window.huellitasPostMailbox) {
+        window.huellitasPostMailbox(message);
+    }
+
+    myAdoptionMessage.value = "";
+    myAdoptionMessageFeedback.className = "form-note success";
+    myAdoptionMessageFeedback.textContent = "Tu mensaje qued&oacute; registrado para el equipo.";
+    renderMyAdoption();
+});
+
+window.addEventListener("huellitas:adoptionsChanged", renderMyAdoption);
+window.addEventListener("huellitas:mailboxChanged", renderMyAdoption);
+window.addEventListener("load", () => {
+    if (window.huellitasSyncServerState) {
+        window.huellitasSyncServerState().then(renderMyAdoption);
+    } else {
+        renderMyAdoption();
+    }
+});
+renderMyAdoption();
+</script>
+<script src="huellitas.js"></script>
+</body>
+</html>

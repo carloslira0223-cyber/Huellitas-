@@ -1,0 +1,967 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Huellitas | Inicio</title>
+<link rel="stylesheet" href="huellitas.css">
+</head>
+
+<body>
+<div id="loader">&#128062; Cargando...</div>
+
+<nav class="site-nav">
+    <a class="brand" href="pagina.html" aria-label="Ir al inicio">
+        <img src="assets/imagenes/logo.png" alt="Logo de Huellitas">
+        <span>Huellitas</span>
+    </a>
+
+    <div class="nav-links" aria-label="Navegaci&oacute;n principal">
+        <a class="nav-link active" href="pagina.html">Inicio</a>
+        <a class="nav-link" href="jueguitos.html">Juegos</a>
+        <a class="nav-link" href="directorio.html">Directorio</a>
+        <a class="nav-link" href="areas.html">&Aacute;reas</a>
+        <a class="nav-link" href="domesticos.html">Mascotas</a>
+        <a class="nav-link" href="leyes.html">Leyes</a>
+        <a class="nav-link" href="equipo.html">Equipo</a>
+        <a class="nav-link" href="presentacion.html">Presentaci&oacute;n</a>
+        <a class="nav-link" href="adopcion_huellitas.html">Adopciones</a>
+        <a class="nav-link" href="adoptar.html">Adoptar</a>
+    </div>
+
+    <div class="nav-actions" id="zonaUsuario">
+        <button class="icon-button" type="button" data-theme-toggle onclick="toggleDark()" aria-label="Cambiar modo">&#9790;</button>
+        <button type="button" onclick="abrirLogin()" id="btnLogin">Iniciar sesi&oacute;n</button>
+
+        <div id="perfil" style="display:none;">
+            <span id="nombreNav"></span>
+            <img id="fotoNav" onclick="toggleMenu()" alt="Foto de perfil">
+
+            <div id="menuPerfil" role="dialog" aria-label="Perfil Huellitas">
+                <div class="profile-popover-header">
+                    <img id="fotoMenu" alt="Foto de perfil">
+                    <div>
+                        <span class="profile-kicker">Perfil Huellitas</span>
+                        <strong id="menuNombre"></strong>
+                        <small id="menuEmail"></small>
+                    </div>
+                    <button class="profile-close" type="button" onclick="cerrarMenuPerfil()" aria-label="Cerrar perfil">&times;</button>
+                </div>
+
+                <div class="profile-stats">
+                    <span><b id="menuBestScore">0</b> pts</span>
+                    <span><b id="menuRequests">0</b> solicitudes</span>
+                    <span><b id="menuFavorites">0</b> favoritos</span>
+                    <span><b id="menuBadgeCount">0</b> insignias</span>
+                </div>
+
+                <div class="profile-section">
+                    <h3>Preferencias</h3>
+                    <label class="profile-favorite">Mascota favorita
+                        <select id="menuFavoritePet">
+                            <option value="">Elegir</option>
+                            <option>Perro</option>
+                            <option>Gato</option>
+                            <option>Tortuga</option>
+                            <option>Perico</option>
+                        </select>
+                    </label>
+                </div>
+
+                <div class="profile-section">
+                    <h3>Insignias</h3>
+                    <div class="profile-badges" id="menuBadges"></div>
+                </div>
+
+                <div class="profile-section">
+                    <h3>Favoritos guardados</h3>
+                    <div class="profile-favorites" id="menuFavoriteItems"></div>
+                </div>
+
+                <div class="profile-section">
+                    <h3>Accesos r&aacute;pidos</h3>
+                    <div class="profile-actions-grid">
+                        <a href="adopcion_huellitas.html">Mascotas</a>
+                        <a href="adoptar.html">Checklist</a>
+                        <a href="mi_adopcion.html">Mi adopci&oacute;n</a>
+                        <a href="jueguitos.html">Mascota</a>
+                        <a href="equipo.html">Panel</a>
+                    </div>
+                </div>
+
+                <div class="profile-footer-actions">
+                    <button class="profile-edit-link" type="button" onclick="abrirEditar()">Editar perfil</button>
+                    <button class="profile-logout" type="button" onclick="cerrarSesion()">Cerrar sesi&oacute;n</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<main>
+    <section class="hero home-hero">
+        <div class="hero-inner">
+            <span class="eyebrow">Protecci&oacute;n y conciencia animal</span>
+            <h1>Huellitas &#128062;</h1>
+            <p>Cada patita cuenta. Explora informaci&oacute;n, juegos y lugares de adopci&oacute;n para ayudar a los animales de tu comunidad.</p>
+
+            <div class="hero-actions">
+                <button type="button" onclick="scrollToSeccion()">Explorar temas</button>
+                <a class="button-link secondary" href="jueguitos.html">Ir a juegos</a>
+                <a class="button-link secondary" href="directorio.html">Ver directorio</a>
+                <a class="button-link secondary" href="adopcion_huellitas.html">Adopciones</a>
+            </div>
+
+            <div class="home-quick-actions" aria-label="Accesos r&aacute;pidos Huellitas">
+                <a href="adoptar.html#solicitud"><b>Adoptar</b><span>Inicia una solicitud</span></a>
+                <button type="button" data-report-toggle-home><b>Reportar</b><span>Guarda seguimiento</span></button>
+                <a href="jueguitos.html"><b>Juegos</b><span>Gana patitas</span></a>
+                <a href="mi_adopcion.html"><b>Mi adopci&oacute;n</b><span>Revisa tu avance</span></a>
+            </div>
+        </div>
+    </section>
+
+    <section class="section impact-dashboard-section fade-in" id="impacto">
+        <div class="section-title">
+            <h2>Impacto Huellitas</h2>
+            <p>Resumen vivo de lo que se ha guardado en la p&aacute;gina: solicitudes, centros, puntajes, reportes y favoritos.</p>
+        </div>
+
+        <div class="impact-dashboard">
+            <article class="impact-card">
+                <span>Solicitudes enviadas</span>
+                <strong id="impactRequests">0</strong>
+                <p>Registros de adopci&oacute;n guardados.</p>
+            </article>
+
+            <article class="impact-card">
+                <span>Centros registrados</span>
+                <strong id="impactCenters">6</strong>
+                <p>Opciones del directorio local.</p>
+            </article>
+
+            <article class="impact-card">
+                <span>Mejor puntaje</span>
+                <strong id="impactScore">0</strong>
+                <p>Marca m&aacute;s alta en juegos.</p>
+            </article>
+
+            <article class="impact-card">
+                <span>Reportes guardados</span>
+                <strong id="impactReports">0</strong>
+                <p id="impactReportsStatus">Sin reportes todav&iacute;a.</p>
+            </article>
+
+            <article class="impact-card">
+                <span>Favoritos</span>
+                <strong id="impactFavorites">0</strong>
+                <p>Mascotas y centros guardados.</p>
+            </article>
+        </div>
+    </section>
+
+    <section class="section featured-pets-section fade-in">
+        <div class="section-title">
+            <h2>Huellitas destacadas</h2>
+            <p>Mascotas listas para aparecer en una solicitud, con fichas claras y acceso directo al proceso.</p>
+        </div>
+
+        <div class="featured-pets-grid">
+            <article class="featured-pet">
+                <img src="assets/imagenes/1000107801.jpg" alt="Aruma en adopci&oacute;n">
+                <div>
+                    <span class="status-badge status-aprobada">Disponible</span>
+                    <h3>Aruma</h3>
+                    <p>Alegre, sociable y perfecta para una familia activa.</p>
+                    <a class="button-link" href="adoptar.html?mascota=Aruma&tipo=Perro#solicitud">Solicitar</a>
+                </div>
+            </article>
+
+            <article class="featured-pet">
+                <img src="assets/imagenes/1000107795.jpg" alt="Panque en adopci&oacute;n">
+                <div>
+                    <span class="status-badge status-aprobada">Disponible</span>
+                    <h3>Panque</h3>
+                    <p>Curioso, tranquilo e ideal para espacios seguros.</p>
+                    <a class="button-link" href="adoptar.html?mascota=Panque&tipo=Gato#solicitud">Solicitar</a>
+                </div>
+            </article>
+
+            <article class="featured-pet">
+                <img src="assets/imagenes/1000107810.jpg" alt="Canelo en adopci&oacute;n">
+                <div>
+                    <span class="status-badge status-aprobada">Disponible</span>
+                    <h3>Canelo</h3>
+                    <p>Noble, calmado y listo para paseos tranquilos.</p>
+                    <a class="button-link" href="adoptar.html?mascota=Canelo&tipo=Perro#solicitud">Solicitar</a>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <section class="section servicios fade-in" id="temas">
+        <div class="section-title">
+            <h2>Nuestros temas</h2>
+            <p>Contenido sencillo para aprender sobre cuidado animal, espacios naturales y responsabilidad comunitaria.</p>
+        </div>
+
+        <div class="cards">
+            <article class="card">
+                <img src="https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=900&q=80" alt="Area natural con bosque">
+                <div class="card-content">
+                    <h3>&Aacute;reas naturales</h3>
+                    <p>Protecci&oacute;n de h&aacute;bitats y espacios donde la vida animal puede crecer con seguridad.</p>
+                    <button type="button" onclick="irPagina('areas.html')">Ver m&aacute;s</button>
+                </div>
+            </article>
+
+            <article class="card">
+                <img src="https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&w=900&q=80" alt="Perros domesticos">
+                <div class="card-content">
+                    <h3>Animales dom&eacute;sticos</h3>
+                    <p>Cuidado responsable, bienestar diario y mejores decisiones para perros y gatos.</p>
+                    <button type="button" onclick="irPagina('domesticos.html')">Ver m&aacute;s</button>
+                </div>
+            </article>
+
+            <article class="card">
+                <img src="https://images.unsplash.com/photo-1474511320723-9a56873867b5?auto=format&fit=crop&w=900&q=80" alt="Zorro en la naturaleza">
+                <div class="card-content">
+                    <h3>Leyes de protecci&oacute;n</h3>
+                    <p>Normativas animalistas y acciones para defender el bienestar de los animales.</p>
+                    <button type="button" onclick="irPagina('leyes.html')">Ver m&aacute;s</button>
+                </div>
+            </article>
+        </div>
+
+        <div class="section-actions">
+            <a class="button-link" href="jueguitos.html">Siguiente: juegos</a>
+            <a class="button-link secondary" href="directorio.html">Buscar centros</a>
+            <a class="button-link secondary" href="equipo.html">Conocer equipo</a>
+        </div>
+    </section>
+
+    <section class="section middle-grid fade-in">
+        <article class="middle-box">
+            <img src="https://images.unsplash.com/photo-1583337130417-3346a1be7dee?auto=format&fit=crop&w=700&q=80" alt="Perro recibiendo cuidado">
+            <div>
+                <h2>Campa&ntilde;as</h2>
+                <p>Adopci&oacute;n, esterilizaci&oacute;n y acciones comunitarias para cuidar mejor a los animales.</p>
+            </div>
+        </article>
+
+        <article class="middle-box">
+            <img src="https://images.unsplash.com/photo-1517849845537-4d257902454a?auto=format&fit=crop&w=700&q=80" alt="Perro mirando a la camara">
+            <div>
+                <h2>Recomendaciones</h2>
+                <p>Consejos pr&aacute;cticos para mejorar alimentaci&oacute;n, salud, higiene y bienestar.</p>
+            </div>
+        </article>
+    </section>
+
+    <section class="section about fade-in">
+        <div class="about-text">
+            <h2>Sobre Huellitas</h2>
+            <p>Promovemos respeto, protecci&oacute;n y conciencia animal con informaci&oacute;n clara, juegos educativos y recursos locales.</p>
+        </div>
+
+        <div class="about-img about-logo">
+            <img src="assets/imagenes/logo.png" alt="Logo de Huellitas">
+        </div>
+    </section>
+
+    <section class="section fade-in">
+        <div class="contacto">
+            <h2>Cont&aacute;ctanos</h2>
+            <p>Comparte una duda, propuesta o reporte para seguir cuidando m&aacute;s huellitas.</p>
+            <form id="contactForm" class="contact-form">
+                <div class="form-grid">
+                    <div>
+                        <label for="contactName">Nombre</label>
+                        <input id="contactName" required placeholder="Tu nombre">
+                    </div>
+                    <div>
+                        <label for="contactEmail">Correo</label>
+                        <input id="contactEmail" type="email" required placeholder="tu-correo@ejemplo.com">
+                    </div>
+                    <div>
+                        <label for="contactType">Tipo de mensaje</label>
+                        <select id="contactType" required>
+                            <option>Duda</option>
+                            <option>Reporte</option>
+                            <option>Propuesta</option>
+                            <option>Comentario</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="contactTeamEmail">Correo del equipo</label>
+                        <input id="contactTeamEmail" type="email" required placeholder="equipo404@correo.com">
+                    </div>
+                </div>
+
+                <label for="contactMessage">Mensaje</label>
+                <textarea id="contactMessage" required placeholder="Escribe tu mensaje"></textarea>
+
+                <div class="section-actions">
+                    <button type="submit">Guardar y preparar correo</button>
+                </div>
+                <p class="form-note" id="contactFeedback"></p>
+            </form>
+        </div>
+    </section>
+</main>
+
+<div class="login-container" id="panelLogin">
+    <form id="loginForm" onsubmit="login(event)">
+        <h2>Iniciar sesi&oacute;n</h2>
+
+        <label for="loginUser">Email</label>
+        <input type="email" id="loginUser" required>
+
+        <label for="loginPass">Contrase&ntilde;a</label>
+        <input type="password" id="loginPass" required>
+
+        <button type="submit" class="form-btn">Ingresar</button>
+    </form>
+
+    <form id="registerForm" onsubmit="registro(event)" style="display:none;">
+        <h2>Crear cuenta</h2>
+
+        <label for="nombre">Nombre completo</label>
+        <input type="text" id="nombre" required>
+
+        <label for="email">Email</label>
+        <input type="email" id="email" required>
+
+        <label for="newPass">Contrase&ntilde;a</label>
+        <input type="password" id="newPass" required>
+
+        <label for="color">Color favorito</label>
+        <input type="color" id="color" value="#5f9d63">
+
+        <div id="previewColor" style="height:40px; border-radius:8px; margin-top:10px;"></div>
+
+        <label for="foto">Foto de perfil</label>
+        <input type="file" id="foto" accept="image/*">
+
+        <button type="submit" class="form-btn">Crear cuenta</button>
+    </form>
+
+    <p id="mensaje"></p>
+
+    <div class="link" onclick="mostrarRegistro()">Crear cuenta</div>
+    <div class="link" onclick="mostrarLogin()" style="display:none;" id="volverLogin">Volver</div>
+</div>
+
+<div class="login-container" id="editarPanel">
+    <h2>Editar perfil</h2>
+
+    <label for="editNombre">Nombre</label>
+    <input type="text" id="editNombre">
+
+    <label for="editColor">Color favorito</label>
+    <input type="color" id="editColor">
+
+    <label for="editFoto">Foto</label>
+    <input type="file" id="editFoto" accept="image/*">
+
+    <button class="form-btn" type="button" onclick="guardarCambios()">Guardar cambios</button>
+</div>
+
+<footer class="site-footer">
+    <strong>HUELLITAS &#128062;</strong>
+    <span>Proyecto escolar de CECyTEM Tultitl&aacute;n - Grupo 404 - Equipo Huellitas</span>
+</footer>
+
+<script>
+const colorInput = document.getElementById("color");
+const preview = document.getElementById("previewColor");
+let usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
+
+if (colorInput && preview) {
+    preview.style.background = colorInput.value;
+    colorInput.addEventListener("input", function() {
+        preview.style.background = this.value;
+    });
+}
+
+function abrirLogin() {
+    document.getElementById("editarPanel").classList.remove("active");
+    document.getElementById("panelLogin").classList.add("active");
+}
+
+function abrirEditar() {
+    const usuario = JSON.parse(localStorage.getItem("sesion"));
+
+    if (!usuario) {
+        return;
+    }
+
+    document.getElementById("panelLogin").classList.remove("active");
+    document.getElementById("editarPanel").classList.add("active");
+    document.getElementById("editNombre").value = usuario.nombre;
+    document.getElementById("editColor").value = usuario.color;
+}
+
+function guardarCambios() {
+    const usuario = JSON.parse(localStorage.getItem("sesion"));
+    const nuevaFotoInput = document.getElementById("editFoto");
+
+    if (!usuario) {
+        return;
+    }
+
+    const actualizar = async function(fotoBase64) {
+        usuario.nombre = document.getElementById("editNombre").value;
+        usuario.color = document.getElementById("editColor").value;
+
+        if (fotoBase64) {
+            usuario.foto = fotoBase64;
+        }
+
+        if (window.huellitasApi && window.huellitasApi.enabled) {
+            try {
+                const data = await window.huellitasApi.request("/api/profile", {
+                    method: "POST",
+                    body: JSON.stringify(usuario)
+                });
+
+                localStorage.setItem("sesion", JSON.stringify(data.user));
+                cargarUsuario();
+                document.getElementById("editarPanel").classList.remove("active");
+                return;
+            } catch (error) {
+                alert(error.message);
+                return;
+            }
+        }
+
+        const index = usuarios.findIndex(u => u.email === usuario.email);
+
+        if (index !== -1) {
+            usuarios[index] = usuario;
+        }
+
+        localStorage.setItem("usuarios", JSON.stringify(usuarios));
+        localStorage.setItem("sesion", JSON.stringify(usuario));
+        cargarUsuario();
+        document.getElementById("editarPanel").classList.remove("active");
+    };
+
+    if (nuevaFotoInput.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function() {
+            actualizar(reader.result);
+        };
+        reader.readAsDataURL(nuevaFotoInput.files[0]);
+    } else {
+        actualizar();
+    }
+}
+
+function toggleMenu() {
+    const menu = document.getElementById("menuPerfil");
+    const abierto = menu.style.display === "block";
+    menu.style.display = abierto ? "none" : "block";
+    document.getElementById("fotoNav").setAttribute("aria-expanded", abierto ? "false" : "true");
+}
+
+function cerrarMenuPerfil() {
+    const menu = document.getElementById("menuPerfil");
+    const foto = document.getElementById("fotoNav");
+
+    if (menu) {
+        menu.style.display = "none";
+    }
+
+    if (foto) {
+        foto.setAttribute("aria-expanded", "false");
+    }
+}
+
+function cerrarSesion() {
+    if (window.huellitasApi) {
+        window.huellitasApi.clearToken();
+    }
+
+    localStorage.removeItem("sesion");
+    location.reload();
+}
+
+async function login(e) {
+    e.preventDefault();
+
+    const email = document.getElementById("loginUser").value;
+    const pass = document.getElementById("loginPass").value;
+    const msg = document.getElementById("mensaje");
+
+    if (window.huellitasApi && window.huellitasApi.enabled) {
+        try {
+            const data = await window.huellitasApi.request("/api/login", {
+                method: "POST",
+                body: JSON.stringify({ email: email, pass: pass })
+            });
+
+            window.huellitasApi.setToken(data.token);
+            localStorage.setItem("sesion", JSON.stringify(data.user));
+            msg.style.display = "block";
+            msg.className = "success";
+            msg.textContent = "Bienvenido " + data.user.nombre;
+            document.getElementById("panelLogin").classList.remove("active");
+            cargarUsuario();
+            if (window.huellitasMountProfile) {
+                window.huellitasMountProfile();
+            }
+            return;
+        } catch (error) {
+            msg.style.display = "block";
+            msg.className = "error";
+            msg.textContent = error.message;
+            return;
+        }
+    }
+
+    const encontrado = usuarios.find(u => u.email === email && u.pass === pass);
+
+    if (encontrado) {
+        localStorage.setItem("sesion", JSON.stringify(encontrado));
+        msg.style.display = "block";
+        msg.className = "success";
+        msg.textContent = "Bienvenido " + encontrado.nombre;
+        document.getElementById("panelLogin").classList.remove("active");
+        cargarUsuario();
+        if (window.huellitasMountProfile) {
+            window.huellitasMountProfile();
+        }
+    } else {
+        msg.style.display = "block";
+        msg.className = "error";
+        msg.textContent = "Datos incorrectos";
+    }
+}
+
+async function registro(e) {
+    e.preventDefault();
+
+    const nombre = document.getElementById("nombre").value;
+    const email = document.getElementById("email").value;
+    const pass = document.getElementById("newPass").value;
+    const color = document.getElementById("color").value;
+    const fotoInput = document.getElementById("foto");
+    const msg = document.getElementById("mensaje");
+    const existe = usuarios.find(u => u.email === email);
+
+    if (existe && !(window.huellitasApi && window.huellitasApi.enabled)) {
+        msg.style.display = "block";
+        msg.className = "error";
+        msg.textContent = "Ese correo ya esta registrado";
+        return;
+    }
+
+    const crearUsuario = async function(fotoBase64) {
+        if (window.huellitasApi && window.huellitasApi.enabled) {
+            try {
+                const data = await window.huellitasApi.request("/api/register", {
+                    method: "POST",
+                    body: JSON.stringify({
+                        nombre: nombre,
+                        email: email,
+                        pass: pass,
+                        color: color,
+                        foto: fotoBase64 || "https://via.placeholder.com/100"
+                    })
+                });
+
+                window.huellitasApi.setToken(data.token);
+                localStorage.setItem("sesion", JSON.stringify(data.user));
+                msg.style.display = "block";
+                msg.className = "success";
+                msg.textContent = "Cuenta creada correctamente";
+                document.getElementById("panelLogin").classList.remove("active");
+                cargarUsuario();
+                if (window.huellitasMountProfile) {
+                    window.huellitasMountProfile();
+                }
+                return;
+            } catch (error) {
+                msg.style.display = "block";
+                msg.className = "error";
+                msg.textContent = error.message;
+                return;
+            }
+        }
+
+        const nuevoUsuario = {
+            nombre: nombre,
+            email: email,
+            pass: pass,
+            color: color,
+            foto: fotoBase64 || "https://via.placeholder.com/100"
+        };
+
+        usuarios.push(nuevoUsuario);
+        localStorage.setItem("usuarios", JSON.stringify(usuarios));
+        msg.style.display = "block";
+        msg.className = "success";
+        msg.textContent = "Cuenta creada correctamente";
+        mostrarLogin();
+    };
+
+    if (fotoInput.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function() {
+            crearUsuario(reader.result);
+        };
+        reader.readAsDataURL(fotoInput.files[0]);
+    } else {
+        crearUsuario();
+    }
+}
+
+function mostrarRegistro() {
+    document.getElementById("loginForm").style.display = "none";
+    document.getElementById("registerForm").style.display = "block";
+    document.getElementById("volverLogin").style.display = "block";
+}
+
+function mostrarLogin() {
+    document.getElementById("loginForm").style.display = "block";
+    document.getElementById("registerForm").style.display = "none";
+    document.getElementById("volverLogin").style.display = "none";
+}
+
+function leerJsonLocal(key, fallback) {
+    try {
+        return JSON.parse(localStorage.getItem(key)) || fallback;
+    } catch (error) {
+        return fallback;
+    }
+}
+
+function escapeHtmlLocal(texto) {
+    return String(texto || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+function cargarResumenPerfil(usuario) {
+    const puntajes = leerJsonLocal("huellitasPuntajesJuego", []);
+    const solicitudes = leerJsonLocal("huellitasSolicitudesAdopcion", []);
+    const insignias = leerJsonLocal("huellitasInsignias", {});
+    const favoritas = leerJsonLocal("huellitasMascotaFavorita", {});
+    const favoritosGuardados = leerJsonLocal("huellitasFavoritos", {});
+    const badgeTitles = {
+        "guardian-huellitas": "Guardi&aacute;n Huellitas",
+        "experto-cuidados": "Experto en cuidados",
+        "aliado-adopcion": "Aliado de adopci&oacute;n",
+        "coleccionista-huellitas": "Coleccionista Huellitas"
+    };
+    const usuarioBadges = insignias[usuario.email] || [];
+    const usuarioFavoritos = favoritosGuardados[usuario.email] || [];
+    const puntaje = puntajes.find((item) => item.id === usuario.email || item.email === usuario.email);
+    const solicitudesUsuario = solicitudes.filter((item) => item.correo === usuario.email || item.nombre === usuario.nombre);
+    const favorite = document.getElementById("menuFavoritePet");
+
+    document.getElementById("menuBestScore").textContent = puntaje ? (puntaje.mejorPuntaje || 0) : 0;
+    document.getElementById("menuRequests").textContent = solicitudesUsuario.length;
+    document.getElementById("menuFavorites").textContent = usuarioFavoritos.length;
+    document.getElementById("menuBadgeCount").textContent = usuarioBadges.length;
+    document.getElementById("menuBadges").innerHTML = usuarioBadges.length
+        ? usuarioBadges.map((badge) => '<span class="badge-pill">' + (badgeTitles[badge] || badge) + '</span>').join("")
+        : '<span class="mini-empty">Sin insignias todav&iacute;a</span>';
+    document.getElementById("menuFavoriteItems").innerHTML = usuarioFavoritos.length
+        ? usuarioFavoritos.slice(0, 4).map((item) => {
+            const label = item.kind === "center" ? "Centro" : "Mascota";
+            return '<a class="favorite-mini" href="' + escapeHtmlLocal(item.href || "#") + '"><span>' + label + '</span><strong>' + escapeHtmlLocal(item.title) + '</strong></a>';
+        }).join("")
+        : '<span class="mini-empty">Sin favoritos guardados</span>';
+
+    favorite.value = favoritas[usuario.email] || "";
+    favorite.onchange = function() {
+        favoritas[usuario.email] = this.value;
+        localStorage.setItem("huellitasMascotaFavorita", JSON.stringify(favoritas));
+    };
+}
+
+function cargarUsuario() {
+    const usuario = JSON.parse(localStorage.getItem("sesion"));
+
+    if (!usuario) {
+        return;
+    }
+
+    if (document.querySelector("#zonaUsuario [data-global-profile]")) {
+        document.getElementById("btnLogin").style.display = "none";
+        document.getElementById("perfil").style.display = "none";
+        cargarResumenPerfil(usuario);
+        return;
+    }
+
+    document.getElementById("btnLogin").style.display = "none";
+    document.getElementById("perfil").style.display = "flex";
+    document.getElementById("nombreNav").textContent = usuario.nombre;
+    document.getElementById("menuNombre").textContent = usuario.nombre;
+    document.getElementById("menuEmail").textContent = usuario.email;
+    document.documentElement.style.setProperty("--user-color", usuario.color);
+
+    const foto = document.getElementById("fotoNav");
+    foto.src = usuario.foto;
+    foto.setAttribute("role", "button");
+    foto.setAttribute("aria-haspopup", "dialog");
+    foto.setAttribute("aria-expanded", "false");
+    foto.style.border = "3px solid " + usuario.color;
+
+    const fotoMenu = document.getElementById("fotoMenu");
+
+    if (fotoMenu) {
+        fotoMenu.src = usuario.foto;
+        fotoMenu.style.border = "3px solid " + usuario.color;
+    }
+
+    cargarResumenPerfil(usuario);
+}
+
+window.addEventListener("huellitas:favoritesChanged", () => {
+    const usuario = JSON.parse(localStorage.getItem("sesion"));
+
+    if (usuario) {
+        cargarResumenPerfil(usuario);
+    }
+
+    cargarPanelImpacto();
+});
+
+window.addEventListener("huellitas:reportsChanged", cargarPanelImpacto);
+
+function irPagina(pagina) {
+    window.location.href = pagina;
+}
+
+function prepararContacto() {
+    const form = document.getElementById("contactForm");
+    const teamEmail = document.getElementById("contactTeamEmail");
+    const feedback = document.getElementById("contactFeedback");
+
+    if (!form || !teamEmail) {
+        return;
+    }
+
+    teamEmail.value = localStorage.getItem("huellitasCorreoEquipo") || "";
+
+    form.addEventListener("submit", async function(e) {
+        e.preventDefault();
+
+        const mensaje = {
+            fecha: new Date().toLocaleString("es-MX"),
+            nombre: document.getElementById("contactName").value.trim(),
+            correo: document.getElementById("contactEmail").value.trim(),
+            tipo: document.getElementById("contactType").value,
+            correoEquipo: teamEmail.value.trim(),
+            mensaje: document.getElementById("contactMessage").value.trim()
+        };
+        const mensajes = JSON.parse(localStorage.getItem("huellitasMensajesContacto")) || [];
+        const asunto = "Mensaje Huellitas - " + mensaje.tipo;
+        const cuerpo = [
+            "Hola Equipo Huellitas.",
+            "",
+            "Nuevo mensaje desde la pagina.",
+            "",
+            "Nombre: " + mensaje.nombre,
+            "Correo: " + mensaje.correo,
+            "Tipo: " + mensaje.tipo,
+            "Fecha: " + mensaje.fecha,
+            "",
+            "Mensaje:",
+            mensaje.mensaje
+        ].join("\n");
+
+        mensajes.unshift(mensaje);
+        localStorage.setItem("huellitasMensajesContacto", JSON.stringify(mensajes));
+        localStorage.setItem("huellitasCorreoEquipo", mensaje.correoEquipo);
+        let reporteContacto = null;
+
+        if (mensaje.tipo === "Reporte") {
+            const reportes = JSON.parse(localStorage.getItem("huellitasReportes")) || [];
+            reporteContacto = {
+                id: "reporte-contacto-" + Date.now(),
+                profileId: getFavoriteProfileId(),
+                fecha: mensaje.fecha,
+                tipo: "Reporte desde contacto",
+                contacto: mensaje.correo,
+                pagina: "Inicio",
+                correoEquipo: mensaje.correoEquipo,
+                mensaje: mensaje.mensaje,
+                estado: "Recibido",
+                historial: [{ estado: "Recibido", fecha: mensaje.fecha }]
+            };
+            reportes.unshift(reporteContacto);
+            localStorage.setItem("huellitasReportes", JSON.stringify(reportes));
+            window.dispatchEvent(new CustomEvent("huellitas:reportsChanged"));
+            if (window.huellitasNotify) {
+                window.huellitasNotify({
+                    id: reportes[0].id,
+                    profileId: getFavoriteProfileId(),
+                    title: "Reporte recibido",
+                    body: "Tu reporte desde Inicio quedo registrado.",
+                    href: "pagina.html#impacto",
+                    kind: "report"
+                });
+            }
+            cargarPanelImpacto();
+        }
+
+        if (window.huellitasApi && window.huellitasApi.enabled) {
+            try {
+                if (reporteContacto) {
+                    await window.huellitasApi.request("/api/reports", {
+                        method: "POST",
+                        body: JSON.stringify(reporteContacto)
+                    });
+                }
+
+                const data = await window.huellitasApi.request("/api/contact", {
+                    method: "POST",
+                    body: JSON.stringify(mensaje)
+                });
+
+                feedback.textContent = data.emailSent
+                    ? "Tu mensaje fue registrado y enviado al equipo."
+                    : "Tu mensaje fue registrado correctamente.";
+                return;
+            } catch (error) {
+                feedback.textContent = "Tu mensaje fue registrado en este equipo. No se pudo enviar al servidor: " + error.message;
+                return;
+            }
+        }
+
+        feedback.textContent = "Tu mensaje fue registrado. Se abrira tu correo con el contenido preparado.";
+        window.location.href = "mailto:" + mensaje.correoEquipo.replace(/\s/g, "")
+            + "?subject=" + encodeURIComponent(asunto)
+            + "&body=" + encodeURIComponent(cuerpo);
+    });
+}
+
+function getFavoriteProfileId() {
+    const usuario = JSON.parse(localStorage.getItem("sesion"));
+
+    if (usuario && usuario.email) {
+        return usuario.email;
+    }
+
+    let invitadoId = localStorage.getItem("huellitasInvitadoId");
+
+    if (!invitadoId) {
+        invitadoId = "invitado-" + Date.now();
+        localStorage.setItem("huellitasInvitadoId", invitadoId);
+    }
+
+    return invitadoId;
+}
+
+function setImpactValue(id, value) {
+    const element = document.getElementById(id);
+
+    if (element) {
+        element.textContent = value;
+    }
+}
+
+function resumenEstadosReportes(reportes) {
+    if (!reportes.length) {
+        return "Aun no hay reportes registrados.";
+    }
+
+    const recibidos = reportes.filter((item) => (item.estado || "Recibido") === "Recibido").length;
+    const revision = reportes.filter((item) => (item.estado || "") === "En revision").length;
+    const atendidos = reportes.filter((item) => (item.estado || "") === "Atendido").length;
+
+    return recibidos + " recibidos, " + revision + " en revision, " + atendidos + " atendidos.";
+}
+
+async function cargarPanelImpacto() {
+    const solicitudes = leerJsonLocal("huellitasSolicitudesAdopcion", []);
+    const reportes = leerJsonLocal("huellitasReportes", []);
+    const puntajes = leerJsonLocal("huellitasPuntajesJuego", []);
+    const favoritos = leerJsonLocal("huellitasFavoritos", {});
+    const profileFavorites = favoritos[getFavoriteProfileId()] || [];
+    const bestScore = puntajes.reduce((max, item) => Math.max(max, Number(item.mejorPuntaje || 0)), 0);
+
+    setImpactValue("impactRequests", solicitudes.length);
+    setImpactValue("impactCenters", 6);
+    setImpactValue("impactScore", bestScore);
+    setImpactValue("impactReports", reportes.length);
+    setImpactValue("impactFavorites", profileFavorites.length);
+    document.getElementById("impactReportsStatus").textContent = resumenEstadosReportes(reportes);
+
+    if (window.huellitasApi && window.huellitasApi.enabled) {
+        try {
+            const data = await window.huellitasApi.request("/api/team-data");
+            const serverScores = data.scores || [];
+            const serverBest = serverScores.reduce((max, item) => Math.max(max, Number(item.mejorPuntaje || 0)), bestScore);
+            const serverReports = data.reports || [];
+
+            setImpactValue("impactRequests", Math.max(solicitudes.length, (data.adoptions || []).length));
+            setImpactValue("impactScore", serverBest);
+            setImpactValue("impactReports", Math.max(reportes.length, serverReports.length));
+
+            if (serverReports.length > reportes.length) {
+                document.getElementById("impactReportsStatus").textContent = resumenEstadosReportes(serverReports);
+            }
+        } catch (error) {
+            console.warn(error.message);
+        }
+    }
+}
+
+function scrollToSeccion() {
+    document.getElementById("temas").scrollIntoView({
+        behavior: "smooth"
+    });
+}
+
+const elementos = document.querySelectorAll(".fade-in");
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+        }
+    });
+}, {
+    threshold: 0.18
+});
+
+elementos.forEach(el => observer.observe(el));
+
+document.addEventListener("click", function(e) {
+    const menu = document.getElementById("menuPerfil");
+    const foto = document.getElementById("fotoNav");
+
+    if (menu && foto && !menu.contains(e.target) && !foto.contains(e.target)) {
+        cerrarMenuPerfil();
+    }
+});
+
+document.addEventListener("keydown", function(e) {
+    if (e.key === "Escape") {
+        cerrarMenuPerfil();
+    }
+});
+
+window.addEventListener("load", function() {
+    if (window.huellitasHidePageLoader) {
+        window.huellitasHidePageLoader();
+    } else if (document.getElementById("loader")) {
+        document.getElementById("loader").style.display = "none";
+    }
+    cargarUsuario();
+    prepararContacto();
+    cargarPanelImpacto();
+});
+</script>
+<script src="huellitas.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,1016 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Huellitas | Directorio</title>
+<link rel="stylesheet" href="huellitas.css">
+</head>
+
+<body>
+<nav class="site-nav">
+    <a class="brand" href="pagina.html" aria-label="Ir al inicio">
+        <img src="assets/imagenes/logo.png" alt="Logo de Huellitas">
+        <span>Huellitas</span>
+    </a>
+
+    <div class="nav-links" aria-label="Navegaci&oacute;n principal">
+        <a class="nav-link" href="pagina.html">Inicio</a>
+        <a class="nav-link" href="jueguitos.html">Juegos</a>
+        <a class="nav-link active" href="directorio.html">Directorio</a>
+        <a class="nav-link" href="areas.html">&Aacute;reas</a>
+        <a class="nav-link" href="domesticos.html">Mascotas</a>
+        <a class="nav-link" href="leyes.html">Leyes</a>
+        <a class="nav-link" href="equipo.html">Equipo</a>
+        <a class="nav-link" href="presentacion.html">Presentaci&oacute;n</a>
+        <a class="nav-link" href="adopcion_huellitas.html">Adopciones</a>
+        <a class="nav-link" href="adoptar.html">Adoptar</a>
+    </div>
+
+    <div class="nav-actions">
+        <button class="icon-button" type="button" data-theme-toggle onclick="toggleDark()" aria-label="Cambiar modo">&#9790;</button>
+        <a class="button-link secondary" href="jueguitos.html">Ir a juegos</a>
+    </div>
+</nav>
+
+<main>
+    <header class="hero directory-header">
+        <div class="hero-inner">
+            <span class="eyebrow">Recursos locales</span>
+            <h1>Centros de Adopci&oacute;n en Tultitl&aacute;n</h1>
+            <p>Encuentra refugios, albergues y organizaciones que apoyan el rescate, cuidado y adopci&oacute;n responsable.</p>
+
+            <div class="hero-actions">
+                <button type="button" onclick="document.getElementById('centros').scrollIntoView({behavior:'smooth'})">Ver centros</button>
+                <button class="secondary" type="button" onclick="document.getElementById('mapa').scrollIntoView({behavior:'smooth'})">Ver mapa</button>
+                <a class="button-link secondary" href="jueguitos.html">Pasar a juegos</a>
+                <a class="button-link secondary" href="adoptar.html">Checklist de adopci&oacute;n</a>
+            </div>
+        </div>
+    </header>
+
+    <section class="section" id="centros">
+        <div class="section-title">
+            <h2>Directorio de apoyo</h2>
+            <p>Tarjetas con ubicaci&oacute;n general, servicios y actividades principales para ubicar opciones de adopci&oacute;n.</p>
+        </div>
+
+        <div class="directory-tools" aria-label="Filtros del directorio">
+            <div class="search-box">
+                <label for="buscadorDirectorio">Buscar centro</label>
+                <input id="buscadorDirectorio" type="search" placeholder="Nombre, colonia o servicio">
+            </div>
+
+            <div class="filter-group" aria-label="Servicios">
+                <button class="filter-button active" type="button" data-filter="todos">Todos</button>
+                <button class="filter-button" type="button" data-filter="adopcion">Adopci&oacute;n</button>
+                <button class="filter-button" type="button" data-filter="veterinaria">Veterinaria</button>
+                <button class="filter-button" type="button" data-filter="esterilizacion">Esterilizaci&oacute;n</button>
+                <button class="filter-button" type="button" data-filter="rescate">Rescate</button>
+                <button class="filter-button" type="button" data-filter="voluntariado">Voluntariado</button>
+            </div>
+
+            <p class="results-count" id="resultadosDirectorio">6 centros encontrados</p>
+        </div>
+
+        <div class="directory-tabs" id="directorioTabs" aria-label="Pesta&ntilde;as de centros"></div>
+
+        <div class="grid auto directory-tabbed" id="directorioGrid">
+            <article class="card directory-card" data-name="Refugio Huellas de Amor" data-zone="Buenavista Tultitlan Estado de Mexico" data-services="vacunacion desparasitacion esterilizacion rescate adopcion veterinaria">
+                <img src="assets/imagenes/huellitas de amor.webp" alt="Imagen de Refugio Huellas de Amor">
+                <div class="info">
+                    <h2>Refugio Huellas de Amor</h2>
+                    <p><strong>Direcci&oacute;n:</strong><br>Colonia Buenavista, Tultitl&aacute;n, Estado de M&eacute;xico.</p>
+                    <div class="directory-meta">
+                        <span><strong>Tel&eacute;fono:</strong> Por confirmar</span>
+                        <span><strong>Horario:</strong> Lun a s&aacute;b, 10:00 a 16:00</span>
+                    </div>
+                    <div class="tag-row">
+                        <span class="tag">Adopci&oacute;n</span>
+                        <span class="tag">Veterinaria</span>
+                        <span class="tag">Esterilizaci&oacute;n</span>
+                    </div>
+                    <p>Centro dedicado al rescate y recuperaci&oacute;n de perros y gatos abandonados. Cuenta con atenci&oacute;n veterinaria y campa&ntilde;as de adopci&oacute;n.</p>
+                    <ul class="lista">
+                        <li>Vacunaci&oacute;n y desparasitaci&oacute;n</li>
+                        <li>Esterilizaci&oacute;n</li>
+                        <li>Rescate animal</li>
+                        <li>Eventos de adopci&oacute;n</li>
+                    </ul>
+                    <ol class="directory-steps">
+                        <li>Agenda visita</li>
+                        <li>Conoce al animal</li>
+                        <li>Llena solicitud</li>
+                    </ol>
+                    <button class="secondary interest-button" type="button" data-center="Refugio Huellas de Amor" onclick="abrirDetalleCentro(this)">Ver detalles</button>
+                    <button class="secondary interest-button" type="button" data-center="Refugio Huellas de Amor" onclick="copiarDatosCentro(this)">Copiar datos</button>
+                    <button class="interest-button" type="button" data-center="Refugio Huellas de Amor" data-location="Colonia Buenavista, Tultitl&aacute;n, Estado de M&eacute;xico" onclick="abrirFormularioAdopcion(this)">Me interesa adoptar</button>
+                </div>
+            </article>
+
+            <article class="card directory-card" data-name="Patitas Felices Tultitlan" data-zone="Unidad Morelos Tultitlan" data-services="proteccion veterinaria adopcion voluntariado rescate rehabilitacion">
+                <img src="assets/imagenes/patitas felices.webp" alt="Imagen de Patitas Felices Tultitlan">
+                <div class="info">
+                    <h2>Patitas Felices Tultitl&aacute;n</h2>
+                    <p><strong>Direcci&oacute;n:</strong><br>Unidad Morelos 3ra Secci&oacute;n, Tultitl&aacute;n.</p>
+                    <div class="directory-meta">
+                        <span><strong>Tel&eacute;fono:</strong> Por confirmar</span>
+                        <span><strong>Horario:</strong> S&aacute;b y dom, 11:00 a 15:00</span>
+                    </div>
+                    <div class="tag-row">
+                        <span class="tag">Adopci&oacute;n</span>
+                        <span class="tag">Voluntariado</span>
+                        <span class="tag">Rescate</span>
+                    </div>
+                    <p>Organizaci&oacute;n enfocada en el rescate y rehabilitaci&oacute;n de animales en situaci&oacute;n vulnerable dentro del municipio.</p>
+                    <ul class="lista">
+                        <li>Protecci&oacute;n animal</li>
+                        <li>Atenci&oacute;n veterinaria</li>
+                        <li>Programas de adopci&oacute;n</li>
+                        <li>Voluntariado</li>
+                    </ul>
+                    <ol class="directory-steps">
+                        <li>Pregunta disponibles</li>
+                        <li>Elige responsable</li>
+                        <li>Firma compromiso</li>
+                    </ol>
+                    <button class="secondary interest-button" type="button" data-center="Patitas Felices Tultitlan" onclick="abrirDetalleCentro(this)">Ver detalles</button>
+                    <button class="secondary interest-button" type="button" data-center="Patitas Felices Tultitlan" onclick="copiarDatosCentro(this)">Copiar datos</button>
+                    <button class="interest-button" type="button" data-center="Patitas Felices Tultitl&aacute;n" data-location="Unidad Morelos 3ra Secci&oacute;n, Tultitl&aacute;n" onclick="abrirFormularioAdopcion(this)">Me interesa adoptar</button>
+                </div>
+            </article>
+
+            <article class="card directory-card" data-name="Casa Canina Esperanza" data-zone="Fuentes del Valle Tultitlan" data-services="resguardo adopcion veterinaria esterilizacion alimentacion medica">
+                <img src="assets/imagenes/esperanza canina.webp" alt="Imagen de Casa Canina Esperanza">
+                <div class="info">
+                    <h2>Casa Canina Esperanza</h2>
+                    <p><strong>Direcci&oacute;n:</strong><br>Fuentes del Valle, Tultitl&aacute;n.</p>
+                    <div class="directory-meta">
+                        <span><strong>Tel&eacute;fono:</strong> Por confirmar</span>
+                        <span><strong>Horario:</strong> Mar a dom, 10:00 a 17:00</span>
+                    </div>
+                    <div class="tag-row">
+                        <span class="tag">Resguardo</span>
+                        <span class="tag">M&eacute;dica</span>
+                        <span class="tag">Esterilizaci&oacute;n</span>
+                    </div>
+                    <p>Albergue temporal para perros y gatos rescatados, ofreciendo alimentaci&oacute;n, cuidado m&eacute;dico y adopciones.</p>
+                    <ul class="lista">
+                        <li>Resguardo temporal</li>
+                        <li>Jornadas de adopci&oacute;n</li>
+                        <li>Atenci&oacute;n m&eacute;dica</li>
+                        <li>Esterilizaci&oacute;n</li>
+                    </ul>
+                    <ol class="directory-steps">
+                        <li>Solicita informes</li>
+                        <li>Visita albergue</li>
+                        <li>Agenda entrega</li>
+                    </ol>
+                    <button class="secondary interest-button" type="button" data-center="Casa Canina Esperanza" onclick="abrirDetalleCentro(this)">Ver detalles</button>
+                    <button class="secondary interest-button" type="button" data-center="Casa Canina Esperanza" onclick="copiarDatosCentro(this)">Copiar datos</button>
+                    <button class="interest-button" type="button" data-center="Casa Canina Esperanza" data-location="Fuentes del Valle, Tultitl&aacute;n" onclick="abrirFormularioAdopcion(this)">Me interesa adoptar</button>
+                </div>
+            </article>
+
+            <article class="card directory-card" data-name="Refugio Amigos Peludos" data-zone="San Pablo de las Salinas Tultitlan" data-services="educacion rescate proteccion eventos veterinaria adopcion">
+                <img src="assets/imagenes/amigos peludos.jpeg" alt="Imagen de Refugio Amigos Peludos">
+                <div class="info">
+                    <h2>Refugio Amigos Peludos</h2>
+                    <p><strong>Direcci&oacute;n:</strong><br>San Pablo de las Salinas, Tultitl&aacute;n.</p>
+                    <div class="directory-meta">
+                        <span><strong>Tel&eacute;fono:</strong> Por confirmar</span>
+                        <span><strong>Horario:</strong> S&aacute;b y dom, 10:00 a 14:00</span>
+                    </div>
+                    <div class="tag-row">
+                        <span class="tag">Educaci&oacute;n</span>
+                        <span class="tag">Eventos</span>
+                        <span class="tag">Protecci&oacute;n</span>
+                    </div>
+                    <p>Asociaci&oacute;n independiente que promueve la adopci&oacute;n responsable y el bienestar animal mediante campa&ntilde;as comunitarias.</p>
+                    <ul class="lista">
+                        <li>Educaci&oacute;n animal</li>
+                        <li>Rescate y protecci&oacute;n</li>
+                        <li>Eventos comunitarios</li>
+                        <li>Atenci&oacute;n veterinaria</li>
+                    </ul>
+                    <ol class="directory-steps">
+                        <li>Revisa eventos</li>
+                        <li>Pregunta requisitos</li>
+                        <li>Da seguimiento</li>
+                    </ol>
+                    <button class="secondary interest-button" type="button" data-center="Refugio Amigos Peludos" onclick="abrirDetalleCentro(this)">Ver detalles</button>
+                    <button class="secondary interest-button" type="button" data-center="Refugio Amigos Peludos" onclick="copiarDatosCentro(this)">Copiar datos</button>
+                    <button class="interest-button" type="button" data-center="Refugio Amigos Peludos" data-location="San Pablo de las Salinas, Tultitl&aacute;n" onclick="abrirFormularioAdopcion(this)">Me interesa adoptar</button>
+                </div>
+            </article>
+
+            <article class="card directory-card" data-name="Albergue Patitas sin Hogar" data-zone="Colonia La Sardana Tultitlan" data-services="recuperacion adopcion vacunacion seguimiento rescate">
+                <img src="assets/imagenes/patitas sin hogar.webp" alt="Imagen de Albergue Patitas sin Hogar">
+                <div class="info">
+                    <h2>Albergue Patitas sin Hogar</h2>
+                    <p><strong>Direcci&oacute;n:</strong><br>Colonia La Sarda&ntilde;a, Tultitl&aacute;n.</p>
+                    <div class="directory-meta">
+                        <span><strong>Tel&eacute;fono:</strong> Por confirmar</span>
+                        <span><strong>Horario:</strong> Lun a vie, 9:00 a 15:00</span>
+                    </div>
+                    <div class="tag-row">
+                        <span class="tag">Adopci&oacute;n</span>
+                        <span class="tag">Vacunaci&oacute;n</span>
+                        <span class="tag">Seguimiento</span>
+                    </div>
+                    <p>Refugio especializado en el rescate de cachorros y gatos, ofreciendo recuperaci&oacute;n y seguimiento post-adopci&oacute;n.</p>
+                    <ul class="lista">
+                        <li>Recuperaci&oacute;n animal</li>
+                        <li>Adopciones seguras</li>
+                        <li>Vacunaci&oacute;n</li>
+                        <li>Seguimiento post-adopci&oacute;n</li>
+                    </ul>
+                    <ol class="directory-steps">
+                        <li>Llena formulario</li>
+                        <li>Espera contacto</li>
+                        <li>Adapta con calma</li>
+                    </ol>
+                    <button class="secondary interest-button" type="button" data-center="Albergue Patitas sin Hogar" onclick="abrirDetalleCentro(this)">Ver detalles</button>
+                    <button class="secondary interest-button" type="button" data-center="Albergue Patitas sin Hogar" onclick="copiarDatosCentro(this)">Copiar datos</button>
+                    <button class="interest-button" type="button" data-center="Albergue Patitas sin Hogar" data-location="Colonia La Sarda&ntilde;a, Tultitl&aacute;n" onclick="abrirFormularioAdopcion(this)">Me interesa adoptar</button>
+                </div>
+            </article>
+            <article class="card directory-card" data-name="Criollos al Rescate" data-zone="Tultitlan Estado de Mexico" data-services="rescate adopcion veterinaria rehabilitacion voluntariado">
+                <img src="assets/imagenes/1000107801.jpg" alt="Imagen de Criollos al Rescate">
+                <div class="info">
+                    <h2>Criollos al Rescate</h2>
+                    <p><strong>Direcci&oacute;n:</strong><br>Tultitl&aacute;n, Estado de M&eacute;xico.</p>
+                    <div class="directory-meta">
+                        <span><strong>Tel&eacute;fono:</strong> Por confirmar</span>
+                        <span><strong>Horario:</strong> Vie a dom, 10:00 a 16:00</span>
+                    </div>
+                    <div class="tag-row">
+                        <span class="tag">Rescate</span>
+                        <span class="tag">Adopci&oacute;n</span>
+                        <span class="tag">Voluntariado</span>
+                    </div>
+                    <p>Organizaci&oacute;n dedicada al rescate, rehabilitaci&oacute;n y adopci&oacute;n responsable de perros y gatos criollos.</p>
+                    <ul class="lista">
+                        <li>Rescate animal</li>
+                        <li>Adopci&oacute;n responsable</li>
+                        <li>Atenci&oacute;n veterinaria</li>
+                        <li>Voluntariado</li>
+                    </ul>
+                    <ol class="directory-steps">
+                        <li>Reporta caso</li>
+                        <li>Apoya rescate</li>
+                        <li>Da hogar</li>
+                    </ol>
+                    <button class="secondary interest-button" type="button" data-center="Criollos al Rescate" onclick="abrirDetalleCentro(this)">Ver detalles</button>
+                    <button class="secondary interest-button" type="button" data-center="Criollos al Rescate" onclick="copiarDatosCentro(this)">Copiar datos</button>
+                    <button class="interest-button" type="button" data-center="Criollos al Rescate" data-location="Tultitl&aacute;n, Estado de M&eacute;xico" onclick="abrirFormularioAdopcion(this)">Me interesa adoptar</button>
+                </div>
+            </article>
+        </div>
+
+        <div class="empty-state" id="sinResultados" hidden>
+            <strong>No encontramos centros con esos filtros.</strong>
+            <span>Prueba con otra zona, servicio o palabra clave.</span>
+        </div>
+
+        <div class="section-actions">
+            <a class="button-link secondary" href="pagina.html">Volver al inicio</a>
+            <a class="button-link secondary" href="#mapa">Ver mapa</a>
+            <a class="button-link" href="jueguitos.html">Siguiente: juegos</a>
+        </div>
+    </section>
+
+    <section class="section" id="mapa">
+        <div class="section-title">
+            <h2>Mapa visual de ubicaciones</h2>
+            <p>Vista aproximada para ubicar las seis zonas del directorio dentro de Tultitl&aacute;n y alrededores.</p>
+        </div>
+
+        <div class="map-layout">
+            <div class="visual-map" aria-label="Mapa visual de centros de adopci&oacute;n">
+                <div class="map-shape">
+                    <button class="map-pin pin-1 active" type="button" data-map-target="Refugio Huellas de Amor" onclick="resaltarCentroMapa(this)" aria-label="Refugio Huellas de Amor"><span>1</span></button>
+                    <button class="map-pin pin-2" type="button" data-map-target="Patitas Felices Tultitlan" onclick="resaltarCentroMapa(this)" aria-label="Patitas Felices Tultitl&aacute;n"><span>2</span></button>
+                    <button class="map-pin pin-3" type="button" data-map-target="Casa Canina Esperanza" onclick="resaltarCentroMapa(this)" aria-label="Casa Canina Esperanza"><span>3</span></button>
+                    <button class="map-pin pin-4" type="button" data-map-target="Refugio Amigos Peludos" onclick="resaltarCentroMapa(this)" aria-label="Refugio Amigos Peludos"><span>4</span></button>
+                    <button class="map-pin pin-5" type="button" data-map-target="Albergue Patitas sin Hogar" onclick="resaltarCentroMapa(this)" aria-label="Albergue Patitas sin Hogar"><span>5</span></button>
+                    <button class="map-pin pin-6" type="button" data-map-target="Criollos al Rescate" onclick="resaltarCentroMapa(this)" aria-label="Criollos al Rescate"><span>6</span></button>
+                </div>
+                <p class="map-caption">Mapa escolar ilustrativo: los pines representan zonas generales, no coordenadas exactas.</p>
+            </div>
+
+            <div class="map-list">
+                <article class="map-item active" data-map-item="Refugio Huellas de Amor">
+                    <strong>1. Refugio Huellas de Amor</strong>
+                    <span>Colonia Buenavista, Tultitl&aacute;n, Estado de M&eacute;xico.</span>
+                </article>
+                <article class="map-item" data-map-item="Patitas Felices Tultitlan">
+                    <strong>2. Patitas Felices Tultitl&aacute;n</strong>
+                    <span>Unidad Morelos 3ra Secci&oacute;n, Tultitl&aacute;n.</span>
+                </article>
+                <article class="map-item" data-map-item="Casa Canina Esperanza">
+                    <strong>3. Casa Canina Esperanza</strong>
+                    <span>Fuentes del Valle, Tultitl&aacute;n.</span>
+                </article>
+                <article class="map-item" data-map-item="Refugio Amigos Peludos">
+                    <strong>4. Refugio Amigos Peludos</strong>
+                    <span>San Pablo de las Salinas, Tultitl&aacute;n.</span>
+                </article>
+                <article class="map-item" data-map-item="Albergue Patitas sin Hogar">
+                    <strong>5. Albergue Patitas sin Hogar</strong>
+                    <span>Colonia La Sarda&ntilde;a, Tultitl&aacute;n.</span>
+                </article>
+                <article class="map-item" data-map-item="Criollos al Rescate">
+                    <strong>6. Criollos al Rescate</strong>
+                    <span>Tultitl&aacute;n, Estado de M&eacute;xico.</span>
+                </article>
+            </div>
+        </div>
+
+        <div class="map-zone-grid">
+            <article class="map-zone-card active" data-map-zone="Refugio Huellas de Amor">
+                <span>Buenavista</span>
+                <strong>Adopci&oacute;n + veterinaria</strong>
+            </article>
+            <article class="map-zone-card" data-map-zone="Patitas Felices Tultitlan">
+                <span>Unidad Morelos</span>
+                <strong>Rescate + voluntariado</strong>
+            </article>
+            <article class="map-zone-card" data-map-zone="Casa Canina Esperanza">
+                <span>Fuentes del Valle</span>
+                <strong>Resguardo + esterilizaci&oacute;n</strong>
+            </article>
+            <article class="map-zone-card" data-map-zone="Refugio Amigos Peludos">
+                <span>San Pablo</span>
+                <strong>Educaci&oacute;n + eventos</strong>
+            </article>
+            <article class="map-zone-card" data-map-zone="Albergue Patitas sin Hogar">
+                <span>La Sarda&ntilde;a</span>
+                <strong>Seguimiento + vacunaci&oacute;n</strong>
+            </article>
+            <article class="map-zone-card" data-map-zone="Criollos al Rescate">
+                <span>Tultitl&aacute;n</span>
+                <strong>Rehabilitaci&oacute;n + apoyo</strong>
+            </article>
+        </div>
+    </section>
+</main>
+
+<div class="modal-backdrop" id="adoptionModal" hidden>
+    <div class="adoption-modal" role="dialog" aria-modal="true" aria-labelledby="adoptionTitle">
+        <button class="modal-close" type="button" onclick="cerrarFormularioAdopcion()" aria-label="Cerrar formulario">&times;</button>
+
+        <span class="eyebrow">Solicitud de adopci&oacute;n</span>
+        <h2 id="adoptionTitle">Me interesa adoptar</h2>
+        <p>Completa tus datos. La solicitud se guardar&aacute; en este navegador y se abrir&aacute; un correo listo para enviar al equipo.</p>
+
+        <form id="adoptionForm">
+            <label for="adoptionCenter">Centro seleccionado</label>
+            <input id="adoptionCenter" name="centro" readonly>
+
+            <div class="form-grid">
+                <div>
+                    <label for="adoptionName">Tu nombre</label>
+                    <input id="adoptionName" name="nombre" required placeholder="Nombre completo">
+                </div>
+
+                <div>
+                    <label for="adoptionPhone">Tel&eacute;fono</label>
+                    <input id="adoptionPhone" name="telefono" required placeholder="55 0000 0000">
+                </div>
+
+                <div>
+                    <label for="adoptionEmail">Tu correo</label>
+                    <input id="adoptionEmail" name="correo" type="email" required placeholder="tu-correo@ejemplo.com">
+                </div>
+
+                <div>
+                    <label for="adoptionPet">Mascota de inter&eacute;s</label>
+                    <select id="adoptionPet" name="mascota" required>
+                        <option value="">Selecciona una opci&oacute;n</option>
+                        <option>Perro</option>
+                        <option>Gato</option>
+                        <option>Cachorro</option>
+                        <option>No estoy seguro</option>
+                    </select>
+                </div>
+            </div>
+
+            <label for="teamEmail">Correo del equipo</label>
+            <input id="teamEmail" name="correoEquipo" type="email" required placeholder="equipo404@correo.com">
+            <p class="form-note">Este correo se recordar&aacute; en este navegador para las siguientes solicitudes.</p>
+
+            <label for="adoptionMessage">Mensaje</label>
+            <textarea id="adoptionMessage" name="mensaje" placeholder="Cu&eacute;ntanos por qu&eacute; te interesa adoptar o qu&eacute; dudas tienes."></textarea>
+
+            <button type="submit">Guardar y preparar correo</button>
+            <p class="form-note" id="adoptionFeedback"></p>
+        </form>
+    </div>
+</div>
+
+<div class="modal-backdrop" id="detailModal" hidden>
+    <div class="adoption-modal" role="dialog" aria-modal="true" aria-labelledby="detailTitle">
+        <button class="modal-close" type="button" onclick="cerrarDetalleCentro()" aria-label="Cerrar detalles">&times;</button>
+        <span class="eyebrow">Detalles del centro</span>
+        <h2 id="detailTitle"></h2>
+        <p id="detailLocation"></p>
+        <p id="detailPhone"></p>
+        <p id="detailHours"></p>
+
+        <div class="detail-actions">
+            <a class="button-link secondary" id="detailMaps" href="#" target="_blank" rel="noopener">Abrir direcci&oacute;n en Google Maps</a>
+            <button type="button" id="detailCopyButton">Copiar datos</button>
+        </div>
+
+        <div class="feature-band">
+            <div class="feature-panel">
+                <h3>Requisitos sugeridos</h3>
+                <ul class="tip-list" id="detailRequirements"></ul>
+            </div>
+            <div class="feature-panel">
+                <h3>Servicios y horario</h3>
+                <ul class="tip-list" id="detailServices"></ul>
+            </div>
+        </div>
+
+        <div class="feature-panel" style="margin-top:16px;">
+            <h3>Pasos recomendados</h3>
+            <ul class="tip-list" id="detailSteps"></ul>
+        </div>
+    </div>
+</div>
+
+<footer class="site-footer">
+    <strong>HUELLITAS &#128062;</strong>
+    <span>Proyecto escolar de CECyTEM Tultitl&aacute;n - Grupo 404 - Equipo Huellitas</span>
+</footer>
+
+<script>
+const buscadorDirectorio = document.getElementById("buscadorDirectorio");
+const botonesFiltro = document.querySelectorAll(".filter-button");
+const tarjetasDirectorio = document.querySelectorAll(".directory-card");
+const directorioTabs = document.getElementById("directorioTabs");
+const resultadosDirectorio = document.getElementById("resultadosDirectorio");
+const sinResultados = document.getElementById("sinResultados");
+const adoptionModal = document.getElementById("adoptionModal");
+const adoptionForm = document.getElementById("adoptionForm");
+const adoptionCenter = document.getElementById("adoptionCenter");
+const teamEmail = document.getElementById("teamEmail");
+const adoptionFeedback = document.getElementById("adoptionFeedback");
+const detailModal = document.getElementById("detailModal");
+const detailMaps = document.getElementById("detailMaps");
+const detailCopyButton = document.getElementById("detailCopyButton");
+const tabStorageKey = "huellitasCentroDirectorio";
+const favoritesStorageKey = "huellitasFavoritos";
+let filtroActual = "todos";
+let centroActivo = localStorage.getItem(tabStorageKey) || "";
+
+teamEmail.value = localStorage.getItem("huellitasCorreoEquipo") || "";
+
+const detallesCentros = {
+    "Refugio Huellas de Amor": {
+        ubicacion: "Colonia Buenavista, Tultitlan, Estado de Mexico.",
+        telefono: "Por confirmar",
+        horario: "Lunes a sabado, 10:00 a 16:00.",
+        mapa: "https://www.google.com/maps/search/?api=1&query=Colonia+Buenavista+Tultitlan+Estado+de+Mexico",
+        requisitos: ["Identificacion oficial.", "Comprobante de domicilio.", "Entrevista de adopcion responsable.", "Compromiso de vacunacion y seguimiento."],
+        servicios: ["Vacunacion y desparasitacion.", "Esterilizacion.", "Rescate animal.", "Eventos de adopcion."],
+        pasos: ["Agenda una visita.", "Conoce al animal.", "Llena solicitud.", "Prepara casa y seguimiento."]
+    },
+    "Patitas Felices Tultitlan": {
+        ubicacion: "Unidad Morelos 3ra Seccion, Tultitlan.",
+        telefono: "Por confirmar",
+        horario: "Sabado y domingo, 11:00 a 15:00.",
+        mapa: "https://www.google.com/maps/search/?api=1&query=Unidad+Morelos+3ra+Seccion+Tultitlan",
+        requisitos: ["Ser mayor de edad.", "Carta compromiso.", "Espacio seguro en casa.", "Permitir seguimiento post-adopcion."],
+        servicios: ["Atencion veterinaria.", "Voluntariado.", "Programas de adopcion.", "Rescate y rehabilitacion."],
+        pasos: ["Pregunta por mascotas disponibles.", "Elige segun tu estilo de vida.", "Firma compromiso.", "Recibe orientacion de cuidado."]
+    },
+    "Casa Canina Esperanza": {
+        ubicacion: "Fuentes del Valle, Tultitlan.",
+        telefono: "Por confirmar",
+        horario: "Martes a domingo, 10:00 a 17:00.",
+        mapa: "https://www.google.com/maps/search/?api=1&query=Fuentes+del+Valle+Tultitlan",
+        requisitos: ["Identificacion oficial.", "Comprobante de domicilio.", "Visita previa o entrevista.", "Transporte seguro para la mascota."],
+        servicios: ["Resguardo temporal.", "Jornadas de adopcion.", "Atencion medica.", "Esterilizacion."],
+        pasos: ["Solicita informacion.", "Visita el albergue.", "Completa datos.", "Agenda entrega responsable."]
+    },
+    "Refugio Amigos Peludos": {
+        ubicacion: "San Pablo de las Salinas, Tultitlan.",
+        telefono: "Por confirmar",
+        horario: "Sabado y domingo, 10:00 a 14:00.",
+        mapa: "https://www.google.com/maps/search/?api=1&query=San+Pablo+de+las+Salinas+Tultitlan",
+        requisitos: ["Identificacion.", "Entrevista familiar.", "Aceptar esterilizacion si aplica.", "No comprar ni revender animales."],
+        servicios: ["Educacion animal.", "Rescate y proteccion.", "Eventos comunitarios.", "Atencion veterinaria."],
+        pasos: ["Revisa eventos activos.", "Pregunta por requisitos.", "Conoce al animal.", "Da seguimiento despues de adoptar."]
+    },
+    "Albergue Patitas sin Hogar": {
+        ubicacion: "Colonia La Sardana, Tultitlan.",
+        telefono: "Por confirmar",
+        horario: "Lunes a viernes, 9:00 a 15:00.",
+        mapa: "https://www.google.com/maps/search/?api=1&query=Colonia+La+Sardana+Tultitlan",
+        requisitos: ["Ser adoptante responsable.", "Espacio limpio y seguro.", "Compromiso de salud veterinaria.", "Seguimiento post-adopcion."],
+        servicios: ["Recuperacion animal.", "Adopciones seguras.", "Vacunacion.", "Seguimiento post-adopcion."],
+        pasos: ["Llena el formulario.", "Espera contacto del equipo.", "Prepara alimento y cama.", "Realiza adaptacion gradual."]
+    },
+    "Criollos al Rescate": {
+        ubicacion: "Tultitlan, Estado de Mexico.",
+        telefono: "Por confirmar",
+        horario: "Viernes a domingo, 10:00 a 16:00.",
+        mapa: "https://www.google.com/maps/search/?api=1&query=Tultitlan+Estado+de+Mexico+rescate+animal",
+        requisitos: ["Identificacion oficial.", "Compromiso de cuidado responsable.", "Espacio seguro.", "Disponibilidad para seguimiento."],
+        servicios: ["Rescate animal.", "Rehabilitacion.", "Adopcion responsable.", "Voluntariado."],
+        pasos: ["Reporta o agenda visita.", "Pregunta por disponibilidad.", "Llena solicitud.", "Acompana el proceso."]
+    }
+};
+
+function limpiarTexto(texto) {
+    return texto
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "");
+}
+
+function getFavoriteProfileId() {
+    let sesion = null;
+
+    try {
+        sesion = JSON.parse(localStorage.getItem("sesion"));
+    } catch (error) {
+        sesion = null;
+    }
+
+    if (sesion && sesion.email) {
+        return sesion.email;
+    }
+
+    let invitadoId = localStorage.getItem("huellitasInvitadoId");
+
+    if (!invitadoId) {
+        invitadoId = "invitado-" + Date.now();
+        localStorage.setItem("huellitasInvitadoId", invitadoId);
+    }
+
+    return invitadoId;
+}
+
+function readFavorites() {
+    try {
+        return JSON.parse(localStorage.getItem(favoritesStorageKey)) || {};
+    } catch (error) {
+        return {};
+    }
+}
+
+function getProfileFavorites() {
+    const favorites = readFavorites();
+    return favorites[getFavoriteProfileId()] || [];
+}
+
+function saveProfileFavorites(items) {
+    const favorites = readFavorites();
+    const profileId = getFavoriteProfileId();
+    favorites[profileId] = items;
+    localStorage.setItem(favoritesStorageKey, JSON.stringify(favorites));
+    window.dispatchEvent(new CustomEvent("huellitas:favoritesChanged"));
+
+    if (window.huellitasPushFavorites) {
+        window.huellitasPushFavorites(profileId, items);
+    }
+}
+
+function isFavorite(id, kind) {
+    return getProfileFavorites().some((item) => item.id === id && item.kind === kind);
+}
+
+function showDirectoryToast(title, message) {
+    const toast = document.createElement("div");
+    toast.className = "badge-toast";
+    toast.innerHTML = '<strong>' + escapeHtml(title) + '</strong><span>' + escapeHtml(message) + '</span>';
+    document.body.appendChild(toast);
+    requestAnimationFrame(() => toast.classList.add("visible"));
+    setTimeout(() => {
+        toast.classList.remove("visible");
+        setTimeout(() => toast.remove(), 260);
+    }, 2300);
+}
+
+function toggleFavorite(item) {
+    const favorites = getProfileFavorites();
+    const exists = favorites.some((favorite) => favorite.id === item.id && favorite.kind === item.kind);
+    const next = exists
+        ? favorites.filter((favorite) => !(favorite.id === item.id && favorite.kind === item.kind))
+        : [Object.assign({}, item, { addedAt: new Date().toLocaleString("es-MX") })].concat(favorites);
+
+    saveProfileFavorites(next);
+
+    if (!exists && window.huellitasAwardBadge) {
+        window.huellitasAwardBadge("coleccionista-huellitas");
+    }
+
+    showDirectoryToast(
+        exists ? "Favorito retirado" : "Favorito guardado",
+        exists ? "Se quit&oacute; de tu perfil." : (item.title || item.id) + " qued&oacute; guardado en tu perfil."
+    );
+}
+
+function updateFavoriteButton(button) {
+    const active = isFavorite(button.dataset.favoriteId, button.dataset.favoriteKind);
+    button.classList.toggle("active", active);
+    button.setAttribute("aria-pressed", active ? "true" : "false");
+    button.innerHTML = active ? "&#9829;" : "&#9825;";
+}
+
+function initCenterFavorites() {
+    tarjetasDirectorio.forEach((card) => {
+        const info = card.querySelector(".info");
+        const title = card.querySelector("h2");
+        const detalle = detallesCentros[card.dataset.name];
+
+        if (!info || !title || info.querySelector(".favorite-button")) {
+            return;
+        }
+
+        const header = document.createElement("div");
+        header.className = "card-heading";
+        title.insertAdjacentElement("beforebegin", header);
+        header.appendChild(title);
+
+        const button = document.createElement("button");
+        button.className = "favorite-button center-favorite-button";
+        button.type = "button";
+        button.dataset.favoriteKind = "center";
+        button.dataset.favoriteId = card.dataset.name;
+        button.setAttribute("aria-label", "Guardar " + card.dataset.name + " en favoritos");
+        header.appendChild(button);
+        updateFavoriteButton(button);
+
+        button.addEventListener("click", () => {
+            toggleFavorite({
+                kind: "center",
+                id: card.dataset.name,
+                title: title.textContent,
+                subtitle: detalle ? detalle.ubicacion : card.dataset.zone,
+                href: "directorio.html#centros",
+                image: card.querySelector("img") ? card.querySelector("img").getAttribute("src") : ""
+            });
+            updateFavoriteButton(button);
+        });
+    });
+}
+
+function crearTabsDirectorio() {
+    directorioTabs.innerHTML = Array.from(tarjetasDirectorio).map((tarjeta) => {
+        const nombre = tarjeta.dataset.name;
+        const titulo = tarjeta.querySelector("h2").textContent;
+
+        return '<button class="directory-tab" type="button" data-tab-center="' + nombre + '">' + titulo + '</button>';
+    }).join("");
+
+    directorioTabs.querySelectorAll(".directory-tab").forEach((tab) => {
+        tab.addEventListener("click", () => {
+            centroActivo = tab.dataset.tabCenter;
+            localStorage.setItem(tabStorageKey, centroActivo);
+            filtrarDirectorio();
+        });
+    });
+}
+
+function filtrarDirectorio() {
+    const busqueda = limpiarTexto(buscadorDirectorio.value);
+    let visibles = 0;
+    let primerVisible = "";
+    let activoCoincide = false;
+
+    tarjetasDirectorio.forEach((tarjeta) => {
+        const textoTarjeta = limpiarTexto([
+            tarjeta.dataset.name,
+            tarjeta.dataset.zone,
+            tarjeta.dataset.services,
+            tarjeta.textContent
+        ].join(" "));
+        const coincideBusqueda = textoTarjeta.includes(busqueda);
+        const coincideFiltro = filtroActual === "todos" || textoTarjeta.includes(filtroActual);
+        const mostrar = coincideBusqueda && coincideFiltro;
+
+        if (mostrar) {
+            visibles++;
+
+            if (!primerVisible) {
+                primerVisible = tarjeta.dataset.name;
+            }
+
+            if (tarjeta.dataset.name === centroActivo) {
+                activoCoincide = true;
+            }
+        }
+    });
+
+    if (!centroActivo) {
+        centroActivo = primerVisible;
+    }
+
+    const centroVisible = activoCoincide ? centroActivo : primerVisible;
+
+    tarjetasDirectorio.forEach((tarjeta) => {
+        const textoTarjeta = limpiarTexto([
+            tarjeta.dataset.name,
+            tarjeta.dataset.zone,
+            tarjeta.dataset.services,
+            tarjeta.textContent
+        ].join(" "));
+        const coincideBusqueda = textoTarjeta.includes(busqueda);
+        const coincideFiltro = filtroActual === "todos" || textoTarjeta.includes(filtroActual);
+        const mostrar = coincideBusqueda && coincideFiltro;
+        const esActivo = mostrar && tarjeta.dataset.name === centroVisible;
+
+        tarjeta.hidden = !esActivo;
+        tarjeta.classList.toggle("active-directory-card", esActivo);
+    });
+
+    directorioTabs.querySelectorAll(".directory-tab").forEach((tab) => {
+        const tarjeta = document.querySelector('[data-name="' + tab.dataset.tabCenter + '"]');
+        const textoTarjeta = limpiarTexto([
+            tarjeta.dataset.name,
+            tarjeta.dataset.zone,
+            tarjeta.dataset.services,
+            tarjeta.textContent
+        ].join(" "));
+        const coincideBusqueda = textoTarjeta.includes(busqueda);
+        const coincideFiltro = filtroActual === "todos" || textoTarjeta.includes(filtroActual);
+        const mostrar = coincideBusqueda && coincideFiltro;
+
+        tab.hidden = !mostrar;
+        tab.classList.toggle("active", mostrar && tab.dataset.tabCenter === centroVisible);
+    });
+
+    resultadosDirectorio.textContent = visibles === 1
+        ? "1 centro encontrado"
+        : visibles + " centros encontrados";
+    sinResultados.hidden = visibles !== 0;
+}
+
+botonesFiltro.forEach((boton) => {
+    boton.addEventListener("click", () => {
+        botonesFiltro.forEach((item) => item.classList.remove("active"));
+        boton.classList.add("active");
+        filtroActual = boton.dataset.filter;
+        filtrarDirectorio();
+    });
+});
+
+buscadorDirectorio.addEventListener("input", filtrarDirectorio);
+
+function abrirFormularioAdopcion(boton) {
+    adoptionCenter.value = boton.dataset.center;
+    adoptionCenter.dataset.location = boton.dataset.location;
+    adoptionFeedback.textContent = "";
+    adoptionModal.hidden = false;
+    document.body.style.overflow = "hidden";
+    document.getElementById("adoptionName").focus();
+}
+
+function cerrarFormularioAdopcion() {
+    adoptionModal.hidden = true;
+    document.body.style.overflow = "";
+}
+
+function pintarLista(id, items) {
+    document.getElementById(id).innerHTML = items.map((item) => "<li>" + item + "</li>").join("");
+}
+
+function crearTextoCentro(nombre, detalle) {
+    return [
+        nombre,
+        "Direccion: " + detalle.ubicacion,
+        "Telefono: " + detalle.telefono,
+        "Horario: " + detalle.horario,
+        "Google Maps: " + detalle.mapa,
+        "Servicios: " + detalle.servicios.join(" "),
+        "Pasos: " + detalle.pasos.join(" ")
+    ].join("\n");
+}
+
+function copiarConFallback(texto) {
+    const area = document.createElement("textarea");
+    area.value = texto;
+    area.setAttribute("readonly", "");
+    area.style.position = "fixed";
+    area.style.left = "-9999px";
+    document.body.appendChild(area);
+    area.select();
+    document.execCommand("copy");
+    document.body.removeChild(area);
+}
+
+function confirmarCopia(boton) {
+    if (!boton) {
+        return;
+    }
+
+    const textoOriginal = boton.textContent;
+    boton.textContent = "Datos copiados";
+    boton.disabled = true;
+
+    setTimeout(() => {
+        boton.textContent = textoOriginal;
+        boton.disabled = false;
+    }, 1400);
+}
+
+function copiarTextoCentro(texto, boton) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(texto)
+            .then(() => confirmarCopia(boton))
+            .catch(() => {
+                copiarConFallback(texto);
+                confirmarCopia(boton);
+            });
+        return;
+    }
+
+    copiarConFallback(texto);
+    confirmarCopia(boton);
+}
+
+function copiarDatosCentro(boton) {
+    const detalle = detallesCentros[boton.dataset.center];
+
+    if (!detalle) {
+        return;
+    }
+
+    copiarTextoCentro(crearTextoCentro(boton.dataset.center, detalle), boton);
+}
+
+function abrirDetalleCentro(boton) {
+    const detalle = detallesCentros[boton.dataset.center];
+
+    if (!detalle) {
+        return;
+    }
+
+    document.getElementById("detailTitle").textContent = boton.dataset.center;
+    document.getElementById("detailLocation").textContent = "Direccion: " + detalle.ubicacion;
+    document.getElementById("detailPhone").textContent = "Telefono: " + detalle.telefono;
+    document.getElementById("detailHours").textContent = "Horario sugerido: " + detalle.horario;
+    detailMaps.href = detalle.mapa;
+    detailCopyButton.dataset.center = boton.dataset.center;
+    pintarLista("detailRequirements", detalle.requisitos);
+    pintarLista("detailServices", detalle.servicios);
+    pintarLista("detailSteps", detalle.pasos);
+    detailModal.hidden = false;
+    document.body.style.overflow = "hidden";
+}
+
+function cerrarDetalleCentro() {
+    detailModal.hidden = true;
+    document.body.style.overflow = "";
+}
+
+detailCopyButton.addEventListener("click", function() {
+    const detalle = detallesCentros[this.dataset.center];
+
+    if (!detalle) {
+        return;
+    }
+
+    copiarTextoCentro(crearTextoCentro(this.dataset.center, detalle), this);
+});
+
+function resaltarCentroMapa(pin) {
+    const target = typeof pin === "string" ? pin : pin.dataset.mapTarget;
+
+    document.querySelectorAll(".map-pin").forEach((item) => item.classList.remove("active"));
+    document.querySelectorAll(".map-item").forEach((item) => item.classList.remove("active"));
+    document.querySelectorAll(".map-zone-card").forEach((item) => item.classList.remove("active"));
+
+    const activePin = document.querySelector('[data-map-target="' + target + '"]');
+
+    if (activePin) {
+        activePin.classList.add("active");
+    }
+
+    const item = document.querySelector('[data-map-item="' + target + '"]');
+    const zone = document.querySelector('[data-map-zone="' + target + '"]');
+
+    if (item) {
+        item.classList.add("active");
+    }
+
+    if (zone) {
+        zone.classList.add("active");
+    }
+}
+
+function guardarSolicitudAdopcion(solicitud) {
+    const solicitudes = JSON.parse(localStorage.getItem("huellitasSolicitudesAdopcion")) || [];
+    solicitudes.unshift(solicitud);
+    localStorage.setItem("huellitasSolicitudesAdopcion", JSON.stringify(solicitudes));
+}
+
+function prepararCorreoSolicitud(solicitud) {
+    const asunto = "Solicitud de adopcion - " + solicitud.centro;
+    const cuerpo = [
+        "Hola Equipo Huellitas.",
+        "",
+        "Me interesa iniciar una solicitud de adopcion.",
+        "",
+        "Centro: " + solicitud.centro,
+        "Ubicacion: " + solicitud.ubicacion,
+        "Nombre: " + solicitud.nombre,
+        "Telefono: " + solicitud.telefono,
+        "Correo: " + solicitud.correo,
+        "Mascota de interes: " + solicitud.mascota,
+        "",
+        "Mensaje:",
+        solicitud.mensaje || "Sin mensaje adicional.",
+        "",
+        "Fecha de registro: " + solicitud.fecha
+    ].join("\n");
+
+    window.location.href = "mailto:" + solicitud.correoEquipo.replace(/\s/g, "")
+        + "?subject=" + encodeURIComponent(asunto)
+        + "&body=" + encodeURIComponent(cuerpo);
+}
+
+adoptionForm.addEventListener("submit", async function(e) {
+    e.preventDefault();
+
+    const solicitud = {
+        fecha: new Date().toLocaleString("es-MX"),
+        centro: adoptionCenter.value,
+        ubicacion: adoptionCenter.dataset.location || "",
+        nombre: document.getElementById("adoptionName").value.trim(),
+        telefono: document.getElementById("adoptionPhone").value.trim(),
+        correo: document.getElementById("adoptionEmail").value.trim(),
+        mascota: document.getElementById("adoptionPet").value,
+        correoEquipo: teamEmail.value.trim(),
+        mensaje: document.getElementById("adoptionMessage").value.trim()
+    };
+
+    localStorage.setItem("huellitasCorreoEquipo", solicitud.correoEquipo);
+    guardarSolicitudAdopcion(solicitud);
+    if (window.huellitasAwardBadge) {
+        window.huellitasAwardBadge("aliado-adopcion");
+    }
+
+    if (window.huellitasApi && window.huellitasApi.enabled) {
+        try {
+            const data = await window.huellitasApi.request("/api/adoptions", {
+                method: "POST",
+                body: JSON.stringify(solicitud)
+            });
+
+            adoptionFeedback.textContent = data.emailSent
+                ? "Tu solicitud fue registrada y enviada al equipo."
+                : "Tu solicitud fue registrada y quedo lista para revision.";
+            return;
+        } catch (error) {
+            adoptionFeedback.textContent = "Tu solicitud fue registrada en este equipo. No se pudo enviar al servidor: " + error.message;
+            return;
+        }
+    }
+
+    adoptionFeedback.textContent = "Tu solicitud fue registrada. Se abrira tu correo con el mensaje preparado.";
+    prepararCorreoSolicitud(solicitud);
+});
+
+adoptionModal.addEventListener("click", function(e) {
+    if (e.target === adoptionModal) {
+        cerrarFormularioAdopcion();
+    }
+});
+
+detailModal.addEventListener("click", function(e) {
+    if (e.target === detailModal) {
+        cerrarDetalleCentro();
+    }
+});
+
+document.querySelectorAll("[data-map-item], [data-map-zone]").forEach((item) => {
+    item.addEventListener("click", () => {
+        const target = item.dataset.mapItem || item.dataset.mapZone;
+        resaltarCentroMapa(target);
+    });
+});
+
+document.addEventListener("keydown", function(e) {
+    if (e.key === "Escape" && !adoptionModal.hidden) {
+        cerrarFormularioAdopcion();
+    }
+
+    if (e.key === "Escape" && !detailModal.hidden) {
+        cerrarDetalleCentro();
+    }
+});
+
+initCenterFavorites();
+crearTabsDirectorio();
+filtrarDirectorio();
+</script>
+<script src="huellitas.js"></script>
+</body>
+</html>
+

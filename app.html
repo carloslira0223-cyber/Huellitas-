@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Huellitas | Modo continuo</title>
+<link rel="stylesheet" href="huellitas.css">
+</head>
+
+<body class="app-shell-body">
+<iframe class="app-frame" id="huellitasFrame" title="Huellitas" src="pagina.html"></iframe>
+<div class="app-transition" id="appTransition"></div>
+
+<div class="app-welcome" id="appWelcome">
+    <div class="app-welcome-card">
+        <span class="eyebrow">Modo continuo</span>
+        <h1>Huellitas &#128062;</h1>
+        <p>Entra desde aqu&iacute; para mantener la m&uacute;sica viva mientras cambias entre secciones y disfrutar transiciones suaves.</p>
+        <button type="button" id="enterApp">Entrar al sitio</button>
+    </div>
+</div>
+
+<script src="huellitas.js"></script>
+<script>
+const frame = document.getElementById("huellitasFrame");
+const transition = document.getElementById("appTransition");
+const welcome = document.getElementById("appWelcome");
+const enterApp = document.getElementById("enterApp");
+const params = new URLSearchParams(window.location.search);
+const initialPage = params.get("page");
+
+function safePage(page) {
+    if (!page || page.startsWith("http") || page.startsWith("file:") || page.includes("..")) {
+        return "pagina.html";
+    }
+
+    return page;
+}
+
+function navigateFrame(page) {
+    const nextPage = safePage(page);
+    transition.classList.add("active");
+
+    setTimeout(() => {
+        frame.src = nextPage;
+    }, 180);
+}
+
+if (initialPage) {
+    frame.src = safePage(initialPage);
+}
+
+enterApp.addEventListener("click", () => {
+    welcome.hidden = true;
+});
+
+frame.addEventListener("load", () => {
+    setTimeout(() => {
+        transition.classList.remove("active");
+    }, 160);
+});
+
+window.addEventListener("message", (event) => {
+    if (!event.data || typeof event.data !== "object") {
+        return;
+    }
+
+    if (event.data.type === "huellitas:navigate") {
+        navigateFrame(event.data.href);
+    }
+
+    if (event.data.type === "huellitas:settingsChanged" && window.huellitasRefreshSettings) {
+        window.huellitasRefreshSettings();
+    }
+});
+</script>
+</body>
+</html>

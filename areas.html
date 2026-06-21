@@ -1,0 +1,187 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Huellitas | &Aacute;reas naturales</title>
+<link rel="stylesheet" href="huellitas.css">
+</head>
+
+<body>
+<nav class="site-nav">
+    <a class="brand" href="pagina.html" aria-label="Ir al inicio">
+        <img src="assets/imagenes/logo.png" alt="Logo de Huellitas">
+        <span>Huellitas</span>
+    </a>
+
+    <div class="nav-links" aria-label="Navegaci&oacute;n principal">
+        <a class="nav-link" href="pagina.html">Inicio</a>
+        <a class="nav-link" href="jueguitos.html">Juegos</a>
+        <a class="nav-link" href="directorio.html">Directorio</a>
+        <a class="nav-link active" href="areas.html">&Aacute;reas</a>
+        <a class="nav-link" href="domesticos.html">Mascotas</a>
+        <a class="nav-link" href="leyes.html">Leyes</a>
+        <a class="nav-link" href="equipo.html">Equipo</a>
+        <a class="nav-link" href="presentacion.html">Presentaci&oacute;n</a>
+        <a class="nav-link" href="adopcion_huellitas.html">Adopciones</a>
+        <a class="nav-link" href="adoptar.html">Adoptar</a>
+    </div>
+
+    <div class="nav-actions">
+        <button class="icon-button" type="button" data-theme-toggle onclick="toggleDark()" aria-label="Cambiar modo">&#9790;</button>
+        <a class="button-link secondary" href="domesticos.html">Animales dom&eacute;sticos</a>
+    </div>
+</nav>
+
+<main>
+    <header class="hero topic-header areas-header">
+        <div class="hero-inner">
+            <span class="eyebrow">H&aacute;bitats y especies</span>
+            <h1>&Aacute;reas naturales</h1>
+            <p>Proteger los espacios donde viven los animales ayuda a conservar agua, aire limpio, vegetaci&oacute;n nativa y refugios seguros para muchas especies.</p>
+
+            <div class="hero-actions">
+                <button type="button" onclick="document.getElementById('zonas').scrollIntoView({behavior:'smooth'})">Ver zonas</button>
+                <a class="button-link secondary" href="pagina.html#temas">Volver a temas</a>
+            </div>
+        </div>
+    </header>
+
+    <section class="section info-path-section">
+        <div class="quick-guide-grid">
+            <article class="guide-card">
+                <span>01</span>
+                <h3>Observa sin invadir</h3>
+                <p>La fauna necesita distancia. Mirar, fotografiar y aprender sin tocar protege su comportamiento natural.</p>
+            </article>
+            <article class="guide-card">
+                <span>02</span>
+                <h3>Cuida el camino</h3>
+                <p>Usar senderos marcados evita erosión, protege plantas y reduce accidentes dentro del área natural.</p>
+            </article>
+            <article class="guide-card">
+                <span>03</span>
+                <h3>Regresa con tu basura</h3>
+                <p>Una bolsa, botella o envoltura puede lastimar animales y contaminar agua o suelo durante años.</p>
+            </article>
+        </div>
+    </section>
+
+    <section class="section" id="zonas">
+        <div class="section-title">
+            <h2>Cerca del Estado de M&eacute;xico</h2>
+            <p>Estas zonas son ejemplos importantes para entender por qu&eacute; cuidar el territorio tambi&eacute;n es cuidar a los animales.</p>
+        </div>
+
+        <div class="topic-grid">
+            <article class="card topic-card">
+                <img src="https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?auto=format&fit=crop&w=900&q=80" alt="Bosque y sendero natural">
+                <div class="info">
+                    <h2>Sierra de Guadalupe</h2>
+                    <div class="tag-row">
+                        <span class="tag">Tultitl&aacute;n</span>
+                        <span class="tag">Parque estatal</span>
+                    </div>
+                    <p>Comparte territorio con Coacalco, Ecatepec, Tlalnepantla y Tultitl&aacute;n. Es una zona clave para convivencia familiar, senderismo y educaci&oacute;n ambiental.</p>
+                    <ul class="tip-list">
+                        <li>Ayuda a conservar un pulm&oacute;n verde dentro de una zona muy urbanizada.</li>
+                        <li>Sus accesos en Tultitl&aacute;n la vuelven una opci&oacute;n cercana para visitar con respeto.</li>
+                    </ul>
+                </div>
+            </article>
+
+            <article class="card topic-card">
+                <img src="https://images.unsplash.com/photo-1473773508845-188df298d2d1?auto=format&fit=crop&w=900&q=80" alt="Paisaje de humedal con aves">
+                <div class="info">
+                    <h2>Ci&eacute;negas del Lerma</h2>
+                    <div class="tag-row">
+                        <span class="tag">Humedal</span>
+                        <span class="tag">Fauna migratoria</span>
+                    </div>
+                    <p>Protege parte de los humedales que existieron en el Valle de Toluca. Es refugio para patos y cercetas migratorias, y h&aacute;bitat del ajolote del Lerma.</p>
+                    <ul class="tip-list">
+                        <li>No tirar basura evita contaminar el agua donde viven especies sensibles.</li>
+                        <li>Observar aves sin molestarlas protege sus rutas de descanso y alimentaci&oacute;n.</li>
+                    </ul>
+                </div>
+            </article>
+
+            <article class="card topic-card">
+                <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=900&q=80" alt="Montana con bosque y cielo abierto">
+                <div class="info">
+                    <h2>Nevado de Toluca</h2>
+                    <div class="tag-row">
+                        <span class="tag">Alta monta&ntilde;a</span>
+                        <span class="tag">CONANP</span>
+                    </div>
+                    <p>Es un &Aacute;rea de Protecci&oacute;n de Flora y Fauna con bosques, cr&aacute;ter y paisajes de gran valor ecol&oacute;gico. Sus zonas n&uacute;cleo requieren visitas de bajo impacto.</p>
+                    <ul class="tip-list">
+                        <li>Caminar en senderos marcados reduce la erosi&oacute;n y protege plantas nativas.</li>
+                        <li>No alimentar fauna evita cambios peligrosos en su conducta natural.</li>
+                    </ul>
+                </div>
+            </article>
+
+            <article class="card topic-card">
+                <img src="https://images.unsplash.com/photo-1476231682828-37e571bc172f?auto=format&fit=crop&w=900&q=80" alt="Bosque iluminado por el sol">
+                <div class="info">
+                    <h2>Sierra Morelos</h2>
+                    <div class="tag-row">
+                        <span class="tag">Toluca</span>
+                        <span class="tag">Educaci&oacute;n ambiental</span>
+                    </div>
+                    <p>Parque estatal en Toluca y Zinacantepec con vegetaci&oacute;n nativa, senderos e instalaciones para actividades de aprendizaje y convivencia.</p>
+                    <ul class="tip-list">
+                        <li>Cuidar sus &aacute;rboles ayuda a mantener equilibrio ecol&oacute;gico y aire limpio.</li>
+                        <li>Sus espacios educativos sirven para conocer mejor la fauna y flora local.</li>
+                    </ul>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="feature-band">
+            <div class="feature-panel">
+                <h2>&iquest;C&oacute;mo protegemos un h&aacute;bitat?</h2>
+                <ul class="tip-list">
+                    <li>Regresar con toda la basura que llevamos.</li>
+                    <li>Respetar senderos, horarios y zonas restringidas.</li>
+                    <li>No extraer plantas, piedras, nidos ni animales.</li>
+                    <li>Evitar ruido excesivo y fogatas fuera de zonas permitidas.</li>
+                </ul>
+            </div>
+
+            <div class="feature-panel">
+                <h2>Idea para la escuela</h2>
+                <p>El grupo puede elegir un &aacute;rea cercana, investigar qu&eacute; especies viven ah&iacute; y crear una campa&ntilde;a de limpieza o difusi&oacute;n para explicar por qu&eacute; ese lugar importa.</p>
+                <div class="section-actions">
+                    <a class="button-link" href="domesticos.html">Siguiente: dom&eacute;sticos</a>
+                    <a class="button-link secondary" href="leyes.html">Ver leyes</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="section-title">
+            <h2>Fuentes consultadas</h2>
+            <p>Resumen escolar basado en informaci&oacute;n p&uacute;blica de instituciones ambientales.</p>
+        </div>
+        <div class="source-list">
+            <a href="https://sma.edomex.gob.mx/parque-estatal-sierra-guadalupe">Gobierno del Estado de M&eacute;xico: Parque Estatal Sierra de Guadalupe</a>
+            <a href="https://conanp.gob.mx/conanp/dominios/nevadotol/index.php">CONANP: &Aacute;rea de Protecci&oacute;n de Flora y Fauna Nevado de Toluca</a>
+            <a href="https://descubreanp.conanp.gob.mx/es/conanp/ANP/_rid/c7829721a8324b0ea29cb5ef322c9671/_mto/3/_wst/maximized?imp_act=imp_step3&suri=36">CONANP: Ci&eacute;negas del Lerma</a>
+            <a href="https://cepanaf.edomex.gob.mx/parque_sierra_morelos">CEPANAF: Parque Estatal Sierra Morelos</a>
+        </div>
+    </section>
+</main>
+
+<footer class="site-footer">
+    <strong>HUELLITAS &#128062;</strong>
+    <span>Proyecto escolar de CECyTEM Tultitl&aacute;n - Grupo 404 - Equipo Huellitas</span>
+</footer>
+<script src="huellitas.js"></script>
+</body>
+</html>
+

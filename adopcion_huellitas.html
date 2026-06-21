@@ -1,0 +1,917 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Huellitas | Adopciones</title>
+<link rel="stylesheet" href="huellitas.css">
+</head>
+
+<body>
+<nav class="site-nav">
+    <a class="brand" href="pagina.html" aria-label="Ir al inicio">
+        <img src="assets/imagenes/logo.png" alt="Logo de Huellitas">
+        <span>Huellitas</span>
+    </a>
+
+    <div class="nav-links" aria-label="Navegaci&oacute;n principal">
+        <a class="nav-link" href="pagina.html">Inicio</a>
+        <a class="nav-link" href="jueguitos.html">Juegos</a>
+        <a class="nav-link" href="directorio.html">Directorio</a>
+        <a class="nav-link" href="areas.html">&Aacute;reas</a>
+        <a class="nav-link" href="domesticos.html">Mascotas</a>
+        <a class="nav-link" href="leyes.html">Leyes</a>
+        <a class="nav-link" href="equipo.html">Equipo</a>
+        <a class="nav-link" href="presentacion.html">Presentaci&oacute;n</a>
+        <a class="nav-link active" href="adopcion_huellitas.html">Adopciones</a>
+        <a class="nav-link" href="adoptar.html">Adoptar</a>
+    </div>
+
+    <div class="nav-actions">
+        <button class="icon-button" type="button" data-theme-toggle onclick="toggleDark()" aria-label="Cambiar modo">&#9790;</button>
+        <a class="button-link secondary" href="adoptar.html">Solicitud</a>
+    </div>
+</nav>
+
+<main>
+    <header class="hero adoption-gallery-header">
+        <div class="hero-inner">
+            <span class="eyebrow">Galer&iacute;a de adopci&oacute;n responsable</span>
+            <h1>Conoce a las huellitas que buscan hogar</h1>
+            <p>Una adopci&oacute;n responsable empieza con informaci&oacute;n, calma y compromiso. Aqu&iacute; puedes ver mascotas disponibles y pasar directo a la solicitud.</p>
+
+            <div class="hero-actions">
+                <button type="button" onclick="document.getElementById('match').scrollIntoView({behavior:'smooth'})">Hacer match</button>
+                <button type="button" onclick="document.getElementById('mascotas').scrollIntoView({behavior:'smooth'})">Ver mascotas</button>
+                <a class="button-link secondary" href="adoptar.html#checklist">Estoy listo para adoptar?</a>
+            </div>
+        </div>
+    </header>
+
+    <section class="section adoption-match-section" id="match">
+        <div class="section-title">
+            <h2>Match de adopci&oacute;n</h2>
+            <p>Responde r&aacute;pido y Huellitas te recomienda una mascota seg&uacute;n tu tiempo, espacio y estilo de vida.</p>
+        </div>
+
+        <div class="match-layout">
+            <form class="feature-panel match-form" id="adoptionMatchForm">
+                <fieldset class="match-question">
+                    <legend>Tu ritmo diario</legend>
+                    <label class="match-option"><input type="radio" name="energy" value="calma" required> Tranquilo, prefiero paseos suaves.</label>
+                    <label class="match-option"><input type="radio" name="energy" value="medio"> Normal, puedo jugar un rato cada d&iacute;a.</label>
+                    <label class="match-option"><input type="radio" name="energy" value="activo"> Activo, me gustan los paseos largos.</label>
+                </fieldset>
+
+                <fieldset class="match-question">
+                    <legend>Tu espacio</legend>
+                    <label class="match-option"><input type="radio" name="home" value="departamento" required> Departamento o espacio peque&ntilde;o.</label>
+                    <label class="match-option"><input type="radio" name="home" value="casa"> Casa con espacio medio.</label>
+                    <label class="match-option"><input type="radio" name="home" value="patio"> Casa con patio o zona amplia.</label>
+                </fieldset>
+
+                <fieldset class="match-question">
+                    <legend>Compa&ntilde;&iacute;a en casa</legend>
+                    <label class="match-option"><input type="radio" name="routine" value="solo" required> Paso varias horas fuera.</label>
+                    <label class="match-option"><input type="radio" name="routine" value="acompanado"> Hay alguien en casa buena parte del d&iacute;a.</label>
+                    <label class="match-option"><input type="radio" name="routine" value="familia"> Somos familia y podemos turnarnos.</label>
+                </fieldset>
+
+                <fieldset class="match-question">
+                    <legend>Preferencia</legend>
+                    <label class="match-option"><input type="radio" name="pet" value="perro" required> Quiero perro.</label>
+                    <label class="match-option"><input type="radio" name="pet" value="gato"> Quiero gato.</label>
+                    <label class="match-option"><input type="radio" name="pet" value="cualquiera"> Me importa m&aacute;s el match.</label>
+                </fieldset>
+
+                <div class="section-actions left">
+                    <button type="submit">Ver mi match</button>
+                    <button class="secondary" type="reset">Reiniciar</button>
+                </div>
+            </form>
+
+            <aside class="feature-panel match-result-card" id="matchResult" aria-live="polite">
+                <span class="eyebrow">Tu recomendaci&oacute;n</span>
+                <h2>Lista para descubrirse</h2>
+                <p>Cuando respondas el test aparecer&aacute; aqu&iacute; la mascota que mejor va contigo.</p>
+                <div class="match-placeholder">
+                    <span>?</span>
+                </div>
+            </aside>
+        </div>
+    </section>
+
+    <section class="section" id="mascotas">
+        <div class="section-title">
+            <h2>Mascotas en adopci&oacute;n</h2>
+            <p>Filtra por tipo, revisa su ficha y usa el bot&oacute;n de inter&eacute;s para abrir la solicitud con la mascota seleccionada.</p>
+        </div>
+
+        <div class="adoption-search-panel">
+            <div>
+                <label for="adoptionSearch">Buscar mascota</label>
+                <input id="adoptionSearch" placeholder="Nombre, edad, personalidad o zona">
+            </div>
+
+            <div>
+                <label for="adoptionEnergy">Energ&iacute;a</label>
+                <select id="adoptionEnergy">
+                    <option value="">Todas</option>
+                    <option value="calma">Tranquila</option>
+                    <option value="medio">Media</option>
+                    <option value="activo">Activa</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="adoptionHome">Espacio</label>
+                <select id="adoptionHome">
+                    <option value="">Todos</option>
+                    <option value="departamento">Departamento</option>
+                    <option value="casa">Casa</option>
+                    <option value="patio">Patio</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="adoptionStatus">Estado</label>
+                <select id="adoptionStatus">
+                    <option value="">Todos</option>
+                    <option value="Disponible">Disponible</option>
+                    <option value="En proceso">En proceso</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="adoption-toolbar" aria-label="Filtros de adopci&oacute;n">
+            <button class="pet-filter active" type="button" data-adoption-filter="todos">Todos</button>
+            <button class="pet-filter" type="button" data-adoption-filter="perro">Perros</button>
+            <button class="pet-filter" type="button" data-adoption-filter="gato">Gatos</button>
+            <button class="pet-filter secondary" type="button" id="clearAdoptionSearch">Limpiar b&uacute;squeda</button>
+        </div>
+
+        <div class="adoption-gallery-grid" id="adoptionGallery">
+            <article class="adoption-pet-card" data-pet-kind="perro" data-pet-name="Paloma" data-pet-type="Perro">
+                <div class="adoption-pet-media">
+                    <img src="assets/imagenes/1000107792.jpg" alt="Paloma en adopci&oacute;n responsable">
+                    <span class="pet-badge">Perrita</span>
+                </div>
+                <div class="adoption-pet-content">
+                    <span class="eyebrow">Dulce y tranquila</span>
+                    <h2>Paloma</h2>
+                    <p>Ideal para una familia paciente que quiera darle seguridad, cari&ntilde;o y una rutina estable.</p>
+                    <div class="pet-traits">
+                        <span>Compa&ntilde;era</span>
+                        <span>Rutina tranquila</span>
+                        <span>Amor diario</span>
+                    </div>
+                    <a class="button-link" data-adoption-interest href="adoptar.html?mascota=Paloma&tipo=Perro#solicitud">Me interesa</a>
+                </div>
+            </article>
+
+            <article class="adoption-pet-card" data-pet-kind="gato" data-pet-name="Panque" data-pet-type="Gato">
+                <div class="adoption-pet-media">
+                    <img src="assets/imagenes/1000107795.jpg" alt="Panque en adopci&oacute;n responsable">
+                    <span class="pet-badge">Gatito</span>
+                </div>
+                <div class="adoption-pet-content">
+                    <span class="eyebrow">Curioso y observador</span>
+                    <h2>Panque</h2>
+                    <p>Busca un hogar seguro, con paciencia para adaptarse y espacios limpios para descansar.</p>
+                    <div class="pet-traits">
+                        <span>Independiente</span>
+                        <span>Casa segura</span>
+                        <span>Juego suave</span>
+                    </div>
+                    <a class="button-link" data-adoption-interest href="adoptar.html?mascota=Panque&tipo=Gato#solicitud">Me interesa</a>
+                </div>
+            </article>
+
+            <article class="adoption-pet-card" data-pet-kind="perro" data-pet-name="Aruma" data-pet-type="Perro">
+                <div class="adoption-pet-media">
+                    <img src="assets/imagenes/1000107801.jpg" alt="Aruma en adopci&oacute;n responsable">
+                    <span class="pet-badge">Perrita</span>
+                </div>
+                <div class="adoption-pet-content">
+                    <span class="eyebrow">Alegre y sociable</span>
+                    <h2>Aruma</h2>
+                    <p>Perfecta para alguien que pueda acompa&ntilde;arla, jugar con ella y cuidarla con constancia.</p>
+                    <div class="pet-traits">
+                        <span>Juguetona</span>
+                        <span>Paseos</span>
+                        <span>Familia activa</span>
+                    </div>
+                    <a class="button-link" data-adoption-interest href="adoptar.html?mascota=Aruma&tipo=Perro#solicitud">Me interesa</a>
+                </div>
+            </article>
+
+            <article class="adoption-pet-card" data-pet-kind="perro" data-pet-name="Caramelo" data-pet-type="Perro">
+                <div class="adoption-pet-media">
+                    <img src="assets/imagenes/1000107804.jpg" alt="Caramelo en adopci&oacute;n responsable">
+                    <span class="pet-badge">Perrito</span>
+                </div>
+                <div class="adoption-pet-content">
+                    <span class="eyebrow">Noble y cari&ntilde;oso</span>
+                    <h2>Caramelo</h2>
+                    <p>Necesita una familia que lo cuide con respeto, alimento adecuado y visitas veterinarias.</p>
+                    <div class="pet-traits">
+                        <span>Leal</span>
+                        <span>Cuidados b&aacute;sicos</span>
+                        <span>Hogar estable</span>
+                    </div>
+                    <a class="button-link" data-adoption-interest href="adoptar.html?mascota=Caramelo&tipo=Perro#solicitud">Me interesa</a>
+                </div>
+            </article>
+
+            <article class="adoption-pet-card" data-pet-kind="perro" data-pet-name="Oso" data-pet-type="Perro">
+                <div class="adoption-pet-media">
+                    <img src="assets/imagenes/1000107807.jpg" alt="Oso en adopci&oacute;n responsable">
+                    <span class="pet-badge">Perrito</span>
+                </div>
+                <div class="adoption-pet-content">
+                    <span class="eyebrow">Activo y protector</span>
+                    <h2>Oso</h2>
+                    <p>Busca una persona responsable que le d&eacute; paseos, atenci&oacute;n y una adaptaci&oacute;n segura.</p>
+                    <div class="pet-traits">
+                        <span>Energ&iacute;a</span>
+                        <span>Espacio seguro</span>
+                        <span>Gu&iacute;a paciente</span>
+                    </div>
+                    <a class="button-link" data-adoption-interest href="adoptar.html?mascota=Oso&tipo=Perro#solicitud">Me interesa</a>
+                </div>
+            </article>
+
+            <article class="adoption-pet-card" data-pet-kind="perro" data-pet-name="Canelo" data-pet-type="Perro">
+                <div class="adoption-pet-media">
+                    <img src="assets/imagenes/1000107810.jpg" alt="Canelo en adopci&oacute;n responsable">
+                    <span class="pet-badge">Perrito</span>
+                </div>
+                <div class="adoption-pet-content">
+                    <span class="eyebrow">Calmado y noble</span>
+                    <h2>Canelo</h2>
+                    <p>Una buena opci&oacute;n para un hogar que pueda darle paseos tranquilos y mucho cuidado.</p>
+                    <div class="pet-traits">
+                        <span>Noble</span>
+                        <span>Acompa&ntilde;amiento</span>
+                        <span>Compromiso</span>
+                    </div>
+                    <a class="button-link" data-adoption-interest href="adoptar.html?mascota=Canelo&tipo=Perro#solicitud">Me interesa</a>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="adoption-guidance">
+            <article class="feature-panel adoption-message-card">
+                <img src="assets/imagenes/1000107790.jpg" alt="Perrito feliz invitando a adoptar">
+                <div>
+                    <span class="eyebrow">Adopta con conciencia</span>
+                    <h2>No es solo llevarlo a casa</h2>
+                    <p>Adoptar significa dar alimento, tiempo, vacunas, esterilizaci&oacute;n, respeto y un espacio seguro durante muchos a&ntilde;os.</p>
+                </div>
+            </article>
+
+            <article class="feature-panel">
+                <span class="eyebrow">Pasos sugeridos</span>
+                <h2>Antes de llenar la solicitud</h2>
+                <ol class="adoption-step-list">
+                    <li>Elige una mascota seg&uacute;n tu tiempo, espacio y presupuesto.</li>
+                    <li>Haz el checklist para revisar si est&aacute;s preparado.</li>
+                    <li>Llena la solicitud con datos reales y espera seguimiento del equipo.</li>
+                    <li>Confirma requisitos directamente con el centro o refugio.</li>
+                </ol>
+                <div class="section-actions left">
+                    <a class="button-link" href="adoptar.html#checklist">Hacer checklist</a>
+                    <a class="button-link secondary" href="directorio.html">Ver directorio</a>
+                </div>
+            </article>
+        </div>
+    </section>
+</main>
+
+<footer class="site-footer">
+    <strong>HUELLITAS &#128062;</strong>
+    <span>Proyecto escolar de CECyTEM Tultitl&aacute;n - Grupo 404 - Equipo Huellitas</span>
+</footer>
+
+<script>
+const matchForm = document.getElementById("adoptionMatchForm");
+const matchResult = document.getElementById("matchResult");
+const adoptionGallery = document.getElementById("adoptionGallery");
+const adoptionFilters = document.querySelectorAll("[data-adoption-filter]");
+const adoptionSearch = document.getElementById("adoptionSearch");
+const adoptionEnergy = document.getElementById("adoptionEnergy");
+const adoptionHome = document.getElementById("adoptionHome");
+const adoptionStatus = document.getElementById("adoptionStatus");
+const clearAdoptionSearch = document.getElementById("clearAdoptionSearch");
+let adoptionCards = Array.from(document.querySelectorAll("[data-pet-kind]"));
+let currentAdoptionFilter = "todos";
+const favoritesStorageKey = "huellitasFavoritos";
+const extraPetsStorageKey = "huellitasMascotasExtra";
+const petProfiles = {
+    Paloma: { energy: "calma", home: "departamento", status: "Disponible", keywords: "dulce tranquila companera rutina tranquila amor diario familia paciente" },
+    Panque: { energy: "calma", home: "departamento", status: "Disponible", keywords: "curioso observador independiente casa segura juego suave gato" },
+    Aruma: { energy: "activo", home: "casa", status: "Disponible", keywords: "alegre sociable juguetona paseos familia activa acompanada" },
+    Caramelo: { energy: "medio", home: "casa", status: "Disponible", keywords: "noble carinoso leal cuidados basicos hogar estable" },
+    Oso: { energy: "activo", home: "patio", status: "Disponible", keywords: "activo protector energia espacio seguro guia paciente" },
+    Canelo: { energy: "calma", home: "casa", status: "Disponible", keywords: "calmado noble acompanamiento compromiso paseos tranquilos" }
+};
+const petMatches = {
+    Paloma: {
+        nombre: "Paloma",
+        tipo: "Perro",
+        image: "assets/imagenes/1000107792.jpg",
+        href: "adoptar.html?mascota=Paloma&tipo=Perro#solicitud",
+        traits: ["calma", "departamento", "acompanado", "familia", "perro", "cualquiera"],
+        reason: "Va contigo si quieres una compa&ntilde;era dulce, tranquila y de rutina estable."
+    },
+    Panque: {
+        nombre: "Panque",
+        tipo: "Gato",
+        image: "assets/imagenes/1000107795.jpg",
+        href: "adoptar.html?mascota=Panque&tipo=Gato#solicitud",
+        traits: ["calma", "departamento", "solo", "gato", "cualquiera"],
+        reason: "Es buena opci&oacute;n si buscas una mascota curiosa, m&aacute;s independiente y de casa segura."
+    },
+    Aruma: {
+        nombre: "Aruma",
+        tipo: "Perro",
+        image: "assets/imagenes/1000107801.jpg",
+        href: "adoptar.html?mascota=Aruma&tipo=Perro#solicitud",
+        traits: ["medio", "activo", "casa", "patio", "acompanado", "familia", "perro", "cualquiera"],
+        reason: "Combina con alguien alegre que pueda jugar, acompa&ntilde;ar y mantener una rutina constante."
+    },
+    Caramelo: {
+        nombre: "Caramelo",
+        tipo: "Perro",
+        image: "assets/imagenes/1000107804.jpg",
+        href: "adoptar.html?mascota=Caramelo&tipo=Perro#solicitud",
+        traits: ["medio", "casa", "acompanado", "familia", "perro", "cualquiera"],
+        reason: "Te puede quedar si quieres un perrito noble, cari&ntilde;oso y de cuidados diarios claros."
+    },
+    Oso: {
+        nombre: "Oso",
+        tipo: "Perro",
+        image: "assets/imagenes/1000107807.jpg",
+        href: "adoptar.html?mascota=Oso&tipo=Perro#solicitud",
+        traits: ["activo", "patio", "familia", "perro", "cualquiera"],
+        reason: "Va mejor con personas activas, espacio seguro y paciencia para guiarlo."
+    },
+    Canelo: {
+        nombre: "Canelo",
+        tipo: "Perro",
+        image: "assets/imagenes/1000107810.jpg",
+        href: "adoptar.html?mascota=Canelo&tipo=Perro#solicitud",
+        traits: ["calma", "medio", "departamento", "casa", "solo", "acompanado", "perro", "cualquiera"],
+        reason: "Es buen match si buscas un compa&ntilde;ero noble, calmado y de paseos tranquilos."
+    }
+};
+
+function escapeHtml(texto) {
+    return String(texto || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+function readJson(key, fallback) {
+    try {
+        return JSON.parse(localStorage.getItem(key)) || fallback;
+    } catch (error) {
+        return fallback;
+    }
+}
+
+function petKind(tipo) {
+    return String(tipo || "").toLowerCase() === "gato" ? "gato" : "perro";
+}
+
+function petHref(pet) {
+    return "adoptar.html?mascota=" + encodeURIComponent(pet.nombre) + "&tipo=" + encodeURIComponent(pet.tipo) + "#solicitud";
+}
+
+function extraPetToMatch(pet) {
+    const tipoValue = petKind(pet.tipo);
+
+    return {
+        nombre: pet.nombre,
+        tipo: pet.tipo,
+        image: pet.imagen || (tipoValue === "gato" ? "assets/imagenes/1000107795.jpg" : "assets/imagenes/1000107801.jpg"),
+        href: petHref(pet),
+        traits: [pet.energia, pet.espacio, pet.rutina, tipoValue, "cualquiera"].filter(Boolean),
+        reason: "Es una ficha agregada por el equipo: " + escapeHtml(pet.personalidad || "busca un hogar responsable") + "."
+    };
+}
+
+function getExtraPets() {
+    return readJson(extraPetsStorageKey, []);
+}
+
+function normalizeText(text) {
+    return String(text || "")
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "");
+}
+
+function hydrateCardSearchData() {
+    adoptionCards.forEach((card) => {
+        const profile = petProfiles[card.dataset.petName] || {};
+
+        card.dataset.energy = card.dataset.energy || profile.energy || "";
+        card.dataset.home = card.dataset.home || profile.home || "";
+        card.dataset.status = card.dataset.status || profile.status || "Disponible";
+        card.dataset.search = normalizeText([
+            card.dataset.petName,
+            card.dataset.petType,
+            card.textContent,
+            profile.keywords
+        ].join(" "));
+    });
+}
+
+function filtrarMascotasAdopcion() {
+    const query = normalizeText(adoptionSearch ? adoptionSearch.value : "");
+    const energy = adoptionEnergy ? adoptionEnergy.value : "";
+    const home = adoptionHome ? adoptionHome.value : "";
+    const status = adoptionStatus ? adoptionStatus.value : "";
+
+    adoptionCards.forEach((card) => {
+        const kindOk = currentAdoptionFilter === "todos" || card.dataset.petKind === currentAdoptionFilter;
+        const queryOk = !query || (card.dataset.search || "").includes(query);
+        const energyOk = !energy || card.dataset.energy === energy;
+        const homeOk = !home || card.dataset.home === home;
+        const statusOk = !status || card.dataset.status === status;
+
+        card.hidden = !(kindOk && queryOk && energyOk && homeOk && statusOk);
+    });
+}
+
+function getAllPetMatches() {
+    const all = Object.assign({}, petMatches);
+
+    getExtraPets().forEach((pet) => {
+        if (pet.estado !== "Adoptada") {
+            all[pet.nombre] = extraPetToMatch(pet);
+        }
+    });
+
+    return all;
+}
+
+function renderExtraPets() {
+    const extraPets = getExtraPets();
+
+    if (!adoptionGallery) {
+        return;
+    }
+
+    adoptionGallery.querySelectorAll("[data-extra-pet]").forEach((card) => card.remove());
+
+    extraPets.forEach((pet) => {
+        const tipoKind = petKind(pet.tipo);
+        const disponible = pet.estado !== "Adoptada";
+        const href = petHref(pet);
+        const card = document.createElement("article");
+
+        card.className = "adoption-pet-card extra-pet-card";
+        card.dataset.extraPet = "true";
+        card.dataset.petKind = tipoKind;
+        card.dataset.petName = pet.nombre;
+        card.dataset.petType = pet.tipo;
+        card.dataset.energy = pet.energia || "";
+        card.dataset.home = pet.espacio || "";
+        card.dataset.status = pet.estado || "Disponible";
+        card.dataset.search = normalizeText([pet.nombre, pet.tipo, pet.edad, pet.personalidad, pet.historia, pet.estado].join(" "));
+        card.innerHTML = [
+            '<div class="adoption-pet-media">',
+            '<img src="' + escapeHtml(pet.imagen || (tipoKind === "gato" ? "assets/imagenes/1000107795.jpg" : "assets/imagenes/1000107801.jpg")) + '" alt="' + escapeHtml(pet.nombre) + ' en adopci&oacute;n">',
+            '<span class="pet-badge">' + escapeHtml(pet.estado || "Disponible") + '</span>',
+            '</div>',
+            '<div class="adoption-pet-content">',
+            '<span class="eyebrow">Agregada por el equipo</span>',
+            '<h2>' + escapeHtml(pet.nombre) + '</h2>',
+            '<p>' + escapeHtml(pet.historia || "Busca un hogar responsable con paciencia y cuidados diarios.") + '</p>',
+            '<div class="pet-traits">',
+            '<span>' + escapeHtml(pet.tipo) + '</span>',
+            '<span>' + escapeHtml(pet.edad) + '</span>',
+            '<span>' + escapeHtml(pet.personalidad) + '</span>',
+            '</div>',
+            disponible ? '<a class="button-link" data-adoption-interest href="' + href + '">Me interesa</a>' : '<button class="secondary" type="button" disabled>Adoptada</button>',
+            '</div>'
+        ].join("");
+
+        adoptionGallery.appendChild(card);
+    });
+
+    adoptionCards = Array.from(document.querySelectorAll("[data-pet-kind]"));
+}
+
+function getFavoriteProfileId() {
+    let sesion = null;
+
+    try {
+        sesion = JSON.parse(localStorage.getItem("sesion"));
+    } catch (error) {
+        sesion = null;
+    }
+
+    if (sesion && sesion.email) {
+        return sesion.email;
+    }
+
+    let invitadoId = localStorage.getItem("huellitasInvitadoId");
+
+    if (!invitadoId) {
+        invitadoId = "invitado-" + Date.now();
+        localStorage.setItem("huellitasInvitadoId", invitadoId);
+    }
+
+    return invitadoId;
+}
+
+function readFavorites() {
+    try {
+        return JSON.parse(localStorage.getItem(favoritesStorageKey)) || {};
+    } catch (error) {
+        return {};
+    }
+}
+
+function getProfileFavorites() {
+    const favorites = readFavorites();
+    return favorites[getFavoriteProfileId()] || [];
+}
+
+function saveProfileFavorites(items) {
+    const favorites = readFavorites();
+    const profileId = getFavoriteProfileId();
+    favorites[profileId] = items;
+    localStorage.setItem(favoritesStorageKey, JSON.stringify(favorites));
+    window.dispatchEvent(new CustomEvent("huellitas:favoritesChanged"));
+
+    if (window.huellitasPushFavorites) {
+        window.huellitasPushFavorites(profileId, items);
+    }
+}
+
+function isFavorite(id, kind) {
+    return getProfileFavorites().some((item) => item.id === id && item.kind === kind);
+}
+
+function showAdoptionToast(title, message) {
+    const toast = document.createElement("div");
+    toast.className = "badge-toast";
+    toast.innerHTML = '<strong>' + escapeHtml(title) + '</strong><span>' + escapeHtml(message) + '</span>';
+    document.body.appendChild(toast);
+    requestAnimationFrame(() => toast.classList.add("visible"));
+    setTimeout(() => {
+        toast.classList.remove("visible");
+        setTimeout(() => toast.remove(), 260);
+    }, 2300);
+}
+
+function toggleFavorite(item) {
+    const favorites = getProfileFavorites();
+    const exists = favorites.some((favorite) => favorite.id === item.id && favorite.kind === item.kind);
+    const next = exists
+        ? favorites.filter((favorite) => !(favorite.id === item.id && favorite.kind === item.kind))
+        : [Object.assign({}, item, { addedAt: new Date().toLocaleString("es-MX") })].concat(favorites);
+
+    saveProfileFavorites(next);
+
+    if (!exists && window.huellitasAwardBadge) {
+        window.huellitasAwardBadge("coleccionista-huellitas");
+    }
+
+    showAdoptionToast(
+        exists ? "Favorito retirado" : "Favorito guardado",
+        exists ? "Se quit&oacute; de tu perfil." : (item.title || item.id) + " qued&oacute; guardado en tu perfil."
+    );
+}
+
+function updateFavoriteButton(button) {
+    const active = isFavorite(button.dataset.favoriteId, button.dataset.favoriteKind);
+    button.classList.toggle("active", active);
+    button.setAttribute("aria-pressed", active ? "true" : "false");
+    button.innerHTML = active ? "&#9829;" : "&#9825;";
+}
+
+function initPetFavorites() {
+    const allPets = getAllPetMatches();
+
+    adoptionCards.forEach((card) => {
+        const pet = allPets[card.dataset.petName];
+        const media = card.querySelector(".adoption-pet-media");
+
+        if (!pet || !media || media.querySelector(".favorite-button")) {
+            return;
+        }
+
+        const button = document.createElement("button");
+        button.className = "favorite-button pet-favorite-button";
+        button.type = "button";
+        button.dataset.favoriteKind = "pet";
+        button.dataset.favoriteId = pet.nombre;
+        button.dataset.favoriteTitle = pet.nombre;
+        button.dataset.favoriteSubtitle = pet.tipo;
+        button.dataset.favoriteHref = pet.href;
+        button.setAttribute("aria-label", "Guardar " + pet.nombre + " en favoritos");
+        media.appendChild(button);
+        updateFavoriteButton(button);
+
+        button.addEventListener("click", () => {
+            toggleFavorite({
+                kind: "pet",
+                id: pet.nombre,
+                title: pet.nombre,
+                subtitle: pet.tipo,
+                href: pet.href,
+                image: pet.image
+            });
+            updateFavoriteButton(button);
+        });
+    });
+}
+
+function getPetDetail(card) {
+    const allPets = getAllPetMatches();
+    const pet = allPets[card.dataset.petName] || {};
+    const traits = Array.from(card.querySelectorAll(".pet-traits span")).map((item) => item.textContent.trim());
+    const image = card.querySelector("img") ? card.querySelector("img").getAttribute("src") : pet.image;
+
+    return {
+        nombre: card.dataset.petName || pet.nombre || "Mascota",
+        tipo: card.dataset.petType || pet.tipo || "Mascota",
+        image: image || "assets/imagenes/logo.png",
+        estado: card.dataset.status || "Disponible",
+        energia: card.dataset.energy || "medio",
+        espacio: card.dataset.home || "casa",
+        historia: card.querySelector("p") ? card.querySelector("p").textContent.trim() : pet.reason || "",
+        traits: traits,
+        href: pet.href || petHref({ nombre: card.dataset.petName, tipo: card.dataset.petType })
+    };
+}
+
+function ensurePetProfileModal() {
+    let modal = document.getElementById("petProfileModal");
+
+    if (modal) {
+        return modal;
+    }
+
+    modal = document.createElement("div");
+    modal.className = "pet-profile-modal";
+    modal.id = "petProfileModal";
+    modal.hidden = true;
+    modal.innerHTML = [
+        '<div class="pet-profile-card" role="dialog" aria-modal="true" aria-labelledby="petProfileTitle">',
+        '<button class="modal-close" type="button" data-pet-profile-close aria-label="Cerrar ficha">&times;</button>',
+        '<div class="pet-profile-body" id="petProfileBody"></div>',
+        '</div>'
+    ].join("");
+    document.body.appendChild(modal);
+    modal.addEventListener("click", (event) => {
+        if (event.target === modal || event.target.hasAttribute("data-pet-profile-close")) {
+            modal.hidden = true;
+            document.body.style.overflow = "";
+        }
+    });
+    return modal;
+}
+
+function openPetProfile(card) {
+    const pet = getPetDetail(card);
+    const modal = ensurePetProfileModal();
+    const body = modal.querySelector("#petProfileBody");
+
+    body.innerHTML = [
+        '<div class="pet-profile-media">',
+        '<img src="' + escapeHtml(pet.image) + '" alt="Ficha de ' + escapeHtml(pet.nombre) + '">',
+        '<span class="status-badge status-' + normalizeText(pet.estado).replace(/\s+/g, "-") + '">' + escapeHtml(pet.estado) + '</span>',
+        '</div>',
+        '<div class="pet-profile-info">',
+        '<span class="eyebrow">Ficha de adopci&oacute;n</span>',
+        '<h2 id="petProfileTitle">' + escapeHtml(pet.nombre) + '</h2>',
+        '<p>' + escapeHtml(pet.historia) + '</p>',
+        '<div class="pet-profile-stats">',
+        '<span><b>Tipo</b>' + escapeHtml(pet.tipo) + '</span>',
+        '<span><b>Energ&iacute;a</b>' + escapeHtml(pet.energia || "media") + '</span>',
+        '<span><b>Espacio</b>' + escapeHtml(pet.espacio || "hogar seguro") + '</span>',
+        '</div>',
+        '<div class="pet-traits">' + pet.traits.map((trait) => '<span>' + escapeHtml(trait) + '</span>').join("") + '</div>',
+        '<div class="section-actions left">',
+        '<a class="button-link" href="' + escapeHtml(pet.href) + '">Iniciar solicitud</a>',
+        '<button class="secondary" type="button" data-pet-profile-close>Cerrar</button>',
+        '</div>',
+        '</div>'
+    ].join("");
+    modal.hidden = false;
+    document.body.style.overflow = "hidden";
+}
+
+function initPetDetailButtons() {
+    adoptionCards.forEach((card) => {
+        const content = card.querySelector(".adoption-pet-content");
+
+        if (!content || content.querySelector(".pet-detail-button")) {
+            return;
+        }
+
+        const button = document.createElement("button");
+        button.className = "secondary pet-detail-button";
+        button.type = "button";
+        button.textContent = "Ver ficha";
+        button.addEventListener("click", () => openPetProfile(card));
+        content.appendChild(button);
+    });
+}
+
+function scrollToPet(nombre) {
+    const card = document.querySelector('[data-pet-name="' + nombre + '"]');
+
+    if (!card) {
+        return;
+    }
+
+    adoptionCards.forEach((item) => {
+        item.hidden = false;
+    });
+    card.hidden = false;
+    currentAdoptionFilter = "todos";
+    if (adoptionSearch) {
+        adoptionSearch.value = "";
+    }
+    if (adoptionEnergy) {
+        adoptionEnergy.value = "";
+    }
+    if (adoptionHome) {
+        adoptionHome.value = "";
+    }
+    if (adoptionStatus) {
+        adoptionStatus.value = "";
+    }
+    adoptionFilters.forEach((item) => item.classList.toggle("active", item.dataset.adoptionFilter === "todos"));
+    card.scrollIntoView({ behavior: "smooth", block: "center" });
+    card.classList.add("match-highlight");
+    setTimeout(() => card.classList.remove("match-highlight"), 1600);
+}
+
+function calcularMatch(values) {
+    const allPets = getAllPetMatches();
+    let ganador = null;
+    let mejorPuntaje = -1;
+
+    Object.keys(allPets).forEach((nombre) => {
+        const pet = allPets[nombre];
+        let score = 0;
+
+        values.forEach((value) => {
+            if (pet.traits.includes(value)) {
+                score += value === "perro" || value === "gato" ? 3 : 2;
+            }
+        });
+
+        if (score > mejorPuntaje) {
+            mejorPuntaje = score;
+            ganador = pet;
+        }
+    });
+
+    return ganador;
+}
+
+renderExtraPets();
+hydrateCardSearchData();
+
+adoptionFilters.forEach((button) => {
+    button.addEventListener("click", () => {
+        const filter = button.dataset.adoptionFilter || "todos";
+
+        adoptionFilters.forEach((item) => item.classList.remove("active"));
+        button.classList.add("active");
+        currentAdoptionFilter = filter;
+        filtrarMascotasAdopcion();
+    });
+});
+
+[adoptionSearch, adoptionEnergy, adoptionHome, adoptionStatus].forEach((control) => {
+    if (control) {
+        control.addEventListener("input", filtrarMascotasAdopcion);
+        control.addEventListener("change", filtrarMascotasAdopcion);
+    }
+});
+
+if (clearAdoptionSearch) {
+    clearAdoptionSearch.addEventListener("click", () => {
+        currentAdoptionFilter = "todos";
+        adoptionFilters.forEach((item) => item.classList.toggle("active", item.dataset.adoptionFilter === "todos"));
+        adoptionSearch.value = "";
+        adoptionEnergy.value = "";
+        adoptionHome.value = "";
+        adoptionStatus.value = "";
+        filtrarMascotasAdopcion();
+    });
+}
+
+if (matchForm) {
+    matchForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+
+        const data = new FormData(matchForm);
+        const values = ["energy", "home", "routine", "pet"].map((key) => data.get(key));
+        const pet = calcularMatch(values);
+
+        if (!pet) {
+            return;
+        }
+
+        const selected = {
+            nombre: pet.nombre,
+            tipo: pet.tipo,
+            fecha: new Date().toLocaleString("es-MX"),
+            origen: "Match de adopcion"
+        };
+
+        localStorage.setItem("huellitasMascotaInteres", JSON.stringify(selected));
+
+        matchResult.innerHTML = [
+            '<span class="eyebrow">Tu mejor match</span>',
+            '<div class="match-pet-result">',
+            '<img src="' + pet.image + '" alt="' + pet.nombre + ' recomendada por Huellitas">',
+            '<div>',
+            '<h2>' + pet.nombre + '</h2>',
+            '<p>' + pet.reason + '</p>',
+            '<div class="pet-traits">',
+            '<span>' + pet.tipo + '</span>',
+            '<span>Match responsable</span>',
+            '<span>Ficha lista</span>',
+            '</div>',
+            '<div class="section-actions left">',
+            '<button type="button" onclick="scrollToPet(\'' + pet.nombre + '\')">Ver ficha</button>',
+            '<a class="button-link secondary" href="' + pet.href + '">Adoptar</a>',
+            '</div>',
+            '</div>',
+            '</div>'
+        ].join("");
+
+        if (window.huellitasAwardBadge) {
+            window.huellitasAwardBadge("aliado-adopcion");
+        }
+    });
+
+    matchForm.addEventListener("reset", () => {
+        matchResult.innerHTML = [
+            '<span class="eyebrow">Tu recomendaci&oacute;n</span>',
+            '<h2>Lista para descubrirse</h2>',
+            '<p>Cuando respondas el test aparecer&aacute; aqu&iacute; la mascota que mejor va contigo.</p>',
+            '<div class="match-placeholder"><span>?</span></div>'
+        ].join("");
+    });
+}
+
+function initAdoptionInterestLinks() {
+    document.querySelectorAll("[data-adoption-interest]").forEach((link) => {
+        if (link.dataset.interestReady) {
+            return;
+        }
+
+        link.dataset.interestReady = "true";
+        link.addEventListener("click", () => {
+            const card = link.closest("[data-pet-name]");
+            const selected = {
+                nombre: card.dataset.petName,
+                tipo: card.dataset.petType,
+                fecha: new Date().toLocaleString("es-MX")
+            };
+
+            localStorage.setItem("huellitasMascotaInteres", JSON.stringify(selected));
+
+            if (window.huellitasAwardBadge) {
+                window.huellitasAwardBadge("aliado-adopcion");
+            }
+        });
+    });
+}
+
+function refreshAdoptionGallery() {
+    renderExtraPets();
+    hydrateCardSearchData();
+    initPetFavorites();
+    initPetDetailButtons();
+    initAdoptionInterestLinks();
+    filtrarMascotasAdopcion();
+}
+
+initAdoptionInterestLinks();
+initPetFavorites();
+initPetDetailButtons();
+window.addEventListener("huellitas:petsChanged", refreshAdoptionGallery);
+</script>
+<script src="huellitas.js"></script>
+</body>
+</html>
+

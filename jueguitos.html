@@ -1,0 +1,3318 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Huellitas | Juegos</title>
+<link rel="stylesheet" href="huellitas.css">
+</head>
+
+<body>
+<div id="loader">&#128062; Cargando...</div>
+
+<nav class="site-nav">
+    <a class="brand" href="pagina.html" aria-label="Ir al inicio">
+        <img src="assets/imagenes/logo.png" alt="Logo de Huellitas">
+        <span>Huellitas</span>
+    </a>
+
+    <div class="nav-links" aria-label="Navegaci&oacute;n principal">
+        <a class="nav-link" href="pagina.html">Inicio</a>
+        <a class="nav-link active" href="jueguitos.html">Juegos</a>
+        <a class="nav-link" href="directorio.html">Directorio</a>
+        <a class="nav-link" href="areas.html">&Aacute;reas</a>
+        <a class="nav-link" href="domesticos.html">Mascotas</a>
+        <a class="nav-link" href="leyes.html">Leyes</a>
+        <a class="nav-link" href="equipo.html">Equipo</a>
+        <a class="nav-link" href="presentacion.html">Presentaci&oacute;n</a>
+        <a class="nav-link" href="adopcion_huellitas.html">Adopciones</a>
+        <a class="nav-link" href="adoptar.html">Adoptar</a>
+    </div>
+
+    <div class="nav-actions">
+        <button class="icon-button" type="button" data-theme-toggle onclick="toggleDark()" aria-label="Cambiar modo">&#9790;</button>
+        <a class="button-link secondary" href="pagina.html">Regresar</a>
+    </div>
+</nav>
+
+<main>
+    <section class="hero game-header">
+        <div class="hero-inner">
+            <span class="eyebrow">Zona interactiva</span>
+            <h1>Tu Mascota</h1>
+            <p>Cuida a tu compa&ntilde;ero virtual, gana patitas, compra tesoros y completa retos de cuidado animal.</p>
+
+            <div class="hero-actions">
+                <button type="button" onclick="document.getElementById('zonaMichi').scrollIntoView({behavior:'smooth'})">Cuidar mi mascota</button>
+                <a class="button-link secondary" href="adopcion_huellitas.html">Ver adopciones</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="zonaMichi">
+        <div class="section-title">
+            <h2>Mi mascota</h2>
+            <p>La zona de juegos gira alrededor de tu mascota: sus puntos, accesorios, misiones y progreso se guardan en este navegador.</p>
+        </div>
+
+        <div class="pet-dashboard">
+            <article class="pet-stage-panel">
+                <div class="pet-stage-header">
+                    <div>
+                        <span class="eyebrow">Tu compa&ntilde;ero</span>
+                        <h2 id="petDisplayName">Bobby</h2>
+                    </div>
+                    <span class="pet-level-pill">Nivel <b id="petLevel">1</b></span>
+                </div>
+
+                <div class="pet-scene" id="petScene">
+                    <div class="pet-thought" id="petThought" hidden>
+                        <span id="petThoughtText">Estoy listo.</span>
+                    </div>
+                    <div class="pet-bed" id="petBed"></div>
+                    <div class="pet-avatar-wrap">
+                        <span class="pet-accessory pet-head" id="petHead"></span>
+                        <span class="pet-accessory pet-neck" id="petNeck"></span>
+                        <span class="pet-sprite-stack" id="petSpriteStack" role="img" aria-label="Mascota pixel animada">
+                            <span class="pet-base" id="petBase" aria-hidden="true"></span>
+                            <span class="pet-collar-sprite" id="petCollarSprite" aria-hidden="true" hidden></span>
+                            <span class="pet-crown-sprite" id="petCrownSprite" aria-hidden="true" hidden></span>
+                            <span class="pet-ball-sprite" id="petBallSprite" aria-hidden="true" hidden></span>
+                        </span>
+                        <span class="pet-accessory pet-toy" id="petToy"></span>
+                    </div>
+                    <p id="petMood">Listo para jugar.</p>
+                </div>
+
+                <div class="pet-name-row">
+                    <label for="petNameInput">Nombre</label>
+                    <div>
+                        <input id="petNameInput" maxlength="18" placeholder="Bobby">
+                        <button type="button" onclick="cambiarNombreMascota()">Guardar</button>
+                    </div>
+                </div>
+            </article>
+
+            <aside class="pet-side-panel">
+                <div class="pet-wallet">
+                    <div>
+                        <span>Patitas</span>
+                        <strong id="petCoins">0</strong>
+                    </div>
+                    <div>
+                        <span>Puntos</span>
+                        <strong id="petPoints">0</strong>
+                    </div>
+                    <div>
+                        <span>Racha</span>
+                        <strong id="petStreak">0</strong>
+                    </div>
+                </div>
+
+                <div class="pet-stats">
+                    <div class="pet-stat">
+                        <span>Felicidad</span>
+                        <div><b id="statHappy"></b></div>
+                    </div>
+                    <div class="pet-stat">
+                        <span>Salud</span>
+                        <div><b id="statHealth"></b></div>
+                    </div>
+                    <div class="pet-stat">
+                        <span>Energ&iacute;a</span>
+                        <div><b id="statEnergy"></b></div>
+                    </div>
+                    <div class="pet-stat">
+                        <span>Confianza</span>
+                        <div><b id="statBond"></b></div>
+                    </div>
+                </div>
+
+                <div class="pet-actions" id="petActions"></div>
+                <p class="pet-action-note" id="petActionNote">Alimentar cuesta patitas; descansar, jugar, charlar y asear tienen espera para que el progreso sea justo.</p>
+            </aside>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="mission-layout">
+            <article class="feature-panel">
+                <span class="eyebrow">Misiones</span>
+                <h2>Retos del d&iacute;a</h2>
+                <p>Completa acciones para reclamar patitas extra.</p>
+                <div class="mission-list" id="missionList"></div>
+            </article>
+
+            <article class="feature-panel">
+                <span class="eyebrow">Marcador</span>
+                <h2>Tabla de cuidadores</h2>
+                <p>Los mejores puntajes se guardan por usuario.</p>
+                <div class="saved-list" id="leaderboardPets"></div>
+            </article>
+        </div>
+    </section>
+
+    <section class="section" id="arcadePerruno">
+        <div class="section-title">
+            <h2>Arcade Perruno</h2>
+            <p>Reta tu memoria, reflejos y cuidado responsable. Cada minijuego suma patitas para tu mascota virtual.</p>
+        </div>
+
+        <div class="arcade-shell">
+            <div class="arcade-console-top">
+                <div>
+                    <span class="eyebrow">Consola Huellitas</span>
+                    <h3>Elige tu reto</h3>
+                    <p>Los juegos finales quedan ordenados por habilidad: reflejos, memoria, cuidado y aprendizaje.</p>
+                </div>
+                <div class="arcade-console-pet" data-mini-pet></div>
+            </div>
+
+            <div class="game-picker" aria-label="Seleccionar juego">
+                <button class="active" type="button" data-game-tab="catch" onclick="seleccionarJuego('catch')">&#127873; Premios</button>
+                <button type="button" data-game-tab="clean" onclick="seleccionarJuego('clean')">&#129532; Ba&ntilde;o</button>
+                <button type="button" data-game-tab="simon" onclick="seleccionarJuego('simon')">&#128276; Sim&oacute;n</button>
+                <button type="button" data-game-tab="maze" onclick="seleccionarJuego('maze')">&#129513; Laberinto</button>
+                <button type="button" data-game-tab="guardians" onclick="seleccionarJuego('guardians')">&#128737; Guardianes</button>
+                <button type="button" data-game-tab="word" onclick="seleccionarJuego('word')">&#128269; Sopa</button>
+                <button type="button" data-game-tab="memory" onclick="seleccionarJuego('memory')">&#129504; Memorama</button>
+                <button type="button" data-game-tab="cat" onclick="seleccionarJuego('cat')">&#128008; Gatito</button>
+            </div>
+
+            <div class="arcade-stage">
+                <article class="arcade-game-panel active" id="game-catch" data-game-panel>
+                    <div class="game-title-row">
+                        <div>
+                            <span class="eyebrow">Reflejos</span>
+                            <h2>Atrapa Premios</h2>
+                            <p>Encuentra premios buenos antes de que el tablero cambie. Cada acierto sube la racha.</p>
+                        </div>
+                        <span class="game-icon-badge">&#127873;</span>
+                    </div>
+                    <div class="game-meta">
+                        <span id="catchTimer">Tiempo: 20</span>
+                        <span id="catchScore">Premios: 0</span>
+                    </div>
+                    <div class="catch-board" id="catchBoard"></div>
+                    <button type="button" onclick="iniciarAtrapaPremios()">Iniciar reto</button>
+                </article>
+
+                <article class="arcade-game-panel" id="game-clean" data-game-panel hidden>
+                    <div class="game-title-row">
+                        <div>
+                            <span class="eyebrow">Higiene</span>
+                            <h2>Ba&ntilde;o Express</h2>
+                            <p>Limpia a tu mascota con rapidez. Quita lodo, gotas y pulguitas para mejorar su salud.</p>
+                        </div>
+                        <span class="game-icon-badge">&#129532;</span>
+                    </div>
+                    <div class="game-meta">
+                        <span id="cleanTimer">Tiempo: 18</span>
+                        <span id="cleanScore">Limpieza: 0/8</span>
+                    </div>
+                    <div class="clean-board" id="cleanBoard"></div>
+                    <button type="button" onclick="iniciarLimpiezaExpress()">Iniciar limpieza</button>
+                </article>
+
+                <article class="arcade-game-panel" id="game-simon" data-game-panel hidden>
+                    <div class="game-title-row">
+                        <div>
+                            <span class="eyebrow">Memoria</span>
+                            <h2>Sim&oacute;n Perruno</h2>
+                            <p>Observa la secuencia y repite las acciones. Cada ronda exige m&aacute;s concentraci&oacute;n.</p>
+                        </div>
+                        <span class="game-icon-badge">&#128276;</span>
+                    </div>
+                    <div class="game-meta">
+                        <span id="simonRound">Ronda: 0</span>
+                        <span id="simonBest">Mejor: 0</span>
+                    </div>
+                    <div class="simon-pad" id="simonPad">
+                        <button class="simon-btn bark" type="button" data-simon="bark" onclick="tocarSimon('bark')">Ladrar</button>
+                        <button class="simon-btn sit" type="button" data-simon="sit" onclick="tocarSimon('sit')">Sentarse</button>
+                        <button class="simon-btn jump" type="button" data-simon="jump" onclick="tocarSimon('jump')">Brincar</button>
+                        <button class="simon-btn paw" type="button" data-simon="paw" onclick="tocarSimon('paw')">Patita</button>
+                    </div>
+                    <button type="button" onclick="iniciarSimonPerruno()">Iniciar Simon</button>
+                    <p class="game-result" id="simonStatus">Listo para memorizar.</p>
+                </article>
+
+                <article class="arcade-game-panel" id="game-maze" data-game-panel hidden>
+                    <div class="game-title-row">
+                        <div>
+                            <span class="eyebrow">Estrategia</span>
+                            <h2>Laberinto de Croquetas</h2>
+                            <p>Mueve al perrito hasta el plato. Menos movimientos significa mejor recompensa.</p>
+                        </div>
+                        <span class="game-icon-badge">&#129513;</span>
+                    </div>
+                    <div class="game-meta">
+                        <span id="mazeMoves">Movimientos: 0</span>
+                        <span id="mazeGoal">Meta: plato</span>
+                    </div>
+                    <div class="maze-grid" id="mazeGrid"></div>
+                    <div class="maze-controls" aria-label="Controles del laberinto">
+                        <button type="button" onclick="moverLaberinto('up')">&#8593;</button>
+                        <button type="button" onclick="moverLaberinto('left')">&#8592;</button>
+                        <button type="button" onclick="moverLaberinto('down')">&#8595;</button>
+                        <button type="button" onclick="moverLaberinto('right')">&#8594;</button>
+                    </div>
+                    <button class="secondary" type="button" onclick="reiniciarLaberinto()">Reiniciar laberinto</button>
+                    <p class="game-result" id="mazeStatus"></p>
+                </article>
+
+                <article class="arcade-game-panel" id="game-guardians" data-game-panel hidden>
+                    <div class="game-title-row">
+                        <div>
+                            <span class="eyebrow">Cuidado responsable</span>
+                            <h2>Guardianes de Patitas</h2>
+                            <p>Elige una mascota y responde misiones con tiempo para mantenerla feliz, sana y segura.</p>
+                        </div>
+                        <span class="game-icon-badge">&#128737;</span>
+                    </div>
+                    <div class="guardian-start" id="guardianStart">
+                        <div class="guardian-pet-select" id="guardianPetSelect">
+                            <button class="active" type="button" data-guardian-pet="dog" onclick="seleccionarGuardianMascota('dog')">&#128054; Perrito</button>
+                            <button type="button" data-guardian-pet="cat" onclick="seleccionarGuardianMascota('cat')">&#128049; Gatito</button>
+                            <button type="button" data-guardian-pet="rabbit" onclick="seleccionarGuardianMascota('rabbit')">&#128007; Conejito</button>
+                            <button type="button" data-guardian-pet="bird" onclick="seleccionarGuardianMascota('bird')">&#128038; Ave</button>
+                        </div>
+                        <p>Ser&aacute;s un guardi&aacute;n que toma decisiones r&aacute;pidas para cuidar y amar a su mascota.</p>
+                        <button type="button" onclick="iniciarGuardianesPatitas()">Iniciar Guardianes</button>
+                    </div>
+                    <div class="guardian-game" id="guardianGame" hidden>
+                        <div class="guardian-pet-stage">
+                            <span id="guardianPetIcon">&#128054;</span>
+                            <div>
+                                <strong id="guardianLevel">Nivel 1: Agua y comida</strong>
+                                <span id="guardianMission">Misi&oacute;n de cuidado</span>
+                            </div>
+                        </div>
+                        <div class="game-meta">
+                            <span id="guardianTimer">Tiempo: 15</span>
+                            <span id="guardianScore">Puntos: 0</span>
+                            <span id="guardianProgress">Misi&oacute;n 1/10</span>
+                        </div>
+                        <div class="happiness-meter">
+                            <span>Felicidad</span>
+                            <b><i id="guardianHappinessBar"></i></b>
+                            <strong id="guardianHappinessText">70%</strong>
+                        </div>
+                        <h3 id="guardianQuestion">Pregunta</h3>
+                        <div class="guardian-options" id="guardianOptions"></div>
+                        <p class="game-result" id="guardianFeedback"></p>
+                    </div>
+                </article>
+
+                <article class="arcade-game-panel" id="game-word" data-game-panel hidden>
+                    <div class="game-title-row">
+                        <div>
+                            <span class="eyebrow">Observaci&oacute;n</span>
+                            <h2>Sopa de Letras Huellitas</h2>
+                            <p>Encuentra palabras de cuidado responsable. Puedes seleccionar con mouse o dedo.</p>
+                        </div>
+                        <span class="game-icon-badge">&#128269;</span>
+                    </div>
+                    <div class="game-meta">
+                        <span id="wordTimer">Tiempo: 180</span>
+                        <span id="wordScore">Puntos: 0</span>
+                        <span id="wordHints">Pistas: 3</span>
+                    </div>
+                    <div class="word-game-layout">
+                        <div class="word-grid" id="wordGrid"></div>
+                        <div class="word-side">
+                            <h3>Palabras</h3>
+                            <div class="word-list" id="wordList"></div>
+                            <button type="button" onclick="iniciarSopaHuellitas()">Iniciar sopa</button>
+                            <button class="secondary" type="button" onclick="usarPistaSopa()">Usar pista</button>
+                            <button class="secondary" type="button" onclick="finalizarSopaHuellitas(true)">Terminar</button>
+                        </div>
+                    </div>
+                    <p class="game-result" id="wordResult">Presiona iniciar para generar una sopa nueva.</p>
+                </article>
+
+                <article class="arcade-game-panel" id="game-memory" data-game-panel hidden>
+                    <div class="game-title-row">
+                        <div>
+                            <span class="eyebrow">Memoria visual</span>
+                            <h2>Memorama Huellitas</h2>
+                            <p>Encuentra parejas relacionadas con mascotas y sus cuidados. Elige dificultad para empezar.</p>
+                        </div>
+                        <span class="game-icon-badge">&#129504;</span>
+                    </div>
+                    <div class="memory-levels">
+                        <button class="active" type="button" data-memory-level="easy" onclick="elegirNivelMemorama('easy')">F&aacute;cil</button>
+                        <button type="button" data-memory-level="medium" onclick="elegirNivelMemorama('medium')">Medio</button>
+                        <button type="button" data-memory-level="hard" onclick="elegirNivelMemorama('hard')">Dif&iacute;cil</button>
+                    </div>
+                    <div class="game-meta">
+                        <span id="memoryTimer">Tiempo: 120</span>
+                        <span id="memoryScore">Puntos: 0</span>
+                        <span id="memoryAttempts">Intentos: 0</span>
+                        <span id="memoryPairs">Parejas: 0/4</span>
+                    </div>
+                    <div class="memory-board" id="memoryBoard"></div>
+                    <div class="arcade-actions">
+                        <button type="button" onclick="iniciarMemoramaHuellitas()">Iniciar memorama</button>
+                        <button class="secondary" type="button" onclick="reiniciarMemorama()">Jugar otra vez</button>
+                    </div>
+                    <p class="game-result" id="memoryFeedback">Encuentra las parejas y aprende a cuidar mejor a tus mascotas.</p>
+                </article>
+
+                <article class="arcade-game-panel" id="game-cat" data-game-panel hidden>
+                    <div class="game-title-row">
+                        <div>
+                            <span class="eyebrow">Reflejos seguros</span>
+                            <h2>Gatito Travieso</h2>
+                            <p>Mueve la canasta y atrapa objetos seguros. Evita lo peligroso y no dejes caer lo bueno.</p>
+                        </div>
+                        <span class="game-icon-badge">&#128008;</span>
+                    </div>
+                    <div class="game-meta">
+                        <span id="catTimer">Tiempo: 45</span>
+                        <span id="catScore">Puntos: 0</span>
+                        <span id="catLives">Vidas: 3</span>
+                        <span id="catLevel">Nivel: 1</span>
+                    </div>
+                    <div class="cat-field" id="catField">
+                        <div class="cat-table">&#128049;</div>
+                        <div class="cat-basket" id="catBasket">&#129531;</div>
+                    </div>
+                    <div class="game-meta">
+                        <span id="catGood">Buenos: 0</span>
+                        <span id="catAvoided">Malos evitados: 0</span>
+                    </div>
+                    <div class="arcade-actions">
+                        <button type="button" onclick="iniciarGatitoTravieso()">Iniciar Gatito Travieso</button>
+                        <button class="secondary" type="button" onclick="finalizarGatitoTravieso(true)">Terminar</button>
+                    </div>
+                    <p class="game-result" id="catFeedback">Atrapa estambre, juguete, comida y agua. Evita cable, vidrio y chocolate.</p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="section-title">
+            <h2>Tienda de tesoros</h2>
+            <p>Compra accesorios con patitas. Tu inventario queda arriba para equipar r&aacute;pido lo que ya ganaste.</p>
+        </div>
+
+        <div class="shop-status">
+            <div>
+                <span>Patitas disponibles</span>
+                <strong id="shopCoins">0</strong>
+            </div>
+            <p>Alimentar cuesta <b id="feedCostLabel">6</b> patitas. Las dem&aacute;s acciones se refrescan con tiempo para que no se farmee.</p>
+        </div>
+
+        <div class="shop-layout">
+            <div class="shop-grid" id="shopGrid"></div>
+
+            <aside class="shop-side">
+                <article class="feature-panel inventory-panel">
+                    <span class="eyebrow">Inventario</span>
+                    <h2>Equipar</h2>
+                    <div class="inventory-list" id="inventoryList"></div>
+                </article>
+
+                <article class="feature-panel cart-panel">
+                    <span class="eyebrow">Carrito</span>
+                    <h2>Tu compra</h2>
+                    <div class="cart-list" id="cartList"></div>
+                    <div class="cart-total">
+                        <span>Total</span>
+                        <strong id="cartTotal">0</strong>
+                    </div>
+                    <p class="cart-help" id="cartHelp">Agrega tesoros para comprar.</p>
+                    <button id="buyCartButton" type="button" onclick="comprarCarrito()">Comprar tesoros</button>
+                    <button id="clearCartButton" class="secondary" type="button" onclick="vaciarCarrito()">Vaciar carrito</button>
+                </article>
+            </aside>
+        </div>
+    </section>
+</main>
+
+<footer class="site-footer">
+    <strong>HUELLITAS &#128062;</strong>
+    <span>Proyecto escolar de CECyTEM Tultitl&aacute;n - Grupo 404 - Equipo Huellitas</span>
+</footer>
+
+<script>
+const scoreStorageKey = "huellitasPuntajesJuego";
+const currentPlayer = getPlayer();
+const currentProfileId = currentPlayer.id || "invitado";
+const legacyPetStateKey = "huellitasMichiEstado";
+const legacyInventoryKey = "huellitasMichiInventario";
+const legacyMissionsKey = "huellitasMichiMisiones";
+const legacyCooldownStorageKey = "huellitasMascotaCooldowns";
+const petStoragePrefix = "huellitasMichi:" + encodeURIComponent(currentProfileId) + ":";
+const petStateKey = petStoragePrefix + "estado";
+const inventoryKey = petStoragePrefix + "inventario";
+const missionsKey = petStoragePrefix + "misiones";
+const cooldownStorageKey = petStoragePrefix + "cooldowns";
+const simonBestKey = petStoragePrefix + "simonBest";
+const todayKey = new Date().toLocaleDateString("es-MX");
+const barkAudio = new Audio("assets/sonidos/ladrido.mp3");
+const correctAudio = new Audio("assets/sonidos/correcto.mp3");
+const incorrectAudio = new Audio("assets/sonidos/incorrecto.mp3");
+barkAudio.preload = "auto";
+correctAudio.preload = "auto";
+incorrectAudio.preload = "auto";
+
+function migratePetStorage() {
+    const migrationKey = petStoragePrefix + "migrado";
+    const legacyOwnerKey = "huellitasMichiMigracionOwner";
+    const legacyOwner = localStorage.getItem(legacyOwnerKey);
+    const canClaimLegacy = !legacyOwner || legacyOwner === currentProfileId;
+
+    if (localStorage.getItem(migrationKey)) {
+        return;
+    }
+
+    if (!canClaimLegacy) {
+        localStorage.setItem(migrationKey, "true");
+        return;
+    }
+
+    if (!localStorage.getItem(petStateKey) && localStorage.getItem(legacyPetStateKey)) {
+        localStorage.setItem(petStateKey, localStorage.getItem(legacyPetStateKey));
+        localStorage.setItem(legacyOwnerKey, currentProfileId);
+    }
+
+    if (!localStorage.getItem(inventoryKey) && localStorage.getItem(legacyInventoryKey)) {
+        localStorage.setItem(inventoryKey, localStorage.getItem(legacyInventoryKey));
+        localStorage.setItem(legacyOwnerKey, currentProfileId);
+    }
+
+    if (!localStorage.getItem(missionsKey) && localStorage.getItem(legacyMissionsKey)) {
+        localStorage.setItem(missionsKey, localStorage.getItem(legacyMissionsKey));
+        localStorage.setItem(legacyOwnerKey, currentProfileId);
+    }
+
+    if (!localStorage.getItem(cooldownStorageKey) && localStorage.getItem(legacyCooldownStorageKey)) {
+        localStorage.setItem(cooldownStorageKey, localStorage.getItem(legacyCooldownStorageKey));
+        localStorage.setItem(legacyOwnerKey, currentProfileId);
+    }
+
+    if (!localStorage.getItem(simonBestKey) && localStorage.getItem("huellitasSimonBest")) {
+        localStorage.setItem(simonBestKey, localStorage.getItem("huellitasSimonBest"));
+        localStorage.setItem(legacyOwnerKey, currentProfileId);
+    }
+
+    localStorage.setItem(migrationKey, "true");
+}
+
+migratePetStorage();
+
+const defaultState = {
+    name: "Bobby",
+    coins: 65,
+    points: 0,
+    level: 1,
+    streak: 0,
+    bestStreak: 0,
+    stats: {
+        happy: 72,
+        health: 76,
+        energy: 68,
+        bond: 32
+    },
+    equipped: {
+        head: "",
+        neck: "",
+        toy: "",
+        bed: ""
+    }
+};
+
+const shopItems = [
+    { id: "mono-rojo", name: "Mo&ntilde;o rojo", slot: "head", emoji: "&#127872;", price: 35, desc: "Un toque tierno para la cabeza." },
+    { id: "corona-sol", name: "Corona sol", slot: "head", emoji: "&#128081;", price: 80, desc: "Para una mascota de nivel alto." },
+    { id: "collar-verde", name: "Collar", slot: "neck", emoji: "&#128062;", price: 30, desc: "Una capita pixel que queda pegada al perrito." },
+    { id: "placa-huella", name: "Placa huella", slot: "neck", emoji: "&#127991;&#65039;", price: 45, desc: "Identificaci&oacute;n responsable." },
+    { id: "pelota", name: "Pelota", slot: "toy", emoji: "&#9917;", price: 25, desc: "Sube felicidad al equiparla." },
+    { id: "camita", name: "Camita", slot: "bed", emoji: "&#128719;&#65039;", price: 70, desc: "Descanso seguro." },
+    { id: "casita", name: "Casita", slot: "bed", emoji: "&#127968;", price: 95, desc: "Un espacio propio." }
+];
+
+const itemAliases = {
+    "raton-juguete": "pelota",
+    peluche: "pelota"
+};
+
+const missionBase = [
+    { id: "feed", title: "Alimenta a tu mascota", goal: 1, reward: 12 },
+    { id: "catch", title: "Gana Atrapa Premios", goal: 1, reward: 20 },
+    { id: "quiz", title: "Responde 3 aciertos", goal: 3, reward: 18 },
+    { id: "shop", title: "Compra 1 tesoro", goal: 1, reward: 15 }
+];
+
+const actionConfig = {
+    feed: {
+        icon: "&#129367;",
+        label: "Alimentar",
+        cost: 6,
+        cooldown: 22000,
+        points: 5,
+        happy: 4,
+        health: 8,
+        energy: 4,
+        bond: 2,
+        mission: "feed",
+        done: "Comida lista. Gracias por cuidarme.",
+        wait: "Todavia estoy digiriendo."
+    },
+    play: {
+        icon: "&#129525;",
+        label: "Jugar",
+        cost: 0,
+        cooldown: 36000,
+        points: 8,
+        happy: 10,
+        health: 0,
+        energy: -8,
+        bond: 5,
+        done: "Ese juego estuvo buenisimo.",
+        wait: "Dame tantito aire y jugamos otra vez."
+    },
+    rest: {
+        icon: "&#128716;",
+        label: "Dormir",
+        cost: 0,
+        cooldown: 75000,
+        points: 4,
+        happy: 2,
+        health: 5,
+        energy: 14,
+        bond: 1,
+        done: "Ya descanse. Me siento mejor.",
+        wait: "Ya dormi hace poquito."
+    },
+    talk: {
+        icon: "&#128172;",
+        label: "Charlar",
+        cost: 0,
+        cooldown: 52000,
+        points: 5,
+        happy: 4,
+        health: 0,
+        energy: 0,
+        bond: 9,
+        done: "Me gusta cuando platicas conmigo.",
+        wait: "Estoy pensando que responderte."
+    },
+    clean: {
+        icon: "&#129532;",
+        label: "Asear",
+        cost: 0,
+        cooldown: 46000,
+        points: 6,
+        happy: 3,
+        health: 10,
+        energy: -2,
+        bond: 4,
+        done: "Quede limpiecito.",
+        wait: "Ahorita sigo limpio."
+    }
+};
+
+const quizQuestions = [
+    {
+        text: "Si un gato nuevo llega a casa, que conviene hacer primero?",
+        options: ["Darle un espacio tranquilo", "Banarlo de inmediato", "Presentarlo a todos corriendo"],
+        correct: 0
+    },
+    {
+        text: "Que ayuda a una mascota a no perderse?",
+        options: ["Identificacion", "No darle agua", "Dejarla salir sola"],
+        correct: 0
+    },
+    {
+        text: "Cual es una senal para ir al veterinario?",
+        options: ["No come y esta decaido", "Duerme despues de jugar", "Toma agua normal"],
+        correct: 0
+    },
+    {
+        text: "Que decision es responsable antes de adoptar?",
+        options: ["Revisar tiempo y presupuesto", "Adoptar por impulso", "Elegir solo por foto"],
+        correct: 0
+    },
+    {
+        text: "Que necesita un gato para entretenerse?",
+        options: ["Juego seguro y rascador", "Solo encierro", "Comida humana diaria"],
+        correct: 0
+    }
+];
+
+const careCases = [
+    {
+        text: "Tu mascota tiro su agua mientras estabas fuera.",
+        options: [
+            { text: "Limpiar y dejar agua fresca", good: true, feedback: "Bien: agua limpia y espacio seguro." },
+            { text: "Reganarlo sin revisar nada", good: false, feedback: "Mejor revisa la causa y evita castigos." },
+            { text: "No volver a ponerle agua", good: false, feedback: "El agua siempre debe estar disponible." }
+        ]
+    },
+    {
+        text: "Quieres comprar un juguete nuevo.",
+        options: [
+            { text: "Elegir uno seguro y resistente", good: true, feedback: "Correcto: seguridad antes que apariencia." },
+            { text: "Elegir piezas muy pequenas", good: false, feedback: "Podria tragarlas o lastimarse." },
+            { text: "Darle cables para morder", good: false, feedback: "Eso puede ser peligroso." }
+        ]
+    },
+    {
+        text: "Tu mascota esta escondida por ruido fuerte.",
+        options: [
+            { text: "Darle calma y un refugio", good: true, feedback: "Perfecto: necesita sentirse seguro." },
+            { text: "Sacarlo a la fuerza", good: false, feedback: "Eso aumenta miedo y estres." },
+            { text: "Perseguirlo para grabarlo", good: false, feedback: "No es cuidado responsable." }
+        ]
+    }
+];
+
+const foodItems = [
+    { name: "Croquetas", icon: "&#129367;", safe: true, feedback: "Bien: alimento pensado para mascotas." },
+    { name: "Agua fresca", icon: "&#128167;", safe: true, feedback: "Perfecto: hidratarse siempre ayuda." },
+    { name: "Pollo cocido sin huesos", icon: "&#127831;", safe: true, feedback: "Correcto: simple y sin condimentos." },
+    { name: "Chocolate", icon: "&#127851;", safe: false, feedback: "No: el chocolate puede ser peligroso." },
+    { name: "Cebolla", icon: "&#129477;", safe: false, feedback: "No: puede hacerle dano." },
+    { name: "Basura", icon: "&#128465;", safe: false, feedback: "No: puede traer bacterias o objetos peligrosos." },
+    { name: "Zanahoria", icon: "&#129365;", safe: true, feedback: "Bien: en porciones pequenas puede ser snack." },
+    { name: "Huesos cocidos", icon: "&#129460;", safe: false, feedback: "No: pueden astillarse y lastimar." }
+];
+
+const simonActions = ["bark", "sit", "jump", "paw"];
+const mazeLayout = [
+    "S..#...",
+    ".#.#.#.",
+    ".#...#.",
+    "...#.#.",
+    "##.#...",
+    "...##.#",
+    ".#....G"
+];
+
+let state = loadState();
+let inventory = loadInventory();
+let cart = [];
+let missions = loadMissions();
+let cooldowns = loadCooldowns();
+let catchTimer = null;
+let catchActive = false;
+let catchTimeLeft = 20;
+let catchHits = 0;
+let quizIndex = 0;
+let quizAnswered = false;
+let quizGood = 0;
+let careIndex = 0;
+let thoughtTimer = null;
+let thoughtHideTimer = null;
+let cleanTimer = null;
+let cleanActive = false;
+let cleanTimeLeft = 18;
+let cleanHits = 0;
+let cleanSpots = [];
+let runnerTimer = null;
+let runnerActive = false;
+let runnerDistance = 0;
+let runnerBones = 0;
+let runnerLives = 3;
+let runnerObstacleX = 0;
+let runnerBoneX = 0;
+let runnerJumping = false;
+let simonSequence = [];
+let simonInputIndex = 0;
+let simonPlaying = false;
+let simonBest = Number(localStorage.getItem(simonBestKey) || 0);
+let foodTimer = null;
+let foodActive = false;
+let foodLocked = false;
+let foodRound = 0;
+let foodScore = 0;
+let foodCombo = 0;
+let foodTimeLeft = 5;
+let currentFood = null;
+let boneIndex = 0;
+let bonePosition = 0;
+let boneRound = 1;
+let boneScore = 0;
+let boneCanGuess = false;
+let boneShuffling = false;
+let boneShuffleStep = 0;
+let boneShuffleTimer = null;
+let mazePosition = { row: 0, col: 0 };
+let mazeMoves = 0;
+
+function readJson(key, fallback) {
+    try {
+        return JSON.parse(localStorage.getItem(key)) || fallback;
+    } catch (error) {
+        return fallback;
+    }
+}
+
+function escapeHtml(text) {
+    return String(text || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+function clamp(value) {
+    return Math.max(0, Math.min(100, value));
+}
+
+function normalizeItemId(id) {
+    return itemAliases[id] || id || "";
+}
+
+function normalizeItemList(ids) {
+    const normalized = [];
+
+    (Array.isArray(ids) ? ids : []).forEach((rawId) => {
+        const id = normalizeItemId(rawId);
+
+        if (id && getItem(id) && !normalized.includes(id)) {
+            normalized.push(id);
+        }
+    });
+
+    return normalized;
+}
+
+function normalizeEquippedItems(equipped) {
+    const next = Object.assign({}, defaultState.equipped, equipped || {});
+
+    Object.keys(next).forEach((slot) => {
+        const id = normalizeItemId(next[slot]);
+        const item = getItem(id);
+        next[slot] = item && item.slot === slot ? id : "";
+    });
+
+    return next;
+}
+
+function loadState() {
+    const saved = readJson(petStateKey, {});
+    const next = Object.assign({}, defaultState, saved);
+    next.stats = Object.assign({}, defaultState.stats, saved.stats || {});
+    next.equipped = normalizeEquippedItems(saved.equipped);
+    return next;
+}
+
+function calculateLevel() {
+    return Math.max(1, Math.floor(state.points / 120) + 1);
+}
+
+function saveState() {
+    state.level = calculateLevel();
+    state.bestStreak = Math.max(state.bestStreak || 0, state.streak || 0);
+    state.equipped = normalizeEquippedItems(state.equipped);
+    localStorage.setItem(petStateKey, JSON.stringify(state));
+    guardarPuntaje();
+}
+
+function loadInventory() {
+    const rawInventory = readJson(inventoryKey, []);
+    const normalized = normalizeItemList(rawInventory);
+
+    if (JSON.stringify(rawInventory) !== JSON.stringify(normalized)) {
+        localStorage.setItem(inventoryKey, JSON.stringify(normalized));
+    }
+
+    return normalized;
+}
+
+function saveInventory() {
+    inventory = normalizeItemList(inventory);
+    localStorage.setItem(inventoryKey, JSON.stringify(inventory));
+}
+
+function loadMissions() {
+    const stored = readJson(missionsKey, null);
+
+    if (stored && stored.date === todayKey) {
+        return stored;
+    }
+
+    return {
+        date: todayKey,
+        items: missionBase.map((mission) => Object.assign({}, mission, { progress: 0, claimed: false }))
+    };
+}
+
+function saveMissions() {
+    localStorage.setItem(missionsKey, JSON.stringify(missions));
+}
+
+function loadCooldowns() {
+    return readJson(cooldownStorageKey, {});
+}
+
+function saveCooldowns() {
+    localStorage.setItem(cooldownStorageKey, JSON.stringify(cooldowns));
+}
+
+function getActionRemaining(type) {
+    return Math.max(0, (cooldowns[type] || 0) - Date.now());
+}
+
+function formatTime(ms) {
+    const totalSeconds = Math.ceil(ms / 1000);
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = totalSeconds % 60;
+
+    if (minutes <= 0) {
+        return seconds + "s";
+    }
+
+    return minutes + ":" + String(seconds).padStart(2, "0");
+}
+
+function getItem(id) {
+    const normalizedId = normalizeItemId(id);
+    return shopItems.find((item) => item.id === normalizedId);
+}
+
+function getPlayer() {
+    let session = null;
+
+    try {
+        session = JSON.parse(localStorage.getItem("sesion"));
+    } catch (error) {
+        session = null;
+    }
+
+    if (session && session.email) {
+        return {
+            id: session.email,
+            nombre: session.nombre || "Jugador",
+            email: session.email,
+            foto: session.foto || "assets/imagenes/logo.png",
+            invitado: false
+        };
+    }
+
+    let invitadoId = localStorage.getItem("huellitasInvitadoId");
+
+    if (!invitadoId) {
+        invitadoId = "invitado-" + Date.now();
+        localStorage.setItem("huellitasInvitadoId", invitadoId);
+    }
+
+    return {
+        id: invitadoId,
+        nombre: "Invitado",
+        email: "",
+        foto: "assets/imagenes/logo.png",
+        invitado: true
+    };
+}
+
+function addPoints(points, coins, message) {
+    const levelBefore = state.level || calculateLevel();
+
+    state.points += points;
+    state.coins += coins || 0;
+    state.stats.happy = clamp(state.stats.happy + Math.ceil(points / 6));
+    state.stats.bond = clamp(state.stats.bond + Math.ceil(points / 10));
+    saveState();
+    revisarInsignias();
+    renderAll();
+    celebrarMichi(state.level > levelBefore ? "Subiste a nivel " + state.level + ". Tu mascota desbloqueo un escenario nuevo." : (message || "Reto completado. Tu mascota esta feliz."));
+}
+
+function updateMission(id, amount) {
+    const mission = missions.items.find((item) => item.id === id);
+
+    if (!mission || mission.claimed) {
+        return;
+    }
+
+    mission.progress = Math.min(mission.goal, mission.progress + (amount || 1));
+    saveMissions();
+}
+
+function claimMission(id) {
+    const mission = missions.items.find((item) => item.id === id);
+
+    if (!mission || mission.claimed || mission.progress < mission.goal) {
+        return;
+    }
+
+    const levelBefore = state.level || calculateLevel();
+
+    mission.claimed = true;
+    state.coins += mission.reward;
+    state.points += mission.reward;
+    saveMissions();
+    saveState();
+    revisarInsignias();
+    renderAll();
+    celebrarMichi(state.level > levelBefore ? "Nivel " + state.level + " desbloqueado por completar retos." : "Mision completada. Ganaste " + mission.reward + " patitas.");
+}
+
+function renderPet() {
+    const head = getItem(state.equipped.head);
+    const neck = getItem(state.equipped.neck);
+    const toy = getItem(state.equipped.toy);
+    const bed = getItem(state.equipped.bed);
+    const scene = document.getElementById("petScene");
+    const crownSprite = document.getElementById("petCrownSprite");
+    const collarSprite = document.getElementById("petCollarSprite");
+    const ballSprite = document.getElementById("petBallSprite");
+    const crownEquipped = head && head.id === "corona-sol";
+    const collarEquipped = neck && neck.id === "collar-verde";
+    const ballEquipped = toy && toy.id === "pelota";
+
+    scene.className = "pet-scene " + getLevelTheme();
+    document.getElementById("petDisplayName").textContent = state.name;
+    document.getElementById("petNameInput").value = state.name;
+    document.getElementById("petLevel").textContent = state.level;
+    document.getElementById("petCoins").textContent = state.coins;
+    document.getElementById("petPoints").textContent = state.points;
+    document.getElementById("petStreak").textContent = state.bestStreak;
+    document.getElementById("shopCoins").textContent = state.coins;
+    document.getElementById("feedCostLabel").textContent = actionConfig.feed.cost;
+    document.getElementById("petHead").innerHTML = head && !crownEquipped ? head.emoji : "";
+    document.getElementById("petNeck").innerHTML = neck && !collarEquipped ? neck.emoji : "";
+    document.getElementById("petToy").innerHTML = toy && !ballEquipped ? toy.emoji : "";
+    document.getElementById("petBed").innerHTML = bed ? bed.emoji : "";
+    crownSprite.hidden = !crownEquipped;
+    collarSprite.hidden = !collarEquipped;
+    ballSprite.hidden = !ballEquipped;
+    renderMiniPetSprites();
+    document.getElementById("petMood").textContent = getMood();
+    renderStat("statHappy", state.stats.happy);
+    renderStat("statHealth", state.stats.health);
+    renderStat("statEnergy", state.stats.energy);
+    renderStat("statBond", state.stats.bond);
+}
+
+function getMiniPetSpriteMarkup(extraClass) {
+    const head = getItem(state.equipped.head);
+    const neck = getItem(state.equipped.neck);
+    const toy = getItem(state.equipped.toy);
+    const crownEquipped = head && head.id === "corona-sol";
+    const collarEquipped = neck && neck.id === "collar-verde";
+    const ballEquipped = toy && toy.id === "pelota";
+
+    return [
+        '<span class="mini-pet-sprite ' + (extraClass || "") + '">',
+        '<span class="mini-pet-base"></span>',
+        collarEquipped ? '<span class="mini-pet-collar"></span>' : "",
+        crownEquipped ? '<span class="mini-pet-crown"></span>' : "",
+        ballEquipped ? '<span class="mini-pet-ball"></span>' : "",
+        '</span>'
+    ].join("");
+}
+
+function renderMiniPetSprites() {
+    if (!document.querySelectorAll) {
+        return;
+    }
+
+    document.querySelectorAll("[data-mini-pet]").forEach((target) => {
+        target.innerHTML = getMiniPetSpriteMarkup("");
+    });
+}
+
+function restartPetSpriteAnimation() {
+    if (!document.querySelectorAll) {
+        return;
+    }
+
+    const layers = Array.from(document.querySelectorAll(".pet-base, .pet-collar-sprite, .pet-crown-sprite, .pet-ball-sprite, .mini-pet-base, .mini-pet-collar, .mini-pet-crown, .mini-pet-ball, .sprite-preview-base, .sprite-preview-layer"));
+
+    layers.forEach((layer) => {
+        layer.style.animation = "none";
+    });
+
+    void document.body.offsetWidth;
+
+    window.requestAnimationFrame(() => {
+        layers.forEach((layer) => {
+            layer.style.animation = "";
+        });
+    });
+}
+
+function refreshPetSpritesOnEntry() {
+    renderMiniPetSprites();
+    restartPetSpriteAnimation();
+    window.setTimeout(restartPetSpriteAnimation, 90);
+    window.setTimeout(restartPetSpriteAnimation, 260);
+}
+
+function getLevelTheme() {
+    if (state.level >= 8) {
+        return "level-night";
+    }
+
+    if (state.level >= 6) {
+        return "level-festival";
+    }
+
+    if (state.level >= 4) {
+        return "level-sky";
+    }
+
+    if (state.level >= 2) {
+        return "level-garden";
+    }
+
+    return "level-home";
+}
+
+function celebrarMichi(message) {
+    const scene = document.getElementById("petScene");
+    const mood = document.getElementById("petMood");
+
+    if (!scene) {
+        return;
+    }
+
+    const previousBurst = scene.querySelector(".michi-star-burst");
+
+    if (previousBurst) {
+        previousBurst.remove();
+    }
+
+    if (message && mood) {
+        mood.textContent = message;
+    }
+
+    const burst = document.createElement("div");
+    burst.className = "michi-star-burst";
+
+    Array.from({ length: 14 }).forEach((_, index) => {
+        const star = document.createElement("span");
+        star.innerHTML = "&#10022;";
+        star.style.setProperty("--star-x", (18 + Math.random() * 64) + "%");
+        star.style.setProperty("--star-y", (18 + Math.random() * 54) + "%");
+        star.style.setProperty("--star-size", (18 + Math.random() * 18) + "px");
+        star.style.animationDelay = (index * 35) + "ms";
+        burst.appendChild(star);
+    });
+
+    scene.appendChild(burst);
+    window.setTimeout(() => burst.remove(), 1200);
+}
+
+function playBarkSound() {
+    barkAudio.pause();
+    barkAudio.currentTime = 0;
+    barkAudio.volume = 0.6;
+    barkAudio.play().catch(() => {});
+}
+
+function playGameSound(kind) {
+    const audio = kind === "bad" ? incorrectAudio : correctAudio;
+
+    audio.pause();
+    audio.currentTime = 0;
+    audio.volume = kind === "bad" ? 0.48 : 0.54;
+    audio.play().catch(() => {});
+}
+
+function getPetThought() {
+    if (state.coins < actionConfig.feed.cost) {
+        return "Necesito patitas para mi comidita.";
+    }
+
+    if (state.stats.energy < 42) {
+        return "Tengo suenito. Me vendria bien dormir.";
+    }
+
+    if (state.stats.health < 48) {
+        return "Me siento raro. Un aseo y cuidados me ayudan.";
+    }
+
+    if (state.stats.happy < 50) {
+        return "Jugamos un ratito?";
+    }
+
+    if (state.stats.bond < 45) {
+        return "Me gusta cuando me hablas.";
+    }
+
+    const happyThoughts = [
+        "Estoy feliz contigo.",
+        "Hoy quiero ganar patitas.",
+        "Me siento seguro aqui.",
+        "Gracias por cuidarme."
+    ];
+
+    return happyThoughts[Math.floor(Math.random() * happyThoughts.length)];
+}
+
+function showPetThought(message, withSound) {
+    const thought = document.getElementById("petThought");
+    const text = document.getElementById("petThoughtText");
+
+    if (!thought || !text) {
+        return;
+    }
+
+    clearTimeout(thoughtHideTimer);
+    text.textContent = message || getPetThought();
+    thought.hidden = false;
+    thought.classList.add("visible");
+
+    if (withSound) {
+        playBarkSound();
+    }
+
+    thoughtHideTimer = window.setTimeout(() => {
+        thought.classList.remove("visible");
+        thought.hidden = true;
+    }, 5200);
+}
+
+function startPetThoughts() {
+    clearInterval(thoughtTimer);
+    window.setTimeout(() => showPetThought(getPetThought(), false), 900);
+    thoughtTimer = window.setInterval(() => {
+        showPetThought(getPetThought(), true);
+    }, 18000);
+}
+
+function renderStat(id, value) {
+    const bar = document.getElementById(id);
+    bar.style.width = clamp(value) + "%";
+    bar.textContent = clamp(value) + "%";
+}
+
+function renderActions() {
+    const container = document.getElementById("petActions");
+
+    container.innerHTML = Object.keys(actionConfig).map((type) => {
+        const action = actionConfig[type];
+        const remaining = getActionRemaining(type);
+        const disabled = remaining > 0 || state.coins < action.cost;
+        const detail = remaining > 0
+            ? "Disponible en " + formatTime(remaining)
+            : action.cost > 0 && state.coins < action.cost
+                ? "Faltan " + (action.cost - state.coins) + " patitas"
+            : action.cost > 0
+                ? "Cuesta " + action.cost + " patitas"
+                : "Sin costo";
+
+        return [
+            '<button class="pet-action-button" type="button" onclick="accionCuidado(\'' + type + '\')" ' + (disabled ? "disabled" : "") + '>',
+            '<span>' + action.icon + " " + action.label + '</span>',
+            '<small>' + detail + '</small>',
+            '</button>'
+        ].join("");
+    }).join("");
+
+    const note = document.getElementById("petActionNote");
+    const nextReady = Object.keys(actionConfig)
+        .map((type) => getActionRemaining(type))
+        .filter((remaining) => remaining > 0)
+        .sort((a, b) => a - b)[0];
+
+    note.textContent = nextReady
+        ? "La proxima accion se refresca en " + formatTime(nextReady) + "."
+        : "Todo listo: elige una accion para cuidar a tu mascota.";
+}
+
+function getMood() {
+    const average = (state.stats.happy + state.stats.health + state.stats.energy + state.stats.bond) / 4;
+
+    if (average >= 82) {
+        return state.name + " esta feliz y brillante.";
+    }
+
+    if (average >= 60) {
+        return state.name + " esta tranquilo.";
+    }
+
+    return state.name + " necesita cuidados.";
+}
+
+function renderMissions() {
+    document.getElementById("missionList").innerHTML = missions.items.map((mission) => {
+        const ready = mission.progress >= mission.goal;
+        const button = mission.claimed
+            ? '<button class="secondary" type="button" disabled>Reclamada</button>'
+            : '<button type="button" onclick="claimMission(\'' + mission.id + '\')" ' + (ready ? "" : "disabled") + '>Reclamar +' + mission.reward + '</button>';
+
+        return [
+            '<article class="mission-item">',
+            '<div>',
+            '<strong>' + mission.title + '</strong>',
+            '<span>' + mission.progress + '/' + mission.goal + ' completado</span>',
+            '</div>',
+            button,
+            '</article>'
+        ].join("");
+    }).join("");
+}
+
+function renderShop() {
+    inventory = normalizeItemList(inventory);
+    cart = normalizeItemList(cart);
+
+    document.getElementById("shopGrid").innerHTML = shopItems.map((item) => {
+        const owned = inventory.includes(item.id);
+        const inCart = cart.includes(item.id);
+
+        return [
+            '<article class="shop-item">',
+            '<div class="shop-emoji">' + getItemIconMarkup(item, false) + '</div>',
+            '<div>',
+            '<span class="eyebrow">' + slotName(item.slot) + '</span>',
+            '<h3>' + item.name + '</h3>',
+            '<p>' + item.desc + '</p>',
+            '<strong>' + item.price + ' patitas</strong>',
+            '</div>',
+            owned ? '<button class="secondary" type="button" disabled>Comprado</button>' : '<button type="button" onclick="agregarCarrito(\'' + item.id + '\')" ' + (inCart ? "disabled" : "") + '>' + (inCart ? "En carrito" : "Agregar") + '</button>',
+            '</article>'
+        ].join("");
+    }).join("");
+}
+
+function renderCart() {
+    cart = normalizeItemList(cart);
+    const cartList = document.getElementById("cartList");
+    const total = cart.reduce((sum, id) => {
+        const item = getItem(id);
+        return sum + (item ? item.price : 0);
+    }, 0);
+    const buyButton = document.getElementById("buyCartButton");
+    const clearButton = document.getElementById("clearCartButton");
+    const cartHelp = document.getElementById("cartHelp");
+
+    if (!cart.length) {
+        cartList.innerHTML = '<div class="empty-state"><strong>Tu carrito esta listo.</strong><span>Agrega alimento o accesorios para cuidar a tu mascota.</span></div>';
+    } else {
+        cartList.innerHTML = cart.map((id) => {
+            const item = getItem(id);
+
+            if (!item) {
+                return "";
+            }
+
+            return [
+                '<article class="cart-item">',
+                getItemIconMarkup(item, true),
+                '<strong>' + item.name + '</strong>',
+                '<button class="secondary" type="button" onclick="quitarCarrito(\'' + id + '\')">Quitar</button>',
+                '</article>'
+            ].join("");
+        }).join("");
+    }
+
+    document.getElementById("cartTotal").textContent = total;
+
+    if (!cart.length) {
+        buyButton.disabled = true;
+        clearButton.disabled = true;
+        cartHelp.textContent = "Agrega tesoros para comprar.";
+    } else if (state.coins < total) {
+        buyButton.disabled = true;
+        clearButton.disabled = false;
+        cartHelp.textContent = "Te faltan " + (total - state.coins) + " patitas.";
+    } else {
+        buyButton.disabled = false;
+        clearButton.disabled = false;
+        cartHelp.textContent = "Listo para comprar con tus patitas.";
+    }
+}
+
+function renderInventory() {
+    const inventoryList = document.getElementById("inventoryList");
+    inventory = normalizeItemList(inventory);
+
+    if (!inventory.length) {
+        inventoryList.innerHTML = '<div class="empty-state"><strong>Aun no hay tesoros.</strong><span>Compra accesorios en la tienda para personalizar a tu mascota.</span></div>';
+        return;
+    }
+
+    inventoryList.innerHTML = inventory.map((id) => {
+        const item = getItem(id);
+
+        if (!item) {
+            return "";
+        }
+
+        const equipped = state.equipped[item.slot] === id;
+        return [
+            '<article class="inventory-item">',
+            getItemIconMarkup(item, true),
+            '<div><strong>' + item.name + '</strong><small>' + slotName(item.slot) + '</small></div>',
+            '<button type="button" onclick="equiparItem(\'' + id + '\')">' + (equipped ? "Quitar" : "Equipar") + '</button>',
+            '</article>'
+        ].join("");
+    }).join("");
+}
+
+function renderLeaderboard() {
+    const scores = readJson(scoreStorageKey, [])
+        .sort((a, b) => (b.mejorPuntaje || 0) - (a.mejorPuntaje || 0))
+        .slice(0, 5);
+
+    if (!scores.length) {
+        document.getElementById("leaderboardPets").innerHTML = '<div class="empty-state"><strong>Aun no hay puntajes.</strong><span>Completa minijuegos para aparecer en la tabla.</span></div>';
+        return;
+    }
+
+    document.getElementById("leaderboardPets").innerHTML = scores.map((score, index) => {
+        return [
+            '<article class="score-row score-row-avatar">',
+            '<span class="score-position">#' + (index + 1) + '</span>',
+            '<img class="score-avatar" src="' + escapeHtml(score.foto || "assets/imagenes/logo.png") + '" alt="">',
+            '<strong>' + escapeHtml(score.nombre) + '</strong>',
+            '<span>' + (score.mejorPuntaje || 0) + ' pts</span>',
+            '</article>'
+        ].join("");
+    }).join("");
+}
+
+function renderAll() {
+    renderPet();
+    renderActions();
+    renderMissions();
+    renderShop();
+    renderCart();
+    renderInventory();
+    renderLeaderboard();
+}
+
+function slotName(slot) {
+    const names = {
+        head: "Cabeza",
+        neck: "Collar",
+        toy: "Juguete",
+        bed: "Descanso"
+    };
+    return names[slot] || "Tesoro";
+}
+
+function getItemIconMarkup(item, compact) {
+    const spriteClasses = {
+        "corona-sol": "sprite-crown-preview",
+        "collar-verde": "sprite-collar-preview",
+        pelota: "sprite-ball-preview"
+    };
+    const spriteClass = item && spriteClasses[item.id];
+
+    if (spriteClass) {
+        return [
+            '<span class="' + (compact ? "item-sprite-icon" : "shop-sprite-preview") + '" aria-hidden="true">',
+            '<span class="sprite-preview-base"></span>',
+            '<span class="sprite-preview-layer ' + spriteClass + '"></span>',
+            '</span>'
+        ].join("");
+    }
+
+    return '<span>' + (item ? item.emoji : "") + '</span>';
+}
+
+function cambiarNombreMascota() {
+    const nextName = document.getElementById("petNameInput").value.trim();
+
+    if (!nextName) {
+        return;
+    }
+
+    state.name = nextName.slice(0, 18);
+    saveState();
+    renderAll();
+}
+
+function accionCuidado(type) {
+    const action = actionConfig[type];
+
+    if (!action) {
+        return;
+    }
+
+    const remaining = getActionRemaining(type);
+
+    if (remaining > 0) {
+        showPetThought(action.wait + " Faltan " + formatTime(remaining) + ".", true);
+        renderActions();
+        return;
+    }
+
+    if (state.coins < action.cost) {
+        showPetThought("Necesito " + action.cost + " patitas para comer.", true);
+        document.getElementById("petMood").textContent = "Te faltan patitas para alimentar.";
+        renderActions();
+        return;
+    }
+
+    const levelBefore = state.level || calculateLevel();
+
+    state.coins -= action.cost;
+    state.points += action.points;
+    state.stats.happy = clamp(state.stats.happy + action.happy);
+    state.stats.health = clamp(state.stats.health + action.health);
+    state.stats.energy = clamp(state.stats.energy + action.energy);
+    state.stats.bond = clamp(state.stats.bond + action.bond);
+    cooldowns[type] = Date.now() + action.cooldown;
+
+    if (action.mission) {
+        updateMission(action.mission, 1);
+    }
+
+    saveCooldowns();
+    saveState();
+    revisarInsignias();
+    renderAll();
+    showPetThought(action.done, true);
+
+    if (state.level > levelBefore) {
+        celebrarMichi("Subiste a nivel " + state.level + ". Tu mascota cambio su escenario.");
+    }
+}
+
+function agregarCarrito(id) {
+    const normalizedId = normalizeItemId(id);
+
+    if (getItem(normalizedId) && !cart.includes(normalizedId) && !inventory.includes(normalizedId)) {
+        cart.push(normalizedId);
+        renderShop();
+        renderCart();
+    }
+}
+
+function quitarCarrito(id) {
+    const normalizedId = normalizeItemId(id);
+    cart = cart.filter((itemId) => normalizeItemId(itemId) !== normalizedId);
+    renderShop();
+    renderCart();
+}
+
+function vaciarCarrito() {
+    cart = [];
+    renderShop();
+    renderCart();
+}
+
+function comprarCarrito() {
+    cart = normalizeItemList(cart);
+    const total = cart.reduce((sum, id) => sum + getItem(id).price, 0);
+
+    if (!cart.length || state.coins < total) {
+        return;
+    }
+
+    cart.forEach((id) => {
+        if (!inventory.includes(id)) {
+            inventory.push(id);
+        }
+    });
+    state.coins -= total;
+    updateMission("shop", 1);
+    saveInventory();
+    saveState();
+    vaciarCarrito();
+    renderAll();
+    celebrarMichi("Tesoro nuevo guardado. Tu mascota tiene mas estilo.");
+}
+
+function equiparItem(id) {
+    const normalizedId = normalizeItemId(id);
+    const item = getItem(normalizedId);
+
+    if (!item || !inventory.includes(normalizedId)) {
+        return;
+    }
+
+    state.equipped[item.slot] = state.equipped[item.slot] === normalizedId ? "" : normalizedId;
+    state.stats.happy = clamp(state.stats.happy + 3);
+    saveState();
+    renderAll();
+    restartPetSpriteAnimation();
+}
+
+function seleccionarJuego(gameId) {
+    document.querySelectorAll("[data-game-tab]").forEach((button) => {
+        button.classList.toggle("active", button.dataset.gameTab === gameId);
+    });
+
+    document.querySelectorAll("[data-game-panel]").forEach((panel) => {
+        const active = panel.id === "game-" + gameId;
+        panel.hidden = !active;
+        panel.classList.toggle("active", active);
+    });
+
+    refreshPetSpritesOnEntry();
+}
+
+function premiarJuego(message, points, coins, boosts) {
+    const levelBefore = state.level || calculateLevel();
+
+    state.points += points;
+    state.coins += coins;
+    Object.keys(boosts || {}).forEach((key) => {
+        state.stats[key] = clamp((state.stats[key] || 0) + boosts[key]);
+    });
+    state.streak++;
+    saveState();
+    revisarInsignias();
+    renderAll();
+    celebrarMichi(state.level > levelBefore ? "Subiste a nivel " + state.level + ". Nuevo progreso desbloqueado." : message);
+}
+
+function iniciarLimpiezaExpress() {
+    clearInterval(cleanTimer);
+    cleanActive = true;
+    cleanTimeLeft = 18;
+    cleanHits = 0;
+    cleanSpots = Array.from({ length: 8 }).map((_, index) => ({
+        id: index,
+        clean: false,
+        x: 12 + Math.random() * 72,
+        y: 16 + Math.random() * 62,
+        mark: ["&#128167;", "&#129532;", "&#128030;", "&#11044;"][index % 4]
+    }));
+    renderCleanBoard();
+
+    cleanTimer = setInterval(() => {
+        cleanTimeLeft--;
+        document.getElementById("cleanTimer").textContent = "Tiempo: " + cleanTimeLeft;
+
+        if (cleanTimeLeft <= 0) {
+            finalizarLimpiezaExpress();
+        }
+    }, 1000);
+}
+
+function renderCleanBoard() {
+    const board = document.getElementById("cleanBoard");
+    document.getElementById("cleanTimer").textContent = "Tiempo: " + cleanTimeLeft;
+    document.getElementById("cleanScore").textContent = "Limpieza: " + cleanHits + "/8";
+
+    if (!cleanActive) {
+        board.innerHTML = '<div class="clean-pet-display">' + getMiniPetSpriteMarkup("clean-pet-sprite") + '<strong>Presiona iniciar limpieza.</strong></div>';
+        return;
+    }
+
+    board.innerHTML = [
+        '<div class="clean-pet-display active">' + getMiniPetSpriteMarkup("clean-pet-sprite") + '<strong>Limpia rapido</strong></div>',
+        cleanSpots.map((spot) => {
+            if (spot.clean) {
+                return "";
+            }
+
+            return '<button class="clean-spot" type="button" style="left:' + spot.x + '%; top:' + spot.y + '%;" onclick="limpiarMancha(' + spot.id + ')">' + spot.mark + '</button>';
+        }).join("")
+    ].join("");
+}
+
+function limpiarMancha(id) {
+    const spot = cleanSpots.find((item) => item.id === id);
+
+    if (!cleanActive || !spot || spot.clean) {
+        return;
+    }
+
+    spot.clean = true;
+    cleanHits++;
+    playGameSound("good");
+    renderCleanBoard();
+
+    if (cleanHits >= cleanSpots.length) {
+        finalizarLimpiezaExpress();
+    }
+}
+
+function finalizarLimpiezaExpress() {
+    clearInterval(cleanTimer);
+    cleanTimer = null;
+    cleanActive = false;
+
+    if (cleanHits >= 8) {
+        document.getElementById("cleanBoard").innerHTML = '<div class="catch-finish">Limpieza perfecta: ' + cleanHits + '/8</div>';
+        premiarJuego("Limpieza perfecta. Ganaste 16 patitas.", 18, 16, { health: 12, happy: 6 });
+    } else {
+        playGameSound("bad");
+        document.getElementById("cleanBoard").innerHTML = '<div class="catch-finish">Limpieza incompleta: ' + cleanHits + '/8</div>';
+        state.streak = 0;
+        saveState();
+        renderAll();
+    }
+}
+
+function iniciarPaseoParque() {
+    clearInterval(runnerTimer);
+    runnerActive = true;
+    runnerDistance = 0;
+    runnerBones = 0;
+    runnerLives = 3;
+    runnerObstacleX = 520;
+    runnerBoneX = 760;
+    runnerJumping = false;
+    document.getElementById("runnerResult").textContent = "";
+    actualizarPaseo();
+
+    runnerTimer = setInterval(tickPaseoParque, 70);
+}
+
+function tickPaseoParque() {
+    if (!runnerActive) {
+        return;
+    }
+
+    runnerDistance++;
+    runnerObstacleX -= 12;
+    runnerBoneX -= 10;
+
+    if (runnerObstacleX < -40) {
+        runnerObstacleX = 500 + Math.random() * 180;
+    }
+
+    if (runnerBoneX < -40) {
+        runnerBoneX = 560 + Math.random() * 220;
+    }
+
+    if (runnerObstacleX > 50 && runnerObstacleX < 112 && !runnerJumping) {
+        runnerLives--;
+        runnerObstacleX = 520 + Math.random() * 160;
+        playGameSound("bad");
+        showPetThought("Cuidado con los obstaculos.", true);
+    }
+
+    if (runnerBoneX > 58 && runnerBoneX < 118) {
+        runnerBones++;
+        runnerBoneX = 620 + Math.random() * 220;
+        playGameSound("good");
+    }
+
+    actualizarPaseo();
+
+    if (runnerLives <= 0 || runnerDistance >= 260) {
+        finalizarPaseoParque(runnerLives > 0);
+    }
+}
+
+function actualizarPaseo() {
+    document.getElementById("runnerDistance").textContent = "Distancia: " + runnerDistance;
+    document.getElementById("runnerBones").textContent = "Huesitos: " + runnerBones;
+    document.getElementById("runnerLives").textContent = "Vidas: " + runnerLives;
+    document.getElementById("runnerObstacle").style.left = runnerObstacleX + "px";
+    document.getElementById("runnerBone").style.left = runnerBoneX + "px";
+}
+
+function saltarPerrito() {
+    const dog = document.getElementById("runnerDog");
+
+    if (!runnerActive || runnerJumping) {
+        return;
+    }
+
+    runnerJumping = true;
+    dog.classList.add("jumping");
+    window.setTimeout(() => {
+        runnerJumping = false;
+        dog.classList.remove("jumping");
+    }, 560);
+}
+
+function finalizarPaseoParque(success) {
+    clearInterval(runnerTimer);
+    runnerTimer = null;
+    runnerActive = false;
+    document.getElementById("runnerResult").textContent = success
+        ? "Paseo completo. Huesitos recogidos: " + runnerBones + "."
+        : "Se acabo el paseo. Intentalo otra vez.";
+
+    if (success) {
+        playGameSound("good");
+        premiarJuego("Paseo completo. Ganaste patitas y energia.", 22, 12 + runnerBones, { energy: 8, happy: 8, bond: 5 });
+    } else {
+        playGameSound("bad");
+        state.streak = 0;
+        saveState();
+        renderAll();
+    }
+}
+
+function iniciarSimonPerruno() {
+    simonSequence = [];
+    simonInputIndex = 0;
+    agregarPasoSimon();
+}
+
+function agregarPasoSimon() {
+    simonSequence.push(simonActions[Math.floor(Math.random() * simonActions.length)]);
+    simonInputIndex = 0;
+    document.getElementById("simonRound").textContent = "Ronda: " + simonSequence.length;
+    document.getElementById("simonBest").textContent = "Mejor: " + simonBest;
+    reproducirSimon();
+}
+
+function reproducirSimon() {
+    simonPlaying = true;
+    document.getElementById("simonStatus").textContent = "Observa la secuencia.";
+
+    simonSequence.forEach((action, index) => {
+        window.setTimeout(() => iluminarSimon(action), 450 + index * 620);
+    });
+
+    window.setTimeout(() => {
+        simonPlaying = false;
+        document.getElementById("simonStatus").textContent = "Tu turno.";
+    }, 600 + simonSequence.length * 620);
+}
+
+function iluminarSimon(action) {
+    const button = document.querySelector('[data-simon="' + action + '"]');
+
+    if (!button) {
+        return;
+    }
+
+    button.classList.add("lit");
+    playBarkSound();
+    window.setTimeout(() => button.classList.remove("lit"), 320);
+}
+
+function tocarSimon(action) {
+    if (simonPlaying || !simonSequence.length) {
+        return;
+    }
+
+    iluminarSimon(action);
+
+    if (action !== simonSequence[simonInputIndex]) {
+        playGameSound("bad");
+        document.getElementById("simonStatus").textContent = "Se rompio la secuencia. Llegaste a ronda " + simonSequence.length + ".";
+        simonBest = Math.max(simonBest, Math.max(0, simonSequence.length - 1));
+        localStorage.setItem(simonBestKey, simonBest);
+        state.streak = 0;
+        saveState();
+        renderAll();
+        simonSequence = [];
+        simonInputIndex = 0;
+        document.getElementById("simonBest").textContent = "Mejor: " + simonBest;
+        return;
+    }
+
+    simonInputIndex++;
+
+    if (simonInputIndex >= simonSequence.length) {
+        simonBest = Math.max(simonBest, simonSequence.length);
+        localStorage.setItem(simonBestKey, simonBest);
+        document.getElementById("simonBest").textContent = "Mejor: " + simonBest;
+        playGameSound("good");
+
+        if (simonSequence.length >= 5) {
+            document.getElementById("simonStatus").textContent = "Secuencia completada. Nivel experto.";
+            premiarJuego("Simon Perruno completado. Ganaste 22 patitas.", 26, 22, { bond: 10, happy: 7 });
+            simonSequence = [];
+            simonInputIndex = 0;
+        } else {
+            document.getElementById("simonStatus").textContent = "Bien. La secuencia crece.";
+            window.setTimeout(agregarPasoSimon, 700);
+        }
+    }
+}
+
+function iniciarAlimentacionRapida() {
+    clearInterval(foodTimer);
+    foodActive = true;
+    foodLocked = false;
+    foodRound = 0;
+    foodScore = 0;
+    foodCombo = 0;
+    siguienteAlimentoRapido();
+}
+
+function siguienteAlimentoRapido() {
+    clearInterval(foodTimer);
+    foodLocked = false;
+    foodRound++;
+    foodTimeLeft = 5;
+    currentFood = foodItems[Math.floor(Math.random() * foodItems.length)];
+    document.getElementById("foodRound").textContent = "Ronda: " + foodRound + "/8";
+    document.getElementById("foodScore").textContent = "Aciertos: " + foodScore;
+    document.getElementById("foodCombo").textContent = "Racha: " + foodCombo;
+    document.getElementById("foodEmoji").innerHTML = currentFood.icon;
+    document.getElementById("foodName").textContent = currentFood.name;
+    document.getElementById("foodResult").textContent = "";
+    actualizarRelojAlimento();
+
+    foodTimer = setInterval(() => {
+        foodTimeLeft--;
+        actualizarRelojAlimento();
+
+        if (foodTimeLeft <= 0) {
+            resolverAlimento(null);
+        }
+    }, 1000);
+}
+
+function pintarAlimento() {
+    clearInterval(foodTimer);
+    foodActive = false;
+    foodLocked = false;
+    currentFood = null;
+    document.getElementById("foodRound").textContent = "Ronda: 0/8";
+    document.getElementById("foodScore").textContent = "Aciertos: " + foodScore;
+    document.getElementById("foodCombo").textContent = "Racha: " + foodCombo;
+    document.getElementById("foodTimer").textContent = "Tiempo: 5";
+    document.getElementById("foodTimerBar").style.width = "100%";
+    document.getElementById("foodEmoji").innerHTML = "&#129367;";
+    document.getElementById("foodName").textContent = "Presiona iniciar";
+    document.getElementById("foodResult").textContent = "Responde 8 alimentos rapido para ganar.";
+}
+
+function actualizarRelojAlimento() {
+    document.getElementById("foodTimer").textContent = "Tiempo: " + foodTimeLeft;
+    document.getElementById("foodTimerBar").style.width = Math.max(0, foodTimeLeft * 20) + "%";
+}
+
+function responderAlimento(answer) {
+    if (!foodActive) {
+        iniciarAlimentacionRapida();
+        return;
+    }
+
+    resolverAlimento(answer);
+}
+
+function resolverAlimento(answer) {
+    if (foodLocked || !currentFood) {
+        return;
+    }
+
+    foodLocked = true;
+    clearInterval(foodTimer);
+    const correct = answer === currentFood.safe;
+
+    if (correct) {
+        foodScore++;
+        foodCombo++;
+        playGameSound("good");
+    } else {
+        foodCombo = 0;
+        playGameSound("bad");
+    }
+
+    document.getElementById("foodResult").textContent = answer === null
+        ? "Tiempo fuera. " + currentFood.feedback
+        : (correct ? "Correcto. " : "Casi. ") + currentFood.feedback;
+    document.getElementById("foodScore").textContent = "Aciertos: " + foodScore;
+    document.getElementById("foodCombo").textContent = "Racha: " + foodCombo;
+
+    if (foodRound >= 8) {
+        const won = foodScore >= 6;
+        window.setTimeout(() => {
+            if (won) {
+                premiarJuego("Alimentacion balanceada completada. Racha final: " + foodCombo + ".", 20 + foodCombo, 14 + foodScore + foodCombo, { health: 10, bond: 4 });
+            } else {
+                state.streak = 0;
+                saveState();
+                renderAll();
+            }
+
+            foodActive = false;
+            foodRound = 0;
+            foodScore = 0;
+            foodCombo = 0;
+            pintarAlimento();
+        }, 700);
+        return;
+    }
+
+    window.setTimeout(siguienteAlimentoRapido, 650);
+}
+
+function iniciarBuscaHuesito() {
+    clearInterval(boneShuffleTimer);
+    bonePosition = Math.floor(Math.random() * 3);
+    boneIndex = bonePosition;
+    boneCanGuess = false;
+    boneShuffling = false;
+    boneShuffleStep = 0;
+    document.getElementById("boneStatus").textContent = "Mira bien donde esta el huesito...";
+    renderBoneShells("reveal");
+
+    window.setTimeout(() => {
+        iniciarMezclaHuesito();
+    }, 750);
+}
+
+function iniciarMezclaHuesito() {
+    boneShuffling = true;
+    boneCanGuess = false;
+    document.getElementById("boneStatus").textContent = "Sigue la mezcla...";
+
+    clearInterval(boneShuffleTimer);
+    boneShuffleTimer = setInterval(() => {
+        boneShuffleStep++;
+        const swapWith = Math.floor(Math.random() * 3);
+
+        if (swapWith !== bonePosition) {
+            bonePosition = swapWith;
+        } else {
+            bonePosition = (bonePosition + 1) % 3;
+        }
+
+        renderBoneShells("shuffle");
+
+        if (boneShuffleStep >= 6) {
+            clearInterval(boneShuffleTimer);
+            boneShuffleTimer = null;
+            boneShuffling = false;
+            boneCanGuess = true;
+            document.getElementById("boneStatus").textContent = "Ahora si: elige una caja.";
+            renderBoneShells("guess");
+        }
+    }, 260);
+}
+
+function renderBoneShells(mode) {
+    const shells = document.getElementById("boneShells");
+    document.getElementById("boneRound").textContent = "Ronda: " + boneRound + "/5";
+    document.getElementById("boneScore").textContent = "Aciertos: " + boneScore;
+    document.getElementById("boneSpeed").textContent = "Mezcla: " + boneShuffleStep;
+    shells.innerHTML = Array.from({ length: 3 }).map((_, index) => {
+        const reveal = mode === "reveal" || mode === "result";
+        const hasBone = index === bonePosition;
+        const classes = ["bone-shell"];
+
+        if (mode === "shuffle") {
+            classes.push("shuffling");
+        }
+
+        if (mode === "result" && hasBone) {
+            classes.push("found");
+        }
+
+        const content = reveal && hasBone
+            ? '<span class="bone-prize">&#129460;</span>'
+            : '<span class="bone-box">&#128230;</span>';
+        return '<button class="' + classes.join(" ") + '" type="button" onclick="escogerHuesito(' + index + ')" ' + (!boneCanGuess ? "disabled" : "") + '>' + content + '</button>';
+    }).join("");
+}
+
+function escogerHuesito(index) {
+    if (!boneCanGuess) {
+        return;
+    }
+
+    boneCanGuess = false;
+    const correct = index === bonePosition;
+
+    if (correct) {
+        boneScore++;
+        playGameSound("good");
+        document.getElementById("boneStatus").textContent = "Correcto, encontraste el huesito.";
+    } else {
+        playGameSound("bad");
+        document.getElementById("boneStatus").textContent = "Casi. Estaba en otra caja.";
+    }
+
+    renderBoneShells("result");
+
+    if (boneRound >= 5) {
+        window.setTimeout(() => {
+            if (boneScore >= 3) {
+                premiarJuego("Busca el Huesito ganado. Buen olfato.", 18, 14, { happy: 8, bond: 4 });
+            } else {
+                state.streak = 0;
+                saveState();
+                renderAll();
+            }
+
+            boneRound = 1;
+            boneScore = 0;
+            boneShuffleStep = 0;
+            renderBoneShells("guess");
+            document.getElementById("boneStatus").textContent = "Presiona mezclar para empezar.";
+        }, 700);
+        return;
+    }
+
+    boneRound++;
+    window.setTimeout(iniciarBuscaHuesito, 850);
+}
+
+function reiniciarLaberinto() {
+    mazePosition = { row: 0, col: 0 };
+    mazeMoves = 0;
+    renderLaberinto();
+}
+
+function renderLaberinto() {
+    const grid = document.getElementById("mazeGrid");
+    document.getElementById("mazeMoves").textContent = "Movimientos: " + mazeMoves;
+    grid.innerHTML = mazeLayout.map((row, rowIndex) => {
+        return row.split("").map((cell, colIndex) => {
+            const isDog = mazePosition.row === rowIndex && mazePosition.col === colIndex;
+            const classes = ["maze-cell"];
+
+            if (cell === "#") {
+                classes.push("wall");
+            }
+
+            if (cell === "G") {
+                classes.push("goal");
+            }
+
+            if (isDog) {
+                classes.push("dog");
+            }
+
+            const content = isDog ? getMiniPetSpriteMarkup("maze-pet-sprite") : cell === "G" ? "&#127858;" : "";
+            return '<span class="' + classes.join(" ") + '">' + content + '</span>';
+        }).join("");
+    }).join("");
+    document.getElementById("mazeStatus").textContent = "Llega al plato sin chocar con paredes.";
+}
+
+function moverLaberinto(direction) {
+    const deltas = {
+        up: [-1, 0],
+        down: [1, 0],
+        left: [0, -1],
+        right: [0, 1]
+    };
+    const delta = deltas[direction];
+
+    if (!delta) {
+        return;
+    }
+
+    const nextRow = mazePosition.row + delta[0];
+    const nextCol = mazePosition.col + delta[1];
+    const row = mazeLayout[nextRow];
+
+    if (!row || row[nextCol] === undefined || row[nextCol] === "#") {
+        playGameSound("bad");
+        document.getElementById("mazeStatus").textContent = "Pared. Busca otro camino.";
+        return;
+    }
+
+    mazePosition = { row: nextRow, col: nextCol };
+    mazeMoves++;
+    renderLaberinto();
+
+    if (mazeLayout[nextRow][nextCol] === "G") {
+        playGameSound("good");
+        document.getElementById("mazeStatus").textContent = "Llegaste al plato en " + mazeMoves + " movimientos.";
+        premiarJuego("Laberinto completado. Ganaste croquetas y patitas.", 24, Math.max(10, 26 - mazeMoves), { energy: 6, health: 6, bond: 5 });
+        window.setTimeout(reiniciarLaberinto, 900);
+    }
+}
+
+const guardianPets = {
+    dog: { label: "Perrito", icon: "&#128054;" },
+    cat: { label: "Gatito", icon: "&#128049;" },
+    rabbit: { label: "Conejito", icon: "&#128007;" },
+    bird: { label: "Ave", icon: "&#128038;" }
+};
+const guardianLevels = [
+    "Agua y comida",
+    "Higiene",
+    "Salud y veterinario",
+    "Juego y cari&ntilde;o",
+    "Responsabilidad"
+];
+const guardianQuestions = [
+    { level: 1, mission: "Tu mascota lleg&oacute; cansada y con sed.", text: "&iquest;Qu&eacute; haces primero?", options: ["Le doy agua limpia.", "Le doy dulces.", "La dejo sola.", "La ba&ntilde;o con agua fr&iacute;a."], correct: 0, good: "Muy bien. El agua limpia ayuda a recuperarse.", bad: "Casi. Primero hay que cubrir necesidades b&aacute;sicas." },
+    { level: 1, mission: "El plato est&aacute; sucio despu&eacute;s de comer.", text: "&iquest;Qu&eacute; decisi&oacute;n es mejor?", options: ["Lavar el plato y servir comida adecuada.", "Poner m&aacute;s comida encima.", "Darle chocolate.", "No revisar su agua."], correct: 0, good: "Excelente. Limpieza y alimento adecuado van juntos.", bad: "Recuerda que la comida debe ser segura y el plato limpio." },
+    { level: 2, mission: "Tu mascota huele mal y se rasc&oacute; mucho.", text: "&iquest;Qu&eacute; haces?", options: ["Reviso pulgas y la aseo con cuidado.", "Le pongo perfume fuerte.", "La encierro.", "La mojo sin secarla."], correct: 0, good: "Muy bien. La higiene tambi&eacute;n es salud.", bad: "Cuidado. La higiene debe hacerse sin lastimarla." },
+    { level: 2, mission: "Tu conejito necesita un lugar limpio.", text: "&iquest;Cu&aacute;l es una buena acci&oacute;n?", options: ["Limpiar su espacio y cambiar agua.", "Dejar basura cerca.", "Usar qu&iacute;micos fuertes sin enjuagar.", "Quitarle su refugio."], correct: 0, good: "Perfecto. Un espacio limpio previene enfermedades.", bad: "Recuerda: limpio, seguro y sin productos peligrosos." },
+    { level: 3, mission: "Tu mascota no quiere comer.", text: "&iquest;Qu&eacute; es lo m&aacute;s responsable?", options: ["Observarla y consultar al veterinario si contin&uacute;a.", "Ignorarla varios d&iacute;as.", "Darle comida humana al azar.", "Regalarla de inmediato."], correct: 0, good: "Correcto. Cambios de apetito se deben atender.", bad: "Casi. Si algo cambia en su salud, hay que revisar." },
+    { level: 3, mission: "Toca vacuna anual.", text: "&iquest;Qu&eacute; haces?", options: ["Agendar visita veterinaria.", "Esperar hasta que enferme.", "Comprar medicina sin receta.", "No llevar registro."], correct: 0, good: "Bien. Prevenir es cuidar.", bad: "Las vacunas y revisiones evitan problemas graves." },
+    { level: 4, mission: "Tu gatito tir&oacute; su plato de comida.", text: "&iquest;C&oacute;mo reaccionas?", options: ["Limpio y reviso si necesita un plato estable.", "Lo castigo fuerte.", "Lo dejo sin comer.", "Le doy basura para jugar."], correct: 0, good: "Excelente. Resolver sin maltrato tambi&eacute;n educa.", bad: "Recuerda que cuidar implica paciencia." },
+    { level: 4, mission: "Est&aacute; lloviendo y tu perrito quiere salir.", text: "&iquest;Qu&eacute; opci&oacute;n es m&aacute;s segura?", options: ["Esperar o salir con protecci&oacute;n y supervisi&oacute;n.", "Dejarlo correr solo.", "Sacarlo sin correa.", "Dejarlo bajo la lluvia mucho tiempo."], correct: 0, good: "Muy bien. Seguridad antes que prisa.", bad: "En lluvia se debe cuidar temperatura y seguridad." },
+    { level: 5, mission: "Quieres adoptar otra mascota.", text: "&iquest;Qu&eacute; revisas antes?", options: ["Tiempo, espacio, dinero y responsabilidad familiar.", "Solo que se vea bonita.", "Que sea sorpresa para todos.", "Nada, adoptar por impulso."], correct: 0, good: "Gran decisi&oacute;n. Adoptar requiere compromiso.", bad: "Adoptar por impulso puede causar abandono." },
+    { level: 5, mission: "Tu mascota podr&iacute;a perderse.", text: "&iquest;Qu&eacute; ayuda a prevenirlo?", options: ["Collar con placa e identificaci&oacute;n.", "Dejarla salir sola.", "No tomarle fotos.", "Quitarle su correa."], correct: 0, good: "Excelente. Identificar salva vidas.", bad: "La identificaci&oacute;n ayuda a que vuelva a casa." }
+];
+let guardianSelectedPet = "dog";
+let guardianOrder = [];
+let guardianIndex = 0;
+let guardianScore = 0;
+let guardianHappiness = 70;
+let guardianTime = 15;
+let guardianTimerId = null;
+let guardianLocked = false;
+
+const wordDefinitions = [
+    { word: "AGUA", label: "AGUA" },
+    { word: "COMIDA", label: "COMIDA" },
+    { word: "AMOR", label: "AMOR" },
+    { word: "BANO", label: "BA&Ntilde;O" },
+    { word: "VACUNA", label: "VACUNA" },
+    { word: "PASEO", label: "PASEO" },
+    { word: "JUEGO", label: "JUEGO" },
+    { word: "VETERINARIO", label: "VETERINARIO" },
+    { word: "HIGIENE", label: "HIGIENE" },
+    { word: "CUIDADO", label: "CUIDADO" },
+    { word: "COLLAR", label: "COLLAR" },
+    { word: "CAMITA", label: "CAMITA" }
+];
+let wordGrid = [];
+let wordFound = {};
+let wordScoreValue = 0;
+let wordHintsLeft = 3;
+let wordTimeLeft = 180;
+let wordCountdownTimer = null;
+let wordActive = false;
+let wordSelecting = false;
+let wordStartCell = null;
+let wordSelectedCells = [];
+
+const memoryPairs = [
+    { id: "dog-food", a: "&#128054;<b>Perrito</b>", b: "&#129367;<b>Comida</b>" },
+    { id: "cat-play", a: "&#128049;<b>Gatito</b>", b: "&#127922;<b>Juego</b>" },
+    { id: "rabbit-carrot", a: "&#128007;<b>Conejito</b>", b: "&#129365;<b>Zanahoria</b>" },
+    { id: "bird-seeds", a: "&#128038;<b>Ave</b>", b: "&#127793;<b>Semillas</b>" },
+    { id: "water-bowl", a: "&#128167;<b>Agua</b>", b: "&#127860;<b>Plato</b>" },
+    { id: "bath-hygiene", a: "&#128705;<b>Ba&ntilde;o</b>", b: "&#129532;<b>Higiene</b>" },
+    { id: "vet-vaccine", a: "&#129658;<b>Veterinario</b>", b: "&#128137;<b>Vacuna</b>" },
+    { id: "walk-leash", a: "&#127795;<b>Paseo</b>", b: "&#129528;<b>Correa</b>" },
+    { id: "love-care", a: "&#10084;<b>Amor</b>", b: "&#128062;<b>Cuidado</b>" },
+    { id: "bed-home", a: "&#128719;<b>Camita</b>", b: "&#127968;<b>Hogar</b>" }
+];
+let memoryLevel = "easy";
+let memoryCards = [];
+let memoryFirst = null;
+let memorySecond = null;
+let memoryLocked = false;
+let memoryScoreValue = 0;
+let memoryAttempts = 0;
+let memoryPairsFound = 0;
+let memoryTimeLeft = 120;
+let memoryTimerId = null;
+let memoryActive = false;
+
+const catGoodObjects = [
+    { icon: "&#129526;", name: "Estambre" },
+    { icon: "&#127922;", name: "Juguete" },
+    { icon: "&#127860;", name: "Plato" },
+    { icon: "&#128719;", name: "Camita" },
+    { icon: "&#129367;", name: "Comida para gato" },
+    { icon: "&#128167;", name: "Agua" }
+];
+const catBadObjects = [
+    { icon: "&#128268;", name: "Cable" },
+    { icon: "&#129514;", name: "Vidrio" },
+    { icon: "&#127851;", name: "Chocolate" },
+    { icon: "&#9888;", name: "Producto peligroso" },
+    { icon: "&#128465;", name: "Basura" }
+];
+let catTimerId = null;
+let catSpawnId = null;
+let catClockId = null;
+let catActive = false;
+let catObjects = [];
+let catScoreValue = 0;
+let catLivesValue = 3;
+let catTimeLeft = 45;
+let catLevelValue = 1;
+let catGoodCaught = 0;
+let catBadAvoided = 0;
+let catCombo = 0;
+let catBasketX = 50;
+
+function shuffleItems(items) {
+    return items.map((item) => ({ item, sort: Math.random() })).sort((a, b) => a.sort - b.sort).map((entry) => entry.item);
+}
+
+function seleccionarGuardianMascota(type) {
+    guardianSelectedPet = guardianPets[type] ? type : "dog";
+    document.querySelectorAll("[data-guardian-pet]").forEach((button) => {
+        button.classList.toggle("active", button.dataset.guardianPet === guardianSelectedPet);
+    });
+}
+
+function iniciarGuardianesPatitas() {
+    guardianOrder = shuffleItems(guardianQuestions).sort((a, b) => a.level - b.level);
+    guardianIndex = 0;
+    guardianScore = 0;
+    guardianHappiness = 70;
+    guardianLocked = false;
+    document.getElementById("guardianStart").hidden = true;
+    document.getElementById("guardianGame").hidden = false;
+    mostrarMisionGuardian();
+}
+
+function mostrarMisionGuardian() {
+    clearInterval(guardianTimerId);
+    guardianLocked = false;
+    guardianTime = 15;
+    const current = guardianOrder[guardianIndex];
+    const pet = guardianPets[guardianSelectedPet];
+
+    if (!current) {
+        finalizarGuardianesPatitas();
+        return;
+    }
+
+    document.getElementById("guardianPetIcon").innerHTML = pet.icon;
+    document.getElementById("guardianLevel").innerHTML = "Nivel " + current.level + ": " + guardianLevels[current.level - 1];
+    document.getElementById("guardianMission").innerHTML = current.mission;
+    document.getElementById("guardianQuestion").innerHTML = current.text;
+    document.getElementById("guardianScore").textContent = "Puntos: " + guardianScore;
+    document.getElementById("guardianProgress").textContent = "Misi&oacute;n " + (guardianIndex + 1) + "/" + guardianOrder.length;
+    document.getElementById("guardianFeedback").textContent = "";
+    actualizarGuardianTimer();
+    actualizarGuardianFelicidad();
+    document.getElementById("guardianOptions").innerHTML = current.options.map((option, index) => {
+        return '<button type="button" onclick="responderGuardian(' + index + ')">' + option + '</button>';
+    }).join("");
+
+    guardianTimerId = setInterval(() => {
+        guardianTime--;
+        actualizarGuardianTimer();
+
+        if (guardianTime <= 0) {
+            responderGuardian(-1);
+        }
+    }, 1000);
+}
+
+function actualizarGuardianTimer() {
+    document.getElementById("guardianTimer").textContent = "Tiempo: " + guardianTime;
+}
+
+function actualizarGuardianFelicidad() {
+    guardianHappiness = clamp(guardianHappiness);
+    document.getElementById("guardianHappinessBar").style.width = guardianHappiness + "%";
+    document.getElementById("guardianHappinessText").textContent = guardianHappiness + "%";
+}
+
+function responderGuardian(index) {
+    if (guardianLocked) {
+        return;
+    }
+
+    guardianLocked = true;
+    clearInterval(guardianTimerId);
+    const current = guardianOrder[guardianIndex];
+    const correct = index === current.correct;
+    const feedback = document.getElementById("guardianFeedback");
+
+    document.querySelectorAll("#guardianOptions button").forEach((button, buttonIndex) => {
+        button.disabled = true;
+        button.classList.toggle("correct", buttonIndex === current.correct);
+        button.classList.toggle("wrong", buttonIndex === index && !correct);
+    });
+
+    if (correct) {
+        guardianScore += 10 + Math.max(0, guardianTime);
+        guardianHappiness = clamp(guardianHappiness + 8);
+        updateMission("quiz", 1);
+        playGameSound("good");
+        feedback.textContent = "Muy bien. Tu mascota est&aacute; m&aacute;s feliz y saludable.";
+    } else {
+        guardianHappiness = clamp(guardianHappiness - 9);
+        playGameSound("bad");
+        feedback.textContent = index < 0 ? "Tiempo fuera. " + current.bad : "Casi, pero recuerda que las mascotas necesitan cuidado y atenci&oacute;n.";
+    }
+
+    document.getElementById("guardianScore").textContent = "Puntos: " + guardianScore;
+    actualizarGuardianFelicidad();
+    window.setTimeout(() => {
+        guardianIndex++;
+        mostrarMisionGuardian();
+    }, 950);
+}
+
+function finalizarGuardianesPatitas() {
+    clearInterval(guardianTimerId);
+    const rank = guardianScore >= 150 && guardianHappiness >= 80
+        ? "Guardi&aacute;n de Patitas Experto"
+        : guardianScore >= 90
+            ? "Protector de Mascotas"
+            : "Cuidador Principiante";
+    const message = guardianScore >= 90
+        ? "Felicidades. Demostraste que sabes cuidar, respetar y amar a los animalitos."
+        : "Buen intento. Sigue aprendiendo para cuidar mejor a cada mascota.";
+
+    document.getElementById("guardianGame").innerHTML = [
+        '<div class="final-screen">',
+        '<h3>Resultado Guardianes de Patitas</h3>',
+        '<strong>' + guardianScore + ' puntos</strong>',
+        '<span>Felicidad final: ' + guardianHappiness + '%</span>',
+        '<span>Nivel de cuidador: ' + rank + '</span>',
+        '<p>' + message + '</p>',
+        '<button type="button" onclick="reiniciarGuardianesPatitas()">Jugar otra vez</button>',
+        '</div>'
+    ].join("");
+
+    if (guardianScore >= 70) {
+        premiarJuego("Guardianes de Patitas completado. Ganaste patitas por cuidar bien.", Math.floor(guardianScore / 5), Math.floor(guardianScore / 10), { happy: 10, health: 8, bond: 8 });
+    }
+}
+
+function reiniciarGuardianesPatitas() {
+    document.getElementById("guardianGame").hidden = true;
+    document.getElementById("guardianGame").innerHTML = [
+        '<div class="guardian-pet-stage">',
+        '<span id="guardianPetIcon">&#128054;</span>',
+        '<div><strong id="guardianLevel">Nivel 1: Agua y comida</strong><span id="guardianMission">Misi&oacute;n de cuidado</span></div>',
+        '</div>',
+        '<div class="game-meta"><span id="guardianTimer">Tiempo: 15</span><span id="guardianScore">Puntos: 0</span><span id="guardianProgress">Misi&oacute;n 1/10</span></div>',
+        '<div class="happiness-meter"><span>Felicidad</span><b><i id="guardianHappinessBar"></i></b><strong id="guardianHappinessText">70%</strong></div>',
+        '<h3 id="guardianQuestion">Pregunta</h3>',
+        '<div class="guardian-options" id="guardianOptions"></div>',
+        '<p class="game-result" id="guardianFeedback"></p>'
+    ].join("");
+    document.getElementById("guardianStart").hidden = false;
+}
+
+function iniciarSopaHuellitas() {
+    clearInterval(wordCountdownTimer);
+    wordGrid = crearSopaLetras();
+    wordFound = {};
+    wordScoreValue = 0;
+    wordHintsLeft = 3;
+    wordTimeLeft = 180;
+    wordActive = true;
+    wordSelecting = false;
+    renderSopaLetras();
+    actualizarSopaMeta();
+    document.getElementById("wordResult").textContent = "Encuentra palabras arrastrando en l&iacute;nea recta.";
+    wordCountdownTimer = setInterval(() => {
+        wordTimeLeft--;
+        actualizarSopaMeta();
+
+        if (wordTimeLeft <= 0) {
+            finalizarSopaHuellitas(false);
+        }
+    }, 1000);
+}
+
+function prepararSopaHuellitas() {
+    clearInterval(wordCountdownTimer);
+    wordGrid = crearSopaLetras();
+    wordFound = {};
+    wordScoreValue = 0;
+    wordHintsLeft = 3;
+    wordTimeLeft = 180;
+    wordActive = false;
+    wordSelecting = false;
+    renderSopaLetras();
+    actualizarSopaMeta();
+    document.getElementById("wordResult").textContent = "Presiona iniciar para jugar con tiempo, o toca una letra para comenzar.";
+}
+
+function activarTiempoSopa() {
+    if (wordActive) {
+        return;
+    }
+
+    wordActive = true;
+    clearInterval(wordCountdownTimer);
+    document.getElementById("wordResult").textContent = "Tiempo iniciado. Encuentra las palabras escondidas.";
+    wordCountdownTimer = setInterval(() => {
+        wordTimeLeft--;
+        actualizarSopaMeta();
+
+        if (wordTimeLeft <= 0) {
+            finalizarSopaHuellitas(false);
+        }
+    }, 1000);
+}
+
+function crearSopaLetras() {
+    const size = 14;
+    const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    const grid = Array.from({ length: size }, () => Array.from({ length: size }, () => ""));
+    const directions = [[0, 1], [1, 0], [1, 1], [-1, 1]];
+
+    wordDefinitions.forEach((entry) => {
+        for (let attempt = 0; attempt < 220; attempt++) {
+            const dir = directions[Math.floor(Math.random() * directions.length)];
+            const row = Math.floor(Math.random() * size);
+            const col = Math.floor(Math.random() * size);
+            const endRow = row + dir[0] * (entry.word.length - 1);
+            const endCol = col + dir[1] * (entry.word.length - 1);
+
+            if (endRow < 0 || endRow >= size || endCol < 0 || endCol >= size) {
+                continue;
+            }
+
+            const cells = entry.word.split("").map((letter, index) => ({
+                row: row + dir[0] * index,
+                col: col + dir[1] * index,
+                letter
+            }));
+
+            if (cells.every((cell) => !grid[cell.row][cell.col] || grid[cell.row][cell.col] === cell.letter)) {
+                cells.forEach((cell) => {
+                    grid[cell.row][cell.col] = cell.letter;
+                });
+                break;
+            }
+        }
+    });
+
+    return grid.map((row) => row.map((letter) => letter || letters[Math.floor(Math.random() * letters.length)]));
+}
+
+function renderSopaLetras() {
+    const grid = document.getElementById("wordGrid");
+    const list = document.getElementById("wordList");
+
+    grid.innerHTML = wordGrid.map((row, rowIndex) => {
+        return row.map((letter, colIndex) => {
+            return '<button type="button" data-word-row="' + rowIndex + '" data-word-col="' + colIndex + '" onpointerdown="empezarSeleccionSopa(' + rowIndex + ',' + colIndex + ')" onpointerenter="moverSeleccionSopa(' + rowIndex + ',' + colIndex + ')">' + letter + '</button>';
+        }).join("");
+    }).join("");
+
+    list.innerHTML = wordDefinitions.map((entry) => {
+        return '<span class="' + (wordFound[entry.word] ? "found" : "") + '">' + (wordFound[entry.word] ? "&#10003; " : "") + entry.label + '</span>';
+    }).join("");
+    marcarCeldasSopa();
+}
+
+function actualizarSopaMeta() {
+    const foundCount = Object.keys(wordFound).length;
+    document.getElementById("wordTimer").textContent = "Tiempo: " + wordTimeLeft;
+    document.getElementById("wordScore").textContent = "Puntos: " + wordScoreValue;
+    document.getElementById("wordHints").textContent = "Pistas: " + wordHintsLeft;
+
+    if (foundCount >= wordDefinitions.length) {
+        finalizarSopaHuellitas(false);
+    }
+}
+
+function empezarSeleccionSopa(row, col) {
+    if (!wordGrid.length) {
+        iniciarSopaHuellitas();
+    } else if (!wordActive) {
+        activarTiempoSopa();
+    }
+
+    wordSelecting = true;
+    wordStartCell = { row, col };
+    actualizarSeleccionSopa(row, col);
+}
+
+function moverSeleccionSopa(row, col) {
+    if (!wordSelecting) {
+        return;
+    }
+
+    actualizarSeleccionSopa(row, col);
+}
+
+function actualizarSeleccionSopa(row, col) {
+    wordSelectedCells = obtenerLineaSopa(wordStartCell.row, wordStartCell.col, row, col);
+    document.querySelectorAll("#wordGrid button").forEach((button) => button.classList.remove("selected"));
+    wordSelectedCells.forEach((cell) => {
+        const button = document.querySelector('[data-word-row="' + cell.row + '"][data-word-col="' + cell.col + '"]');
+        if (button) {
+            button.classList.add("selected");
+        }
+    });
+}
+
+function obtenerLineaSopa(startRow, startCol, endRow, endCol) {
+    const rowDiff = endRow - startRow;
+    const colDiff = endCol - startCol;
+    const rowStep = Math.sign(rowDiff);
+    const colStep = Math.sign(colDiff);
+    const valid = rowDiff === 0 || colDiff === 0 || Math.abs(rowDiff) === Math.abs(colDiff);
+
+    if (!valid) {
+        return [{ row: startRow, col: startCol }];
+    }
+
+    const length = Math.max(Math.abs(rowDiff), Math.abs(colDiff)) + 1;
+    return Array.from({ length }).map((_, index) => ({
+        row: startRow + rowStep * index,
+        col: startCol + colStep * index
+    }));
+}
+
+function terminarSeleccionSopa() {
+    if (!wordSelecting) {
+        return;
+    }
+
+    wordSelecting = false;
+    const letters = wordSelectedCells.map((cell) => wordGrid[cell.row][cell.col]).join("");
+    const reverse = letters.split("").reverse().join("");
+    const match = wordDefinitions.find((entry) => !wordFound[entry.word] && (entry.word === letters || entry.word === reverse));
+
+    if (match) {
+        wordFound[match.word] = wordSelectedCells;
+        wordScoreValue += 10;
+        playGameSound("good");
+        document.getElementById("wordResult").innerHTML = "Palabra encontrada: " + match.label + ". +10 puntos.";
+    } else {
+        playGameSound("bad");
+        document.getElementById("wordResult").textContent = "Sigue buscando. Las palabras van en l&iacute;nea recta.";
+    }
+
+    renderSopaLetras();
+    actualizarSopaMeta();
+}
+
+function marcarCeldasSopa() {
+    Object.keys(wordFound).forEach((word) => {
+        (wordFound[word] || []).forEach((cell) => {
+            const button = document.querySelector('[data-word-row="' + cell.row + '"][data-word-col="' + cell.col + '"]');
+            if (button) {
+                button.classList.add("found");
+            }
+        });
+    });
+}
+
+function usarPistaSopa() {
+    if (!wordGrid.length) {
+        iniciarSopaHuellitas();
+    }
+
+    if (wordHintsLeft <= 0) {
+        document.getElementById("wordResult").textContent = "Ya usaste tus 3 pistas.";
+        return;
+    }
+
+    const pending = wordDefinitions.find((entry) => !wordFound[entry.word]);
+
+    if (!pending) {
+        return;
+    }
+
+    const buttons = Array.from(document.querySelectorAll("#wordGrid button"));
+    const target = buttons.find((button) => button.textContent === pending.word[0] && !button.classList.contains("found"));
+
+    if (target) {
+        target.classList.add("hint");
+        wordHintsLeft--;
+        document.getElementById("wordResult").innerHTML = "Pista: busca una palabra que empieza con " + pending.word[0] + ".";
+        actualizarSopaMeta();
+    }
+}
+
+function initSopaTouchControls() {
+    const grid = document.getElementById("wordGrid");
+
+    if (!grid) {
+        return;
+    }
+
+    grid.addEventListener("pointermove", (event) => {
+        if (!wordSelecting) {
+            return;
+        }
+
+        const target = document.elementFromPoint(event.clientX, event.clientY);
+        const button = target && target.closest ? target.closest("[data-word-row]") : null;
+
+        if (button) {
+            moverSeleccionSopa(Number(button.dataset.wordRow), Number(button.dataset.wordCol));
+        }
+    });
+}
+
+function finalizarSopaHuellitas(manual) {
+    clearInterval(wordCountdownTimer);
+    wordActive = false;
+    const foundCount = Object.keys(wordFound).length;
+    const used = 180 - wordTimeLeft;
+    const message = foundCount >= wordDefinitions.length
+        ? "Felicidades. Demostraste que sabes mucho sobre el cuidado de las mascotas."
+        : "Encontraste " + foundCount + " palabras. Puedes jugar otra vez para completar la sopa.";
+
+    document.getElementById("wordResult").innerHTML = [
+        '<div class="final-screen compact">',
+        '<strong>' + wordScoreValue + ' puntos</strong>',
+        '<span>Palabras encontradas: ' + foundCount + '/' + wordDefinitions.length + '</span>',
+        '<span>Tiempo usado: ' + used + 's</span>',
+        '<p>' + message + '</p>',
+        '<button type="button" onclick="iniciarSopaHuellitas()">Jugar otra vez</button>',
+        '</div>'
+    ].join("");
+
+    if (!manual && foundCount >= 7) {
+        premiarJuego("Sopa de Letras completada. Ganaste patitas de aprendizaje.", foundCount * 4, foundCount * 2, { bond: 4, happy: 5 });
+    }
+}
+
+window.addEventListener("pointerup", terminarSeleccionSopa);
+
+function elegirNivelMemorama(level) {
+    memoryLevel = level;
+    document.querySelectorAll("[data-memory-level]").forEach((button) => {
+        button.classList.toggle("active", button.dataset.memoryLevel === level);
+    });
+
+    if (!memoryActive && document.getElementById("memoryBoard")) {
+        prepararMemoramaHuellitas();
+    }
+}
+
+function getMemoryPairCount() {
+    return memoryLevel === "hard" ? 10 : memoryLevel === "medium" ? 6 : 4;
+}
+
+function iniciarMemoramaHuellitas() {
+    clearInterval(memoryTimerId);
+    const pairCount = getMemoryPairCount();
+    memoryActive = true;
+    memoryScoreValue = 0;
+    memoryAttempts = 0;
+    memoryPairsFound = 0;
+    memoryFirst = null;
+    memorySecond = null;
+    memoryLocked = false;
+    memoryTimeLeft = memoryLevel === "hard" ? 150 : 120;
+    memoryCards = shuffleItems(memoryPairs.slice(0, pairCount).flatMap((pair) => [
+        { id: pair.id + "-a", pair: pair.id, content: pair.a, matched: false, open: false },
+        { id: pair.id + "-b", pair: pair.id, content: pair.b, matched: false, open: false }
+    ]));
+    renderMemorama();
+    actualizarMemoramaMeta();
+    document.getElementById("memoryFeedback").textContent = "Encuentra parejas relacionadas con cuidado responsable.";
+    memoryTimerId = setInterval(() => {
+        memoryTimeLeft--;
+        actualizarMemoramaMeta();
+
+        if (memoryTimeLeft <= 0) {
+            finalizarMemorama(false);
+        }
+    }, 1000);
+}
+
+function prepararMemoramaHuellitas() {
+    clearInterval(memoryTimerId);
+    const pairCount = getMemoryPairCount();
+    memoryActive = false;
+    memoryScoreValue = 0;
+    memoryAttempts = 0;
+    memoryPairsFound = 0;
+    memoryFirst = null;
+    memorySecond = null;
+    memoryLocked = false;
+    memoryTimeLeft = memoryLevel === "hard" ? 150 : 120;
+    memoryCards = shuffleItems(memoryPairs.slice(0, pairCount).flatMap((pair) => [
+        { id: pair.id + "-a", pair: pair.id, content: pair.a, matched: false, open: false },
+        { id: pair.id + "-b", pair: pair.id, content: pair.b, matched: false, open: false }
+    ]));
+    renderMemorama();
+    actualizarMemoramaMeta();
+    document.getElementById("memoryFeedback").textContent = "Elige dificultad y presiona iniciar para comenzar el reto.";
+}
+
+function renderMemorama() {
+    const board = document.getElementById("memoryBoard");
+    board.dataset.level = memoryLevel;
+    board.innerHTML = memoryCards.map((card, index) => {
+        const open = card.open || card.matched;
+        return [
+            '<button class="memory-card ' + (open ? "open" : "") + (card.matched ? " matched" : "") + '" type="button" onclick="voltearMemoria(' + index + ')">',
+            '<span class="memory-back">&#128062;</span>',
+            '<span class="memory-front">' + card.content + '</span>',
+            '</button>'
+        ].join("");
+    }).join("");
+}
+
+function actualizarMemoramaMeta() {
+    const total = getMemoryPairCount();
+    document.getElementById("memoryTimer").textContent = "Tiempo: " + memoryTimeLeft;
+    document.getElementById("memoryScore").textContent = "Puntos: " + memoryScoreValue;
+    document.getElementById("memoryAttempts").textContent = "Intentos: " + memoryAttempts;
+    document.getElementById("memoryPairs").textContent = "Parejas: " + memoryPairsFound + "/" + total;
+}
+
+function voltearMemoria(index) {
+    if (!memoryActive) {
+        iniciarMemoramaHuellitas();
+        window.setTimeout(() => voltearMemoria(index), 0);
+        return;
+    }
+
+    if (memoryLocked || !memoryCards.length) {
+        return;
+    }
+
+    const card = memoryCards[index];
+
+    if (!card || card.open || card.matched) {
+        return;
+    }
+
+    card.open = true;
+
+    if (memoryFirst === null) {
+        memoryFirst = index;
+        renderMemorama();
+        return;
+    }
+
+    memorySecond = index;
+    memoryAttempts++;
+    memoryLocked = true;
+    renderMemorama();
+    actualizarMemoramaMeta();
+
+    const first = memoryCards[memoryFirst];
+    const second = memoryCards[memorySecond];
+
+    if (first.pair === second.pair) {
+        first.matched = true;
+        second.matched = true;
+        memoryPairsFound++;
+        memoryScoreValue += 10;
+        playGameSound("good");
+        document.getElementById("memoryFeedback").textContent = "Pareja encontrada. Vas cuidando incre&iacute;ble a tus mascotas.";
+        memoryFirst = null;
+        memorySecond = null;
+        memoryLocked = false;
+        renderMemorama();
+        actualizarMemoramaMeta();
+
+        if (memoryPairsFound >= getMemoryPairCount()) {
+            finalizarMemorama(true);
+        }
+        return;
+    }
+
+    memoryScoreValue = Math.max(0, memoryScoreValue - 1);
+    playGameSound("bad");
+    document.getElementById("memoryFeedback").textContent = "Casi casi, intenta recordar d&oacute;nde estaba.";
+    window.setTimeout(() => {
+        first.open = false;
+        second.open = false;
+        memoryFirst = null;
+        memorySecond = null;
+        memoryLocked = false;
+        renderMemorama();
+        actualizarMemoramaMeta();
+    }, 720);
+}
+
+function finalizarMemorama(success) {
+    clearInterval(memoryTimerId);
+    memoryActive = false;
+    const total = getMemoryPairCount();
+    const used = (memoryLevel === "hard" ? 150 : 120) - memoryTimeLeft;
+    const rank = memoryPairsFound >= total && memoryAttempts <= total + 4
+        ? "Guardi&aacute;n de Patitas Experto"
+        : memoryPairsFound >= Math.ceil(total * 0.7)
+            ? "Protector de Mascotas"
+            : "Cuidador Principiante";
+
+    document.getElementById("memoryFeedback").innerHTML = [
+        '<div class="final-screen compact">',
+        '<strong>' + memoryScoreValue + ' puntos</strong>',
+        '<span>Tiempo usado: ' + used + 's</span>',
+        '<span>Intentos: ' + memoryAttempts + '</span>',
+        '<span>Nivel de cuidador: ' + rank + '</span>',
+        '<p>Felicidades. Encontraste parejas y entrenaste tu memoria con un gran coraz&oacute;n para cuidar mascotas.</p>',
+        '<button type="button" onclick="reiniciarMemorama()">Jugar otra vez</button>',
+        '</div>'
+    ].join("");
+
+    if (success) {
+        premiarJuego("Memorama Huellitas completado. Ganaste patitas por tu memoria.", memoryScoreValue, total * 3, { bond: 6, happy: 7 });
+    }
+}
+
+function reiniciarMemorama() {
+    iniciarMemoramaHuellitas();
+}
+
+function actualizarCanastaGatito() {
+    const basket = document.getElementById("catBasket");
+    if (basket) {
+        basket.style.left = catBasketX + "%";
+    }
+}
+
+function iniciarGatitoTravieso() {
+    clearInterval(catTimerId);
+    clearInterval(catSpawnId);
+    clearInterval(catClockId);
+    limpiarObjetosGatito();
+    catActive = true;
+    catScoreValue = 0;
+    catLivesValue = 3;
+    catTimeLeft = 45;
+    catLevelValue = 1;
+    catGoodCaught = 0;
+    catBadAvoided = 0;
+    catCombo = 0;
+    catBasketX = 50;
+    actualizarCanastaGatito();
+    actualizarGatitoMeta();
+    document.getElementById("catFeedback").textContent = "El gatito empez&oacute; a tirar objetos. Atrapa solo lo seguro.";
+    catTimerId = setInterval(tickGatitoTravieso, 50);
+    catSpawnId = setInterval(spawnObjetoGatito, 850);
+    catClockId = setInterval(tickSegundoGatito, 1000);
+}
+
+function limpiarObjetosGatito() {
+    catObjects.forEach((item) => {
+        if (item.el) {
+            item.el.remove();
+        }
+    });
+    catObjects = [];
+    document.querySelectorAll(".cat-drop").forEach((item) => item.remove());
+}
+
+function spawnObjetoGatito() {
+    if (!catActive) {
+        return;
+    }
+
+    crearObjetoGatito();
+
+    if (catLevelValue >= 3 && Math.random() > 0.45) {
+        crearObjetoGatito();
+    }
+
+    if (catLevelValue >= 4 && Math.random() > 0.55) {
+        crearObjetoGatito();
+    }
+}
+
+function crearObjetoGatito() {
+    const field = document.getElementById("catField");
+    const good = Math.random() > 0.34;
+    const source = good ? catGoodObjects : catBadObjects;
+    const picked = source[Math.floor(Math.random() * source.length)];
+    const el = document.createElement("span");
+    el.className = "cat-drop " + (good ? "good" : "bad");
+    el.innerHTML = picked.icon;
+    field.appendChild(el);
+    catObjects.push({
+        el,
+        good,
+        name: picked.name,
+        x: 8 + Math.random() * 84,
+        y: 34,
+        speed: 1.8 + catLevelValue * 0.38 + Math.random() * 0.9
+    });
+}
+
+function tickGatitoTravieso() {
+    if (!catActive) {
+        return;
+    }
+
+    const field = document.getElementById("catField");
+    const rect = field.getBoundingClientRect();
+    catObjects.slice().forEach((item) => {
+        item.y += item.speed;
+        item.el.style.left = item.x + "%";
+        item.el.style.top = item.y + "px";
+
+        const nearBasket = item.y > rect.height - 84 && Math.abs(item.x - catBasketX) < 13;
+
+        if (nearBasket) {
+            resolverObjetoGatito(item, true);
+        } else if (item.y > rect.height - 34) {
+            resolverObjetoGatito(item, false);
+        }
+    });
+}
+
+function resolverObjetoGatito(item, caught) {
+    catObjects = catObjects.filter((object) => object !== item);
+    item.el.remove();
+
+    if (caught && item.good) {
+        catCombo++;
+        catGoodCaught++;
+        catScoreValue += 10 + Math.min(10, catCombo * 2);
+        playGameSound("good");
+        document.getElementById("catFeedback").textContent = "Buen trabajo. " + item.name + " s&iacute; es seguro.";
+    } else if (caught && !item.good) {
+        catCombo = 0;
+        catLivesValue--;
+        catScoreValue = Math.max(0, catScoreValue - 8);
+        playGameSound("bad");
+        document.getElementById("catFeedback").textContent = "Cuidado. " + item.name + " puede ser peligroso.";
+    } else if (!caught && item.good) {
+        catCombo = 0;
+        catScoreValue = Math.max(0, catScoreValue - 3);
+        document.getElementById("catFeedback").textContent = "Se cay&oacute; un objeto bueno. Intenta atraparlo.";
+    } else {
+        catBadAvoided++;
+        catScoreValue += 4;
+        document.getElementById("catFeedback").textContent = "Bien. Evitaste un objeto peligroso.";
+    }
+
+    actualizarGatitoMeta();
+
+    if (catLivesValue <= 0) {
+        finalizarGatitoTravieso(false);
+    }
+}
+
+function actualizarGatitoMeta() {
+    document.getElementById("catTimer").textContent = "Tiempo: " + catTimeLeft;
+    document.getElementById("catScore").textContent = "Puntos: " + catScoreValue;
+    document.getElementById("catLives").textContent = "Vidas: " + catLivesValue;
+    document.getElementById("catLevel").textContent = "Nivel: " + catLevelValue;
+    document.getElementById("catGood").textContent = "Buenos: " + catGoodCaught;
+    document.getElementById("catAvoided").textContent = "Malos evitados: " + catBadAvoided;
+}
+
+function relojGatitoTravieso() {
+    if (!catActive) {
+        return;
+    }
+}
+
+function finalizarGatitoTravieso(manual) {
+    if (!catActive && manual) {
+        document.getElementById("catFeedback").textContent = "Inicia el juego para ayudar al gatito travieso.";
+        return;
+    }
+
+    clearInterval(catTimerId);
+    clearInterval(catSpawnId);
+    clearInterval(catClockId);
+    catActive = false;
+    limpiarObjetosGatito();
+    const rankMessage = catScoreValue >= 120
+        ? "Felicidades. Ayudaste al gatito travieso a jugar de forma segura."
+        : "Buen intento. Sigue practicando para distinguir objetos seguros.";
+    document.getElementById("catFeedback").innerHTML = [
+        '<div class="final-screen compact">',
+        '<strong>' + catScoreValue + ' puntos</strong>',
+        '<span>Objetos buenos atrapados: ' + catGoodCaught + '</span>',
+        '<span>Objetos malos evitados: ' + catBadAvoided + '</span>',
+        '<span>Nivel alcanzado: ' + catLevelValue + '</span>',
+        '<p>' + rankMessage + '</p>',
+        '<button type="button" onclick="iniciarGatitoTravieso()">Jugar otra vez</button>',
+        '</div>'
+    ].join("");
+
+    if (!manual && catScoreValue >= 70) {
+        premiarJuego("Gatito Travieso completado. Ganaste patitas por jugar seguro.", Math.floor(catScoreValue / 3), Math.floor(catScoreValue / 8), { happy: 8, bond: 6 });
+    }
+}
+
+function tickSegundoGatito() {
+    if (!catActive) {
+        return;
+    }
+
+    catTimeLeft--;
+    const nextLevel = Math.min(4, Math.floor((45 - catTimeLeft) / 11) + 1);
+
+    if (nextLevel > catLevelValue) {
+        catLevelValue = nextLevel;
+        document.getElementById("catFeedback").textContent = "El gatito se puso m&aacute;s travieso. Nuevo nivel.";
+        playBarkSound();
+    }
+
+    actualizarGatitoMeta();
+
+    if (catTimeLeft <= 0) {
+        finalizarGatitoTravieso(false);
+    }
+}
+
+function initGatitoControls() {
+    const field = document.getElementById("catField");
+
+    if (!field) {
+        return;
+    }
+
+    field.addEventListener("pointermove", (event) => {
+        const rect = field.getBoundingClientRect();
+        catBasketX = Math.max(5, Math.min(95, ((event.clientX - rect.left) / rect.width) * 100));
+        actualizarCanastaGatito();
+    });
+}
+
+function iniciarAtrapaPremios() {
+    clearInterval(catchTimer);
+    catchActive = true;
+    catchTimeLeft = 20;
+    catchHits = 0;
+    document.getElementById("catchTimer").textContent = "Tiempo: " + catchTimeLeft;
+    document.getElementById("catchScore").textContent = "Premios: 0";
+    pintarCatchBoard();
+
+    catchTimer = setInterval(() => {
+        catchTimeLeft--;
+        document.getElementById("catchTimer").textContent = "Tiempo: " + catchTimeLeft;
+        pintarCatchBoard();
+
+        if (catchTimeLeft <= 0) {
+            finalizarAtrapaPremios();
+        }
+    }, 1000);
+}
+
+function pintarCatchBoard() {
+    const board = document.getElementById("catchBoard");
+
+    if (!catchActive) {
+        board.innerHTML = '<div class="catch-finish">Presiona iniciar reto para jugar.</div>';
+        return;
+    }
+
+    const targetIndex = Math.floor(Math.random() * 12);
+    const prizes = ["&#127831;", "&#129526;", "&#128031;", "&#128142;"];
+
+    board.innerHTML = Array.from({ length: 12 }).map((_, index) => {
+        const isTarget = index === targetIndex;
+        return '<button type="button" class="' + (isTarget ? "target" : "") + '" onclick="' + (isTarget ? "atraparPremio()" : "fallarPremio()") + '">' + (isTarget ? prizes[Math.floor(Math.random() * prizes.length)] : "&middot;") + '</button>';
+    }).join("");
+}
+
+function atraparPremio() {
+    if (!catchActive) {
+        return;
+    }
+
+    catchHits++;
+    playGameSound("good");
+    state.coins += 2;
+    state.points += 4;
+    state.stats.happy = clamp(state.stats.happy + 2);
+    document.getElementById("catchScore").textContent = "Premios: " + catchHits;
+    saveState();
+    renderPet();
+    renderLeaderboard();
+    pintarCatchBoard();
+}
+
+function fallarPremio() {
+    if (!catchActive) {
+        return;
+    }
+
+    playGameSound("bad");
+    state.stats.energy = clamp(state.stats.energy - 1);
+    saveState();
+    renderPet();
+}
+
+function finalizarAtrapaPremios() {
+    clearInterval(catchTimer);
+    catchTimer = null;
+    catchActive = false;
+
+    if (catchHits >= 8) {
+        playGameSound("good");
+        updateMission("catch", 1);
+        state.streak++;
+        addPoints(20, 12);
+    } else {
+        playGameSound("bad");
+        state.streak = 0;
+        saveState();
+        renderAll();
+    }
+
+    document.getElementById("catchBoard").innerHTML = '<div class="catch-finish">Premios atrapados: ' + catchHits + '</div>';
+}
+
+function nuevaPreguntaMichi() {
+    quizIndex = (quizIndex + 1) % quizQuestions.length;
+    quizAnswered = false;
+    pintarQuizMichi();
+}
+
+function pintarQuizMichi() {
+    const question = quizQuestions[quizIndex];
+    const options = document.getElementById("quizPetOptions");
+
+    document.getElementById("quizPetQuestion").textContent = question.text;
+    document.getElementById("quizPetResult").textContent = "";
+    document.getElementById("quizPetProgress").textContent = "Pregunta " + (quizIndex + 1) + " de " + quizQuestions.length;
+    document.getElementById("quizPetGood").textContent = "Aciertos: " + quizGood;
+    options.innerHTML = question.options.map((option, index) => {
+        return '<button type="button" onclick="responderQuizMichi(' + index + ')">' + option + '</button>';
+    }).join("");
+}
+
+function responderQuizMichi(index) {
+    const question = quizQuestions[quizIndex];
+
+    if (quizAnswered) {
+        return;
+    }
+
+    quizAnswered = true;
+
+    if (index === question.correct) {
+        quizGood++;
+        state.streak++;
+        playGameSound("good");
+        document.getElementById("quizPetResult").textContent = "Correcto. Tu mascota confia mas en ti.";
+        updateMission("quiz", 1);
+        addPoints(12, 6);
+    } else {
+        state.streak = 0;
+        playGameSound("bad");
+        document.getElementById("quizPetResult").textContent = "Casi. Revisa la mejor opcion de cuidado.";
+        saveState();
+        renderAll();
+    }
+
+    document.getElementById("quizPetGood").textContent = "Aciertos: " + quizGood;
+}
+
+function nuevoCasoCuidado() {
+    careIndex = (careIndex + 1) % careCases.length;
+    pintarCasoCuidado();
+}
+
+function pintarCasoCuidado() {
+    const careCase = careCases[careIndex];
+
+    document.getElementById("careCase").textContent = careCase.text;
+    document.getElementById("careResult").textContent = "";
+    document.getElementById("careRound").textContent = "Caso " + (careIndex + 1);
+    document.getElementById("careStreak").textContent = "Racha: " + state.streak;
+    document.getElementById("careOptions").innerHTML = careCase.options.map((option, index) => {
+        return '<button type="button" onclick="responderCasoCuidado(' + index + ')">' + option.text + '</button>';
+    }).join("");
+}
+
+function responderCasoCuidado(index) {
+    const option = careCases[careIndex].options[index];
+
+    document.getElementById("careResult").textContent = option.feedback;
+
+    if (option.good) {
+        state.streak++;
+        state.stats.bond = clamp(state.stats.bond + 6);
+        playGameSound("good");
+        addPoints(10, 5);
+    } else {
+        state.streak = 0;
+        state.stats.happy = clamp(state.stats.happy - 4);
+        playGameSound("bad");
+        saveState();
+        renderAll();
+    }
+
+    document.getElementById("careStreak").textContent = "Racha: " + state.streak;
+}
+
+function guardarPuntaje() {
+    const player = getPlayer();
+    const scores = readJson(scoreStorageKey, []);
+    const existing = scores.find((item) => item.id === player.id);
+    const now = new Date().toLocaleString("es-MX");
+
+    if (existing) {
+        existing.nombre = player.nombre;
+        existing.email = player.email;
+        existing.foto = player.foto;
+        existing.invitado = player.invitado;
+        existing.mejorPuntaje = Math.max(existing.mejorPuntaje || 0, state.points);
+        existing.mejoresLogros = Math.max(existing.mejoresLogros || 0, state.level);
+        existing.ultimoPuntaje = state.points;
+        existing.ultimaVez = now;
+    } else {
+        scores.push({
+            id: player.id,
+            nombre: player.nombre,
+            email: player.email,
+            foto: player.foto,
+            invitado: player.invitado,
+            mejorPuntaje: state.points,
+            mejoresLogros: state.level,
+            ultimoPuntaje: state.points,
+            ultimaVez: now
+        });
+    }
+
+    localStorage.setItem(scoreStorageKey, JSON.stringify(scores));
+
+    if (window.huellitasApi && window.huellitasApi.enabled) {
+        window.huellitasApi.request("/api/scores", {
+            method: "POST",
+            body: JSON.stringify({
+                id: player.id,
+                nombre: player.nombre,
+                email: player.email,
+                foto: player.foto,
+                puntaje: state.points,
+                logros: state.level
+            })
+        }).catch(() => {});
+    }
+}
+
+function revisarInsignias() {
+    if (!window.huellitasAwardBadge) {
+        return;
+    }
+
+    if (state.points >= 80) {
+        window.huellitasAwardBadge("guardian-huellitas");
+    }
+
+    if (state.level >= 3 || state.bestStreak >= 4) {
+        window.huellitasAwardBadge("experto-cuidados");
+    }
+}
+
+window.addEventListener("load", () => {
+    if (window.huellitasHidePageLoader) {
+        window.huellitasHidePageLoader();
+    } else if (document.getElementById("loader")) {
+        document.getElementById("loader").style.display = "none";
+    }
+    renderAll();
+    pintarCatchBoard();
+    renderCleanBoard();
+    reiniciarLaberinto();
+    prepararSopaHuellitas();
+    prepararMemoramaHuellitas();
+    initSopaTouchControls();
+    initGatitoControls();
+    startPetThoughts();
+    refreshPetSpritesOnEntry();
+    window.setInterval(renderActions, 1000);
+});
+
+window.addEventListener("pageshow", () => {
+    renderAll();
+    refreshPetSpritesOnEntry();
+});
+
+document.addEventListener("visibilitychange", () => {
+    if (!document.hidden) {
+        refreshPetSpritesOnEntry();
+    }
+});
+
+if (document.addEventListener) {
+    document.addEventListener("keydown", (event) => {
+        if (event.code === "Space" && runnerActive) {
+            event.preventDefault();
+            saltarPerrito();
+        }
+
+        const mazeKeys = {
+            ArrowUp: "up",
+            ArrowDown: "down",
+            ArrowLeft: "left",
+            ArrowRight: "right"
+        };
+
+        if (mazeKeys[event.key]) {
+            event.preventDefault();
+            moverLaberinto(mazeKeys[event.key]);
+        }
+    });
+}
+</script>
+<script src="huellitas.js"></script>
+</body>
+</html>
+
