@@ -237,7 +237,7 @@
 
     function useMobilePanels() {
         return window.matchMedia
-            && window.matchMedia("(max-width: 980px), (max-height: 720px), (pointer: coarse)").matches;
+            && window.matchMedia("(max-width: 980px), (pointer: coarse)").matches;
     }
 
     function applyPalette(settings) {

@@ -9917,7 +9917,7 @@ body.dark .guide-card p {
 }
 
 /* Perfil como hoja completa cuando se abre en pantallas tactiles o compactas */
-@media (max-width: 980px), (max-height: 720px), (pointer: coarse) {
+@media (max-width: 980px), (pointer: coarse) {
     body.profile-sheet-open .profile-popover,
     body.profile-sheet-open #menuPerfil {
         display: block !important;

@@ -472,7 +472,7 @@ function toggleMenu() {
     menu.style.display = "block";
     menu.scrollTop = 0;
     document.body.classList.add("profile-sheet-open");
-    if (window.matchMedia && window.matchMedia("(max-width: 980px), (max-height: 720px), (pointer: coarse)").matches) {
+    if (window.matchMedia && window.matchMedia("(max-width: 980px), (pointer: coarse)").matches) {
         menu.classList.add("mobile-profile-panel");
         document.body.classList.add("mobile-modal-open");
         document.body.appendChild(menu);
