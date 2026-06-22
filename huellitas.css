@@ -1,4 +1,4 @@
-﻿:root {
+:root {
     --leaf: #5f9d63;
     --leaf-dark: #2f6b43;
     --cocoa: #4b2e2e;
@@ -10009,3 +10009,20 @@ body.dark .guide-card p {
     }
 }
 
+/* Alineacion consistente del acceso Reportar en inicio */
+.home-quick-actions button[data-report-toggle-home] {
+    width: 100%;
+    display: grid !important;
+    grid-template-columns: 1fr;
+    align-content: center !important;
+    justify-content: stretch !important;
+    justify-items: start !important;
+    text-align: left !important;
+}
+
+.home-quick-actions button[data-report-toggle-home] b,
+.home-quick-actions button[data-report-toggle-home] span {
+    width: 100%;
+    justify-self: start;
+    text-align: left;
+}

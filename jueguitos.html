@@ -2139,6 +2139,7 @@ let guardianHappiness = 70;
 let guardianTime = 15;
 let guardianTimerId = null;
 let guardianLocked = false;
+let guardianCurrentOptions = [];
 
 const wordDefinitions = [
     { word: "AGUA", label: "AGUA" },
@@ -2261,8 +2262,12 @@ function mostrarMisionGuardian() {
     document.getElementById("guardianFeedback").textContent = "";
     actualizarGuardianTimer();
     actualizarGuardianFelicidad();
-    document.getElementById("guardianOptions").innerHTML = current.options.map((option, index) => {
-        return '<button type="button" onclick="responderGuardian(' + index + ')">' + option + '</button>';
+    guardianCurrentOptions = shuffleItems(current.options.map((option, index) => ({
+        text: option,
+        correct: index === current.correct
+    })));
+    document.getElementById("guardianOptions").innerHTML = guardianCurrentOptions.map((option, index) => {
+        return '<button type="button" onclick="responderGuardian(' + index + ')">' + option.text + '</button>';
     }).join("");
 
     guardianTimerId = setInterval(() => {
@@ -2293,12 +2298,14 @@ function responderGuardian(index) {
     guardianLocked = true;
     clearInterval(guardianTimerId);
     const current = guardianOrder[guardianIndex];
-    const correct = index === current.correct;
+    const selectedOption = guardianCurrentOptions[index];
+    const correctIndex = guardianCurrentOptions.findIndex((option) => option.correct);
+    const correct = Boolean(selectedOption && selectedOption.correct);
     const feedback = document.getElementById("guardianFeedback");
 
     document.querySelectorAll("#guardianOptions button").forEach((button, buttonIndex) => {
         button.disabled = true;
-        button.classList.toggle("correct", buttonIndex === current.correct);
+        button.classList.toggle("correct", buttonIndex === correctIndex);
         button.classList.toggle("wrong", buttonIndex === index && !correct);
     });
 
