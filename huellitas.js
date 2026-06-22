@@ -100,6 +100,7 @@
     const isAppShell = document.body && document.body.classList.contains("app-shell-body");
     const staticHost = /(^|\.)github\.io$|\.netlify\.app$|\.vercel\.app$|\.pages\.dev$/i.test(window.location.hostname);
     const sameOriginApiEnabled = (window.location.protocol === "http:" || window.location.protocol === "https:") && !staticHost;
+    const hostedApiUrl = "https://huellitas-vi7v.onrender.com";
 
     function normalizeApiBase(value) {
         const clean = String(value || "").trim();
@@ -112,7 +113,7 @@
     }
 
     function getApiBaseUrl() {
-        return normalizeApiBase(window.HUELLITAS_API_URL || localStorage.getItem("huellitasApiUrl") || "");
+        return normalizeApiBase(window.HUELLITAS_API_URL || localStorage.getItem("huellitasApiUrl") || (staticHost ? hostedApiUrl : ""));
     }
 
     function isApiEnabled() {
