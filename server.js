@@ -5,7 +5,7 @@ const crypto = require("crypto");
 const tls = require("tls");
 
 const root = __dirname;
-const dataDir = path.join(root, "data");
+const dataDir = path.resolve(process.env.DATA_DIR || path.join(root, "data"));
 const dbPath = path.join(dataDir, "huellitas-db.json");
 const configPath = path.join(root, "server-config.json");
 const port = Number(process.env.PORT || 3000);

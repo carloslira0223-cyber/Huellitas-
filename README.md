@@ -35,6 +35,12 @@ Con servidor local, la pagina tambien puede guardar informacion compartida en:
 data/huellitas-db.json
 ```
 
+Para usarlo en varios celulares dentro de la misma red Wi-Fi, abre la pagina desde la IP de la computadora que tiene prendido el servidor:
+
+```txt
+http://IP-DE-LA-COMPU:3000
+```
+
 ### GitHub Pages con servidor externo
 
 GitHub Pages muestra la pagina, pero no ejecuta `server.js`. Para que las cuentas, solicitudes, reportes, favoritos y mensajes se compartan entre celulares/compus:
@@ -45,6 +51,17 @@ GitHub Pages muestra la pagina, pero no ejecuta `server.js`. Para que las cuenta
 4. Inicia sesion o crea cuentas desde la pagina.
 
 El servidor incluye CORS para que GitHub Pages pueda conectarse. Puedes copiar `server-config.example.json` como `server-config.json` si quieres limitar origenes permitidos.
+
+#### Configuracion recomendada en Render
+
+- Tipo: Web Service.
+- Repositorio: `Huellitas-`.
+- Runtime/Language: Node.
+- Build command: `npm install`.
+- Start command: `npm start`.
+- Health check path: `/api/health`.
+- Variable opcional: `ALLOWED_ORIGINS=https://carloslira0223-cyber.github.io`.
+- Para datos persistentes: crea un disco y usa `DATA_DIR` apuntando a la carpeta montada, por ejemplo `/var/data`.
 
 ## Respaldo de datos
 

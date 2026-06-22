@@ -1,0 +1,13 @@
+{
+  "name": "huellitas",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Plataforma escolar Huellitas con API local para usuarios, adopciones, reportes y mascota virtual.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
