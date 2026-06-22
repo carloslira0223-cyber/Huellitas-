@@ -1309,6 +1309,7 @@
 
         function openPopover() {
             popover.style.display = "block";
+            popover.scrollTop = 0;
             wrap.classList.add("profile-open");
             document.body.classList.add("profile-sheet-open");
             chip.setAttribute("aria-expanded", "true");

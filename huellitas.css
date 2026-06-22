@@ -9780,3 +9780,78 @@ body.dark .guide-card p {
     }
 }
 
+/* Correccion final: perfil completo y usable en telefono */
+@media (max-width: 760px) {
+    .profile-popover,
+    #menuPerfil {
+        position: fixed !important;
+        top: 10px !important;
+        right: 10px !important;
+        bottom: 10px !important;
+        left: 10px !important;
+        z-index: 5000 !important;
+        width: auto !important;
+        height: auto !important;
+        max-width: none !important;
+        max-height: none !important;
+        overflow-y: auto !important;
+        overscroll-behavior: contain !important;
+        padding: 0 0 max(14px, env(safe-area-inset-bottom)) !important;
+        border: 1px solid var(--line) !important;
+        border-radius: 8px !important;
+        background: var(--surface-strong, #ffffff) !important;
+        box-shadow: 0 22px 52px rgba(0, 0, 0, 0.28) !important;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .profile-popover-header {
+        position: sticky !important;
+        top: 0 !important;
+        z-index: 2 !important;
+        background: var(--surface-strong, #ffffff) !important;
+    }
+
+    .profile-footer-actions {
+        position: static !important;
+        display: grid !important;
+        grid-template-columns: 1fr !important;
+        gap: 8px !important;
+        margin: 10px !important;
+        padding: 10px !important;
+        border: 1px solid var(--line) !important;
+        border-radius: 8px !important;
+        background: var(--surface, #ffffff) !important;
+    }
+
+    .profile-footer-actions .profile-logout,
+    .profile-logout {
+        min-height: 48px !important;
+        font-size: 16px !important;
+        line-height: 1.2 !important;
+    }
+
+    .profile-stats,
+    .profile-section,
+    .profile-tab-panel,
+    .profile-tabs {
+        position: relative !important;
+        z-index: 1 !important;
+    }
+
+    .profile-stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        margin: 10px !important;
+    }
+
+    .profile-section,
+    .profile-tab-panel {
+        margin: 10px !important;
+    }
+}
+
+@media (max-width: 420px) {
+    .profile-stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+}
+
