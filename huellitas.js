@@ -99,7 +99,33 @@
     const isFramed = window.self !== window.top;
     const isAppShell = document.body && document.body.classList.contains("app-shell-body");
     const staticHost = /(^|\.)github\.io$|\.netlify\.app$|\.vercel\.app$|\.pages\.dev$/i.test(window.location.hostname);
-    const apiEnabled = (window.location.protocol === "http:" || window.location.protocol === "https:") && !staticHost;
+    const sameOriginApiEnabled = (window.location.protocol === "http:" || window.location.protocol === "https:") && !staticHost;
+
+    function normalizeApiBase(value) {
+        const clean = String(value || "").trim();
+
+        if (!clean) {
+            return "";
+        }
+
+        return clean.replace(/\/+$/, "");
+    }
+
+    function getApiBaseUrl() {
+        return normalizeApiBase(window.HUELLITAS_API_URL || localStorage.getItem("huellitasApiUrl") || "");
+    }
+
+    function isApiEnabled() {
+        return Boolean(getApiBaseUrl()) || sameOriginApiEnabled;
+    }
+
+    function apiUrl(path) {
+        if (/^https?:\/\//i.test(path)) {
+            return path;
+        }
+
+        return getApiBaseUrl() + path;
+    }
 
     function getApiToken() {
         return localStorage.getItem("huellitasToken") || "";
@@ -116,7 +142,7 @@
     }
 
     async function apiRequest(path, options) {
-        if (!apiEnabled) {
+        if (!isApiEnabled()) {
             throw new Error("Servidor no activo.");
         }
 
@@ -133,7 +159,7 @@
             headers.Authorization = "Bearer " + token;
         }
 
-        const response = await fetch(path, Object.assign({}, requestOptions, { headers }));
+        const response = await fetch(apiUrl(path), Object.assign({}, requestOptions, { headers }));
         const data = await response.json().catch(() => ({}));
 
         if (!response.ok || data.ok === false) {
@@ -144,7 +170,19 @@
     }
 
     window.huellitasApi = {
-        enabled: apiEnabled,
+        get enabled() {
+            return isApiEnabled();
+        },
+        getBaseUrl: getApiBaseUrl,
+        setBaseUrl(url) {
+            const clean = normalizeApiBase(url);
+
+            if (clean) {
+                localStorage.setItem("huellitasApiUrl", clean);
+            } else {
+                localStorage.removeItem("huellitasApiUrl");
+            }
+        },
         request: apiRequest,
         setToken: setApiToken,
         clearToken: clearApiToken
@@ -175,6 +213,25 @@
         if (isFramed) {
             window.parent.postMessage({ type: "huellitas:settingsChanged" }, "*");
         }
+    }
+
+    function currentPageForContinuousMode() {
+        const fileName = window.location.pathname.split("/").pop() || "pagina.html";
+        const page = /\.html$/i.test(fileName) && fileName.toLowerCase() !== "app.html" ? fileName : "pagina.html";
+
+        return page + window.location.search + window.location.hash;
+    }
+
+    function enterContinuousModeIfNeeded() {
+        const params = new URLSearchParams(window.location.search);
+        const settings = getSettings();
+
+        if (isFramed || isAppShell || !settings.music || params.has("standalone")) {
+            return false;
+        }
+
+        window.location.replace("app.html?page=" + encodeURIComponent(currentPageForContinuousMode()));
+        return true;
     }
 
     function applyPalette(settings) {
@@ -323,6 +380,11 @@
 
             if (Array.isArray(data.scores)) {
                 writeJson("huellitasPuntajesJuego", mergeArrayById(readJson("huellitasPuntajesJuego", []), data.scores));
+                changed = true;
+            }
+
+            if (Array.isArray(data.users)) {
+                writeJson("usuarios", mergeArrayById(readJson("usuarios", []), data.users));
                 changed = true;
             }
 
@@ -1239,20 +1301,32 @@
 
         function closePopover() {
             popover.style.display = "none";
+            wrap.classList.remove("profile-open");
+            document.body.classList.remove("profile-sheet-open");
             chip.setAttribute("aria-expanded", "false");
         }
 
-        chip.addEventListener("click", () => {
+        function openPopover() {
+            popover.style.display = "block";
+            wrap.classList.add("profile-open");
+            document.body.classList.add("profile-sheet-open");
+            chip.setAttribute("aria-expanded", "true");
+        }
+
+        chip.addEventListener("click", (event) => {
+            event.stopPropagation();
             const isOpen = popover.style.display === "block";
             if (isOpen) {
                 closePopover();
             } else {
-                popover.style.display = "block";
-                chip.setAttribute("aria-expanded", "true");
+                openPopover();
             }
         });
 
-        closeButton.addEventListener("click", closePopover);
+        closeButton.addEventListener("click", (event) => {
+            event.stopPropagation();
+            closePopover();
+        });
 
         popover.addEventListener("click", (event) => {
             event.stopPropagation();
@@ -1297,6 +1371,12 @@
 
         document.addEventListener("click", (event) => {
             if (!wrap.contains(event.target)) {
+                closePopover();
+            }
+        });
+
+        document.addEventListener("keydown", (event) => {
+            if (event.key === "Escape") {
                 closePopover();
             }
         });
@@ -1356,6 +1436,9 @@
             '<section>',
             '<h3>Navegaci&oacute;n</h3>',
             '<label class="setting-row"><span>Men&uacute; oculto</span><input data-setting-control="navCompact" type="checkbox"></label>',
+            '<label>Servidor de datos</label>',
+            '<input data-api-url type="url" placeholder="https://tu-servidor-huellitas.com">',
+            '<p class="form-note" data-api-status>En GitHub Pages pega aqu&iacute; la URL del servidor para compartir cuentas y datos.</p>',
             '<p class="form-note">Con men&uacute; oculto, las pesta&ntilde;as salen al tocar el bot&oacute;n de arriba.</p>',
             '</section>',
             '</div>',
@@ -1384,6 +1467,23 @@
 
             const currentPage = window.location.pathname.split("/").pop() || "pagina.html";
             window.location.href = "app.html?page=" + encodeURIComponent(currentPage + window.location.hash);
+        });
+
+        const apiInput = panel.querySelector("[data-api-url]");
+        const apiStatus = panel.querySelector("[data-api-status]");
+
+        apiInput.addEventListener("change", () => {
+            window.huellitasApi.setBaseUrl(apiInput.value);
+            apiInput.value = window.huellitasApi.getBaseUrl();
+            apiStatus.textContent = apiInput.value
+                ? "Servidor guardado. Intentando sincronizar datos..."
+                : "Servidor quitado. Se usaran datos de este navegador.";
+
+            syncServerState().then((data) => {
+                apiStatus.textContent = data
+                    ? "Servidor conectado. Los datos se sincronizan entre dispositivos."
+                    : "No se pudo conectar todavia. Revisa que el servidor este prendido y permita CORS.";
+            });
         });
 
         panel.querySelectorAll("[data-setting-control]").forEach((control) => {
@@ -1418,7 +1518,13 @@
         createSettingsPanel();
         const panel = document.getElementById("settingsPanel");
         const darkControl = panel.querySelector("[data-settings-dark]");
+        const apiInput = panel.querySelector("[data-api-url]");
+        const apiStatus = panel.querySelector("[data-api-status]");
         darkControl.checked = document.body.classList.contains("dark");
+        apiInput.value = window.huellitasApi.getBaseUrl();
+        apiStatus.textContent = window.huellitasApi.enabled
+            ? "Servidor activo para compartir cuentas y datos."
+            : "En GitHub Pages pega aqu&iacute; la URL del servidor para compartir cuentas y datos.";
         applySettings(getSettings());
         panel.hidden = false;
         setPageLocked(true);
@@ -1934,6 +2040,10 @@
     };
 
     function initSharedUi() {
+        if (enterContinuousModeIfNeeded()) {
+            return;
+        }
+
         ensurePageLoader();
         initTheme();
         applySettings(getSettings());

@@ -29,11 +29,22 @@ Ejecuta `iniciar-huellitas.bat` y abre:
 http://localhost:3000
 ```
 
-Con servidor local, la pagina tambien puede guardar informacion en:
+Con servidor local, la pagina tambien puede guardar informacion compartida en:
 
 ```txt
 data/huellitas-db.json
 ```
+
+### GitHub Pages con servidor externo
+
+GitHub Pages muestra la pagina, pero no ejecuta `server.js`. Para que las cuentas, solicitudes, reportes, favoritos y mensajes se compartan entre celulares/compus:
+
+1. Sube o ejecuta `server.js` en una compu/hosting que quede accesible por URL.
+2. Abre Huellitas en GitHub Pages.
+3. En Ajustes, pega la URL del servidor en `Servidor de datos`.
+4. Inicia sesion o crea cuentas desde la pagina.
+
+El servidor incluye CORS para que GitHub Pages pueda conectarse. Puedes copiar `server-config.example.json` como `server-config.json` si quieres limitar origenes permitidos.
 
 ## Respaldo de datos
 
@@ -78,4 +89,4 @@ data/huellitas-db.json   Base local cuando se usa servidor
 
 ## Nota para GitHub Pages
 
-La pagina funciona de forma estatica. En GitHub Pages no se usa `server.js`, asi que los datos se guardan en el navegador. Para guardar en archivo JSON local, usen el servidor con `iniciar-huellitas.bat`.
+La pagina funciona de forma estatica y usa `index.html` como entrada. Si no configuras un servidor de datos, guarda datos en el navegador. Si configuras `Servidor de datos` en Ajustes, sincroniza con `server.js`.

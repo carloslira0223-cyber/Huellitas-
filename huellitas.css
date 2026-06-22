@@ -8765,7 +8765,8 @@ body.dark .confirm-card p {
 .profile-popover,
 #menuPerfil,
 .notification-popover {
-    overflow: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
 }
 
 .profile-tabs button.active {
@@ -8865,6 +8866,10 @@ body.dark .system-status-item.bad > span {
 }
 
 @media (max-width: 760px) {
+    body.profile-sheet-open {
+        overflow: hidden;
+    }
+
     .home-quick-actions a,
     .home-quick-actions button {
         min-height: 62px;
@@ -8890,8 +8895,53 @@ body.dark .system-status-item.bad > span {
         right: 0;
         bottom: 0;
         left: 0;
+        width: 100%;
         max-height: 88dvh;
+        overflow-y: auto;
+        padding-bottom: max(8px, env(safe-area-inset-bottom));
         border-radius: 8px 8px 0 0;
+        -webkit-overflow-scrolling: touch;
+        box-shadow: 0 -18px 38px rgba(25, 34, 29, 0.22);
+    }
+
+    .profile-popover-header {
+        position: sticky;
+        top: 0;
+        z-index: 4;
+        gap: 10px;
+    }
+
+    .profile-popover-header small {
+        white-space: normal;
+        overflow-wrap: anywhere;
+    }
+
+    .profile-stats,
+    .profile-history-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        margin: 10px;
+    }
+
+    .profile-section,
+    .profile-tab-panel {
+        margin: 10px;
+        border-radius: 8px;
+    }
+
+    .profile-tabs {
+        position: sticky;
+        top: 66px;
+        z-index: 3;
+        margin: 0;
+        border-left: 0;
+        border-right: 0;
+        border-radius: 0;
+    }
+
+    .profile-footer-actions {
+        grid-template-columns: 1fr;
+        gap: 8px;
+        padding: 10px;
     }
 
     .notification-popover {

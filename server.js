@@ -111,6 +111,37 @@ function sendJson(res, status, payload) {
     res.end(JSON.stringify(payload));
 }
 
+function configuredOrigins() {
+    const raw = process.env.ALLOWED_ORIGINS || config.allowedOrigins || "*";
+
+    if (Array.isArray(raw)) {
+        return raw;
+    }
+
+    return String(raw).split(",").map((item) => item.trim()).filter(Boolean);
+}
+
+function applyCors(req, res) {
+    const origin = req.headers.origin;
+    const allowed = configuredOrigins();
+    const allowAll = allowed.includes("*");
+
+    if (!origin && !allowAll) {
+        return;
+    }
+
+    if (allowAll) {
+        res.setHeader("Access-Control-Allow-Origin", "*");
+    } else if (allowed.includes(origin)) {
+        res.setHeader("Access-Control-Allow-Origin", origin);
+        res.setHeader("Vary", "Origin");
+    }
+
+    res.setHeader("Access-Control-Allow-Methods", "GET,POST,OPTIONS");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Huellitas-Token");
+    res.setHeader("Access-Control-Max-Age", "86400");
+}
+
 function readBody(req) {
     return new Promise((resolve, reject) => {
         let body = "";
@@ -169,6 +200,7 @@ function verifyPassword(password, stored) {
 
 function publicUser(user) {
     return {
+        id: user.id || user.email,
         nombre: user.nombre,
         email: user.email,
         color: user.color || "#5f9d63",
@@ -440,7 +472,8 @@ function buildStats(db) {
         reportsPending: db.reports.filter((item) => item.estado !== "Atendido").length,
         unreadMessages: db.mailbox.filter((item) => item.from !== "admin" && item.readByAdmin !== true).length,
         appointments: appointmentList(db),
-        favoritesTotal: Object.values(db.favorites).reduce((total, items) => total + (Array.isArray(items) ? items.length : 0), 0)
+        favoritesTotal: Object.values(db.favorites).reduce((total, items) => total + (Array.isArray(items) ? items.length : 0), 0),
+        usersTotal: db.users.length
     };
 }
 
@@ -646,6 +679,18 @@ function removeDemoData(db) {
 async function handleApi(req, res, pathname) {
     const db = readDb();
     const body = await readBody(req);
+
+    if (req.method === "GET" && pathname === "/api/health") {
+        sendJson(res, 200, {
+            ok: true,
+            name: "Huellitas API",
+            users: db.users.length,
+            adoptions: db.adoptions.length,
+            reports: db.reports.length,
+            updatedAt: new Date().toISOString()
+        });
+        return;
+    }
 
     if (req.method === "POST" && pathname === "/api/register") {
         const nombre = cleanText(body.nombre);
@@ -1111,6 +1156,7 @@ async function handleApi(req, res, pathname) {
             messages: db.messages,
             reports: db.reports,
             scores: db.scores,
+            users: db.users.map(publicUser),
             favorites: db.favorites,
             notifications: db.notifications,
             mailbox: db.mailbox,
@@ -1130,6 +1176,7 @@ async function handleApi(req, res, pathname) {
             messages: db.messages,
             reports: db.reports,
             scores: db.scores,
+            users: db.users.map(publicUser),
             favorites: db.favorites,
             notifications: db.notifications,
             mailbox: db.mailbox,
@@ -1216,6 +1263,7 @@ async function handleApi(req, res, pathname) {
             messages: db.messages,
             reports: db.reports,
             scores: db.scores,
+            users: db.users.map(publicUser),
             favorites: db.favorites,
             notifications: db.notifications,
             mailbox: db.mailbox,
@@ -1264,6 +1312,13 @@ function serveStatic(req, res, pathname) {
 
 const server = http.createServer(async (req, res) => {
     const url = new URL(req.url, "http://localhost");
+    applyCors(req, res);
+
+    if (req.method === "OPTIONS") {
+        res.writeHead(204);
+        res.end();
+        return;
+    }
 
     try {
         if (url.pathname.startsWith("/api/")) {
