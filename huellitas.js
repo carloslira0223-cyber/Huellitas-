@@ -1333,6 +1333,13 @@
             event.stopPropagation();
         });
 
+        const editProfileLink = wrap.querySelector('.profile-edit-link[href*="#editar-perfil"]');
+        if (editProfileLink) {
+            editProfileLink.addEventListener("click", () => {
+                closePopover();
+            });
+        }
+
         wrap.querySelector("[data-global-logout]").addEventListener("click", () => {
             localStorage.removeItem("sesion");
             window.location.reload();
@@ -1865,6 +1872,38 @@
         }
     }
 
+    function closeAccountPanels() {
+        document.querySelectorAll(".login-container.active").forEach((panel) => {
+            panel.classList.remove("active");
+        });
+    }
+
+    function enhanceAccountPanels() {
+        document.querySelectorAll(".login-container").forEach((panel) => {
+            if (!panel.querySelector("[data-account-panel-close]")) {
+                const close = document.createElement("button");
+                close.className = "account-panel-close";
+                close.type = "button";
+                close.setAttribute("data-account-panel-close", "true");
+                close.setAttribute("aria-label", "Cerrar panel");
+                close.innerHTML = "&times;";
+                panel.insertBefore(close, panel.firstChild);
+            }
+        });
+
+        document.addEventListener("click", (event) => {
+            if (event.target.closest("[data-account-panel-close]")) {
+                closeAccountPanels();
+            }
+        });
+
+        document.addEventListener("keydown", (event) => {
+            if (event.key === "Escape") {
+                closeAccountPanels();
+            }
+        });
+    }
+
     function updateAudioSettings(settings) {
         if (bgAudio) {
             bgAudio.volume = settings.musicVolume;
@@ -1885,11 +1924,11 @@
         const settings = getSettings();
 
         if (!settings.music || !bgAudio) {
-            return;
+            return Promise.resolve();
         }
 
         bgAudio.volume = settings.musicVolume;
-        bgAudio.play().catch(() => {});
+        return bgAudio.play().catch(() => {});
     }
 
     function playClickSound() {
@@ -1914,8 +1953,20 @@
         startMusic();
     }
 
+    window.huellitasStartMusic = function() {
+        audioUnlocked = true;
+        return startMusic();
+    };
+
     function initAudio() {
         if (isFramed) {
+            const requestParentAudio = () => {
+                window.parent.postMessage({ type: "huellitas:unlockAudio" }, "*");
+            };
+
+            document.addEventListener("pointerdown", requestParentAudio, { passive: true });
+            document.addEventListener("touchstart", requestParentAudio, { passive: true });
+            document.addEventListener("keydown", requestParentAudio);
             document.addEventListener("click", (event) => {
                 if (event.target.closest("button, a, .memoria-card, .map-pin, .profile-chip, .favorite-button")) {
                     window.parent.postMessage({ type: "huellitas:playClickSound" }, "*");
@@ -1928,6 +1979,7 @@
             bgAudio = new Audio("assets/sonidos/musica.mp3");
             bgAudio.loop = true;
             bgAudio.preload = "auto";
+            bgAudio.setAttribute("playsinline", "");
         }
 
         if (!clickAudio) {
@@ -1937,6 +1989,7 @@
 
         updateAudioSettings(getSettings());
         document.addEventListener("pointerdown", unlockAudio, { once: true });
+        document.addEventListener("touchstart", unlockAudio, { once: true, passive: true });
         document.addEventListener("keydown", unlockAudio, { once: true });
         document.addEventListener("click", (event) => {
             if (event.target.closest("button, a, .memoria-card, .map-pin, .profile-chip, .favorite-button")) {
@@ -1947,6 +2000,22 @@
         window.addEventListener("message", (event) => {
             if (event.data && event.data.type === "huellitas:playClickSound") {
                 playClickSound();
+            }
+
+            if (event.data && event.data.type === "huellitas:unlockAudio") {
+                unlockAudio();
+            }
+        });
+
+        window.addEventListener("pageshow", () => {
+            if (audioUnlocked) {
+                startMusic();
+            }
+        });
+
+        document.addEventListener("visibilitychange", () => {
+            if (!document.hidden && audioUnlocked) {
+                startMusic();
             }
         });
     }
@@ -2051,6 +2120,7 @@
         initResponsiveNav();
         initReportButton();
         initSettingsButton();
+        enhanceAccountPanels();
         initMobileMenuTools();
         initNotificationBell();
         initGlobalProfile();

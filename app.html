@@ -52,6 +52,10 @@ if (initialPage) {
 
 enterApp.addEventListener("click", () => {
     welcome.hidden = true;
+
+    if (window.huellitasStartMusic) {
+        window.huellitasStartMusic();
+    }
 });
 
 frame.addEventListener("load", () => {
