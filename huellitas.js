@@ -235,6 +235,11 @@
         return true;
     }
 
+    function useMobilePanels() {
+        return window.matchMedia
+            && window.matchMedia("(max-width: 980px), (max-height: 720px), (pointer: coarse)").matches;
+    }
+
     function applyPalette(settings) {
         const palette = palettes[settings.accent] || palettes.verde;
 
@@ -1041,6 +1046,11 @@
 
         function close() {
             popover.style.display = "none";
+            popover.classList.remove("mobile-notification-panel");
+            document.body.classList.remove("mobile-modal-open");
+            if (popover.parentNode !== wrap) {
+                wrap.appendChild(popover);
+            }
             button.setAttribute("aria-expanded", "false");
         }
 
@@ -1055,7 +1065,13 @@
             list.innerHTML = renderNotificationsFor(profileId);
             markNotificationsRead(profileId);
             updateNotificationBell(wrap, profileId);
+            if (useMobilePanels()) {
+                popover.classList.add("mobile-notification-panel");
+                document.body.classList.add("mobile-modal-open");
+                document.body.appendChild(popover);
+            }
             popover.style.display = "block";
+            popover.scrollTop = 0;
             button.setAttribute("aria-expanded", "true");
         });
 
@@ -1302,16 +1318,26 @@
 
         function closePopover() {
             popover.style.display = "none";
+            popover.classList.remove("mobile-profile-panel");
+            if (popover.parentNode !== wrap) {
+                wrap.appendChild(popover);
+            }
             wrap.classList.remove("profile-open");
             document.body.classList.remove("profile-sheet-open");
+            document.body.classList.remove("mobile-modal-open");
             chip.setAttribute("aria-expanded", "false");
         }
 
         function openPopover() {
+            if (useMobilePanels()) {
+                popover.classList.add("mobile-profile-panel");
+                document.body.appendChild(popover);
+            }
             popover.style.display = "block";
             popover.scrollTop = 0;
             wrap.classList.add("profile-open");
             document.body.classList.add("profile-sheet-open");
+            document.body.classList.add("mobile-modal-open");
             chip.setAttribute("aria-expanded", "true");
         }
 

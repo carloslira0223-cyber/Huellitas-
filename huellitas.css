@@ -302,6 +302,67 @@ body.nav-full .nav-links {
     font-weight: 800;
 }
 
+body.mobile-modal-open {
+    overflow: hidden;
+}
+
+.mobile-profile-panel,
+.mobile-notification-panel {
+    position: fixed !important;
+    inset: 8px !important;
+    z-index: 10000 !important;
+    width: auto !important;
+    height: auto !important;
+    max-width: none !important;
+    max-height: none !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    overscroll-behavior: contain !important;
+    border: 1px solid var(--line) !important;
+    border-radius: 8px !important;
+    background: var(--surface-strong, #ffffff) !important;
+    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.34) !important;
+    -webkit-overflow-scrolling: touch;
+}
+
+.mobile-profile-panel {
+    padding-bottom: max(16px, env(safe-area-inset-bottom)) !important;
+}
+
+.mobile-notification-panel {
+    padding: 0 !important;
+}
+
+.mobile-profile-panel .profile-popover-header,
+.mobile-notification-panel .notification-header {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 4 !important;
+    background: var(--surface-strong, #ffffff) !important;
+}
+
+.mobile-profile-panel .profile-footer-actions {
+    position: static !important;
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+    margin: 10px !important;
+    padding: 10px !important;
+    border: 1px solid var(--line) !important;
+    border-radius: 8px !important;
+    background: var(--surface, #ffffff) !important;
+}
+
+.mobile-profile-panel .profile-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    margin: 10px !important;
+}
+
+.mobile-profile-panel .profile-section,
+.mobile-profile-panel .profile-tab-panel {
+    margin: 10px !important;
+}
+
 .profile-chip {
     min-height: 42px;
     display: inline-flex;
