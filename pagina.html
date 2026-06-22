@@ -397,6 +397,7 @@ function abrirEditar() {
         return;
     }
 
+    cerrarMenuPerfil();
     document.getElementById("panelLogin").classList.remove("active");
     document.getElementById("editarPanel").classList.add("active");
     document.getElementById("editNombre").value = usuario.nombre;
@@ -462,8 +463,16 @@ function guardarCambios() {
 function toggleMenu() {
     const menu = document.getElementById("menuPerfil");
     const abierto = menu.style.display === "block";
-    menu.style.display = abierto ? "none" : "block";
-    document.getElementById("fotoNav").setAttribute("aria-expanded", abierto ? "false" : "true");
+
+    if (abierto) {
+        cerrarMenuPerfil();
+        return;
+    }
+
+    menu.style.display = "block";
+    menu.scrollTop = 0;
+    document.body.classList.add("profile-sheet-open");
+    document.getElementById("fotoNav").setAttribute("aria-expanded", "true");
 }
 
 function cerrarMenuPerfil() {
@@ -473,6 +482,8 @@ function cerrarMenuPerfil() {
     if (menu) {
         menu.style.display = "none";
     }
+
+    document.body.classList.remove("profile-sheet-open");
 
     if (foto) {
         foto.setAttribute("aria-expanded", "false");

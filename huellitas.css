@@ -9855,3 +9855,96 @@ body.dark .guide-card p {
     }
 }
 
+/* Perfil como hoja completa cuando se abre en pantallas tactiles o compactas */
+@media (max-width: 980px), (max-height: 720px), (pointer: coarse) {
+    body.profile-sheet-open .profile-popover,
+    body.profile-sheet-open #menuPerfil {
+        display: block !important;
+        position: fixed !important;
+        inset: 8px !important;
+        z-index: 9000 !important;
+        width: auto !important;
+        height: auto !important;
+        min-height: 0 !important;
+        max-width: none !important;
+        max-height: none !important;
+        overflow-x: hidden !important;
+        overflow-y: auto !important;
+        overscroll-behavior: contain !important;
+        padding: 0 0 max(16px, env(safe-area-inset-bottom)) !important;
+        border-radius: 8px !important;
+        background: var(--surface-strong, #ffffff) !important;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    body.profile-sheet-open .profile-popover-header {
+        position: sticky !important;
+        top: 0 !important;
+        z-index: 3 !important;
+        grid-template-columns: 58px minmax(0, 1fr) 44px !important;
+        gap: 10px !important;
+        min-height: 86px !important;
+        padding: 12px !important;
+        overflow: visible !important;
+        background: var(--surface-strong, #ffffff) !important;
+    }
+
+    body.profile-sheet-open .profile-popover-header img {
+        width: 58px !important;
+        height: 58px !important;
+    }
+
+    body.profile-sheet-open .profile-popover-header strong,
+    body.profile-sheet-open .profile-popover-header small,
+    body.profile-sheet-open .profile-kicker {
+        white-space: normal !important;
+        overflow: visible !important;
+        text-overflow: clip !important;
+        overflow-wrap: anywhere !important;
+    }
+
+    body.profile-sheet-open .profile-popover-header strong {
+        font-size: clamp(20px, 6vw, 30px) !important;
+        line-height: 1.05 !important;
+    }
+
+    body.profile-sheet-open .profile-close {
+        width: 44px !important;
+        height: 44px !important;
+        min-height: 44px !important;
+        font-size: 24px !important;
+    }
+
+    body.profile-sheet-open .profile-stats {
+        display: grid !important;
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 8px !important;
+        margin: 10px !important;
+    }
+
+    body.profile-sheet-open .profile-section,
+    body.profile-sheet-open .profile-tab-panel {
+        display: grid !important;
+        gap: 10px !important;
+        margin: 10px !important;
+        padding: 12px !important;
+        border-radius: 8px !important;
+    }
+
+    body.profile-sheet-open .profile-tabs {
+        position: sticky !important;
+        top: 86px !important;
+        z-index: 2 !important;
+        display: flex !important;
+        overflow-x: auto !important;
+        margin: 0 !important;
+    }
+
+    body.profile-sheet-open .profile-footer-actions {
+        position: static !important;
+        display: grid !important;
+        grid-template-columns: 1fr !important;
+        margin: 10px !important;
+    }
+}
+
