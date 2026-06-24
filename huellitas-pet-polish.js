@@ -42,6 +42,16 @@ body.dark #zonaMichi .pet-wallet div{background:rgba(255,255,255,.06);border-col
   #zonaMichi .pet-name-row>div{grid-template-columns:1fr;gap:8px}
   #zonaMichi .pet-name-row button{width:100%}
   #zonaMichi .pet-wallet,#zonaMichi .pet-stats,#zonaMichi .pet-actions,#zonaMichi .pet-action-note{max-width:430px;margin-left:auto;margin-right:auto}
+  #tiendaTesoros{padding-left:12px!important;padding-right:12px!important;overflow:hidden}
+  #tiendaTesoros .shop-layout{grid-template-columns:1fr!important;gap:14px}
+  #tiendaTesoros .shop-side,#tiendaTesoros .inventory-panel,#tiendaTesoros .cart-panel{width:100%;max-width:480px;margin-left:auto;margin-right:auto}
+  #tiendaTesoros .inventory-list{gap:8px}
+  #tiendaTesoros .inventory-item{display:grid!important;grid-template-columns:42px minmax(0,1fr)!important;grid-template-areas:"icon info" "action action";align-items:center;gap:8px;padding:10px!important;border-radius:12px!important;overflow:hidden}
+  #tiendaTesoros .inventory-item>span:first-child{grid-area:icon;justify-self:center;font-size:26px;line-height:1}
+  #tiendaTesoros .inventory-item>.item-sprite-icon{width:40px;height:40px}
+  #tiendaTesoros .inventory-item>div{grid-area:info;min-width:0}
+  #tiendaTesoros .inventory-item strong,#tiendaTesoros .inventory-item small{max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:normal}
+  #tiendaTesoros .inventory-item button{grid-area:action;width:100%!important;min-height:42px;margin-top:0!important}
 }
 @media(max-width:430px){
   #zonaMichi{padding-left:12px!important;padding-right:12px!important}
