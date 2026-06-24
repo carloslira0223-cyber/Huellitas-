@@ -1,5 +1,5 @@
 (function () {
-    const version = "20260624-pet-polish";
+    const version = "20260624-theme-profile-rights";
 
     function writeScript(src) {
         document.write('<script src="' + src + '?v=' + version + '"><\/script>');
@@ -16,9 +16,12 @@
         writeScript("huellitas-original.js");
         writeScript("huellitas-fixes.js");
         writeScript("huellitas-pet-polish.js");
+        writeScript("huellitas-theme-profile.js");
     } else {
         appendScript("huellitas-original.js", () => {
-            appendScript("huellitas-fixes.js", () => appendScript("huellitas-pet-polish.js"));
+            appendScript("huellitas-fixes.js", () => {
+                appendScript("huellitas-pet-polish.js", () => appendScript("huellitas-theme-profile.js"));
+            });
         });
     }
 })();
