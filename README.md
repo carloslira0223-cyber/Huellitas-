@@ -79,7 +79,7 @@ El acceso admin esta reservado para el equipo. Por seguridad, no se escribe la c
 
 - Inicio con panel de impacto.
 - Adopciones con tarjetas y filtros.
-- Perfil abierto con pestaÃ±as.
+- Perfil abierto con pestanas.
 - Mi adopcion con progreso.
 - Arcade Perruno con la mascota virtual.
 - Panel admin con calendario, estado del sistema y graficas.
