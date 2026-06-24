@@ -1,5 +1,5 @@
 (function () {
-    const version = "20260624-secure-final";
+    const version = "20260624-admin-pro";
 
     function writeScript(src) {
         document.write('<script src="' + src + '?v=' + version + '"><\/script>');
@@ -19,12 +19,15 @@
         writeScript("huellitas-profile-mobile.js");
         writeScript("huellitas-pet-color.js");
         writeScript("huellitas-admin-secure.js");
+        writeScript("huellitas-admin-pro.js");
     } else {
         appendScript("huellitas-original.js", () => {
             appendScript("huellitas-fixes.js", () => {
                 appendScript("huellitas-pet-polish.js", () => {
                     appendScript("huellitas-profile-mobile.js", () => {
-                        appendScript("huellitas-pet-color.js", () => appendScript("huellitas-admin-secure.js"));
+                        appendScript("huellitas-pet-color.js", () => {
+                            appendScript("huellitas-admin-secure.js", () => appendScript("huellitas-admin-pro.js"));
+                        });
                     });
                 });
             });
