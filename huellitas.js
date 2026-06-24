@@ -1,5 +1,5 @@
 (function () {
-    const version = "20260623-final-fixes";
+    const version = "20260624-pet-polish";
 
     function writeScript(src) {
         document.write('<script src="' + src + '?v=' + version + '"><\/script>');
@@ -15,7 +15,10 @@
     if (document.readyState === "loading") {
         writeScript("huellitas-original.js");
         writeScript("huellitas-fixes.js");
+        writeScript("huellitas-pet-polish.js");
     } else {
-        appendScript("huellitas-original.js", () => appendScript("huellitas-fixes.js"));
+        appendScript("huellitas-original.js", () => {
+            appendScript("huellitas-fixes.js", () => appendScript("huellitas-pet-polish.js"));
+        });
     }
 })();
