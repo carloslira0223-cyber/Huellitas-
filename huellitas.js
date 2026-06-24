@@ -1,5 +1,5 @@
 (function () {
-    const version = "20260624-settings-themes";
+    const version = "20260624-pet-color";
 
     function writeScript(src) {
         document.write('<script src="' + src + '?v=' + version + '"><\/script>');
@@ -17,10 +17,13 @@
         writeScript("huellitas-fixes.js");
         writeScript("huellitas-pet-polish.js");
         writeScript("huellitas-profile-mobile.js");
+        writeScript("huellitas-pet-color.js");
     } else {
         appendScript("huellitas-original.js", () => {
             appendScript("huellitas-fixes.js", () => {
-                appendScript("huellitas-pet-polish.js", () => appendScript("huellitas-profile-mobile.js"));
+                appendScript("huellitas-pet-polish.js", () => {
+                    appendScript("huellitas-profile-mobile.js", () => appendScript("huellitas-pet-color.js"));
+                });
             });
         });
     }
