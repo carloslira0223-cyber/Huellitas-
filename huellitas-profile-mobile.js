@@ -3,7 +3,6 @@
  * Prohibida su copia, distribucion o uso sin autorizacion.
  */
 (function () {
-    const settingsKey = "huellitasAjustes";
     const styleId = "huellitasProfileMobileStyles";
 
     function onReady(callback) {
@@ -11,34 +10,6 @@
             document.addEventListener("DOMContentLoaded", callback);
         } else {
             callback();
-        }
-    }
-
-    function readSettings() {
-        try {
-            return Object.assign({}, JSON.parse(localStorage.getItem(settingsKey)) || {});
-        } catch (error) {
-            return {};
-        }
-    }
-
-    function saveSettings(settings) {
-        localStorage.setItem(settingsKey, JSON.stringify(settings));
-    }
-
-    function refreshSettings() {
-        if (typeof window.huellitasRefreshSettings === "function") {
-            window.huellitasRefreshSettings();
-        }
-    }
-
-    function keepDefaultColor() {
-        const settings = readSettings();
-
-        if (settings.accent && settings.accent !== "verde") {
-            settings.accent = "verde";
-            saveSettings(settings);
-            refreshSettings();
         }
     }
 
@@ -54,23 +25,22 @@
 .profile-tabs [data-profile-tab]{cursor:pointer}
 .profile-tabs [data-profile-tab][aria-selected="true"]{background:var(--leaf-dark)!important;color:#fff!important}
 [data-huellitas-theme-open],#huellitasThemePanel,[data-mobile-theme]{display:none!important}
-.settings-card label:has(+ .color-options){display:none!important}
-.settings-card .color-options{display:none!important}
 @media(max-width:640px){
-    .site-nav{grid-template-columns:minmax(0,1fr) 40px minmax(116px,auto)!important}
-    .site-nav .nav-actions{max-width:132px!important;width:auto!important;gap:6px!important;overflow:visible!important}
+    .site-nav{grid-template-columns:minmax(0,1fr) 40px max-content!important;column-gap:10px!important}
+    .nav-menu-toggle{grid-column:2!important;justify-self:center!important;position:relative!important;z-index:2!important}
+    .site-nav .nav-actions{grid-column:3!important;max-width:none!important;min-width:max-content!important;width:auto!important;gap:8px!important;justify-self:end!important;overflow:visible!important}
     .site-nav .nav-actions [data-settings-toggle]{display:inline-flex!important;order:-3}
     .site-nav .nav-actions [data-report-toggle],
     .site-nav .nav-actions [data-theme-toggle],
     .site-nav > .nav-actions > .button-link{display:none!important}
 }
 @media(max-width:420px){
-    .site-nav{grid-template-columns:minmax(0,1fr) 38px minmax(112px,auto)!important}
-    .site-nav .nav-actions{max-width:124px!important}
+    .site-nav{grid-template-columns:minmax(0,1fr) 38px max-content!important;column-gap:8px!important}
+    .site-nav .nav-actions{max-width:none!important;gap:6px!important}
 }
 @media(max-width:360px){
-    .site-nav{grid-template-columns:minmax(0,1fr) 36px minmax(104px,auto)!important}
-    .site-nav .nav-actions{max-width:116px!important;gap:4px!important}
+    .site-nav{grid-template-columns:minmax(0,1fr) 36px max-content!important;column-gap:6px!important}
+    .site-nav .nav-actions{max-width:none!important;gap:4px!important}
 }
         `;
         document.head.appendChild(style);
@@ -79,16 +49,6 @@
     function removeThemeControls() {
         document.querySelectorAll("[data-huellitas-theme-open],#huellitasThemePanel,[data-mobile-theme]").forEach((element) => {
             element.remove();
-        });
-
-        document.querySelectorAll(".settings-card .color-options").forEach((options) => {
-            const label = options.previousElementSibling;
-
-            if (label && label.tagName === "LABEL" && /color/i.test(label.textContent || "")) {
-                label.remove();
-            }
-
-            options.remove();
         });
     }
 
@@ -148,7 +108,6 @@
         scheduled = true;
         window.setTimeout(() => {
             scheduled = false;
-            keepDefaultColor();
             removeThemeControls();
             prepareProfileTabs();
             wrapProfileMount();
@@ -172,7 +131,6 @@
 
     onReady(() => {
         injectStyles();
-        keepDefaultColor();
         removeThemeControls();
         prepareProfileTabs();
         wrapProfileMount();
