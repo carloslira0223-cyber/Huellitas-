@@ -26,9 +26,10 @@
 .profile-tabs [data-profile-tab][aria-selected="true"]{background:var(--leaf-dark)!important;color:#fff!important}
 [data-huellitas-theme-open],#huellitasThemePanel,[data-mobile-theme]{display:none!important}
 @media(max-width:720px){
-    .settings-panel:not([hidden]),.report-panel:not([hidden]){align-items:flex-start!important;padding:calc(12px + env(safe-area-inset-top,0px)) 10px 10px!important;overflow-y:auto!important;-webkit-overflow-scrolling:touch!important}
-    .settings-card,.report-card{width:min(100%,560px)!important;max-height:calc(100dvh - 24px - env(safe-area-inset-top,0px))!important;padding:58px 16px 16px!important;overflow-y:auto!important;overscroll-behavior:contain!important}
-    .settings-card .modal-close,.report-card .modal-close{position:absolute!important;top:10px!important;right:10px!important;z-index:5!important;width:40px!important;height:40px!important;min-width:40px!important;min-height:40px!important}
+    .settings-panel:not([hidden]),.report-panel:not([hidden]){z-index:10050!important;position:fixed!important;inset:0!important;align-items:flex-start!important;padding:calc(12px + env(safe-area-inset-top,0px)) 10px 10px!important;overflow-y:auto!important;-webkit-overflow-scrolling:touch!important}
+    .settings-card,.report-card{width:min(100%,560px)!important;max-height:calc(100dvh - 24px - env(safe-area-inset-top,0px))!important;margin:0 auto!important;padding:58px 16px 16px!important;overflow-y:auto!important;overscroll-behavior:contain!important}
+    .settings-card .modal-close,.report-card .modal-close{position:fixed!important;top:calc(16px + env(safe-area-inset-top,0px))!important;right:16px!important;z-index:10070!important;width:42px!important;height:42px!important;min-width:42px!important;min-height:42px!important;background:var(--surface-strong,#fff)!important;color:var(--cocoa)!important;box-shadow:0 10px 24px rgba(0,0,0,.18)!important}
+    body.dark .settings-card .modal-close,body.dark .report-card .modal-close{background:#17211b!important;color:#f5fff7!important;border-color:rgba(220,235,215,.18)!important}
 }
 @media(max-width:640px){
     .site-nav{grid-template-columns:minmax(0,1fr) 40px max-content!important;column-gap:10px!important}
