@@ -12,7 +12,7 @@ Huellitas es una pagina web escolar tipo plataforma para conciencia animal, adop
 - Directorio de centros y secciones informativas.
 - Panel admin con solicitudes, reportes, citas, mensajes, mascotas, calendario, estadisticas y estado del sistema.
 - Exportar/importar respaldo en JSON.
-- Modo demo, restaurar base y reinicio total.
+- Modo demo, respaldo e importacion controlada.
 - Modo oscuro y vista movil.
 
 ## Como abrir la pagina
@@ -69,8 +69,7 @@ En el panel admin:
 
 - `Exportar respaldo`: descarga un archivo `.json` con datos de Huellitas del navegador. Si el servidor local esta activo, tambien incluye la base local.
 - `Importar respaldo`: restaura un archivo generado por Huellitas.
-- `Restaurar base`: limpia datos de uso, conserva usuarios/sesion y regresa la configuracion visual inicial.
-- `Reiniciar sitio`: borra todo. Usar solo cuando ya exista respaldo.
+- Las opciones de restaurar base y reiniciar sitio se retiraron del panel para evitar borrados accidentales.
 
 ## Admin
 
@@ -80,7 +79,7 @@ El acceso admin esta reservado para el equipo. Por seguridad, no se escribe la c
 
 - Inicio con panel de impacto.
 - Adopciones con tarjetas y filtros.
-- Perfil abierto con pestañas.
+- Perfil abierto con pestaÃ±as.
 - Mi adopcion con progreso.
 - Arcade Perruno con la mascota virtual.
 - Panel admin con calendario, estado del sistema y graficas.
