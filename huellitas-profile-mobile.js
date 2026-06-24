@@ -54,6 +54,7 @@
 .profile-tabs [data-profile-tab]{cursor:pointer}
 .profile-tabs [data-profile-tab][aria-selected="true"]{background:var(--leaf-dark)!important;color:#fff!important}
 [data-huellitas-theme-open],#huellitasThemePanel,[data-mobile-theme]{display:none!important}
+.settings-card label:has(+ .color-options){display:none!important}
 .settings-card .color-options{display:none!important}
 @media(max-width:640px){
     .site-nav{grid-template-columns:minmax(0,1fr) 40px minmax(116px,auto)!important}
