@@ -1,5 +1,5 @@
 (function () {
-    const version = "20260624-no-themes";
+    const version = "20260624-settings-themes";
 
     function writeScript(src) {
         document.write('<script src="' + src + '?v=' + version + '"><\/script>');
