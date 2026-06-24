@@ -140,13 +140,28 @@ body.dark .pet-color-status{color:#cfe7d2!important}
         };
     }
 
-    function isWhiteBodyPixel(r, g, b, a) {
+    function getPixelTarget(r, g, b, a, color) {
         if (a < 255) {
-            return false;
+            return null;
         }
 
-        return (r === 255 && g === 255 && b === 255)
-            || (r === 226 && g === 218 && b === 218);
+        if (r === 255 && g === 255 && b === 255) {
+            return hexToRgb(color.light);
+        }
+
+        if (r === 226 && g === 218 && b === 218) {
+            return hexToRgb(color.shade);
+        }
+
+        if ((r === 204 && g === 143 && b === 0) || (r === 138 && g === 99 && b === 7)) {
+            return hexToRgb(color.shade);
+        }
+
+        if (r === 95 && g === 84 && b === 58) {
+            return hexToRgb(color.swatch);
+        }
+
+        return null;
     }
 
     function loadBaseImage() {
@@ -184,8 +199,6 @@ body.dark .pet-color-status{color:#cfe7d2!important}
         return loadBaseImage().then((image) => {
             const canvas = document.createElement("canvas");
             const context = canvas.getContext("2d");
-            const light = hexToRgb(color.light);
-            const shade = hexToRgb(color.shade);
 
             canvas.width = image.naturalWidth || image.width;
             canvas.height = image.naturalHeight || image.height;
@@ -199,12 +212,12 @@ body.dark .pet-color-status{color:#cfe7d2!important}
                 const g = data[index + 1];
                 const b = data[index + 2];
                 const a = data[index + 3];
+                const target = getPixelTarget(r, g, b, a, color);
 
-                if (!isWhiteBodyPixel(r, g, b, a)) {
+                if (!target) {
                     continue;
                 }
 
-                const target = r === 255 ? light : shade;
                 data[index] = target.r;
                 data[index + 1] = target.g;
                 data[index + 2] = target.b;
