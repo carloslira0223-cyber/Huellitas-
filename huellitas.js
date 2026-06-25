@@ -1,5 +1,5 @@
 (function () {
-    const version = "20260624-shop-mobile";
+    const version = "20260624-admin-pet-sync";
 
     function writeScript(src) {
         document.write('<script src="' + src + '?v=' + version + '"><\/script>');
@@ -27,6 +27,7 @@
         writeScript("huellitas-maze-keyguard.js");
         writeScript("huellitas-shop-icons.js");
         writeScript("huellitas-admin-mailbox-fix.js");
+        writeScript("huellitas-admin-pet-sync.js");
     } else {
         appendScript("huellitas-original.js", () => {
             appendScript("huellitas-fixes.js", () => {
@@ -40,7 +41,9 @@
                                             appendScript("huellitas-final-polish.js", () => {
                                                 appendScript("huellitas-ux-guard.js", () => {
                                                     appendScript("huellitas-maze-keyguard.js", () => {
-                                                        appendScript("huellitas-shop-icons.js", () => appendScript("huellitas-admin-mailbox-fix.js"));
+                                                        appendScript("huellitas-shop-icons.js", () => {
+                                                            appendScript("huellitas-admin-mailbox-fix.js", () => appendScript("huellitas-admin-pet-sync.js"));
+                                                        });
                                                     });
                                                 });
                                             });
