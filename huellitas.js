@@ -1,5 +1,5 @@
 (function () {
-    const version = "20260624-admin-mailbox";
+    const version = "20260624-shop-mobile";
 
     function writeScript(src) {
         document.write('<script src="' + src + '?v=' + version + '"><\/script>');
