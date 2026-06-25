@@ -210,7 +210,10 @@ body.dark .featured-carousel-dots button.active{background:var(--leaf)}
     }
 
     function installPetAdminSaveFix() {
-        if (!document.getElementById("petAdminForm") || window.guardarMascotaDesdeFormularioFinalPolish) {
+        const form = document.getElementById("petAdminForm");
+        const previousSubmit = window.guardarMascotaDesdeFormulario;
+
+        if (!form || window.guardarMascotaDesdeFormularioFinalPolish) {
             return;
         }
 
@@ -221,7 +224,6 @@ body.dark .featured-carousel-dots button.active{background:var(--leaf)}
                 return;
             }
 
-            const form = document.getElementById("petAdminForm");
             const feedback = document.getElementById("petAdminFeedback");
             const fileInput = document.getElementById("petAdminPhoto");
             const type = (document.getElementById("petAdminType") || {}).value || "Perro";
@@ -304,6 +306,10 @@ body.dark .featured-carousel-dots button.active{background:var(--leaf)}
         };
 
         window.guardarMascotaDesdeFormulario = patched;
+        if (previousSubmit && previousSubmit !== patched) {
+            form.removeEventListener("submit", previousSubmit);
+        }
+        form.addEventListener("submit", patched);
         try {
             guardarMascotaDesdeFormulario = patched;
         } catch (error) {}
