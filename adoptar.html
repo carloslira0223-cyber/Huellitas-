@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -232,14 +232,17 @@ function cargarMascotaSeleccionada() {
 function calcularChecklist() {
     const checks = checklistForm.querySelectorAll("input[type='checkbox']");
     let total = 0;
+    let maxTotal = 0;
 
     checks.forEach((check) => {
+        maxTotal += Number(check.value || 0);
+
         if (check.checked) {
             total += Number(check.value);
         }
     });
 
-    ultimoResultadoChecklist = Math.min(100, total);
+    ultimoResultadoChecklist = maxTotal ? Math.min(100, Math.round((total / maxTotal) * 100)) : 0;
     checklistScore.textContent = ultimoResultadoChecklist + "%";
     checklistProgress.style.width = ultimoResultadoChecklist + "%";
 
@@ -439,4 +442,3 @@ window.addEventListener("load", () => {
 <script src="huellitas.js"></script>
 </body>
 </html>
-
