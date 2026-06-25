@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Huellitas | Mascotas perdidas</title>
+<link rel="stylesheet" href="huellitas.css">
+</head>
+
+<body>
+<nav class="site-nav">
+    <a class="brand" href="pagina.html" aria-label="Ir al inicio">
+        <img src="assets/imagenes/logo.png" alt="Logo de Huellitas">
+        <span>Huellitas</span>
+    </a>
+
+    <div class="nav-links" aria-label="Navegaci&oacute;n principal">
+        <a class="nav-link" href="pagina.html">Inicio</a>
+        <a class="nav-link" href="jueguitos.html">Juegos</a>
+        <a class="nav-link" href="directorio.html">Directorio</a>
+        <a class="nav-link" href="areas.html">&Aacute;reas</a>
+        <a class="nav-link" href="domesticos.html">Mascotas</a>
+        <a class="nav-link" href="leyes.html">Leyes</a>
+        <a class="nav-link" href="equipo.html">Equipo</a>
+        <a class="nav-link" href="presentacion.html">Presentaci&oacute;n</a>
+        <a class="nav-link active" href="mascotas_perdidas.html">Perdidas</a>
+        <a class="nav-link" href="adopcion_huellitas.html">Adopciones</a>
+        <a class="nav-link" href="adoptar.html">Adoptar</a>
+    </div>
+
+    <div class="nav-actions">
+        <button class="icon-button" type="button" data-theme-toggle onclick="toggleDark()" aria-label="Cambiar modo">&#9790;</button>
+        <a class="button-link secondary" href="#lostPetForm">Reportar</a>
+    </div>
+</nav>
+
+<main>
+    <header class="hero lost-pets-hero">
+        <div class="hero-inner">
+            <span class="eyebrow">Red comunitaria Huellitas</span>
+            <h1>Mascotas perdidas y encontradas</h1>
+            <p>Publica un aviso con zona, contacto y detalles importantes para que la comunidad pueda ayudar a reunir familias.</p>
+
+            <div class="hero-actions">
+                <button type="button" onclick="document.getElementById('reportar-perdida').scrollIntoView({behavior:'smooth'})">Reportar caso</button>
+                <button type="button" onclick="document.getElementById('avisos-perdidos').scrollIntoView({behavior:'smooth'})">Ver avisos</button>
+                <a class="button-link secondary" href="directorio.html">Buscar apoyo</a>
+            </div>
+        </div>
+    </header>
+
+    <section class="section" id="reportar-perdida">
+        <div class="section-title">
+            <h2>Reportar mascota</h2>
+            <p>Agrega datos claros. El aviso se guarda y tambi&eacute;n aparece en el panel admin para seguimiento.</p>
+        </div>
+
+        <div class="feature-band lost-pets-layout">
+            <form class="feature-panel contact-form" id="lostPetForm">
+                <div class="form-grid">
+                    <div>
+                        <label for="lostPetName">Nombre de la mascota</label>
+                        <input id="lostPetName" required placeholder="Ej. Max">
+                    </div>
+
+                    <div>
+                        <label for="lostPetType">Tipo</label>
+                        <select id="lostPetType" required>
+                            <option>Perro</option>
+                            <option>Gato</option>
+                            <option>Otro</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="lostPetSituation">Situaci&oacute;n</label>
+                        <select id="lostPetSituation" required>
+                            <option value="Reportada">Se perdi&oacute;</option>
+                            <option value="Encontrada">La encontr&eacute;</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="lostPetDate">Fecha</label>
+                        <input id="lostPetDate" type="date">
+                    </div>
+
+                    <div>
+                        <label for="lostPetZone">Zona o referencia</label>
+                        <input id="lostPetZone" required placeholder="Colonia, calle o parque">
+                    </div>
+
+                    <div>
+                        <label for="lostPetContact">Contacto</label>
+                        <input id="lostPetContact" required placeholder="Tel&eacute;fono o correo">
+                    </div>
+
+                    <div>
+                        <label for="lostPetPhoto">Foto</label>
+                        <input id="lostPetPhoto" type="file" accept="image/*">
+                    </div>
+                </div>
+
+                <label for="lostPetDescription">Se&ntilde;as y detalles</label>
+                <textarea id="lostPetDescription" required placeholder="Color, collar, tama&ntilde;o, comportamiento, &uacute;ltima vez vista o cuidados si est&aacute; resguardada."></textarea>
+
+                <div class="section-actions left">
+                    <button type="submit">Publicar aviso</button>
+                    <button class="secondary" type="reset">Limpiar</button>
+                </div>
+                <p class="form-note" id="lostPetFeedback" aria-live="polite"></p>
+            </form>
+
+            <aside class="feature-panel lost-pets-guide">
+                <span class="eyebrow">Consejos r&aacute;pidos</span>
+                <h2>Qu&eacute; poner en el aviso</h2>
+                <ul class="tip-list">
+                    <li>Zona exacta o referencia donde se perdi&oacute; o encontr&oacute;.</li>
+                    <li>Foto clara, color, collar, tama&ntilde;o y se&ntilde;as especiales.</li>
+                    <li>Contacto donde puedan responder r&aacute;pido.</li>
+                    <li>Actualiza el estado cuando se encuentre o se re&uacute;na.</li>
+                </ul>
+            </aside>
+        </div>
+    </section>
+
+    <section class="section" id="avisos-perdidos">
+        <div class="section-title">
+            <h2>Avisos activos</h2>
+            <p>Busca por nombre, zona, tipo o estado. Los casos reunidos se conservan como historial.</p>
+        </div>
+
+        <div class="adoption-search-panel lost-pets-search">
+            <div>
+                <label for="lostPetSearch">Buscar</label>
+                <input id="lostPetSearch" placeholder="Nombre, zona, contacto o se&ntilde;as">
+            </div>
+
+            <div>
+                <label for="lostPetStatusFilter">Estado</label>
+                <select id="lostPetStatusFilter">
+                    <option value="">Todos</option>
+                    <option value="Reportada">Reportada</option>
+                    <option value="En busqueda">En b&uacute;squeda</option>
+                    <option value="Encontrada">Encontrada</option>
+                    <option value="Reunida">Reunida</option>
+                    <option value="Archivada">Archivada</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="lostPetTypeFilter">Tipo</label>
+                <select id="lostPetTypeFilter">
+                    <option value="">Todos</option>
+                    <option value="Perro">Perro</option>
+                    <option value="Gato">Gato</option>
+                    <option value="Otro">Otro</option>
+                </select>
+            </div>
+
+            <button class="secondary" type="button" id="lostPetClearFilters">Limpiar</button>
+        </div>
+
+        <div class="lost-pets-grid" id="lostPetsList"></div>
+    </section>
+</main>
+
+<footer>
+    <span>Proyecto escolar de CECyTEM Tultitl&aacute;n - Grupo 404 - Equipo Huellitas</span>
+</footer>
+
+<script src="huellitas.js"></script>
+</body>
+</html>
