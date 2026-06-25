@@ -24,6 +24,7 @@
         writeScript("huellitas-admin-pro.js");
         writeScript("huellitas-final-polish.js");
         writeScript("huellitas-ux-guard.js");
+        writeScript("huellitas-maze-keyguard.js");
     } else {
         appendScript("huellitas-original.js", () => {
             appendScript("huellitas-fixes.js", () => {
@@ -34,7 +35,9 @@
                                 appendScript("huellitas-lost-pets.js", () => {
                                     appendScript("huellitas-admin-secure.js", () => {
                                         appendScript("huellitas-admin-pro.js", () => {
-                                            appendScript("huellitas-final-polish.js", () => appendScript("huellitas-ux-guard.js"));
+                                            appendScript("huellitas-final-polish.js", () => {
+                                                appendScript("huellitas-ux-guard.js", () => appendScript("huellitas-maze-keyguard.js"));
+                                            });
                                         });
                                     });
                                 });
