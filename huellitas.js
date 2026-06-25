@@ -1,5 +1,5 @@
 (function () {
-    const version = "20260624-final-ux";
+    const version = "20260624-admin-mailbox";
 
     function writeScript(src) {
         document.write('<script src="' + src + '?v=' + version + '"><\/script>');
@@ -26,6 +26,7 @@
         writeScript("huellitas-ux-guard.js");
         writeScript("huellitas-maze-keyguard.js");
         writeScript("huellitas-shop-icons.js");
+        writeScript("huellitas-admin-mailbox-fix.js");
     } else {
         appendScript("huellitas-original.js", () => {
             appendScript("huellitas-fixes.js", () => {
@@ -38,7 +39,9 @@
                                         appendScript("huellitas-admin-pro.js", () => {
                                             appendScript("huellitas-final-polish.js", () => {
                                                 appendScript("huellitas-ux-guard.js", () => {
-                                                    appendScript("huellitas-maze-keyguard.js", () => appendScript("huellitas-shop-icons.js"));
+                                                    appendScript("huellitas-maze-keyguard.js", () => {
+                                                        appendScript("huellitas-shop-icons.js", () => appendScript("huellitas-admin-mailbox-fix.js"));
+                                                    });
                                                 });
                                             });
                                         });
