@@ -1,5 +1,5 @@
 (function () {
-    const version = "20260628-safe-nav-v3";
+    const version = "20260628-palette-sync-v4";
 
     function writeScript(src) {
         document.write('<script src="' + src + '?v=' + version + '"><\/script>');

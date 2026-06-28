@@ -891,6 +891,77 @@ body.dark .huellitas-icon-dark {
     }
 }
 
+
+/* Keep every navigation control synced with the selected interface palette. */
+html body .site-nav.huellitas-safe-nav {
+    --huellitas-nav-accent: var(--leaf-dark, #2f6b43);
+    --huellitas-nav-primary: var(--leaf, #5f9d63);
+    --huellitas-nav-soft: var(--sky, #cfe7f4);
+}
+
+html body .site-nav.huellitas-safe-nav .huellitas-nav-item.active,
+html body.dark .site-nav.huellitas-safe-nav .huellitas-nav-item.active,
+html body.dark.nav-full .site-nav.huellitas-safe-nav .huellitas-nav-item.active {
+    color: #ffffff !important;
+    border-color: var(--huellitas-nav-accent) !important;
+    background: var(--huellitas-nav-accent) !important;
+    box-shadow: 0 8px 18px rgba(24, 34, 28, 0.2) !important;
+}
+
+html body .site-nav.huellitas-safe-nav .huellitas-nav-item:hover {
+    color: var(--huellitas-nav-accent) !important;
+    border-color: var(--huellitas-nav-primary) !important;
+    background: var(--huellitas-nav-soft) !important;
+}
+
+html body .site-nav.huellitas-safe-nav .huellitas-nav-item.active:hover,
+html body.dark .site-nav.huellitas-safe-nav .huellitas-nav-item.active:hover {
+    color: #ffffff !important;
+    background: var(--huellitas-nav-accent) !important;
+}
+
+html body .site-nav.huellitas-safe-nav .nav-menu-toggle,
+html body .site-nav.huellitas-safe-nav .nav-actions [data-settings-toggle] {
+    color: #ffffff !important;
+    border-color: var(--huellitas-nav-accent) !important;
+    background: var(--huellitas-nav-accent) !important;
+}
+
+html body .site-nav.huellitas-safe-nav .nav-actions [data-settings-toggle] .huellitas-icon-light {
+    display: none !important;
+}
+
+html body .site-nav.huellitas-safe-nav .nav-actions [data-settings-toggle] .huellitas-icon-dark {
+    display: block !important;
+}
+
+html body .site-nav.huellitas-safe-nav .huellitas-more-toggle,
+html body .site-nav.huellitas-safe-nav .huellitas-mobile-close {
+    color: var(--huellitas-nav-accent) !important;
+    border-color: var(--huellitas-nav-primary) !important;
+    background: var(--huellitas-nav-soft) !important;
+}
+
+html body.dark .site-nav.huellitas-safe-nav .huellitas-more-toggle,
+html body.dark .site-nav.huellitas-safe-nav .huellitas-mobile-close {
+    color: #ffffff !important;
+    border-color: var(--huellitas-nav-primary) !important;
+    background: var(--huellitas-nav-accent) !important;
+}
+
+html body .site-nav.huellitas-safe-nav .huellitas-mobile-head {
+    border-bottom-color: var(--huellitas-nav-primary) !important;
+}
+
+html body .site-nav.huellitas-safe-nav .huellitas-nav-list {
+    border-color: var(--huellitas-nav-primary) !important;
+    scrollbar-color: var(--huellitas-nav-primary) transparent !important;
+}
+
+html body .site-nav.huellitas-safe-nav .huellitas-nav-list::-webkit-scrollbar-thumb {
+    background: var(--huellitas-nav-primary) !important;
+}
+
 @media (prefers-reduced-motion: reduce) {
     .huellitas-nav-list,
     .huellitas-nav-item,
