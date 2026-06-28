@@ -962,6 +962,15 @@ html body .site-nav.huellitas-safe-nav .huellitas-nav-list::-webkit-scrollbar-th
     background: var(--huellitas-nav-primary) !important;
 }
 
+
+html body .site-nav.huellitas-safe-nav .huellitas-nav-item:hover:not(.active),
+html body.dark .site-nav.huellitas-safe-nav .huellitas-nav-item:hover:not(.active) {
+    color: var(--huellitas-nav-accent) !important;
+    border-color: var(--huellitas-nav-primary) !important;
+    background: transparent !important;
+    box-shadow: inset 0 0 0 1px var(--huellitas-nav-primary) !important;
+}
+
 @media (prefers-reduced-motion: reduce) {
     .huellitas-nav-list,
     .huellitas-nav-item,

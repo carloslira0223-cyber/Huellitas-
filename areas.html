@@ -1,10 +1,360 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Huellitas | &Aacute;reas naturales</title>
 <link rel="stylesheet" href="huellitas.css">
+<style>
+.areas-page {
+    overflow-x: hidden;
+}
+
+.areas-page .areas-intro {
+    max-width: 760px;
+}
+
+.areas-page .areas-showcase-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.areas-page .area-place-card {
+    min-width: 0;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--paper);
+    box-shadow: 0 10px 26px rgba(38, 51, 44, 0.08);
+    transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.areas-page .area-place-card:hover {
+    border-color: var(--leaf);
+    box-shadow: 0 14px 30px rgba(38, 51, 44, 0.13);
+    transform: translateY(-3px);
+}
+
+.areas-page .area-place-card > img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    display: block;
+    object-fit: cover;
+    background: var(--mist);
+}
+
+.areas-page .area-place-card .info {
+    display: grid;
+    gap: 11px;
+    padding: 18px;
+}
+
+.areas-page .area-place-card h2 {
+    margin: 0;
+    color: var(--ink);
+    font-size: clamp(21px, 2.2vw, 28px);
+}
+
+.areas-page .area-place-card p {
+    margin: 0;
+    color: var(--muted);
+    line-height: 1.65;
+}
+
+.areas-page .area-note {
+    display: grid;
+    grid-template-columns: 28px minmax(0, 1fr);
+    gap: 9px;
+    align-items: start;
+    padding: 10px 12px;
+    border-left: 3px solid var(--leaf);
+    border-radius: 0 6px 6px 0;
+    background: color-mix(in srgb, var(--sky) 54%, var(--paper));
+}
+
+.areas-page .area-note span {
+    font-size: 19px;
+    line-height: 1.3;
+}
+
+.areas-page .area-note strong {
+    display: block;
+    margin-bottom: 2px;
+    color: var(--leaf-dark);
+    font-size: 13px;
+}
+
+.areas-page .area-note small {
+    display: block;
+    color: var(--ink);
+    font-size: 13px;
+    line-height: 1.45;
+}
+
+.areas-page .species-section {
+    background: color-mix(in srgb, var(--mist) 82%, var(--sky));
+}
+
+.areas-page .species-grid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.areas-page .species-card {
+    min-width: 0;
+    padding: 16px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--paper);
+    box-shadow: 0 7px 18px rgba(38, 51, 44, 0.07);
+}
+
+.areas-page .species-icon {
+    width: 42px;
+    height: 42px;
+    display: grid;
+    place-items: center;
+    margin-bottom: 11px;
+    border: 1px solid var(--leaf);
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--sky) 58%, var(--paper));
+    font-size: 23px;
+}
+
+.areas-page .species-card h3 {
+    margin: 0 0 7px;
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.25;
+}
+
+.areas-page .species-card p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.55;
+}
+
+.areas-page .environment-report {
+    padding-top: 22px;
+}
+
+.areas-page .report-shell {
+    display: grid;
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    gap: 24px;
+    align-items: start;
+    padding: clamp(20px, 4vw, 34px);
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: color-mix(in srgb, var(--sky) 34%, var(--paper));
+    box-shadow: 0 12px 30px rgba(38, 51, 44, 0.08);
+}
+
+.areas-page .report-copy {
+    display: grid;
+    gap: 12px;
+}
+
+.areas-page .report-copy h2,
+.areas-page .report-copy p {
+    margin: 0;
+}
+
+.areas-page .report-copy p {
+    color: var(--muted);
+    line-height: 1.65;
+}
+
+.areas-page .report-toggle {
+    width: fit-content;
+    min-height: 46px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 5px;
+}
+
+.areas-page .areas-report-panel {
+    min-width: 0;
+    padding: 18px;
+    border: 1px solid var(--leaf);
+    border-radius: 8px;
+    background: var(--paper);
+}
+
+.areas-page .areas-report-panel[hidden] {
+    display: none !important;
+}
+
+.areas-page .environment-form {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.areas-page .environment-field {
+    min-width: 0;
+    display: grid;
+    gap: 6px;
+}
+
+.areas-page .environment-field.full {
+    grid-column: 1 / -1;
+}
+
+.areas-page .environment-field label {
+    color: var(--ink);
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.areas-page .environment-field input,
+.areas-page .environment-field select,
+.areas-page .environment-field textarea {
+    width: 100%;
+    min-width: 0;
+    border-color: var(--line);
+    background: var(--paper);
+}
+
+.areas-page .environment-field input:focus,
+.areas-page .environment-field select:focus,
+.areas-page .environment-field textarea:focus {
+    border-color: var(--leaf);
+    outline-color: var(--leaf);
+}
+
+.areas-page .environment-field textarea {
+    min-height: 112px;
+    resize: vertical;
+}
+
+.areas-page .environment-photo-preview {
+    max-width: 180px;
+    max-height: 120px;
+    display: block;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    object-fit: cover;
+}
+
+.areas-page .environment-photo-preview[hidden] {
+    display: none;
+}
+
+.areas-page .environment-file-note,
+.areas-page .environment-feedback {
+    margin: 0;
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.45;
+}
+
+.areas-page .environment-feedback {
+    min-height: 20px;
+    grid-column: 1 / -1;
+    font-size: 14px;
+    font-weight: 800;
+}
+
+.areas-page .environment-feedback.success {
+    color: var(--leaf-dark);
+}
+
+.areas-page .environment-feedback.error {
+    color: #a43f3f;
+}
+
+.areas-page .environment-submit {
+    width: fit-content;
+    min-width: 170px;
+}
+
+body.dark .areas-page .area-place-card,
+body.dark .areas-page .species-card,
+body.dark .areas-page .areas-report-panel {
+    background: #151d18;
+}
+
+body.dark .areas-page .area-note,
+body.dark .areas-page .report-shell,
+body.dark .areas-page .species-icon {
+    background: color-mix(in srgb, var(--leaf-dark) 22%, #151d18);
+}
+
+body.dark .areas-page .environment-field input,
+body.dark .areas-page .environment-field select,
+body.dark .areas-page .environment-field textarea {
+    background: #101713;
+}
+
+@media (max-width: 1000px) {
+    .areas-page .species-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 760px) {
+    .areas-page .areas-showcase-grid,
+    .areas-page .report-shell {
+        grid-template-columns: 1fr;
+    }
+
+    .areas-page .species-grid {
+        grid-auto-flow: column;
+        grid-auto-columns: minmax(235px, 78vw);
+        grid-template-columns: none;
+        gap: 10px;
+        padding: 2px 2px 12px;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        scrollbar-color: var(--leaf) transparent;
+    }
+
+    .areas-page .species-card {
+        scroll-snap-align: start;
+    }
+
+    .areas-page .environment-form {
+        grid-template-columns: 1fr;
+    }
+
+    .areas-page .environment-field.full,
+    .areas-page .environment-feedback {
+        grid-column: 1;
+    }
+}
+
+@media (max-width: 460px) {
+    .areas-page .area-place-card .info,
+    .areas-page .areas-report-panel {
+        padding: 14px;
+    }
+
+    .areas-page .area-place-card > img {
+        aspect-ratio: 4 / 3;
+    }
+
+    .areas-page .report-toggle,
+    .areas-page .environment-submit {
+        width: 100%;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .areas-page .area-place-card {
+        transition: none;
+    }
+
+    .areas-page .area-place-card:hover {
+        transform: none;
+    }
+}
+</style>
 </head>
 
 <body>
@@ -33,110 +383,210 @@
     </div>
 </nav>
 
-<main>
+<main class="areas-page">
     <header class="hero topic-header areas-header">
-        <div class="hero-inner">
-            <span class="eyebrow">H&aacute;bitats y especies</span>
+        <div class="hero-inner areas-intro">
+            <span class="eyebrow">Naturaleza, aprendizaje y cuidado</span>
             <h1>&Aacute;reas naturales</h1>
-            <p>Proteger los espacios donde viven los animales ayuda a conservar agua, aire limpio, vegetaci&oacute;n nativa y refugios seguros para muchas especies.</p>
+            <p>Conoce espacios reales del Estado de M&eacute;xico, descubre qu&eacute; animales podr&iacute;an vivir en ellos y participa para mantenerlos limpios y seguros.</p>
 
             <div class="hero-actions">
-                <button type="button" onclick="document.getElementById('zonas').scrollIntoView({behavior:'smooth'})">Ver zonas</button>
-                <a class="button-link secondary" href="pagina.html#temas">Volver a temas</a>
+                <button type="button" onclick="document.getElementById('zonas').scrollIntoView({behavior:'smooth'})">Explorar zonas</button>
+                <button class="secondary" type="button" onclick="document.getElementById('reporteAmbiental').scrollIntoView({behavior:'smooth'})">Reportar un problema</button>
             </div>
         </div>
     </header>
 
-    <section class="section info-path-section">
+    <section class="section info-path-section" aria-label="Gu&iacute;a de visita responsable">
         <div class="quick-guide-grid">
             <article class="guide-card">
                 <span>01</span>
                 <h3>Observa sin invadir</h3>
-                <p>La fauna necesita distancia. Mirar, fotografiar y aprender sin tocar protege su comportamiento natural.</p>
+                <p>Fotograf&iacute;a y aprende a distancia. La fauna necesita tranquilidad para conservar su comportamiento natural.</p>
             </article>
             <article class="guide-card">
                 <span>02</span>
-                <h3>Cuida el camino</h3>
-                <p>Usar senderos marcados evita erosión, protege plantas y reduce accidentes dentro del área natural.</p>
+                <h3>Respeta los senderos</h3>
+                <p>Usar caminos marcados evita la erosi&oacute;n, protege plantas y reduce accidentes durante la visita.</p>
             </article>
             <article class="guide-card">
                 <span>03</span>
                 <h3>Regresa con tu basura</h3>
-                <p>Una bolsa, botella o envoltura puede lastimar animales y contaminar agua o suelo durante años.</p>
+                <p>Una botella o envoltura puede lastimar animales y contaminar el agua o el suelo durante a&ntilde;os.</p>
             </article>
         </div>
     </section>
 
     <section class="section" id="zonas">
         <div class="section-title">
-            <h2>Cerca del Estado de M&eacute;xico</h2>
-            <p>Estas zonas son ejemplos importantes para entender por qu&eacute; cuidar el territorio tambi&eacute;n es cuidar a los animales.</p>
+            <span class="eyebrow">Cuatro lugares para conocer</span>
+            <h2>&Aacute;reas verdes del Estado de M&eacute;xico</h2>
+            <p>Cada paisaje cumple una funci&oacute;n distinta: conservar bosques, humedales, agua, aire limpio y refugios para muchas especies.</p>
         </div>
 
-        <div class="topic-grid">
-            <article class="card topic-card">
-                <img src="https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?auto=format&fit=crop&w=900&q=80" alt="Bosque y sendero natural">
+        <div class="areas-showcase-grid">
+            <article class="area-place-card">
+                <img src="assets/imagenes/areas/sierra-de-guadalupe.jpeg" alt="Paisaje de la Sierra de Guadalupe" loading="lazy">
                 <div class="info">
-                    <h2>Sierra de Guadalupe</h2>
-                    <div class="tag-row">
-                        <span class="tag">Tultitl&aacute;n</span>
-                        <span class="tag">Parque estatal</span>
+                    <div>
+                        <span class="eyebrow">Parque estatal</span>
+                        <h2>Sierra de Guadalupe</h2>
                     </div>
-                    <p>Comparte territorio con Coacalco, Ecatepec, Tlalnepantla y Tultitl&aacute;n. Es una zona clave para convivencia familiar, senderismo y educaci&oacute;n ambiental.</p>
-                    <ul class="tip-list">
-                        <li>Ayuda a conservar un pulm&oacute;n verde dentro de una zona muy urbanizada.</li>
-                        <li>Sus accesos en Tultitl&aacute;n la vuelven una opci&oacute;n cercana para visitar con respeto.</li>
-                    </ul>
+                    <p>Un espacio natural importante dentro de una zona urbana, donde distintas especies encuentran refugio y las familias pueden convivir con la naturaleza.</p>
+                    <div class="area-note">
+                        <span aria-hidden="true">&#127807;</span>
+                        <div><strong>Dato</strong><small>Funciona como un pulm&oacute;n verde para varios municipios del Valle de M&eacute;xico.</small></div>
+                    </div>
+                    <div class="area-note">
+                        <span aria-hidden="true">&#128062;</span>
+                        <div><strong>Cuida</strong><small>No tires basura, evita fogatas y respeta siempre los senderos marcados.</small></div>
+                    </div>
                 </div>
             </article>
 
-            <article class="card topic-card">
-                <img src="https://images.unsplash.com/photo-1473773508845-188df298d2d1?auto=format&fit=crop&w=900&q=80" alt="Paisaje de humedal con aves">
+            <article class="area-place-card">
+                <img src="assets/imagenes/areas/cienegas-del-lerma.jpeg" alt="Humedal de las Ci&eacute;negas del Lerma" loading="lazy">
                 <div class="info">
-                    <h2>Ci&eacute;negas del Lerma</h2>
-                    <div class="tag-row">
-                        <span class="tag">Humedal</span>
-                        <span class="tag">Fauna migratoria</span>
+                    <div>
+                        <span class="eyebrow">Humedal protegido</span>
+                        <h2>Ci&eacute;negas del Lerma</h2>
                     </div>
-                    <p>Protege parte de los humedales que existieron en el Valle de Toluca. Es refugio para patos y cercetas migratorias, y h&aacute;bitat del ajolote del Lerma.</p>
-                    <ul class="tip-list">
-                        <li>No tirar basura evita contaminar el agua donde viven especies sensibles.</li>
-                        <li>Observar aves sin molestarlas protege sus rutas de descanso y alimentaci&oacute;n.</li>
-                    </ul>
+                    <p>Estos humedales conservan agua y vegetaci&oacute;n acu&aacute;tica, adem&aacute;s de ofrecer alimento y descanso a aves residentes y migratorias.</p>
+                    <div class="area-note">
+                        <span aria-hidden="true">&#129414;</span>
+                        <div><strong>Dato</strong><small>Es una zona clave para aves acu&aacute;ticas y especies sensibles como el ajolote del Lerma.</small></div>
+                    </div>
+                    <div class="area-note">
+                        <span aria-hidden="true">&#128062;</span>
+                        <div><strong>Cuida</strong><small>No contamines el agua y observa a las aves sin acercarte a sus nidos.</small></div>
+                    </div>
                 </div>
             </article>
 
-            <article class="card topic-card">
-                <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=900&q=80" alt="Montana con bosque y cielo abierto">
+            <article class="area-place-card">
+                <img src="assets/imagenes/areas/nevado-de-toluca.jpeg" alt="Paisaje nevado del Nevado de Toluca" loading="lazy">
                 <div class="info">
-                    <h2>Nevado de Toluca</h2>
-                    <div class="tag-row">
-                        <span class="tag">Alta monta&ntilde;a</span>
-                        <span class="tag">CONANP</span>
+                    <div>
+                        <span class="eyebrow">Alta monta&ntilde;a</span>
+                        <h2>Nevado de Toluca</h2>
                     </div>
-                    <p>Es un &Aacute;rea de Protecci&oacute;n de Flora y Fauna con bosques, cr&aacute;ter y paisajes de gran valor ecol&oacute;gico. Sus zonas n&uacute;cleo requieren visitas de bajo impacto.</p>
-                    <ul class="tip-list">
-                        <li>Caminar en senderos marcados reduce la erosi&oacute;n y protege plantas nativas.</li>
-                        <li>No alimentar fauna evita cambios peligrosos en su conducta natural.</li>
-                    </ul>
+                    <p>Sus bosques, laderas y cr&aacute;ter forman un paisaje de gran valor ecol&oacute;gico que ayuda a conservar agua y vegetaci&oacute;n de monta&ntilde;a.</p>
+                    <div class="area-note">
+                        <span aria-hidden="true">&#9968;&#65039;</span>
+                        <div><strong>Dato</strong><small>Sus ecosistemas cambian con la altura y requieren visitas de muy bajo impacto.</small></div>
+                    </div>
+                    <div class="area-note">
+                        <span aria-hidden="true">&#128062;</span>
+                        <div><strong>Cuida</strong><small>No salgas de los senderos ni alimentes a la fauna que encuentres.</small></div>
+                    </div>
                 </div>
             </article>
 
-            <article class="card topic-card">
-                <img src="https://images.unsplash.com/photo-1476231682828-37e571bc172f?auto=format&fit=crop&w=900&q=80" alt="Bosque iluminado por el sol">
+            <article class="area-place-card">
+                <img src="assets/imagenes/areas/sierra-morelos.jpeg" alt="Entrada del Parque Sierra Morelos" loading="lazy">
                 <div class="info">
-                    <h2>Sierra Morelos</h2>
-                    <div class="tag-row">
-                        <span class="tag">Toluca</span>
-                        <span class="tag">Educaci&oacute;n ambiental</span>
+                    <div>
+                        <span class="eyebrow">Parque y educaci&oacute;n ambiental</span>
+                        <h2>Sierra Morelos</h2>
                     </div>
-                    <p>Parque estatal en Toluca y Zinacantepec con vegetaci&oacute;n nativa, senderos e instalaciones para actividades de aprendizaje y convivencia.</p>
-                    <ul class="tip-list">
-                        <li>Cuidar sus &aacute;rboles ayuda a mantener equilibrio ecol&oacute;gico y aire limpio.</li>
-                        <li>Sus espacios educativos sirven para conocer mejor la fauna y flora local.</li>
-                    </ul>
+                    <p>Un parque estatal de Toluca y Zinacantepec con senderos, vegetaci&oacute;n y espacios para aprender sobre el cuidado del ambiente.</p>
+                    <div class="area-note">
+                        <span aria-hidden="true">&#127795;</span>
+                        <div><strong>Dato</strong><small>Combina recreaci&oacute;n, convivencia y actividades de educaci&oacute;n ambiental.</small></div>
+                    </div>
+                    <div class="area-note">
+                        <span aria-hidden="true">&#128062;</span>
+                        <div><strong>Cuida</strong><small>Respeta los &aacute;rboles, recoge tus residuos y mant&eacute;n el ruido bajo.</small></div>
+                    </div>
                 </div>
             </article>
+        </div>
+    </section>
+
+    <section class="section species-section" id="especies">
+        <div class="section-title">
+            <span class="eyebrow">La vida que nos rodea</span>
+            <h2>Animales que podr&iacute;an vivir en estas zonas</h2>
+            <p>Cada &aacute;rea verde es hogar de muchas especies, aunque a veces no las veamos.</p>
+        </div>
+
+        <div class="species-grid" aria-label="Especies de las &aacute;reas naturales">
+            <article class="species-card">
+                <span class="species-icon" aria-hidden="true">&#129414;</span>
+                <h3>Aves migratorias</h3>
+                <p>Pueden usar estas zonas para descansar, alimentarse o vivir por temporadas.</p>
+            </article>
+            <article class="species-card">
+                <span class="species-icon" aria-hidden="true">&#129422;</span>
+                <h3>Reptiles peque&ntilde;os</h3>
+                <p>Ayudan al equilibrio del ecosistema y suelen vivir entre rocas, pasto o zonas c&aacute;lidas.</p>
+            </article>
+            <article class="species-card">
+                <span class="species-icon" aria-hidden="true">&#128063;&#65039;</span>
+                <h3>Ardillas y peque&ntilde;os mam&iacute;feros</h3>
+                <p>Forman parte del ambiente natural y ayudan a mover semillas entre distintas zonas.</p>
+            </article>
+            <article class="species-card">
+                <span class="species-icon" aria-hidden="true">&#128029;</span>
+                <h3>Insectos polinizadores</h3>
+                <p>Son esenciales porque ayudan a que las plantas contin&uacute;en creciendo y reproduci&eacute;ndose.</p>
+            </article>
+            <article class="species-card">
+                <span class="species-icon" aria-hidden="true">&#128062;</span>
+                <h3>Mam&iacute;feros discretos</h3>
+                <p>Muchas especies se refugian cerca de &aacute;rboles, pasto y zonas tranquilas, aunque casi no se vean.</p>
+            </article>
+        </div>
+    </section>
+
+    <section class="section environment-report" id="reporteAmbiental">
+        <div class="report-shell">
+            <div class="report-copy">
+                <span class="eyebrow">Participa y protege</span>
+                <h2>Ay&uacute;danos a cuidar estos espacios</h2>
+                <p>Reporta basura, da&ntilde;o ambiental o una zona descuidada. El reporte quedar&aacute; integrado con el seguimiento de Huellitas.</p>
+                <button class="report-toggle" id="environmentReportToggle" type="button" aria-expanded="false" aria-controls="environmentReportPanel">
+                    <span>Reportar basura o da&ntilde;o ambiental</span>
+                    <span aria-hidden="true">&#128680;</span>
+                </button>
+            </div>
+
+            <div class="areas-report-panel" id="environmentReportPanel" hidden>
+                <form class="environment-form" id="environmentReportForm">
+                    <div class="environment-field">
+                        <label for="environmentPlace">Nombre del lugar</label>
+                        <input id="environmentPlace" name="place" required maxlength="90" placeholder="Ej. Sierra de Guadalupe">
+                    </div>
+
+                    <div class="environment-field">
+                        <label for="environmentProblem">Qu&eacute; problema viste</label>
+                        <select id="environmentProblem" name="problem" required>
+                            <option value="">Selecciona una opci&oacute;n</option>
+                            <option>Basura acumulada</option>
+                            <option>Da&ntilde;o a plantas o &aacute;rboles</option>
+                            <option>Contaminaci&oacute;n del agua</option>
+                            <option>Riesgo para animales</option>
+                            <option>Instalaciones da&ntilde;adas</option>
+                            <option>Otro problema ambiental</option>
+                        </select>
+                    </div>
+
+                    <div class="environment-field full">
+                        <label for="environmentDescription">Descripci&oacute;n</label>
+                        <textarea id="environmentDescription" name="description" required minlength="12" maxlength="900" placeholder="Cu&eacute;ntanos qu&eacute; viste y en qu&eacute; parte del lugar ocurri&oacute;."></textarea>
+                    </div>
+
+                    <div class="environment-field full">
+                        <label for="environmentPhoto">Foto opcional</label>
+                        <input id="environmentPhoto" name="photo" type="file" accept="image/png,image/jpeg,image/webp">
+                        <p class="environment-file-note">Puedes agregar una imagen de hasta 2 MB como evidencia.</p>
+                        <img class="environment-photo-preview" id="environmentPhotoPreview" alt="Vista previa de la evidencia" hidden>
+                    </div>
+
+                    <button class="environment-submit" type="submit">Guardar reporte</button>
+                    <p class="environment-feedback" id="environmentFeedback" role="status" aria-live="polite"></p>
+                </form>
+            </div>
         </div>
     </section>
 
@@ -145,18 +595,18 @@
             <div class="feature-panel">
                 <h2>&iquest;C&oacute;mo protegemos un h&aacute;bitat?</h2>
                 <ul class="tip-list">
-                    <li>Regresar con toda la basura que llevamos.</li>
-                    <li>Respetar senderos, horarios y zonas restringidas.</li>
-                    <li>No extraer plantas, piedras, nidos ni animales.</li>
-                    <li>Evitar ruido excesivo y fogatas fuera de zonas permitidas.</li>
+                    <li>Regresa con toda la basura que llevaste.</li>
+                    <li>Respeta senderos, horarios y zonas restringidas.</li>
+                    <li>No extraigas plantas, piedras, nidos ni animales.</li>
+                    <li>Evita ruido excesivo y fogatas fuera de lugares permitidos.</li>
                 </ul>
             </div>
 
             <div class="feature-panel">
-                <h2>Idea para la escuela</h2>
-                <p>El grupo puede elegir un &aacute;rea cercana, investigar qu&eacute; especies viven ah&iacute; y crear una campa&ntilde;a de limpieza o difusi&oacute;n para explicar por qu&eacute; ese lugar importa.</p>
+                <h2>Una acci&oacute;n s&iacute; hace diferencia</h2>
+                <p>Aprender sobre una zona, compartir c&oacute;mo cuidarla o reportar un problema ayuda a que m&aacute;s personas protejan los espacios donde viven los animales.</p>
                 <div class="section-actions">
-                    <a class="button-link" href="domesticos.html">Siguiente: dom&eacute;sticos</a>
+                    <a class="button-link" href="domesticos.html">Conocer mascotas</a>
                     <a class="button-link secondary" href="leyes.html">Ver leyes</a>
                 </div>
             </div>
@@ -166,13 +616,13 @@
     <section class="section">
         <div class="section-title">
             <h2>Fuentes consultadas</h2>
-            <p>Resumen escolar basado en informaci&oacute;n p&uacute;blica de instituciones ambientales.</p>
+            <p>Informaci&oacute;n educativa basada en instituciones ambientales del Estado de M&eacute;xico y M&eacute;xico.</p>
         </div>
         <div class="source-list">
-            <a href="https://sma.edomex.gob.mx/parque-estatal-sierra-guadalupe">Gobierno del Estado de M&eacute;xico: Parque Estatal Sierra de Guadalupe</a>
-            <a href="https://conanp.gob.mx/conanp/dominios/nevadotol/index.php">CONANP: &Aacute;rea de Protecci&oacute;n de Flora y Fauna Nevado de Toluca</a>
-            <a href="https://descubreanp.conanp.gob.mx/es/conanp/ANP/_rid/c7829721a8324b0ea29cb5ef322c9671/_mto/3/_wst/maximized?imp_act=imp_step3&suri=36">CONANP: Ci&eacute;negas del Lerma</a>
-            <a href="https://cepanaf.edomex.gob.mx/parque_sierra_morelos">CEPANAF: Parque Estatal Sierra Morelos</a>
+            <a href="https://sma.edomex.gob.mx/parque-estatal-sierra-guadalupe">Gobierno del Estado de M&eacute;xico: Sierra de Guadalupe</a>
+            <a href="https://conanp.gob.mx/conanp/dominios/nevadotol/index.php">CONANP: Nevado de Toluca</a>
+            <a href="https://descubreanp.conanp.gob.mx/">CONANP: Ci&eacute;negas del Lerma</a>
+            <a href="https://cepanaf.edomex.gob.mx/parque_sierra_morelos">CEPANAF: Parque Sierra Morelos</a>
         </div>
     </section>
 </main>
@@ -181,7 +631,144 @@
     <strong>HUELLITAS &#128062;</strong>
     <span>Proyecto escolar de CECyTEM Tultitl&aacute;n - Grupo 404 - Equipo Huellitas</span>
 </footer>
+
 <script src="huellitas.js"></script>
+<script>
+(function () {
+    var toggle = document.getElementById("environmentReportToggle");
+    var panel = document.getElementById("environmentReportPanel");
+    var form = document.getElementById("environmentReportForm");
+    var photo = document.getElementById("environmentPhoto");
+    var preview = document.getElementById("environmentPhotoPreview");
+    var feedback = document.getElementById("environmentFeedback");
+    var photoData = "";
+
+    function setFeedback(message, type) {
+        feedback.textContent = message;
+        feedback.className = "environment-feedback" + (type ? " " + type : "");
+    }
+
+    function openPanel() {
+        panel.hidden = false;
+        toggle.setAttribute("aria-expanded", "true");
+        toggle.querySelector("span").textContent = "Cerrar formulario";
+        window.setTimeout(function () {
+            document.getElementById("environmentPlace").focus();
+        }, 80);
+    }
+
+    function closePanel() {
+        panel.hidden = true;
+        toggle.setAttribute("aria-expanded", "false");
+        toggle.querySelector("span").textContent = "Reportar basura o da\u00f1o ambiental";
+    }
+
+    toggle.addEventListener("click", function () {
+        if (panel.hidden) {
+            openPanel();
+        } else {
+            closePanel();
+        }
+    });
+
+    photo.addEventListener("change", function () {
+        var file = photo.files && photo.files[0];
+        photoData = "";
+        preview.hidden = true;
+        preview.removeAttribute("src");
+
+        if (!file) {
+            setFeedback("", "");
+            return;
+        }
+
+        if (file.size > 2 * 1024 * 1024) {
+            photo.value = "";
+            setFeedback("La imagen supera 2 MB. Elige una foto m\u00e1s ligera.", "error");
+            return;
+        }
+
+        var reader = new FileReader();
+        reader.addEventListener("load", function () {
+            photoData = String(reader.result || "");
+            preview.src = photoData;
+            preview.hidden = false;
+            setFeedback("Foto lista para agregarse al reporte.", "");
+        });
+        reader.readAsDataURL(file);
+    });
+
+    form.addEventListener("submit", async function (event) {
+        event.preventDefault();
+        setFeedback("", "");
+
+        if (!form.reportValidity()) {
+            setFeedback("Revisa los campos marcados antes de guardar.", "error");
+            return;
+        }
+
+        var place = document.getElementById("environmentPlace").value.trim();
+        var problem = document.getElementById("environmentProblem").value;
+        var description = document.getElementById("environmentDescription").value.trim();
+        var profileId = window.huellitasGetProfileId
+            ? window.huellitasGetProfileId()
+            : "perfil-local";
+
+        var report = {
+            id: "reporte-ambiental-" + Date.now(),
+            profileId: profileId,
+            tipo: "Da\u00f1o ambiental: " + problem,
+            contacto: "",
+            pagina: "\u00c1reas naturales - " + place,
+            correoEquipo: localStorage.getItem("huellitasCorreoEquipo") || "",
+            mensaje: problem + ". " + description,
+            lugar: place,
+            problemaAmbiental: problem,
+            foto: photoData,
+            fotoNombre: photo.files && photo.files[0] ? photo.files[0].name : "",
+            fecha: new Date().toLocaleString("es-MX"),
+            estado: "Recibido",
+            historial: [{
+                estado: "Recibido",
+                fecha: new Date().toLocaleString("es-MX")
+            }]
+        };
+
+        try {
+            var reports = window.huellitasGetReports
+                ? window.huellitasGetReports()
+                : JSON.parse(localStorage.getItem("huellitasReportes") || "[]");
+
+            reports.unshift(report);
+
+            if (window.huellitasSaveReports) {
+                window.huellitasSaveReports(reports);
+            } else {
+                localStorage.setItem("huellitasReportes", JSON.stringify(reports));
+                window.dispatchEvent(new CustomEvent("huellitas:reportsChanged"));
+            }
+
+            if (window.huellitasApi && typeof window.huellitasApi.request === "function") {
+                try {
+                    await window.huellitasApi.request("/api/reports", {
+                        method: "POST",
+                        body: JSON.stringify(report)
+                    });
+                } catch (serverError) {
+                    console.warn("El reporte ambiental se guardo localmente:", serverError);
+                }
+            }
+
+            form.reset();
+            photoData = "";
+            preview.hidden = true;
+            preview.removeAttribute("src");
+            setFeedback("Gracias por cuidar este espacio. Tu reporte ayuda a proteger a m\u00e1s especies.", "success");
+        } catch (error) {
+            setFeedback("No pudimos guardar el reporte. Revisa el espacio disponible e int\u00e9ntalo otra vez.", "error");
+        }
+    });
+})();
+</script>
 </body>
 </html>
-

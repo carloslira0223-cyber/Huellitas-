@@ -1,5 +1,5 @@
 (function () {
-    const version = "20260628-palette-sync-v4";
+    const version = "20260628-areas-nature-v5";
 
     function writeScript(src) {
         document.write('<script src="' + src + '?v=' + version + '"><\/script>');
