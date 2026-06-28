@@ -1,5 +1,5 @@
 (function () {
-    const version = "20260628-treasure-v6";
+    const version = "20260628-treasure-v7";
 
     function writeScript(src) {
         document.write('<script src="' + src + '?v=' + version + '"><\/script>');

@@ -26,7 +26,9 @@
         if (clean.includes("corona")) return "👑";
         if (clean.includes("mono") || clean.includes("moño")) return "🎀";
         if (clean.includes("collar")) return "🟢";
+        if (clean.includes("placa")) return "🏷️";
         if (clean.includes("pelota")) return "⚽";
+        if (clean.includes("camita")) return "🛏️";
         if (clean.includes("casita")) return "🏠";
         return "🎁";
     }

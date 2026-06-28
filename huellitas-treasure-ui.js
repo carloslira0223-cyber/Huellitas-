@@ -3,7 +3,7 @@
  * Inventario visual conectado al estado real de la mascota.
  */
 (function () {
-    const cssVersion = "20260628-treasure-v6";
+    const cssVersion = "20260628-treasure-v7";
     const slotLabels = { head: "Cabeza", neck: "Collar", toy: "Juguete", bed: "Descanso" };
     let activeFilter = "all";
 
@@ -93,7 +93,7 @@
             '</div>',
             '<div class="treasure-pet-caption" data-treasure-pet-name>Tu companero</div>',
             '</section>',
-            '<section class="treasure-panel treasure-inventory-panel" data-treasure-panel="inventory">',
+            '<section class="treasure-panel treasure-inventory-panel inventory-panel" id="inventarioMascota" data-treasure-panel="inventory">',
             '<div class="treasure-equipped"><h3>&#128062; Objetos equipados &#128062;</h3><div class="treasure-equipped-grid" data-treasure-equipped></div></div>',
             '<div class="treasure-tabs" role="tablist" aria-label="Categorias del inventario">',
             '<button type="button" data-treasure-filter="all">Todo</button>',
@@ -163,7 +163,7 @@
         list.innerHTML = items.map(function (item) {
             const equipped = state.equipped[item.slot] === item.id;
             return [
-                '<article class="inventory-item treasure-inventory-item' + (equipped ? " equipped" : "") + '" data-slot="' + item.slot + '">',
+                '<article class="inventory-item treasure-inventory-item' + (equipped ? " equipped" : "") + '" data-slot="' + item.slot + '" data-emoji-polished="true">',
                 iconMarkup(item),
                 '<div class="treasure-item-copy">',
                 '<strong>' + item.name + '</strong>',
