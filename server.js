@@ -1,3 +1,7 @@
+/*!
+ * Proyecto Huellitas - Creado por Carlos Alexis Lira Alcala - 2026.
+ * Todos los derechos reservados.
+ */
 const http = require("http");
 const fs = require("fs");
 const path = require("path");
@@ -38,6 +42,143 @@ function readConfig() {
 }
 
 const config = readConfig();
+const adminTokens = new Map();
+const adminAttempts = new Map();
+const adminTokenLifetime = 8 * 60 * 60 * 1000;
+const adminAttemptWindow = 15 * 60 * 1000;
+const adminAttemptLimit = 5;
+const legacyAdminPasswordHash = "7571e4e75ae70141d773cbd36bfdac3e92f10c9eeb3e56f5cc03bf7126121a8c";
+const adminProtectedRoutes = new Set([
+    "GET:/api/backup",
+    "GET:/api/team-data",
+    "POST:/api/adoptions/status",
+    "POST:/api/adoptions/appointment",
+    "POST:/api/reports/status",
+    "POST:/api/pets",
+    "POST:/api/pets/status",
+    "POST:/api/pets/delete",
+    "POST:/api/centers",
+    "POST:/api/centers/status",
+    "POST:/api/demo",
+    "POST:/api/demo/reset",
+    "POST:/api/restore",
+    "POST:/api/base",
+    "POST:/api/reset"
+]);
+
+function normalizeAdminPassword(value) {
+    return String(value || "").trim().toLowerCase().replace(/\s+/g, "");
+}
+
+function sha256(value) {
+    return crypto.createHash("sha256").update(String(value)).digest("hex");
+}
+
+function configuredAdminPasswordHash() {
+    const configuredHash = String(process.env.HUELLITAS_ADMIN_PASSWORD_HASH || config.adminPasswordHash || "").trim().toLowerCase();
+
+    if (/^[a-f0-9]{64}$/.test(configuredHash)) {
+        return configuredHash;
+    }
+
+    const configuredPassword = process.env.HUELLITAS_ADMIN_PASSWORD || config.adminPassword;
+    if (configuredPassword) {
+        return sha256(normalizeAdminPassword(configuredPassword));
+    }
+
+    // Compatibilidad temporal. En produccion se recomienda HUELLITAS_ADMIN_PASSWORD_HASH.
+    return legacyAdminPasswordHash;
+}
+
+function safeHashEqual(actual, expected) {
+    if (!/^[a-f0-9]{64}$/.test(actual) || !/^[a-f0-9]{64}$/.test(expected)) {
+        return false;
+    }
+
+    return crypto.timingSafeEqual(Buffer.from(actual, "hex"), Buffer.from(expected, "hex"));
+}
+
+function requestIp(req) {
+    const forwarded = String(req.headers["x-forwarded-for"] || "").split(",")[0].trim();
+    return forwarded || (req.socket && req.socket.remoteAddress) || "unknown";
+}
+
+function isAdminRateLimited(req) {
+    const key = requestIp(req);
+    const now = Date.now();
+    const attempt = adminAttempts.get(key);
+
+    if (!attempt || now - attempt.startedAt > adminAttemptWindow) {
+        adminAttempts.set(key, { count: 0, startedAt: now });
+        return false;
+    }
+
+    return attempt.count >= adminAttemptLimit;
+}
+
+function registerFailedAdminAttempt(req) {
+    const key = requestIp(req);
+    const now = Date.now();
+    const attempt = adminAttempts.get(key);
+
+    if (!attempt || now - attempt.startedAt > adminAttemptWindow) {
+        adminAttempts.set(key, { count: 1, startedAt: now });
+        return;
+    }
+
+    attempt.count += 1;
+}
+
+function clearAdminAttempts(req) {
+    adminAttempts.delete(requestIp(req));
+}
+
+function purgeAdminTokens() {
+    const now = Date.now();
+    adminTokens.forEach((session, token) => {
+        if (!session || session.expiresAt <= now) {
+            adminTokens.delete(token);
+        }
+    });
+}
+
+function adminTokenFromRequest(req) {
+    return String(req.headers["x-huellitas-admin-token"] || "");
+}
+
+function isAdminRequest(req) {
+    purgeAdminTokens();
+    const token = adminTokenFromRequest(req);
+    const session = token ? adminTokens.get(token) : null;
+    return Boolean(session && session.expiresAt > Date.now());
+}
+
+function createAdminToken() {
+    purgeAdminTokens();
+    const token = crypto.randomBytes(32).toString("hex");
+    adminTokens.set(token, {
+        createdAt: Date.now(),
+        expiresAt: Date.now() + adminTokenLifetime
+    });
+    return token;
+}
+
+function revokeAdminToken(req) {
+    const token = adminTokenFromRequest(req);
+    if (token) {
+        adminTokens.delete(token);
+    }
+}
+
+function verifyAdminPassword(value) {
+    const actual = sha256(normalizeAdminPassword(value));
+    return safeHashEqual(actual, configuredAdminPasswordHash());
+}
+
+function isProtectedAdminRoute(req, pathname) {
+    return adminProtectedRoutes.has(req.method + ":" + pathname);
+}
+
 
 function defaultDb() {
     return {
@@ -138,7 +279,7 @@ function applyCors(req, res) {
     }
 
     res.setHeader("Access-Control-Allow-Methods", "GET,POST,OPTIONS");
-    res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Huellitas-Token");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Huellitas-Token, X-Huellitas-Admin-Token");
     res.setHeader("Access-Control-Max-Age", "86400");
 }
 
@@ -679,6 +820,39 @@ function removeDemoData(db) {
 async function handleApi(req, res, pathname) {
     const db = readDb();
     const body = await readBody(req);
+
+    if (req.method === "POST" && pathname === "/api/admin/login") {
+        if (isAdminRateLimited(req)) {
+            sendJson(res, 429, { ok: false, error: "Demasiados intentos. Espera unos minutos." });
+            return;
+        }
+
+        if (!verifyAdminPassword(body.password)) {
+            registerFailedAdminAttempt(req);
+            sendJson(res, 401, { ok: false, error: "Clave incorrecta." });
+            return;
+        }
+
+        clearAdminAttempts(req);
+        sendJson(res, 200, { ok: true, token: createAdminToken(), expiresIn: adminTokenLifetime });
+        return;
+    }
+
+    if (req.method === "POST" && pathname === "/api/admin/logout") {
+        revokeAdminToken(req);
+        sendJson(res, 200, { ok: true });
+        return;
+    }
+
+    if (isProtectedAdminRoute(req, pathname) && !isAdminRequest(req)) {
+        sendJson(res, 401, { ok: false, error: "Se requiere una sesion de administrador valida." });
+        return;
+    }
+
+    if (req.method === "POST" && pathname === "/api/mailbox" && String(body.from || "").toLowerCase() === "admin" && !isAdminRequest(req)) {
+        sendJson(res, 401, { ok: false, error: "No puedes enviar mensajes como administrador." });
+        return;
+    }
 
     if (req.method === "GET" && pathname === "/api/health") {
         sendJson(res, 200, {
@@ -1252,6 +1426,41 @@ async function handleApi(req, res, pathname) {
             pets: cleanDb.pets,
             centers: cleanDb.centers,
             stats: buildStats(cleanDb)
+        });
+        return;
+    }
+
+    if (req.method === "GET" && pathname === "/api/public-data") {
+        const publicReports = db.reports.filter((item) => {
+            const state = String(item.estado || (item.lostPet && item.lostPet.status) || "").toLowerCase();
+            return Boolean(item.lostPet && /(publicado|aprobado|activo|encontrado)/.test(state));
+        });
+        const publicPets = db.pets.filter((item) => !/(oculto|eliminado|rechazado)/i.test(String(item.estado || "")));
+        const publicCenters = db.centers.filter((item) => !/(pendiente|oculto|rechazado)/i.test(String(item.estado || "Aprobado")));
+        const publicScores = db.scores
+            .slice()
+            .sort((a, b) => Number(b.mejorPuntaje || 0) - Number(a.mejorPuntaje || 0))
+            .slice(0, 25)
+            .map((item, index) => ({
+                id: "ranking-" + (index + 1),
+                nombre: cleanText(item.nombre) || "Cuidador",
+                foto: cleanText(item.foto) || "assets/imagenes/logo.png",
+                mejorPuntaje: Number(item.mejorPuntaje || 0),
+                mejoresLogros: Number(item.mejoresLogros || 0)
+            }));
+
+        sendJson(res, 200, {
+            ok: true,
+            adoptions: [],
+            reports: publicReports,
+            scores: publicScores,
+            pets: publicPets,
+            centers: publicCenters,
+            stats: {
+                pets: publicPets.length,
+                centers: publicCenters.length,
+                reports: publicReports.length
+            }
         });
         return;
     }

@@ -71,9 +71,11 @@ En el panel admin:
 - `Importar respaldo`: restaura un archivo generado por Huellitas.
 - Las opciones de restaurar base y reiniciar sitio se retiraron del panel para evitar borrados accidentales.
 
-## Admin
+## Admin seguro
 
-El acceso admin esta reservado para el equipo. Por seguridad, no se escribe la clave en este README si el proyecto se sube a GitHub. Compartanla solo de forma privada entre ustedes.
+El acceso admin se valida en `server.js` y la clave no se guarda en el navegador. En el hosting configura la variable secreta `HUELLITAS_ADMIN_PASSWORD`; no escribas esa clave en archivos del repositorio. Las sesiones administrativas caducan y los intentos fallidos tienen limite.
+
+Sin el servidor activo no se habilitan acciones administrativas. Los visitantes solo reciben datos publicos; solicitudes, correos, respaldos y bandeja interna requieren una sesion admin valida.
 
 ## Sugerencias de capturas para entrega
 
@@ -106,3 +108,14 @@ data/huellitas-db.json   Base local cuando se usa servidor
 ## Nota para GitHub Pages
 
 La pagina funciona de forma estatica y usa `index.html` como entrada. Si no configuras un servidor de datos, guarda datos en el navegador. Si configuras `Servidor de datos` en Ajustes, sincroniza con `server.js`.
+
+
+## App instalable
+
+Huellitas incluye `manifest.webmanifest` y `sw.js`. En navegadores compatibles aparecera la opcion **Instalar Huellitas** en el footer. El modo sin conexion conserva la pantalla de respaldo y recursos visitados; las acciones que usan el servidor siguen necesitando internet.
+
+## Derechos de autor
+
+Copyright (c) 2026 Carlos Alexis Lira Alcala. Todos los derechos reservados.
+
+No se concede permiso para copiar, modificar, distribuir o presentar Huellitas como un proyecto propio. Consulta `LICENSE` y `AVISO_DERECHOS.md`.

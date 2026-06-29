@@ -1,0 +1,268 @@
+/*!
+ * Proyecto Huellitas - Carlos Alexis Lira Alcala - 2026.
+ * Todos los derechos reservados.
+ */
+
+.huellitas-legal-footer {
+    width: 100%;
+    color: #eef7f0;
+    background:
+        linear-gradient(135deg, color-mix(in srgb, var(--leaf-dark, #2f6b43) 92%, #101712), #17251c);
+    border-top: 1px solid color-mix(in srgb, var(--leaf, #5f9d63) 48%, transparent);
+    padding: 24px clamp(16px, 4vw, 48px);
+}
+
+.huellitas-legal-inner {
+    width: min(1180px, 100%);
+    margin: 0 auto;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 24px;
+}
+
+.huellitas-legal-brand {
+    min-width: 0;
+    display: grid;
+    gap: 5px;
+}
+
+.huellitas-legal-brand strong {
+    color: #fff;
+    font-size: 1.05rem;
+}
+
+.huellitas-legal-brand span,
+.huellitas-legal-brand small {
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+}
+
+.huellitas-legal-brand span {
+    font-size: .88rem;
+}
+
+.huellitas-legal-brand small {
+    max-width: 760px;
+    color: rgba(238, 247, 240, .74);
+    font-size: .78rem;
+}
+
+.huellitas-legal-actions {
+    flex: 0 1 360px;
+    min-width: 0;
+    display: grid;
+    justify-items: end;
+    gap: 10px;
+}
+
+.huellitas-rights-note {
+    width: min(360px, 100%);
+    border: 1px solid rgba(255, 255, 255, .2);
+    border-radius: 8px;
+    background: rgba(7, 16, 10, .26);
+    overflow: hidden;
+}
+
+.huellitas-rights-note summary {
+    min-height: 42px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 9px 12px;
+    color: #fff;
+    font-size: .82rem;
+    font-weight: 800;
+    user-select: none;
+}
+
+.huellitas-rights-note p {
+    margin: 0;
+    padding: 0 12px 12px;
+    color: rgba(238, 247, 240, .78);
+    font-size: .76rem;
+    line-height: 1.55;
+    overflow-wrap: anywhere;
+}
+
+.huellitas-install-button {
+    min-height: 42px;
+    border: 1px solid rgba(255, 255, 255, .24);
+    border-radius: 8px;
+    padding: 9px 14px;
+    color: #fff;
+    background: var(--leaf, #5f9d63);
+    font: inherit;
+    font-size: .84rem;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.huellitas-install-button[hidden] {
+    display: none !important;
+}
+
+.huellitas-install-button:hover,
+.huellitas-install-button:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 2px;
+    filter: brightness(1.05);
+}
+
+.huellitas-copyright-toast {
+    position: fixed;
+    left: 50%;
+    bottom: max(18px, env(safe-area-inset-bottom));
+    z-index: 10050;
+    width: min(92vw, 470px);
+    transform: translate(-50%, 18px);
+    padding: 12px 16px;
+    border: 1px solid color-mix(in srgb, var(--leaf, #5f9d63) 58%, #fff);
+    border-radius: 8px;
+    color: #fff;
+    background: rgba(20, 31, 24, .96);
+    box-shadow: 0 16px 42px rgba(0, 0, 0, .3);
+    font-size: .86rem;
+    line-height: 1.45;
+    text-align: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .2s ease, transform .2s ease;
+}
+
+.huellitas-copyright-toast.visible {
+    opacity: 1;
+    transform: translate(-50%, 0);
+}
+
+.site-brand,
+.logo,
+.nav-logo,
+[data-authorship-protected] {
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+img {
+    -webkit-user-drag: none;
+}
+
+/* Proteccion contra desbordes sin impedir zoom, seleccion ni formularios. */
+html,
+body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+main,
+section,
+article,
+aside,
+header,
+footer,
+nav,
+form,
+fieldset,
+div {
+    min-width: 0;
+}
+
+img,
+video,
+canvas,
+svg,
+iframe {
+    max-width: 100%;
+}
+
+h1,
+h2,
+h3,
+h4,
+p,
+li,
+label,
+legend,
+summary,
+small,
+strong,
+span {
+    overflow-wrap: break-word;
+}
+
+input,
+textarea,
+select,
+button {
+    max-width: 100%;
+}
+
+pre,
+code {
+    max-width: 100%;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+body.dark .huellitas-legal-footer {
+    background: linear-gradient(135deg, #0d1811, #111d15);
+}
+
+@media (max-width: 700px) {
+    .huellitas-legal-footer {
+        padding: 20px 14px calc(20px + env(safe-area-inset-bottom));
+    }
+
+    .huellitas-legal-inner {
+        display: grid;
+        gap: 16px;
+    }
+
+    .huellitas-legal-actions {
+        width: 100%;
+        justify-items: stretch;
+    }
+
+    .huellitas-rights-note,
+    .huellitas-install-button {
+        width: 100%;
+    }
+
+    .huellitas-legal-brand span {
+        font-size: .82rem;
+    }
+
+    .huellitas-legal-brand small {
+        font-size: .74rem;
+    }
+
+    .section-title,
+    .game-title-row,
+    .admin-card,
+    .feature-panel,
+    .profile-card,
+    .pet-card,
+    .shop-status {
+        max-width: 100%;
+    }
+
+    .section-title h1,
+    .section-title h2,
+    .game-title-row h2 {
+        max-width: 100%;
+        line-height: 1.12;
+    }
+
+    button,
+    .button,
+    [role="button"] {
+        white-space: normal;
+        overflow-wrap: anywhere;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .huellitas-copyright-toast {
+        transition: none;
+    }
+}

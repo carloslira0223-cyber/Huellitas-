@@ -1,13 +1,17 @@
 /*!
- * Huellitas (c) 2026. Todos los derechos reservados.
- * Prohibida su copia, distribucion o uso sin autorizacion.
+ * Proyecto Huellitas - Creado por Carlos Alexis Lira Alcala - 2026.
+ * Todos los derechos reservados.
+ *
+ * La clave administrativa se valida en el servidor. Nunca se guarda en el navegador.
  */
 (function () {
+    "use strict";
+
     const adminAccessKey = "huellitasAdminActivo";
     const adminTokenKey = "huellitasAdminToken";
-    const passwordHash = "7571e4e75ae70141d773cbd36bfdac3e92f10c9eeb3e56f5cc03bf7126121a8c";
     const adminPaths = [
         "/api/backup",
+        "/api/team-data",
         "/api/adoptions/status",
         "/api/adoptions/appointment",
         "/api/reports/status",
@@ -32,32 +36,6 @@
         }
     }
 
-    function normalizePassword(value) {
-        return String(value || "").trim().toLowerCase().replace(/\s+/g, "");
-    }
-
-    async function sha256(value) {
-        if (!window.crypto || !window.crypto.subtle || !window.TextEncoder) {
-            return "";
-        }
-
-        const data = new TextEncoder().encode(value);
-        const hash = await window.crypto.subtle.digest("SHA-256", data);
-        return Array.from(new Uint8Array(hash))
-            .map((byte) => byte.toString(16).padStart(2, "0"))
-            .join("");
-    }
-
-    async function isValidPassword(value) {
-        const normalized = normalizePassword(value);
-
-        if (!normalized) {
-            return false;
-        }
-
-        return await sha256(normalized) === passwordHash;
-    }
-
     function getAdminToken() {
         return sessionStorage.getItem(adminTokenKey) || "";
     }
@@ -68,13 +46,39 @@
         }
     }
 
-    function clearAdminToken() {
+    function clearAdminSession() {
         sessionStorage.removeItem(adminTokenKey);
+        sessionStorage.removeItem(adminAccessKey);
     }
 
     function isAdminPath(path) {
         const cleanPath = String(path || "").replace(/^https?:\/\/[^/]+/i, "");
-        return adminPaths.some((adminPath) => cleanPath.indexOf(adminPath) === 0);
+        return adminPaths.some(function (adminPath) {
+            return cleanPath.indexOf(adminPath) === 0;
+        });
+    }
+
+    function applyAdminAccess() {
+        if (typeof window.aplicarAccesoAdmin === "function") {
+            window.aplicarAccesoAdmin();
+            return;
+        }
+
+        const active = sessionStorage.getItem(adminAccessKey) === "true" && Boolean(getAdminToken());
+        const gate = document.getElementById("adminGate");
+
+        document.querySelectorAll(".admin-protected").forEach(function (section) {
+            section.hidden = !active;
+        });
+
+        if (gate) {
+            gate.hidden = active;
+        }
+    }
+
+    function expireAdminSession() {
+        clearAdminSession();
+        applyAdminAccess();
     }
 
     function wrapApiRequest() {
@@ -84,46 +88,48 @@
 
         const originalRequest = window.huellitasApi.request;
         window.huellitasApi.request = function (path, options) {
+            const token = getAdminToken();
+            let requestPath = path;
             const requestOptions = Object.assign({}, options || {});
             const headers = Object.assign({}, requestOptions.headers || {});
-            const token = getAdminToken();
+
+            if (String(path).indexOf("/api/team-data") === 0 && !token) {
+                requestPath = String(path).replace("/api/team-data", "/api/public-data");
+            }
 
             if (token && isAdminPath(path)) {
                 headers["X-Huellitas-Admin-Token"] = token;
             }
 
-            return originalRequest(path, Object.assign({}, requestOptions, { headers }));
+            return originalRequest(requestPath, Object.assign({}, requestOptions, { headers })).catch(function (error) {
+                const message = String(error && error.message || "");
+                if (token && isAdminPath(path) && /(sesion de administrador|401|no autorizado)/i.test(message)) {
+                    expireAdminSession();
+                }
+                throw error;
+            });
         };
         window.huellitasApi.adminSecureWrapped = true;
     }
 
     async function loginWithBackend(password) {
         if (!window.huellitasApi || !window.huellitasApi.enabled || typeof window.huellitasApi.request !== "function") {
-            return null;
+            throw new Error("El servidor seguro no esta disponible.");
         }
 
-        try {
-            const data = await window.huellitasApi.request("/api/admin/login", {
-                method: "POST",
-                body: JSON.stringify({ password: String(password || "") })
-            });
+        const data = await window.huellitasApi.request("/api/admin/login", {
+            method: "POST",
+            body: JSON.stringify({ password: String(password || "") })
+        });
 
-            if (data && data.token) {
-                setAdminToken(data.token);
-                wrapApiRequest();
-                return true;
-            }
-        } catch (error) {
-            const message = String(error && error.message || "");
-
-            if (message.indexOf("no configurado") >= 0 || message.indexOf("Servidor no activo") >= 0 || message.indexOf("no encontrada") >= 0 || message.indexOf("404") >= 0) {
-                return null;
-            }
-
-            return false;
+        if (!data || !data.token) {
+            throw new Error("El servidor no entrego una sesion valida.");
         }
 
-        return false;
+        setAdminToken(data.token);
+        sessionStorage.setItem(adminAccessKey, "true");
+        wrapApiRequest();
+        return true;
     }
 
     function showAdminMessage(title, message) {
@@ -133,9 +139,8 @@
     }
 
     function removeDangerButtons() {
-        document.querySelectorAll("[onclick]").forEach((button) => {
+        document.querySelectorAll("[onclick]").forEach(function (button) {
             const action = button.getAttribute("onclick") || "";
-
             if (action.includes("restaurarDatosBase") || action.includes("reiniciarSitioCompleto")) {
                 button.remove();
             }
@@ -152,24 +157,6 @@
         };
     }
 
-    function applyAdminAccess() {
-        if (typeof window.aplicarAccesoAdmin === "function") {
-            window.aplicarAccesoAdmin();
-            return;
-        }
-
-        const active = sessionStorage.getItem(adminAccessKey) === "true";
-        const gate = document.getElementById("adminGate");
-
-        document.querySelectorAll(".admin-protected").forEach((section) => {
-            section.hidden = !active;
-        });
-
-        if (gate) {
-            gate.hidden = active;
-        }
-    }
-
     function secureAdminForm() {
         const form = document.getElementById("adminAccessForm");
         const passwordInput = document.getElementById("adminPassword");
@@ -180,7 +167,7 @@
         }
 
         form.dataset.secureAdminReady = "true";
-        form.addEventListener("submit", async (event) => {
+        form.addEventListener("submit", async function (event) {
             event.preventDefault();
             event.stopPropagation();
 
@@ -188,26 +175,39 @@
                 event.stopImmediatePropagation();
             }
 
-            const passwordValue = passwordInput && passwordInput.value;
-            const backendLogin = await loginWithBackend(passwordValue);
-            const valid = backendLogin === true || (backendLogin === null && await isValidPassword(passwordValue));
-
-            if (passwordInput) {
-                passwordInput.value = "";
+            const submit = form.querySelector('button[type="submit"]');
+            if (submit) {
+                submit.disabled = true;
+                submit.textContent = "Verificando...";
+            }
+            if (feedback) {
+                feedback.textContent = "Validando acceso seguro...";
             }
 
-            if (valid) {
-                sessionStorage.setItem(adminAccessKey, "true");
-
+            try {
+                await loginWithBackend(passwordInput && passwordInput.value);
                 if (feedback) {
                     feedback.textContent = "Acceso concedido.";
                 }
-
                 applyAdminAccess();
                 removeDangerButtons();
-            } else if (feedback) {
-                clearAdminToken();
-                feedback.textContent = "Clave incorrecta. Intenta de nuevo.";
+
+                if (typeof window.cargarTodo === "function") {
+                    window.cargarTodo();
+                }
+            } catch (error) {
+                clearAdminSession();
+                if (feedback) {
+                    feedback.textContent = error.message || "No fue posible validar la clave.";
+                }
+            } finally {
+                if (passwordInput) {
+                    passwordInput.value = "";
+                }
+                if (submit) {
+                    submit.disabled = false;
+                    submit.textContent = "Entrar al panel";
+                }
             }
         }, true);
     }
@@ -219,23 +219,37 @@
 
         const originalLogout = window.salirAdmin;
         window.salirAdmin = function () {
-            clearAdminToken();
+            const token = getAdminToken();
+            if (token && window.huellitasApi && typeof window.huellitasApi.request === "function") {
+                window.huellitasApi.request("/api/admin/logout", {
+                    method: "POST",
+                    headers: { "X-Huellitas-Admin-Token": token },
+                    body: "{}"
+                }).catch(function () {});
+            }
+            clearAdminSession();
             return originalLogout.apply(this, arguments);
         };
         window.salirAdmin.adminSecureWrapped = true;
     }
 
-    onReady(() => {
+    onReady(function () {
+        if (sessionStorage.getItem(adminAccessKey) === "true" && !getAdminToken()) {
+            sessionStorage.removeItem(adminAccessKey);
+        }
+
         wrapApiRequest();
         wrapLogout();
         secureAdminForm();
         removeDangerButtons();
         disableDangerActions();
+        applyAdminAccess();
 
         if (document.body && window.MutationObserver) {
-            new MutationObserver(() => {
+            new MutationObserver(function () {
                 wrapApiRequest();
                 wrapLogout();
+                secureAdminForm();
                 removeDangerButtons();
                 disableDangerActions();
             }).observe(document.body, { childList: true, subtree: true });

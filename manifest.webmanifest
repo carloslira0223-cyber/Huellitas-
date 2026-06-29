@@ -1,0 +1,40 @@
+{
+  "id": "./",
+  "name": "Huellitas - Cuidado y adopcion animal",
+  "short_name": "Huellitas",
+  "description": "Proyecto educativo y social de cuidado animal, adopcion responsable y areas verdes.",
+  "lang": "es-MX",
+  "start_url": "./app.html?source=pwa",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
+  "orientation": "any",
+  "background_color": "#f6fbf5",
+  "theme_color": "#5f9d63",
+  "categories": ["education", "lifestyle", "social"],
+  "icons": [
+    {
+      "src": "pwa-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Adopciones",
+      "short_name": "Adopciones",
+      "url": "./app.html?page=adopcion_huellitas.html"
+    },
+    {
+      "name": "Mascotas perdidas",
+      "short_name": "Perdidas",
+      "url": "./app.html?page=mascotas_perdidas.html"
+    },
+    {
+      "name": "Juegos",
+      "short_name": "Juegos",
+      "url": "./app.html?page=jueguitos.html"
+    }
+  ]
+}

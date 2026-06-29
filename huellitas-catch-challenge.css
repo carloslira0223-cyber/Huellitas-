@@ -1,0 +1,774 @@
+/*!
+ * Proyecto Huellitas - Carlos Alexis Lira Alcala - 2026.
+ * Interfaz premium y responsive de Atrapa Premios.
+ */
+
+#game-catch.catch-premium {
+    --catch-accent: var(--leaf, #5f9d63);
+    --catch-accent-strong: var(--leaf-dark, #2f6b43);
+    --catch-coral: var(--coral, #ed665d);
+    --catch-gold: #f4c542;
+    --catch-bg: #07100b;
+    --catch-panel: #0b1710;
+    --catch-line: color-mix(in srgb, var(--catch-accent) 42%, rgba(255, 255, 255, .12));
+    width: 100%;
+    max-width: none;
+    padding: clamp(14px, 2.2vw, 28px);
+    border: 1px solid var(--catch-line);
+    border-radius: 8px;
+    color: #f4f9f5;
+    background: var(--catch-bg);
+    box-shadow: 0 24px 70px rgba(0, 0, 0, .32), inset 0 0 45px color-mix(in srgb, var(--catch-accent) 8%, transparent);
+    overflow: visible;
+}
+
+.catch-premium-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.04fr) minmax(360px, .96fr);
+    gap: clamp(18px, 2.5vw, 30px);
+    align-items: start;
+}
+
+.catch-play-surface,
+.catch-ranking {
+    min-width: 0;
+    border: 1px solid var(--catch-line);
+    border-radius: 8px;
+    background: color-mix(in srgb, var(--catch-panel) 92%, transparent);
+    box-shadow: inset 0 0 32px rgba(0, 0, 0, .2);
+}
+
+.catch-play-surface {
+    padding: clamp(14px, 2vw, 24px);
+}
+
+.catch-hero {
+    min-height: 142px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    padding: 6px 4px 18px;
+    border-bottom: 1px solid rgba(255, 255, 255, .08);
+}
+
+.catch-hero-copy {
+    min-width: 0;
+}
+
+.catch-kicker {
+    display: block;
+    margin-bottom: 7px;
+    color: color-mix(in srgb, var(--catch-accent) 72%, #fff);
+    font-size: .72rem;
+    font-weight: 900;
+    letter-spacing: 0;
+}
+
+.catch-hero h2 {
+    margin: 0;
+    color: #fff;
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    line-height: 1;
+    letter-spacing: 0;
+}
+
+.catch-hero h2 em {
+    color: color-mix(in srgb, var(--catch-accent) 72%, #d88cff);
+    font-style: normal;
+}
+
+.catch-hero p {
+    max-width: 560px;
+    margin: 10px 0 0;
+    color: rgba(239, 248, 241, .78);
+    line-height: 1.55;
+}
+
+.catch-pixel-pet {
+    flex: 0 0 94px;
+    width: 94px;
+    aspect-ratio: 1;
+    background-image: url("assets/sprites/Sprite-0001-Sheet.png");
+    background-repeat: no-repeat;
+    background-position: left center;
+    background-size: 500% 100%;
+    image-rendering: pixelated;
+    filter: drop-shadow(0 10px 18px color-mix(in srgb, var(--catch-accent) 35%, transparent));
+    animation: catch-pet-breathe 1.7s ease-in-out infinite;
+}
+
+.catch-progress-wrap {
+    padding: 18px 0 12px;
+}
+
+.catch-progress-label {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 8px;
+    color: rgba(244, 249, 245, .82);
+    font-size: .82rem;
+}
+
+.catch-progress-label strong {
+    color: #fff;
+}
+
+.catch-progress-track {
+    height: 9px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, .08);
+    overflow: hidden;
+}
+
+.catch-progress-track i {
+    display: block;
+    width: 0;
+    height: 100%;
+    border-radius: inherit;
+    background: var(--catch-accent);
+    box-shadow: 0 0 16px color-mix(in srgb, var(--catch-accent) 70%, transparent);
+    transition: width .18s ease;
+}
+
+.catch-stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+    margin: 4px 0 14px;
+}
+
+.catch-stats > div {
+    min-height: 70px;
+    display: grid;
+    align-content: center;
+    gap: 4px;
+    padding: 10px 12px;
+    border: 1px solid rgba(255, 255, 255, .12);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, .025);
+}
+
+.catch-stats span {
+    color: rgba(244, 249, 245, .68);
+    font-size: .72rem;
+}
+
+.catch-stats strong {
+    color: color-mix(in srgb, var(--catch-accent) 70%, #d8ff72);
+    font-size: clamp(1.05rem, 2.5vw, 1.45rem);
+    font-variant-numeric: tabular-nums;
+}
+
+#game-catch .catch-board {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-rows: repeat(4, minmax(72px, 1fr));
+    gap: 10px;
+    aspect-ratio: 3 / 3.25;
+    margin: 0;
+    padding: 0;
+}
+
+#game-catch .catch-cell {
+    position: relative;
+    min-width: 0;
+    min-height: 0;
+    display: grid;
+    place-items: center;
+    border: 1px solid color-mix(in srgb, var(--catch-accent) 34%, rgba(255, 255, 255, .1));
+    border-radius: 8px;
+    color: var(--catch-accent);
+    background: rgba(7, 22, 12, .9);
+    box-shadow: inset 0 0 18px rgba(0, 0, 0, .25);
+    cursor: pointer;
+    overflow: visible;
+    touch-action: manipulation;
+    transition: border-color .16s ease, transform .16s ease, background-color .16s ease;
+}
+
+#game-catch .catch-cell:hover,
+#game-catch .catch-cell:focus-visible {
+    outline: none;
+    border-color: var(--catch-accent);
+    box-shadow: 0 0 0 2px color-mix(in srgb, var(--catch-accent) 36%, transparent), inset 0 0 18px rgba(0, 0, 0, .25);
+}
+
+#game-catch .catch-cell:active {
+    transform: scale(.97);
+}
+
+.catch-dot {
+    font-size: 1.2rem;
+    opacity: .72;
+}
+
+.catch-cell.target {
+    border-color: currentColor !important;
+    background: color-mix(in srgb, currentColor 8%, #08110c) !important;
+    box-shadow: 0 0 22px color-mix(in srgb, currentColor 30%, transparent), inset 0 0 22px color-mix(in srgb, currentColor 8%, transparent) !important;
+}
+
+.catch-cell.target-diamond { color: #4bb8ff; }
+.catch-cell.target-gift { color: #ff6f4d; }
+.catch-cell.target-bone { color: #ffd347; }
+.catch-cell.target-clock { color: #8ee83e; }
+
+.catch-prize-symbol {
+    display: block;
+    font-size: clamp(2rem, 5.5vw, 3.5rem);
+    line-height: 1;
+    filter: drop-shadow(0 0 10px currentColor);
+    animation: catch-prize-arrive .2s ease-out;
+}
+
+.catch-cell.caught {
+    transform: scale(.94);
+    filter: brightness(1.3);
+}
+
+.catch-cell.missed {
+    border-color: #ff6b62 !important;
+    background: rgba(100, 15, 14, .24) !important;
+}
+
+.catch-score-pop {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 4;
+    padding: 4px 7px;
+    border-radius: 6px;
+    color: #fff;
+    background: rgba(0, 0, 0, .82);
+    font-size: .72rem;
+    font-weight: 900;
+    pointer-events: none;
+    animation: catch-pop .5s ease-out forwards;
+}
+
+.catch-score-pop.good { color: #a9ff69; }
+.catch-score-pop.bad { color: #ff8b84; }
+
+#game-catch .catch-start {
+    width: min(340px, 100%);
+    min-height: 54px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    margin: 18px auto 0;
+    border: 1px solid color-mix(in srgb, var(--catch-coral) 70%, #fff);
+    border-radius: 8px;
+    color: #fff;
+    background: var(--catch-coral);
+    box-shadow: 0 12px 28px color-mix(in srgb, var(--catch-coral) 28%, transparent);
+    font-size: 1rem;
+    font-weight: 900;
+    cursor: pointer;
+}
+
+#game-catch .catch-start:hover,
+#game-catch .catch-start:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 3px;
+    filter: brightness(1.07);
+}
+
+#game-catch .catch-start.running {
+    background: color-mix(in srgb, var(--catch-coral) 74%, #222);
+}
+
+.catch-help {
+    margin: 10px 0 0;
+    color: rgba(244, 249, 245, .64);
+    font-size: .74rem;
+    text-align: center;
+}
+
+.catch-help span {
+    color: var(--catch-accent);
+}
+
+.catch-ranking {
+    overflow: hidden;
+}
+
+.catch-ranking-tabs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    padding: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, .08);
+}
+
+#game-catch .catch-ranking-tabs button {
+    min-height: 42px;
+    border: 1px solid rgba(255, 255, 255, .12);
+    border-radius: 7px;
+    color: rgba(244, 249, 245, .72);
+    background: transparent;
+    font-size: .78rem;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+#game-catch .catch-ranking-tabs button.active {
+    color: #fff;
+    border-color: var(--catch-accent);
+    background: color-mix(in srgb, var(--catch-accent) 18%, transparent);
+    box-shadow: inset 0 0 18px color-mix(in srgb, var(--catch-accent) 10%, transparent);
+}
+
+.catch-ranking-title {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 14px 16px 10px;
+}
+
+.catch-ranking-title strong {
+    color: #fff;
+}
+
+.catch-ranking-title span {
+    color: rgba(244, 249, 245, .58);
+    font-size: .76rem;
+}
+
+.catch-ranking-table {
+    min-height: 360px;
+    padding: 0 10px 10px;
+    overflow-x: auto;
+}
+
+.catch-rank-row {
+    min-width: 520px;
+    display: grid;
+    grid-template-columns: 38px minmax(116px, 1.4fr) 86px 64px 58px 60px;
+    align-items: center;
+    min-height: 42px;
+    border-bottom: 1px solid rgba(255, 255, 255, .06);
+    color: rgba(244, 249, 245, .82);
+    font-size: .73rem;
+    font-variant-numeric: tabular-nums;
+}
+
+.catch-rank-row.is-mine {
+    border: 1px solid color-mix(in srgb, var(--catch-accent) 55%, transparent);
+    border-radius: 7px;
+    background: color-mix(in srgb, var(--catch-accent) 10%, transparent);
+}
+
+.catch-rank-head {
+    min-height: 34px;
+    color: rgba(244, 249, 245, .52);
+    font-size: .66rem;
+    font-weight: 800;
+}
+
+.rank-place {
+    text-align: center;
+}
+
+.rank-name {
+    min-width: 0;
+    overflow: hidden;
+    color: #fff;
+    font-weight: 800;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.rank-time {
+    color: color-mix(in srgb, var(--catch-accent) 72%, #fff);
+    font-weight: 900;
+}
+
+.catch-ranking-empty {
+    min-height: 290px;
+    display: grid;
+    place-items: center;
+    padding: 24px;
+    color: rgba(244, 249, 245, .56);
+    line-height: 1.6;
+    text-align: center;
+}
+
+.catch-ranking-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px;
+    border-top: 1px solid rgba(255, 255, 255, .08);
+}
+
+.catch-ranking-footer small {
+    color: rgba(244, 249, 245, .5);
+    font-size: .66rem;
+}
+
+#game-catch .catch-ranking-footer button {
+    flex: 0 0 auto;
+    min-height: 36px;
+    border: 1px solid rgba(255, 99, 89, .55);
+    border-radius: 7px;
+    padding: 7px 10px;
+    color: #ff827a;
+    background: transparent;
+    font-size: .68rem;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.catch-result-modal[hidden] {
+    display: none !important;
+}
+
+.catch-result-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 12000;
+    display: grid;
+    place-items: center;
+    padding: 18px;
+}
+
+.catch-result-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, .78);
+    backdrop-filter: blur(7px);
+}
+
+.catch-result-card {
+    position: relative;
+    z-index: 1;
+    width: min(520px, 100%);
+    max-height: min(90vh, 720px);
+    overflow-y: auto;
+    padding: clamp(20px, 4vw, 34px);
+    border: 1px solid color-mix(in srgb, var(--catch-accent) 46%, rgba(255, 255, 255, .16));
+    border-radius: 8px;
+    color: #fff;
+    background: #08110c;
+    box-shadow: 0 34px 100px rgba(0, 0, 0, .58), inset 0 0 48px color-mix(in srgb, var(--catch-accent) 8%, transparent);
+    text-align: center;
+}
+
+.catch-result-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 40px;
+    height: 40px;
+    border: 1px solid rgba(255, 255, 255, .2);
+    border-radius: 8px;
+    color: #fff;
+    background: rgba(255, 255, 255, .04);
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.catch-trophy {
+    display: block;
+    margin: 2px auto 6px;
+    font-size: clamp(4rem, 18vw, 7rem);
+    filter: drop-shadow(0 0 22px rgba(244, 197, 66, .42));
+}
+
+.catch-result-card h2 {
+    margin: 0;
+    color: #fff;
+    font-size: clamp(1.55rem, 5vw, 2.3rem);
+}
+
+.catch-result-subtitle {
+    margin: 6px 0 18px;
+    color: color-mix(in srgb, var(--catch-accent) 70%, #d8ff72);
+    font-weight: 800;
+}
+
+.catch-result-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 9px;
+    margin: 0 0 18px;
+}
+
+.catch-result-stats > div {
+    display: grid;
+    gap: 5px;
+    padding: 12px 8px;
+    border: 1px solid rgba(255, 255, 255, .12);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, .025);
+}
+
+.catch-result-stats span {
+    color: rgba(244, 249, 245, .58);
+    font-size: .68rem;
+}
+
+.catch-result-stats strong {
+    color: #fff;
+    font-size: 1rem;
+    font-variant-numeric: tabular-nums;
+}
+
+.catch-result-card label {
+    display: block;
+    margin-bottom: 7px;
+    color: rgba(244, 249, 245, .76);
+    font-size: .78rem;
+    text-align: left;
+}
+
+.catch-nickname-row {
+    position: relative;
+}
+
+.catch-nickname-row input {
+    width: 100%;
+    min-height: 48px;
+    border: 1px solid rgba(255, 255, 255, .18);
+    border-radius: 8px;
+    padding: 10px 58px 10px 13px;
+    color: #fff;
+    background: rgba(255, 255, 255, .045);
+    font: inherit;
+}
+
+.catch-nickname-row input:focus {
+    outline: 2px solid var(--catch-accent);
+    outline-offset: 1px;
+}
+
+.catch-nickname-row span {
+    position: absolute;
+    top: 50%;
+    right: 13px;
+    transform: translateY(-50%);
+    color: rgba(244, 249, 245, .46);
+    font-size: .68rem;
+}
+
+.catch-nickname-error {
+    min-height: 19px;
+    margin: 5px 0;
+    color: #ff8a82;
+    font-size: .72rem;
+    text-align: left;
+}
+
+.catch-save-result,
+.catch-play-again {
+    width: 100%;
+    min-height: 46px;
+    border-radius: 8px;
+    font: inherit;
+    font-weight: 900;
+    cursor: pointer;
+}
+
+.catch-save-result {
+    border: 1px solid color-mix(in srgb, var(--catch-accent) 72%, #fff);
+    color: #fff;
+    background: var(--catch-accent);
+    box-shadow: 0 10px 28px color-mix(in srgb, var(--catch-accent) 26%, transparent);
+}
+
+.catch-play-again {
+    margin-top: 8px;
+    border: 1px solid rgba(255, 255, 255, .16);
+    color: rgba(255, 255, 255, .82);
+    background: transparent;
+}
+
+.catch-confetti i {
+    position: absolute;
+    width: 7px;
+    height: 14px;
+    border-radius: 2px;
+    background: var(--catch-gold);
+    animation: catch-confetti 1.8s ease-in-out infinite;
+}
+
+.catch-confetti i:nth-child(1) { left: 12%; top: 18%; transform: rotate(24deg); }
+.catch-confetti i:nth-child(2) { left: 24%; top: 9%; background: #59c9ff; animation-delay: .2s; }
+.catch-confetti i:nth-child(3) { right: 18%; top: 14%; background: #ca73ff; animation-delay: .4s; }
+.catch-confetti i:nth-child(4) { right: 9%; top: 30%; background: #ff6f4d; animation-delay: .6s; }
+.catch-confetti i:nth-child(5) { left: 8%; top: 42%; background: #8ee83e; animation-delay: .8s; }
+.catch-confetti i:nth-child(6) { right: 28%; top: 6%; background: #fff; animation-delay: 1s; }
+
+body.catch-modal-open {
+    overflow: hidden;
+}
+
+@keyframes catch-pet-breathe {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+}
+
+@keyframes catch-prize-arrive {
+    from { opacity: 0; transform: scale(.55) rotate(-8deg); }
+    to { opacity: 1; transform: scale(1) rotate(0); }
+}
+
+@keyframes catch-pop {
+    from { opacity: 0; transform: translate(-50%, -20%) scale(.8); }
+    40% { opacity: 1; }
+    to { opacity: 0; transform: translate(-50%, -130%) scale(1.05); }
+}
+
+@keyframes catch-confetti {
+    0%, 100% { opacity: .25; transform: translateY(0) rotate(0); }
+    50% { opacity: 1; transform: translateY(14px) rotate(120deg); }
+}
+
+@media (max-width: 980px) {
+    .catch-premium-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .catch-ranking-table {
+        min-height: 280px;
+    }
+
+    .catch-ranking-empty {
+        min-height: 210px;
+    }
+}
+
+@media (max-width: 560px) {
+    #game-catch.catch-premium {
+        padding: 10px;
+        border-left: 0;
+        border-right: 0;
+    }
+
+    .catch-play-surface {
+        padding: 12px;
+    }
+
+    .catch-hero {
+        min-height: 116px;
+        align-items: flex-start;
+    }
+
+    .catch-hero h2 {
+        font-size: 2rem;
+    }
+
+    .catch-hero p {
+        font-size: .78rem;
+    }
+
+    .catch-pixel-pet {
+        flex-basis: 72px;
+        width: 72px;
+    }
+
+    .catch-stats {
+        gap: 7px;
+    }
+
+    .catch-stats > div {
+        min-height: 62px;
+        padding: 8px;
+    }
+
+    .catch-stats span {
+        font-size: .62rem;
+    }
+
+    .catch-stats strong {
+        font-size: .94rem;
+    }
+
+    #game-catch .catch-board {
+        grid-template-rows: repeat(4, minmax(62px, 1fr));
+        gap: 7px;
+        aspect-ratio: 3 / 3.5;
+    }
+
+    .catch-prize-symbol {
+        font-size: 2.15rem;
+    }
+
+    .catch-ranking-title {
+        display: grid;
+        gap: 3px;
+    }
+
+    .catch-ranking-table {
+        min-height: 0;
+        overflow: visible;
+    }
+
+    .catch-rank-head {
+        display: none;
+    }
+
+    .catch-rank-row {
+        min-width: 0;
+        grid-template-columns: 32px minmax(0, 1fr) 76px 34px;
+        gap: 5px;
+        padding: 6px 2px;
+    }
+
+    .catch-rank-row > span:nth-child(4),
+    .catch-rank-row > span:nth-child(6) {
+        display: none;
+    }
+
+    .catch-rank-row > span:nth-child(5)::before {
+        content: "x";
+        color: rgba(255, 255, 255, .4);
+    }
+
+    .catch-ranking-footer {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    #game-catch .catch-ranking-footer button {
+        width: 100%;
+    }
+
+    .catch-result-modal {
+        align-items: end;
+        padding: 8px;
+    }
+
+    .catch-result-card {
+        width: 100%;
+        max-height: 94vh;
+        padding: 22px 14px calc(18px + env(safe-area-inset-bottom));
+    }
+
+    .catch-result-stats {
+        gap: 6px;
+    }
+
+    .catch-result-stats > div {
+        padding: 9px 5px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .catch-pixel-pet,
+    .catch-prize-symbol,
+    .catch-score-pop,
+    .catch-confetti i {
+        animation: none !important;
+    }
+
+    .catch-progress-track i,
+    #game-catch .catch-cell {
+        transition: none !important;
+    }
+}

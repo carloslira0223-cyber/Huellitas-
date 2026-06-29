@@ -981,3 +981,107 @@ body.dark .treasure-tabs button {
         animation: none !important;
     }
 }
+
+
+/* Vista en vivo: mantiene visible el perrito equipado en pantallas pequenas. */
+.treasure-mobile-live {
+    display: none;
+}
+
+@media (max-width: 700px) {
+    .treasure-mobile-live {
+        position: sticky;
+        top: 8px;
+        z-index: 12;
+        min-height: 112px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin: -2px 0 14px;
+        padding: 10px 12px;
+        border: 2px solid color-mix(in srgb,var(--leaf) 54%,#bd7d2a);
+        border-radius: 8px;
+        color: #183322;
+        background: color-mix(in srgb,#fff7df 92%,var(--leaf));
+        box-shadow: 0 10px 24px rgba(42,25,10,.18);
+        overflow: hidden;
+    }
+
+    .treasure-mobile-pet {
+        flex: 0 0 102px;
+        width: 102px;
+        height: 92px;
+        display: grid;
+        place-items: center;
+        border: 1px solid rgba(75,44,21,.26);
+        border-radius: 8px;
+        background: rgba(255,255,255,.46);
+        overflow: hidden;
+    }
+
+    .treasure-mobile-live .treasure-pet-sprite.pet-sprite-stack {
+        width: 64px !important;
+        height: 64px !important;
+        transform: scale(1.48) !important;
+        transform-origin: center center !important;
+    }
+
+    .treasure-mobile-live > div:last-child {
+        min-width: 0;
+        display: grid;
+        gap: 3px;
+    }
+
+    .treasure-mobile-live small {
+        color: var(--leaf-dark);
+        font-size: 8px;
+        font-weight: 900;
+    }
+
+    .treasure-mobile-live strong {
+        max-width: 100%;
+        color: #183322;
+        font-size: 12px;
+        line-height: 1.25;
+        overflow-wrap: anywhere;
+    }
+
+    .treasure-mobile-live > div:last-child > span {
+        color: #69523b;
+        font-size: 9px;
+        line-height: 1.3;
+    }
+
+    body.dark .treasure-mobile-live {
+        color: #f8f2dc;
+        background: color-mix(in srgb,#16241b 90%,var(--leaf));
+    }
+
+    body.dark .treasure-mobile-live strong {
+        color: #fff7df;
+    }
+
+    body.dark .treasure-mobile-live > div:last-child > span {
+        color: #d4c9a9;
+    }
+
+    body.dark .treasure-mobile-pet {
+        background: rgba(255,255,255,.05);
+    }
+}
+
+@media (max-width: 370px) {
+    .treasure-mobile-live {
+        gap: 8px;
+        padding: 8px;
+    }
+
+    .treasure-mobile-pet {
+        flex-basis: 88px;
+        width: 88px;
+    }
+
+    .treasure-mobile-live .treasure-pet-sprite.pet-sprite-stack {
+        transform: scale(1.32) !important;
+    }
+}

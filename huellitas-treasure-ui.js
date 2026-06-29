@@ -3,7 +3,7 @@
  * Inventario visual conectado al estado real de la mascota.
  */
 (function () {
-    const cssVersion = "20260628-treasure-v8";
+    const cssVersion = "20260628-treasure-v9";
     const slotLabels = { head: "Cabeza", neck: "Collar", toy: "Juguete", bed: "Descanso" };
     let activeFilter = "all";
 
@@ -94,6 +94,17 @@
             '<div class="treasure-pet-caption" data-treasure-pet-name>Tu companero</div>',
             '</section>',
             '<section class="treasure-panel treasure-inventory-panel inventory-panel" id="inventarioMascota" data-treasure-panel="inventory">',
+            '<div class="treasure-mobile-live" aria-live="polite">',
+            '<div class="treasure-mobile-pet"><span class="pet-sprite-stack treasure-pet-sprite" role="img" aria-label="Vista previa del perrito equipado">',
+            '<span class="pet-base" aria-hidden="true"></span>',
+            '<span class="pet-collar-sprite" data-treasure-collar aria-hidden="true" hidden></span>',
+            '<span class="pet-crown-sprite" data-treasure-crown aria-hidden="true" hidden></span>',
+            '<span class="pet-ball-sprite" data-treasure-ball aria-hidden="true" hidden></span>',
+            '<span class="treasure-emoji-layer treasure-bow-layer" data-treasure-bow aria-hidden="true" hidden>&#127872;</span>',
+            '<span class="treasure-emoji-layer treasure-plaque-layer" data-treasure-plaque aria-hidden="true" hidden>&#127991;&#65039;</span>',
+            '</span></div>',
+            '<div><small>VISTA EN VIVO</small><strong data-treasure-live-status>Tu perrito listo para equipar</strong><span>Los cambios aparecen aqui al instante.</span></div>',
+            '</div>',
             '<div class="treasure-equipped"><h3>&#128062; Objetos equipados &#128062;</h3><div class="treasure-equipped-grid" data-treasure-equipped></div></div>',
             '<div class="treasure-tabs" role="tablist" aria-label="Categorias del inventario">',
             '<button type="button" data-treasure-filter="all">Todo</button>',
@@ -209,6 +220,12 @@
         }).join("");
     }
 
+    function setLayerHidden(selector, hidden) {
+        document.querySelectorAll(selector).forEach(function (layer) {
+            layer.hidden = hidden;
+        });
+    }
+
     function renderStage() {
         if (typeof state === "undefined") {
             return;
@@ -218,35 +235,39 @@
         const neck = itemForSlot("neck");
         const toy = itemForSlot("toy");
         const bed = itemForSlot("bed");
-        const crown = document.querySelector("[data-treasure-crown]");
-        const bow = document.querySelector("[data-treasure-bow]");
-        const collar = document.querySelector("[data-treasure-collar]");
-        const plaque = document.querySelector("[data-treasure-plaque]");
-        const ball = document.querySelector("[data-treasure-ball]");
         const environment = document.querySelector("[data-treasure-environment]");
-        const name = document.querySelector("[data-treasure-pet-name]");
+        const equippedNames = [head, neck, toy, bed].filter(Boolean).map(function (item) {
+            return item.name;
+        });
 
-        if (!crown || !bow || !collar || !plaque || !ball || !environment || !name) {
-            return;
+        setLayerHidden("[data-treasure-crown]", !(head && head.id === "corona-sol"));
+        setLayerHidden("[data-treasure-bow]", !(head && head.id === "mono-rojo"));
+        setLayerHidden("[data-treasure-collar]", !(neck && neck.id === "collar-verde"));
+        setLayerHidden("[data-treasure-plaque]", !(neck && neck.id === "placa-huella"));
+        setLayerHidden("[data-treasure-ball]", !(toy && toy.id === "pelota"));
+
+        if (environment) {
+            if (bed) {
+                environment.hidden = false;
+                environment.dataset.kind = bed.id;
+                environment.innerHTML = bed.emoji || (bed.id === "casita" ? "&#127968;" : "&#128719;&#65039;");
+            } else {
+                environment.hidden = true;
+                environment.dataset.kind = "";
+                environment.textContent = "";
+            }
         }
 
-        crown.hidden = !(head && head.id === "corona-sol");
-        bow.hidden = !(head && head.id === "mono-rojo");
-        collar.hidden = !(neck && neck.id === "collar-verde");
-        plaque.hidden = !(neck && neck.id === "placa-huella");
-        ball.hidden = !(toy && toy.id === "pelota");
+        document.querySelectorAll("[data-treasure-pet-name]").forEach(function (name) {
+            name.textContent = (state.name || "Tu companero") + " - listo para equipar";
+        });
 
-        if (bed) {
-            environment.hidden = false;
-            environment.dataset.kind = bed.id;
-            environment.innerHTML = bed.emoji || (bed.id === "casita" ? "&#127968;" : "&#128719;&#65039;");
-        } else {
-            environment.hidden = true;
-            environment.dataset.kind = "";
-            environment.textContent = "";
+        const liveStatus = document.querySelector("[data-treasure-live-status]");
+        if (liveStatus) {
+            liveStatus.textContent = equippedNames.length
+                ? (state.name || "Tu perrito") + ": " + equippedNames.join(", ")
+                : (state.name || "Tu perrito") + " sin accesorios";
         }
-
-        name.textContent = (state.name || "Tu companero") + " - listo para equipar";
     }
 
     function updateCartCount() {
@@ -325,20 +346,33 @@
 
         window.huellitasTreasureEquipWrapped = true;
         const original = window.equiparItem;
-        window.equiparItem = function () {
+        window.equiparItem = function (itemId) {
+            const item = typeof getItem === "function" ? getItem(itemId) : null;
             const result = original.apply(this, arguments);
             window.setTimeout(function () {
                 updateUi();
+                const equipped = Boolean(item && typeof state !== "undefined" && state.equipped && state.equipped[item.slot] === item.id);
+                const liveStatus = document.querySelector("[data-treasure-live-status]");
+                if (liveStatus && item) {
+                    liveStatus.textContent = item.name + (equipped ? " equipado en tu perrito" : " quitado de tu perrito");
+                }
+
                 const stage = document.querySelector(".treasure-stage");
+                const mobilePreview = document.querySelector(".treasure-mobile-live");
                 if (stage) {
                     stage.classList.remove("treasure-stage-updated");
                     void stage.offsetWidth;
                     stage.classList.add("treasure-stage-updated");
-                    if (window.matchMedia("(max-width: 700px)").matches) {
-                        stage.scrollIntoView({ behavior: "smooth", block: "center" });
-                    }
                 }
-            }, 30);
+                if (mobilePreview) {
+                    mobilePreview.classList.remove("treasure-stage-updated");
+                    void mobilePreview.offsetWidth;
+                    mobilePreview.classList.add("treasure-stage-updated");
+                }
+                if (window.matchMedia("(max-width: 700px)").matches && mobilePreview) {
+                    mobilePreview.scrollIntoView({ behavior: "smooth", block: "center" });
+                }
+            }, 40);
             return result;
         };
     }
