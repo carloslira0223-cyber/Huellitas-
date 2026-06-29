@@ -3,7 +3,7 @@
  * Inventario visual conectado al estado real de la mascota.
  */
 (function () {
-    const cssVersion = "20260628-treasure-v7";
+    const cssVersion = "20260628-treasure-v8";
     const slotLabels = { head: "Cabeza", neck: "Collar", toy: "Juguete", bed: "Descanso" };
     let activeFilter = "all";
 
@@ -64,7 +64,7 @@
             '<header class="treasure-topbar">',
             '<div class="treasure-title">',
             '<a class="treasure-back" href="#zonaMichi" aria-label="Volver a mi mascota">&#8592;</a>',
-            '<div class="treasure-title-copy"><span>Compra y equipa</span><strong>Tienda de tesoros</strong></div>',
+            '<div class="treasure-title-copy"><span data-treasure-subtitle>Equipa a tu companero</span><strong data-treasure-title>Inventario</strong></div>',
             '</div>',
             '<div data-treasure-status></div>',
             '</header>',
@@ -74,7 +74,7 @@
             '</div>',
             '<div class="treasure-workspace">',
             '<section class="treasure-stage" aria-label="Vestuario de la mascota">',
-            '<div class="treasure-sign">&#128062; INVENTARIO &#128062;</div>',
+            '<div class="treasure-sign" data-treasure-sign>&#128062; INVENTARIO &#128062;</div>',
             '<div class="treasure-awning" aria-hidden="true"></div>',
             '<div class="treasure-side-label">VESTUARIO<br>LISTO PARA EQUIPAR</div>',
             '<div class="treasure-shelf" aria-hidden="true"><span>&#127793;</span><span>&#129526;</span></div>',
@@ -137,6 +137,21 @@
         const workspace = document.querySelector(".treasure-workspace");
         if (workspace) {
             workspace.classList.toggle("shop-mode", next === "shop");
+        }
+
+        const title = document.querySelector("[data-treasure-title]");
+        const subtitle = document.querySelector("[data-treasure-subtitle]");
+        const sign = document.querySelector("[data-treasure-sign]");
+        if (title) {
+            title.textContent = next === "shop" ? "Tienda de tesoros" : "Inventario";
+        }
+        if (subtitle) {
+            subtitle.textContent = next === "shop" ? "Compra accesorios con patitas" : "Equipa a tu companero";
+        }
+        if (sign) {
+            sign.innerHTML = next === "shop"
+                ? "&#128062; TIENDA &#128062;"
+                : "&#128062; INVENTARIO &#128062;";
         }
     }
 
@@ -277,6 +292,57 @@
         };
     }
 
+    function removeDuplicateHubButton() {
+        const duplicate = document.querySelector('[data-game-hub-button="inventario"]');
+        if (duplicate) {
+            duplicate.remove();
+        }
+    }
+
+    function wrapHubNavigation() {
+        if (window.huellitasTreasureHubWrapped || typeof window.abrirZonaJuegos !== "function") {
+            return;
+        }
+
+        window.huellitasTreasureHubWrapped = true;
+        const original = window.abrirZonaJuegos;
+        window.abrirZonaJuegos = function (area) {
+            const result = original.apply(this, arguments);
+            if (area === "tienda") {
+                setMode("shop");
+            } else if (area === "inventario") {
+                setMode("inventory");
+            }
+            removeDuplicateHubButton();
+            return result;
+        };
+    }
+
+    function wrapEquipAction() {
+        if (window.huellitasTreasureEquipWrapped || typeof window.equiparItem !== "function") {
+            return;
+        }
+
+        window.huellitasTreasureEquipWrapped = true;
+        const original = window.equiparItem;
+        window.equiparItem = function () {
+            const result = original.apply(this, arguments);
+            window.setTimeout(function () {
+                updateUi();
+                const stage = document.querySelector(".treasure-stage");
+                if (stage) {
+                    stage.classList.remove("treasure-stage-updated");
+                    void stage.offsetWidth;
+                    stage.classList.add("treasure-stage-updated");
+                    if (window.matchMedia("(max-width: 700px)").matches) {
+                        stage.scrollIntoView({ behavior: "smooth", block: "center" });
+                    }
+                }
+            }, 30);
+            return result;
+        };
+    }
+
     function bind(shell) {
         shell.querySelectorAll("[data-treasure-mode]").forEach(function (button) {
             button.addEventListener("click", function () {
@@ -332,6 +398,9 @@
         const shell = buildShell(section, status, shopGrid, inventoryList, cartPanel);
         bind(shell);
         wrapRenderAll();
+        wrapHubNavigation();
+        wrapEquipAction();
+        removeDuplicateHubButton();
         setFilter("all");
         setMode(window.matchMedia("(max-width: 700px)").matches ? "shop" : "inventory");
 
@@ -346,6 +415,7 @@
     window.addEventListener("pageshow", function () {
         window.setTimeout(function () {
             enhance();
+            removeDuplicateHubButton();
             updateUi();
         }, 80);
     });
