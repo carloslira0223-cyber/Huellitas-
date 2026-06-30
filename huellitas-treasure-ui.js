@@ -3,7 +3,7 @@
  * Inventario visual conectado al estado real de la mascota.
  */
 (function () {
-    const cssVersion = "20260628-treasure-v9";
+    const cssVersion = "20260628-treasure-v10";
     const slotLabels = { head: "Cabeza", neck: "Collar", toy: "Juguete", bed: "Descanso" };
     let activeFilter = "all";
 
@@ -33,6 +33,12 @@
         }
 
         return getItem(state.equipped[slot]);
+    }
+
+    function plainText(value) {
+        const template = document.createElement("template");
+        template.innerHTML = String(value || "");
+        return (template.content.textContent || "").trim();
     }
 
     function ownedItems() {
@@ -237,7 +243,7 @@
         const bed = itemForSlot("bed");
         const environment = document.querySelector("[data-treasure-environment]");
         const equippedNames = [head, neck, toy, bed].filter(Boolean).map(function (item) {
-            return item.name;
+            return plainText(item.name);
         });
 
         setLayerHidden("[data-treasure-crown]", !(head && head.id === "corona-sol"));
@@ -321,14 +327,17 @@
     }
 
     function wrapHubNavigation() {
-        if (window.huellitasTreasureHubWrapped || typeof window.abrirZonaJuegos !== "function") {
+        if (typeof window.abrirZonaJuegos !== "function") {
             return;
         }
 
-        window.huellitasTreasureHubWrapped = true;
-        const original = window.abrirZonaJuegos;
-        window.abrirZonaJuegos = function (area) {
-            const result = original.apply(this, arguments);
+        const current = window.abrirZonaJuegos;
+        if (current.huellitasTreasureModeWrapped) {
+            return;
+        }
+
+        const wrapped = function (area) {
+            const result = current.apply(this, arguments);
             if (area === "tienda") {
                 setMode("shop");
             } else if (area === "inventario") {
@@ -337,6 +346,8 @@
             removeDuplicateHubButton();
             return result;
         };
+        wrapped.huellitasTreasureModeWrapped = true;
+        window.abrirZonaJuegos = wrapped;
     }
 
     function wrapEquipAction() {
@@ -354,7 +365,7 @@
                 const equipped = Boolean(item && typeof state !== "undefined" && state.equipped && state.equipped[item.slot] === item.id);
                 const liveStatus = document.querySelector("[data-treasure-live-status]");
                 if (liveStatus && item) {
-                    liveStatus.textContent = item.name + (equipped ? " equipado en tu perrito" : " quitado de tu perrito");
+                    liveStatus.textContent = plainText(item.name) + (equipped ? " equipado en tu perrito" : " quitado de tu perrito");
                 }
 
                 const stage = document.querySelector(".treasure-stage");
@@ -449,8 +460,12 @@
     window.addEventListener("pageshow", function () {
         window.setTimeout(function () {
             enhance();
+            wrapHubNavigation();
             removeDuplicateHubButton();
             updateUi();
         }, 80);
     });
+
+    window.setTimeout(wrapHubNavigation, 600);
+    window.setTimeout(wrapHubNavigation, 1600);
 })();
