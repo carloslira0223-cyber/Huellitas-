@@ -1,0 +1,805 @@
+/*!
+ * Proyecto Huellitas - Carlos Alexis Lira Alcala - 2026.
+ * Pulido premium para el modo claro. Todos los derechos reservados.
+ */
+
+body:not(.dark) {
+    --hl-ink: #243129;
+    --hl-muted: #637068;
+    --hl-surface: rgba(255, 255, 255, .96);
+    --hl-surface-soft: color-mix(in srgb, var(--leaf) 7%, #ffffff);
+    --hl-surface-warm: #fffdf8;
+    --hl-line: color-mix(in srgb, var(--leaf) 20%, rgba(38, 51, 44, .12));
+    --hl-line-strong: color-mix(in srgb, var(--leaf) 42%, rgba(38, 51, 44, .16));
+    --hl-shadow: 0 16px 38px rgba(38, 51, 44, .11);
+    --hl-shadow-soft: 0 8px 22px rgba(38, 51, 44, .08);
+    --hl-accent-shadow: 0 12px 28px color-mix(in srgb, var(--leaf) 22%, transparent);
+    color-scheme: light;
+}
+
+/* Zona de juegos y minijuegos clasicos */
+body:not(.dark) .arcade-shell {
+    color: var(--hl-ink);
+    border-color: var(--hl-line);
+    background:
+        radial-gradient(circle at 9% 5%, color-mix(in srgb, var(--leaf) 10%, transparent), transparent 28%),
+        linear-gradient(180deg, rgba(255, 255, 255, .98), rgba(248, 251, 248, .96));
+    box-shadow: var(--hl-shadow);
+}
+
+body:not(.dark) .game-picker {
+    border-color: var(--hl-line);
+    background: rgba(255, 255, 255, .88);
+    box-shadow: var(--hl-shadow-soft);
+    backdrop-filter: blur(14px);
+}
+
+body:not(.dark) .game-picker button {
+    border-color: var(--hl-line);
+    color: var(--hl-ink);
+    background: #ffffff;
+    box-shadow: 0 4px 12px rgba(38, 51, 44, .05);
+}
+
+body:not(.dark) .game-picker button:hover,
+body:not(.dark) .game-picker button:focus-visible {
+    outline: none;
+    border-color: var(--leaf);
+    color: var(--leaf-dark);
+    background: var(--hl-surface-soft);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--leaf) 14%, transparent);
+    transform: none;
+}
+
+body:not(.dark) .game-picker button.active {
+    border-color: var(--leaf);
+    color: #ffffff;
+    background: linear-gradient(135deg, var(--leaf), var(--leaf-dark));
+    box-shadow: var(--hl-accent-shadow);
+}
+
+body:not(.dark) .arcade-stage,
+body:not(.dark) .arcade-game-panel {
+    color: var(--hl-ink);
+    border-color: var(--hl-line);
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, .97), color-mix(in srgb, var(--leaf) 4%, #ffffff)),
+        #ffffff;
+    box-shadow: var(--hl-shadow-soft);
+}
+
+body:not(.dark) .arcade-game-panel h2 {
+    color: var(--hl-ink);
+}
+
+body:not(.dark) .arcade-game-panel > p,
+body:not(.dark) .game-result {
+    color: var(--hl-muted);
+}
+
+body:not(.dark) .game-meta span,
+body:not(.dark) .scoreboard > *,
+body:not(.dark) .food-card,
+body:not(.dark) .bone-shell {
+    border-color: var(--hl-line);
+    color: var(--hl-ink);
+    background: #ffffff;
+    box-shadow: var(--hl-shadow-soft);
+}
+
+body:not(.dark) .game-meta strong,
+body:not(.dark) .food-card strong {
+    color: var(--leaf-dark);
+}
+
+body:not(.dark) .clean-board,
+body:not(.dark) .runner-track {
+    border-color: var(--hl-line);
+    box-shadow: inset 0 0 24px color-mix(in srgb, var(--leaf) 7%, transparent);
+}
+
+body:not(.dark) .maze-grid {
+    border-color: var(--hl-line-strong);
+    background:
+        radial-gradient(circle at 50% 0, color-mix(in srgb, var(--leaf) 10%, transparent), transparent 55%),
+        #ffffff;
+    box-shadow: var(--hl-shadow-soft);
+}
+
+body:not(.dark) .maze-cell {
+    border: 1px solid color-mix(in srgb, var(--leaf) 10%, rgba(38, 51, 44, .06));
+    color: var(--hl-ink);
+    background: color-mix(in srgb, var(--sky) 42%, #ffffff);
+}
+
+body:not(.dark) .maze-cell.wall {
+    border-color: color-mix(in srgb, var(--leaf-dark) 28%, transparent);
+    background: color-mix(in srgb, var(--leaf-dark) 70%, #34433a);
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .08);
+}
+
+body:not(.dark) .maze-cell.goal {
+    border-color: color-mix(in srgb, var(--leaf) 45%, transparent);
+    background: color-mix(in srgb, var(--leaf) 18%, #ffffff);
+    box-shadow: 0 0 16px color-mix(in srgb, var(--leaf) 18%, transparent);
+}
+
+body:not(.dark) .maze-cell.dog {
+    outline-color: color-mix(in srgb, var(--leaf) 46%, transparent);
+    background: color-mix(in srgb, var(--leaf) 13%, #ffffff);
+}
+
+body:not(.dark) .maze-controls button {
+    border: 1px solid var(--leaf);
+    color: #ffffff;
+    background: linear-gradient(135deg, var(--leaf), var(--leaf-dark));
+    box-shadow: var(--hl-accent-shadow);
+}
+
+body:not(.dark) .maze-controls button:hover,
+body:not(.dark) .maze-controls button:focus-visible {
+    outline: 3px solid color-mix(in srgb, var(--leaf) 18%, transparent);
+    outline-offset: 2px;
+    filter: brightness(1.04);
+    transform: none;
+}
+
+/* Atrapa Premios */
+body:not(.dark) #game-catch.catch-premium {
+    --catch-bg: #f7faf7;
+    --catch-panel: #ffffff;
+    --catch-line: var(--hl-line);
+    color: var(--hl-ink);
+    border-color: var(--hl-line-strong);
+    background:
+        radial-gradient(circle at 88% 8%, color-mix(in srgb, var(--catch-accent) 12%, transparent), transparent 28%),
+        linear-gradient(180deg, #fffefa, #f6faf7);
+    box-shadow: var(--hl-shadow), inset 0 0 42px color-mix(in srgb, var(--catch-accent) 4%, transparent);
+}
+
+body:not(.dark) #game-catch .catch-play-surface,
+body:not(.dark) #game-catch .catch-ranking {
+    border-color: var(--hl-line);
+    background: rgba(255, 255, 255, .94);
+    box-shadow: var(--hl-shadow-soft);
+}
+
+body:not(.dark) #game-catch .catch-hero {
+    border-bottom-color: var(--hl-line);
+}
+
+body:not(.dark) #game-catch .catch-kicker,
+body:not(.dark) #game-catch .catch-hero h2 em,
+body:not(.dark) #game-catch .catch-help span,
+body:not(.dark) #game-catch .rank-time {
+    color: var(--catch-accent-strong);
+}
+
+body:not(.dark) #game-catch .catch-hero h2,
+body:not(.dark) #game-catch .catch-progress-label strong,
+body:not(.dark) #game-catch .catch-ranking-title strong,
+body:not(.dark) #game-catch .rank-name,
+body:not(.dark) .catch-result-card h2,
+body:not(.dark) .catch-result-stats strong {
+    color: var(--hl-ink);
+}
+
+body:not(.dark) #game-catch .catch-hero p,
+body:not(.dark) #game-catch .catch-progress-label,
+body:not(.dark) #game-catch .catch-help,
+body:not(.dark) #game-catch .catch-ranking-title span,
+body:not(.dark) #game-catch .catch-ranking-empty,
+body:not(.dark) #game-catch .catch-ranking-footer small,
+body:not(.dark) #game-catch .catch-rank-head {
+    color: var(--hl-muted);
+}
+
+body:not(.dark) #game-catch .catch-progress-track {
+    background: color-mix(in srgb, var(--catch-accent) 10%, #edf1ee);
+}
+
+body:not(.dark) #game-catch .catch-stats > div {
+    border-color: var(--hl-line);
+    background: #ffffff;
+    box-shadow: 0 5px 16px rgba(38, 51, 44, .06);
+}
+
+body:not(.dark) #game-catch .catch-stats span {
+    color: var(--hl-muted);
+}
+
+body:not(.dark) #game-catch .catch-stats strong {
+    color: var(--catch-accent-strong);
+}
+
+body:not(.dark) #game-catch .catch-cell {
+    border-color: color-mix(in srgb, var(--catch-accent) 28%, rgba(38, 51, 44, .1));
+    color: var(--catch-accent-strong);
+    background:
+        radial-gradient(circle, color-mix(in srgb, var(--catch-accent) 7%, transparent), transparent 64%),
+        #ffffff;
+    box-shadow: inset 0 0 16px color-mix(in srgb, var(--catch-accent) 4%, transparent), 0 5px 14px rgba(38, 51, 44, .06);
+}
+
+body:not(.dark) #game-catch .catch-cell:hover,
+body:not(.dark) #game-catch .catch-cell:focus-visible {
+    border-color: var(--catch-accent);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--catch-accent) 16%, transparent), var(--hl-shadow-soft);
+}
+
+body:not(.dark) #game-catch .catch-cell.target {
+    background: color-mix(in srgb, currentColor 8%, #ffffff) !important;
+}
+
+body:not(.dark) #game-catch .catch-ranking-tabs,
+body:not(.dark) #game-catch .catch-ranking-footer {
+    border-color: var(--hl-line);
+}
+
+body:not(.dark) #game-catch .catch-ranking-tabs button {
+    border-color: var(--hl-line);
+    color: var(--hl-muted);
+    background: #ffffff;
+}
+
+body:not(.dark) #game-catch .catch-ranking-tabs button.active {
+    border-color: var(--catch-accent);
+    color: var(--catch-accent-strong);
+    background: color-mix(in srgb, var(--catch-accent) 11%, #ffffff);
+    box-shadow: inset 0 0 14px color-mix(in srgb, var(--catch-accent) 6%, transparent);
+}
+
+body:not(.dark) #game-catch .catch-rank-row {
+    border-bottom-color: rgba(38, 51, 44, .08);
+    color: var(--hl-ink);
+    background: rgba(255, 255, 255, .72);
+}
+
+body:not(.dark) #game-catch .catch-rank-row:nth-child(n+2) {
+    border-radius: 6px;
+}
+
+body:not(.dark) #game-catch .catch-rank-row.is-mine {
+    border-color: var(--catch-accent);
+    background: color-mix(in srgb, var(--catch-accent) 10%, #ffffff);
+}
+
+body:not(.dark) .catch-result-backdrop {
+    background: rgba(30, 42, 34, .46);
+}
+
+body:not(.dark) .catch-result-card {
+    color: var(--hl-ink);
+    border-color: var(--hl-line-strong);
+    background:
+        radial-gradient(circle at 50% 0, color-mix(in srgb, var(--catch-accent) 12%, transparent), transparent 40%),
+        #fffdf8;
+    box-shadow: 0 28px 80px rgba(38, 51, 44, .22);
+}
+
+body:not(.dark) .catch-result-close {
+    border-color: var(--hl-line);
+    color: var(--hl-ink);
+    background: #ffffff;
+}
+
+body:not(.dark) .catch-result-subtitle {
+    color: var(--catch-accent-strong);
+}
+
+body:not(.dark) .catch-result-stats > div {
+    border-color: var(--hl-line);
+    background: #ffffff;
+}
+
+body:not(.dark) .catch-result-stats span,
+body:not(.dark) .catch-result-card label,
+body:not(.dark) .catch-nickname-row span {
+    color: var(--hl-muted);
+}
+
+body:not(.dark) .catch-nickname-row input {
+    border-color: var(--hl-line);
+    color: var(--hl-ink);
+    background: #ffffff;
+}
+
+body:not(.dark) .catch-play-again {
+    border-color: var(--hl-line-strong);
+    color: var(--hl-ink);
+    background: #ffffff;
+}
+
+/* Bano Express */
+body:not(.dark) #game-clean.bath-premium {
+    --bath-bg: #f6faf8;
+    --bath-panel: #ffffff;
+    --bath-line: var(--hl-line);
+    color: var(--hl-ink);
+    border-color: var(--hl-line-strong);
+    background:
+        radial-gradient(circle at 84% 5%, color-mix(in srgb, var(--bath-blue) 16%, transparent), transparent 32%),
+        linear-gradient(180deg, #fffefa, #f4faf8);
+    box-shadow: var(--hl-shadow), inset 0 0 45px color-mix(in srgb, var(--bath-accent) 4%, transparent);
+}
+
+body:not(.dark) #game-clean .bath-main,
+body:not(.dark) #game-clean .bath-ranking {
+    border-color: var(--hl-line);
+    background: rgba(255, 255, 255, .95);
+    box-shadow: var(--hl-shadow-soft);
+}
+
+body:not(.dark) #game-clean .bath-hero {
+    border-bottom-color: var(--hl-line);
+}
+
+body:not(.dark) #game-clean .bath-hero h2,
+body:not(.dark) #game-clean .bath-progress strong,
+body:not(.dark) #game-clean .bath-tool-heading strong,
+body:not(.dark) #game-clean .bath-ranking-title strong,
+body:not(.dark) #game-clean .bath-rank-name,
+body:not(.dark) .bath-result-stats strong {
+    color: var(--hl-ink);
+}
+
+body:not(.dark) #game-clean .bath-hero p,
+body:not(.dark) #game-clean .bath-stats span,
+body:not(.dark) #game-clean .bath-stats small,
+body:not(.dark) #game-clean .bath-progress > div,
+body:not(.dark) #game-clean .bath-tool-heading span,
+body:not(.dark) #game-clean .bath-help,
+body:not(.dark) #game-clean .bath-ranking-title span,
+body:not(.dark) #game-clean .bath-ranking-empty,
+body:not(.dark) #game-clean .bath-ranking-footer small,
+body:not(.dark) #game-clean .bath-rank-head {
+    color: var(--hl-muted);
+}
+
+body:not(.dark) #game-clean .bath-kicker,
+body:not(.dark) #game-clean .bath-rank-time,
+body:not(.dark) #game-clean .bath-result-card h2 {
+    color: var(--bath-accent-strong);
+}
+
+body:not(.dark) #game-clean .bath-illustration {
+    border-color: color-mix(in srgb, var(--bath-blue) 42%, transparent);
+    background: #ffffff;
+    box-shadow: 0 10px 24px color-mix(in srgb, var(--bath-blue) 15%, transparent);
+}
+
+body:not(.dark) #game-clean .bath-stats > div,
+body:not(.dark) #game-clean .bath-progress,
+body:not(.dark) #game-clean .bath-tool-panel {
+    border-color: var(--hl-line);
+    background: #ffffff;
+    box-shadow: 0 5px 16px rgba(38, 51, 44, .055);
+}
+
+body:not(.dark) #game-clean .bath-stats strong {
+    color: var(--bath-accent-strong);
+}
+
+body:not(.dark) #game-clean .bath-progress b {
+    background: color-mix(in srgb, var(--bath-accent) 10%, #edf1ee);
+}
+
+body:not(.dark) #game-clean .bath-stage {
+    border-color: color-mix(in srgb, var(--bath-blue) 38%, rgba(38, 51, 44, .1));
+    background:
+        linear-gradient(color-mix(in srgb, var(--bath-blue) 8%, transparent) 1px, transparent 1px),
+        linear-gradient(90deg, color-mix(in srgb, var(--bath-blue) 8%, transparent) 1px, transparent 1px),
+        radial-gradient(ellipse at 50% 76%, color-mix(in srgb, var(--bath-blue) 14%, transparent), transparent 42%),
+        #f4fbfa;
+    background-size: 30px 30px, 30px 30px, auto, auto;
+    box-shadow: inset 0 0 42px color-mix(in srgb, var(--bath-blue) 8%, transparent);
+}
+
+body:not(.dark) #game-clean .bath-stage::before {
+    background: rgba(119, 82, 44, .08);
+}
+
+body:not(.dark) #game-clean .bath-stage-grid {
+    border-color: color-mix(in srgb, var(--bath-blue) 28%, transparent);
+    background: color-mix(in srgb, var(--bath-blue) 9%, transparent);
+}
+
+body:not(.dark) #game-clean .bath-reaction {
+    border-color: var(--hl-line);
+    color: var(--hl-ink);
+    background: rgba(255, 255, 255, .94);
+    box-shadow: var(--hl-shadow-soft);
+}
+
+body:not(.dark) #game-clean .bath-tools button {
+    border-color: var(--hl-line);
+    color: var(--hl-ink);
+    background: #ffffff;
+    box-shadow: 0 5px 14px rgba(38, 51, 44, .055);
+}
+
+body:not(.dark) #game-clean .bath-tools button strong {
+    color: var(--hl-ink);
+}
+
+body:not(.dark) #game-clean .bath-tools button small {
+    color: var(--hl-muted);
+}
+
+body:not(.dark) #game-clean .bath-tools button.active {
+    border-color: var(--bath-accent);
+    color: var(--bath-accent-strong);
+    background: color-mix(in srgb, var(--bath-accent) 11%, #ffffff);
+}
+
+body:not(.dark) #game-clean .bath-ranking-tabs,
+body:not(.dark) #game-clean .bath-ranking-footer {
+    border-color: var(--hl-line);
+}
+
+body:not(.dark) #game-clean .bath-ranking-tabs button {
+    border-color: var(--hl-line);
+    color: var(--hl-muted);
+    background: #ffffff;
+}
+
+body:not(.dark) #game-clean .bath-ranking-tabs button.active {
+    border-color: var(--bath-accent);
+    color: var(--bath-accent-strong);
+    background: color-mix(in srgb, var(--bath-accent) 11%, #ffffff);
+}
+
+body:not(.dark) #game-clean .bath-rank-row {
+    border-bottom-color: rgba(38, 51, 44, .08);
+    color: var(--hl-ink);
+    background: rgba(255, 255, 255, .72);
+}
+
+body:not(.dark) #game-clean .bath-rank-row.is-mine {
+    border-color: var(--bath-accent);
+    background: color-mix(in srgb, var(--bath-accent) 10%, #ffffff);
+}
+
+body:not(.dark) .bath-result-backdrop {
+    background: rgba(30, 42, 34, .46);
+}
+
+body:not(.dark) .bath-result-card {
+    color: var(--hl-ink);
+    border-color: var(--hl-line-strong);
+    background:
+        radial-gradient(circle at 50% 0, color-mix(in srgb, var(--bath-blue) 14%, transparent), transparent 42%),
+        #fffdf8;
+    box-shadow: 0 28px 82px rgba(38, 51, 44, .24);
+}
+
+body:not(.dark) .bath-result-close {
+    border-color: var(--hl-line);
+    color: var(--hl-ink);
+    background: #ffffff;
+}
+
+body:not(.dark) .bath-result-subtitle,
+body:not(.dark) .bath-result-card label,
+body:not(.dark) .bath-nickname-row span {
+    color: var(--hl-muted);
+}
+
+body:not(.dark) .bath-result-stats > div {
+    border-color: var(--hl-line);
+    background: #ffffff;
+}
+
+body:not(.dark) .bath-nickname-row input {
+    border-color: var(--hl-line);
+    color: var(--hl-ink);
+    background: #ffffff;
+}
+
+body:not(.dark) .bath-play-again {
+    border-color: var(--hl-line-strong);
+    color: var(--hl-ink);
+    background: #ffffff;
+}
+
+/* Simon Perruno */
+body:not(.dark) #game-simon.simon-premium {
+    --simon-accent: var(--leaf);
+    --simon-deep: var(--leaf-dark);
+    --simon-line: var(--hl-line);
+    --simon-panel: rgba(255, 255, 255, .96);
+    color: var(--hl-ink);
+    border-color: var(--hl-line-strong);
+    background:
+        linear-gradient(color-mix(in srgb, var(--simon-accent) 4%, transparent) 1px, transparent 1px),
+        linear-gradient(90deg, color-mix(in srgb, var(--simon-accent) 4%, transparent) 1px, transparent 1px),
+        radial-gradient(circle at 42% 22%, color-mix(in srgb, var(--simon-accent) 12%, transparent), transparent 34%),
+        #f8fbf8;
+    background-size: 32px 32px, 32px 32px, auto, auto;
+    box-shadow: var(--hl-shadow), inset 0 0 48px color-mix(in srgb, var(--simon-accent) 4%, transparent);
+}
+
+body:not(.dark) #game-simon .simon-game-card,
+body:not(.dark) #game-simon .simon-ranking-card {
+    border-color: var(--hl-line);
+    background: rgba(255, 255, 255, .96);
+    box-shadow: var(--hl-shadow-soft);
+}
+
+body:not(.dark) #game-simon .simon-hero {
+    border-bottom-color: var(--hl-line);
+}
+
+body:not(.dark) #game-simon .simon-hero h2,
+body:not(.dark) #game-simon .simon-ranking-heading h3,
+body:not(.dark) #game-simon .simon-stats strong,
+body:not(.dark) #game-simon .simon-action strong,
+body:not(.dark) #game-simon .simon-rank-row .rank-player,
+body:not(.dark) #game-simon .simon-history-row .history-round,
+body:not(.dark) .simon-result-card h2,
+body:not(.dark) .simon-result-stats strong {
+    color: var(--hl-ink);
+}
+
+body:not(.dark) #game-simon .simon-kicker,
+body:not(.dark) #game-simon .simon-ranking-heading span,
+body:not(.dark) #game-simon .simon-hero h2 em,
+body:not(.dark) #game-simon .simon-sequence-line > span,
+body:not(.dark) #game-simon .simon-best-strip strong,
+body:not(.dark) #game-simon .simon-current-score strong {
+    color: var(--simon-deep);
+    text-shadow: none;
+}
+
+body:not(.dark) #game-simon .simon-hero p,
+body:not(.dark) #game-simon .simon-stats span,
+body:not(.dark) #game-simon .simon-action small,
+body:not(.dark) #game-simon .simon-best-strip,
+body:not(.dark) #game-simon .simon-ranking-state,
+body:not(.dark) #game-simon .simon-ranking-empty,
+body:not(.dark) #game-simon .simon-current-score span,
+body:not(.dark) #game-simon .simon-current-score small,
+body:not(.dark) #game-simon .simon-ranking-footer,
+body:not(.dark) #game-simon .simon-rank-head {
+    color: var(--hl-muted);
+}
+
+body:not(.dark) #game-simon .simon-illustration {
+    border-color: var(--hl-line-strong);
+    background: #ffffff;
+    box-shadow: 0 10px 26px color-mix(in srgb, var(--simon-accent) 15%, transparent);
+}
+
+body:not(.dark) #game-simon .simon-mode-switch,
+body:not(.dark) #game-simon .simon-ranking-tabs {
+    border-color: var(--hl-line);
+    background: #f5f8f5;
+}
+
+body:not(.dark) #game-simon .simon-mode-switch button,
+body:not(.dark) #game-simon .simon-sound,
+body:not(.dark) #game-simon .simon-ranking-tabs button {
+    border-color: transparent;
+    color: var(--hl-muted);
+    background: transparent;
+}
+
+body:not(.dark) #game-simon .simon-sound {
+    border-color: var(--hl-line);
+    background: #ffffff;
+}
+
+body:not(.dark) #game-simon .simon-mode-switch button.active,
+body:not(.dark) #game-simon .simon-ranking-tabs button.active {
+    border-color: var(--simon-accent);
+    color: var(--simon-deep);
+    background: color-mix(in srgb, var(--simon-accent) 12%, #ffffff);
+    box-shadow: 0 5px 15px color-mix(in srgb, var(--simon-accent) 10%, transparent);
+}
+
+body:not(.dark) #game-simon .simon-stats > div {
+    border-color: var(--hl-line);
+    background: #ffffff;
+    box-shadow: 0 5px 14px rgba(38, 51, 44, .05);
+}
+
+body:not(.dark) #game-simon .simon-stats > div:nth-child(1) strong,
+body:not(.dark) #game-simon .simon-stats > div:nth-child(5) strong {
+    color: var(--simon-deep);
+}
+
+body:not(.dark) #game-simon .simon-training-stage {
+    border-color: var(--hl-line-strong);
+    background:
+        radial-gradient(ellipse at 50% 78%, color-mix(in srgb, var(--simon-accent) 18%, transparent), transparent 40%),
+        radial-gradient(circle at 50% 45%, color-mix(in srgb, var(--simon-accent) 7%, transparent), transparent 48%),
+        linear-gradient(180deg, #ffffff, #f4f9f5);
+    box-shadow: inset 0 0 38px color-mix(in srgb, var(--simon-accent) 7%, transparent);
+}
+
+body:not(.dark) #game-simon .simon-training-stage::before {
+    background-image: radial-gradient(circle, color-mix(in srgb, var(--simon-accent) 25%, transparent) 1px, transparent 1px);
+    opacity: .34;
+}
+
+body:not(.dark) #game-simon .simon-pet-platform {
+    border-color: color-mix(in srgb, var(--simon-accent) 52%, transparent);
+    background: radial-gradient(ellipse, color-mix(in srgb, var(--simon-accent) 17%, transparent), transparent 68%);
+}
+
+body:not(.dark) #game-simon .simon-pet .pet-sprite-stack,
+body:not(.dark) #game-simon .simon-pet .simon-pet-sprite {
+    filter: drop-shadow(0 11px 8px rgba(38, 51, 44, .24));
+}
+
+body:not(.dark) #game-simon .simon-status {
+    border-color: var(--hl-line);
+    color: var(--hl-ink);
+    background: rgba(255, 255, 255, .94);
+    box-shadow: var(--hl-shadow-soft);
+}
+
+body:not(.dark) #game-simon .simon-sequence-line,
+body:not(.dark) #game-simon .simon-current-score {
+    border-color: var(--hl-line);
+    background: #ffffff;
+}
+
+body:not(.dark) #game-simon .simon-sequence-chips i {
+    border-color: var(--hl-line);
+    color: var(--hl-muted);
+    background: #f6f8f6;
+}
+
+body:not(.dark) #game-simon .simon-sequence-chips i.current {
+    border-color: var(--simon-accent);
+    color: #ffffff;
+    background: var(--simon-accent);
+}
+
+body:not(.dark) #game-simon .simon-sequence-chips i.done {
+    border-color: color-mix(in srgb, var(--simon-accent) 48%, transparent);
+    color: var(--simon-deep);
+    background: color-mix(in srgb, var(--simon-accent) 10%, #ffffff);
+}
+
+body:not(.dark) #game-simon .simon-action {
+    border-color: color-mix(in srgb, var(--action) 30%, var(--hl-line));
+    color: var(--hl-ink);
+    background: #ffffff;
+    box-shadow: 0 7px 18px rgba(38, 51, 44, .07);
+}
+
+body:not(.dark) #game-simon .simon-action:hover:not(:disabled) {
+    border-color: var(--action);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--action) 13%, transparent), var(--hl-shadow-soft);
+}
+
+body:not(.dark) #game-simon .simon-action.active {
+    border-color: var(--action);
+    color: var(--hl-ink);
+    background: color-mix(in srgb, var(--action) 12%, #ffffff);
+    box-shadow: 0 0 22px color-mix(in srgb, var(--action) 22%, transparent);
+}
+
+body:not(.dark) #game-simon .simon-controls button,
+body:not(.dark) #game-simon .simon-result-actions button {
+    border-color: var(--hl-line);
+    color: var(--hl-ink);
+    background: #ffffff;
+}
+
+body:not(.dark) #game-simon .simon-controls .simon-start,
+body:not(.dark) #game-simon .simon-result-actions .simon-save-result {
+    border-color: var(--simon-accent);
+    color: #ffffff;
+    background: linear-gradient(135deg, var(--simon-accent), var(--simon-deep));
+    box-shadow: var(--hl-accent-shadow);
+}
+
+body:not(.dark) #game-simon .simon-controls .simon-give-up {
+    border-color: rgba(205, 67, 67, .28);
+    color: #b33f3f;
+    background: #fffafa;
+}
+
+body:not(.dark) #game-simon .simon-ranking-heading button {
+    border-color: var(--hl-line);
+    color: var(--simon-deep);
+    background: #ffffff;
+}
+
+body:not(.dark) #game-simon .simon-rank-row,
+body:not(.dark) #game-simon .simon-history-row {
+    border-bottom-color: rgba(38, 51, 44, .08);
+    color: var(--hl-ink);
+    background: #ffffff;
+}
+
+body:not(.dark) #game-simon .simon-rank-row.rank-1 {
+    border-color: rgba(218, 165, 32, .36);
+    background: rgba(255, 226, 111, .19);
+}
+
+body:not(.dark) #game-simon .simon-rank-row.rank-2 {
+    background: rgba(190, 203, 210, .18);
+}
+
+body:not(.dark) #game-simon .simon-rank-row.rank-3 {
+    background: rgba(205, 127, 50, .12);
+}
+
+body:not(.dark) #game-simon .simon-rank-row.is-current {
+    outline-color: var(--simon-accent);
+    background: color-mix(in srgb, var(--simon-accent) 10%, #ffffff);
+}
+
+body:not(.dark) #game-simon .simon-ranking-footer {
+    border-top-color: var(--hl-line);
+}
+
+body:not(.dark) .simon-result-backdrop {
+    background: rgba(30, 42, 34, .48);
+}
+
+body:not(.dark) .simon-result-card {
+    color: var(--hl-ink);
+    border-color: var(--hl-line-strong);
+    background:
+        radial-gradient(circle at 50% 0, color-mix(in srgb, var(--simon-accent) 13%, transparent), transparent 42%),
+        #fffdf8;
+    box-shadow: 0 28px 84px rgba(38, 51, 44, .24);
+}
+
+body:not(.dark) .simon-result-close {
+    border-color: var(--hl-line);
+    color: var(--hl-ink);
+    background: #ffffff;
+}
+
+body:not(.dark) .simon-result-card p,
+body:not(.dark) .simon-result-card label,
+body:not(.dark) .simon-save-state {
+    color: var(--hl-muted);
+}
+
+body:not(.dark) .simon-result-stats > div {
+    border-color: var(--hl-line);
+    background: #ffffff;
+}
+
+body:not(.dark) .simon-result-card input {
+    border-color: var(--hl-line);
+    color: var(--hl-ink);
+    background: #ffffff;
+}
+
+/* Los acentos cambian solos porque todos parten de --leaf y --leaf-dark. */
+@media (max-width: 620px) {
+    body:not(.dark) #game-catch.catch-premium,
+    body:not(.dark) #game-clean.bath-premium,
+    body:not(.dark) #game-simon.simon-premium {
+        border-color: var(--hl-line);
+        box-shadow: 0 10px 24px rgba(38, 51, 44, .08);
+    }
+
+    body:not(.dark) .arcade-shell,
+    body:not(.dark) .arcade-stage,
+    body:not(.dark) .arcade-game-panel {
+        box-shadow: 0 8px 20px rgba(38, 51, 44, .07);
+    }
+
+    body:not(.dark) #game-catch .catch-stats > div,
+    body:not(.dark) #game-clean .bath-stats > div,
+    body:not(.dark) #game-simon .simon-stats > div {
+        min-width: 0;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    body:not(.dark) #game-catch *,
+    body:not(.dark) #game-clean *,
+    body:not(.dark) #game-simon * {
+        scroll-behavior: auto;
+    }
+}
