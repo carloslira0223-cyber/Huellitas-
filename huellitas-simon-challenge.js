@@ -76,6 +76,7 @@
         return String(value || "")
             .replace(/<[^>]*>/g, "")
             .replace(/[<>\`{}]/g, "")
+            .replace(/[^\p{L}\p{N} _-]/gu, "")
             .replace(/\s+/g, " ")
             .trim()
             .slice(0, 12);
@@ -734,7 +735,6 @@
         });
         elements().nickname.addEventListener("input", function () {
             const value = safeNickname(elements().nickname.value);
-            if (elements().nickname.value !== value) elements().nickname.value = value;
             elements().nicknameCount.textContent = value.length + "/12";
             elements().saveState.textContent = "";
         });
