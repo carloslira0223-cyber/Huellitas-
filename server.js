@@ -44,6 +44,9 @@ function readConfig() {
 const config = readConfig();
 const adminTokens = new Map();
 const adminAttempts = new Map();
+const simonSubmissions = new Map();
+const simonSubmissionWindow = 10 * 60 * 1000;
+const simonSubmissionLimit = 8;
 const adminTokenLifetime = 8 * 60 * 60 * 1000;
 const adminAttemptWindow = 15 * 60 * 1000;
 const adminAttemptLimit = 5;
@@ -101,6 +104,101 @@ function safeHashEqual(actual, expected) {
 function requestIp(req) {
     const forwarded = String(req.headers["x-forwarded-for"] || "").split(",")[0].trim();
     return forwarded || (req.socket && req.socket.remoteAddress) || "unknown";
+}
+
+function normalizeSimonNickname(value) {
+    return cleanText(value)
+        .replace(/<[^>]*>/g, "")
+        .replace(/[<>\`{}]/g, "")
+        .replace(/\s+/g, " ")
+        .slice(0, 12) || "Jugador";
+}
+
+function hasBlockedSimonNickname(value) {
+    const compact = String(value || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]/g, "");
+    const blocked = ["puta", "puto", "mierda", "pendejo", "pendeja", "idiota", "imbecil", "cabron", "cagada"];
+    return blocked.some((word) => compact.includes(word));
+}
+
+function validateSimonScore(body) {
+    const nickname = normalizeSimonNickname(body.nickname);
+    const anonymousId = cleanText(body.anonymousId);
+    const round = Number(body.round);
+    const errors = Number(body.errors);
+    const combo = Number(body.combo);
+    const avgTime = Number(body.avgTime);
+    const mode = cleanText(body.mode).toLowerCase();
+    const maxCombo = round * (round + 1) / 2 + 3 * (round + 1);
+
+    if (!/^simon-[a-z0-9-]{8,80}$/i.test(anonymousId)) {
+        return { error: "Identificador anonimo invalido." };
+    }
+
+    if (hasBlockedSimonNickname(nickname)) {
+        return { error: "Elige otro apodo." };
+    }
+
+    if (mode !== "challenge") {
+        return { error: "Solo el modo reto entra a la clasificacion." };
+    }
+
+    if (!Number.isInteger(round) || round < 1 || round > 60 ||
+        !Number.isInteger(errors) || errors < 0 || errors > 3 ||
+        !Number.isInteger(combo) || combo < 0 || combo > maxCombo ||
+        !Number.isFinite(avgTime) || avgTime < 0.12 || avgTime > 30) {
+        return { error: "Resultado fuera de los limites permitidos." };
+    }
+
+    return {
+        value: {
+            nickname,
+            anonymousId,
+            round,
+            errors,
+            combo,
+            avgTime: Math.round(avgTime * 1000) / 1000,
+            mode
+        }
+    };
+}
+
+function isSimonRateLimited(req, anonymousId) {
+    const now = Date.now();
+    const key = requestIp(req) + ":" + anonymousId;
+    const state = simonSubmissions.get(key);
+
+    if (!state || now - state.startedAt > simonSubmissionWindow) {
+        simonSubmissions.set(key, { count: 1, startedAt: now });
+        return false;
+    }
+
+    state.count += 1;
+    return state.count > simonSubmissionLimit;
+}
+
+function compareSimonScores(a, b) {
+    return Number(b.round || 0) - Number(a.round || 0) ||
+        Number(a.errors || 0) - Number(b.errors || 0) ||
+        Number(b.combo || 0) - Number(a.combo || 0) ||
+        Number(a.avgTime || 99) - Number(b.avgTime || 99) ||
+        String(a.date || "").localeCompare(String(b.date || ""));
+}
+
+function isBetterSimonScore(candidate, current) {
+    return compareSimonScores(candidate, current) < 0;
+}
+
+function publicSimonScore(item, rank, currentId) {
+    return {
+        rank,
+        nickname: normalizeSimonNickname(item.nickname),
+        round: Number(item.round || 0),
+        errors: Number(item.errors || 0),
+        combo: Number(item.combo || 0),
+        avgTime: Number(item.avgTime || 0),
+        date: item.date || "",
+        current: Boolean(currentId && item.anonymousId === currentId)
+    };
 }
 
 function isAdminRateLimited(req) {
@@ -185,6 +283,7 @@ function defaultDb() {
         users: [],
         sessions: {},
         scores: [],
+        simonScores: [],
         adoptions: [],
         messages: [],
         reports: [],
@@ -210,7 +309,7 @@ function ensureDb() {
 function normalizeDb(db) {
     const base = defaultDb();
     const next = Object.assign(base, db || {});
-    const arrayKeys = ["users", "scores", "adoptions", "messages", "reports", "notifications", "mailbox", "pets", "centers"];
+    const arrayKeys = ["users", "scores", "simonScores", "adoptions", "messages", "reports", "notifications", "mailbox", "pets", "centers"];
 
     arrayKeys.forEach((key) => {
         if (!Array.isArray(next[key])) {
@@ -279,7 +378,7 @@ function applyCors(req, res) {
     }
 
     res.setHeader("Access-Control-Allow-Methods", "GET,POST,OPTIONS");
-    res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Huellitas-Token, X-Huellitas-Admin-Token");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Huellitas-Token, X-Huellitas-Admin-Token, X-Huellitas-Player");
     res.setHeader("Access-Control-Max-Age", "86400");
 }
 
@@ -929,6 +1028,73 @@ async function handleApi(req, res, pathname) {
         user.updatedAt = new Date().toISOString();
         writeDb(db);
         sendJson(res, 200, { ok: true, user: publicUser(user) });
+        return;
+    }
+
+    if (req.method === "GET" && pathname === "/api/simon-ranking") {
+        const currentId = cleanText(req.headers["x-huellitas-player"]);
+        const ordered = db.simonScores.slice().sort(compareSimonScores);
+        const scores = ordered.slice(0, 10).map((item, index) => publicSimonScore(item, index + 1, currentId));
+        const currentIndex = currentId ? ordered.findIndex((item) => item.anonymousId === currentId) : -1;
+
+        sendJson(res, 200, {
+            ok: true,
+            title: "Mejor Memoria Perruna",
+            scores,
+            current: currentIndex >= 0 ? publicSimonScore(ordered[currentIndex], currentIndex + 1, currentId) : null,
+            updatedAt: ordered.length ? ordered[0].date : null
+        });
+        return;
+    }
+
+    if (req.method === "POST" && pathname === "/api/simon-ranking") {
+        const parsed = validateSimonScore(body);
+
+        if (parsed.error) {
+            sendJson(res, 400, { ok: false, error: parsed.error });
+            return;
+        }
+
+        const score = parsed.value;
+
+        if (isSimonRateLimited(req, score.anonymousId)) {
+            sendJson(res, 429, { ok: false, error: "Demasiados envios. Espera unos minutos." });
+            return;
+        }
+
+        const now = new Date().toISOString();
+        const existingIndex = db.simonScores.findIndex((item) => item.anonymousId === score.anonymousId);
+        let savedBest = true;
+
+        if (existingIndex >= 0) {
+            const existing = db.simonScores[existingIndex];
+            savedBest = isBetterSimonScore(score, existing);
+            existing.nickname = score.nickname;
+            existing.lastPlayedAt = now;
+
+            if (savedBest) {
+                Object.assign(existing, score, { date: now, lastPlayedAt: now });
+            }
+        } else {
+            db.simonScores.push(Object.assign({
+                id: "simon-" + sha256(score.anonymousId).slice(0, 16)
+            }, score, { date: now, lastPlayedAt: now }));
+        }
+
+        db.simonScores = db.simonScores.slice().sort(compareSimonScores).slice(0, 500);
+        writeDb(db);
+
+        const ordered = db.simonScores.slice().sort(compareSimonScores);
+        const scores = ordered.slice(0, 10).map((item, index) => publicSimonScore(item, index + 1, score.anonymousId));
+        const currentIndex = ordered.findIndex((item) => item.anonymousId === score.anonymousId);
+
+        sendJson(res, 200, {
+            ok: true,
+            savedBest,
+            scores,
+            current: currentIndex >= 0 ? publicSimonScore(ordered[currentIndex], currentIndex + 1, score.anonymousId) : null,
+            updatedAt: now
+        });
         return;
     }
 
