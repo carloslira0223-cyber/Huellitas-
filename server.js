@@ -110,6 +110,7 @@ function normalizeSimonNickname(value) {
     return cleanText(value)
         .replace(/<[^>]*>/g, "")
         .replace(/[<>\`{}]/g, "")
+        .replace(/[^\p{L}\p{N} _-]/gu, "")
         .replace(/\s+/g, " ")
         .slice(0, 12) || "Jugador";
 }
