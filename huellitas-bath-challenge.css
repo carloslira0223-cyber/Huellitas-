@@ -1,0 +1,1086 @@
+/*!
+ * Proyecto Huellitas - Carlos Alexis Lira Alcala - 2026.
+ * Estilos premium y responsive de Bano Express.
+ */
+
+#game-clean.bath-premium {
+    --bath-accent: var(--leaf, #6abf4b);
+    --bath-accent-strong: var(--leaf-dark, #2f6b43);
+    --bath-purple: color-mix(in srgb, var(--bath-accent) 42%, #a95cff);
+    --bath-blue: color-mix(in srgb, var(--bath-accent) 28%, #4cbcff);
+    --bath-coral: var(--coral, #e76c62);
+    --bath-bg: #07100d;
+    --bath-panel: #0b1713;
+    --bath-line: color-mix(in srgb, var(--bath-accent) 38%, rgba(255,255,255,.13));
+    width: 100%;
+    max-width: none;
+    padding: clamp(14px, 2.2vw, 28px);
+    border: 1px solid var(--bath-line);
+    border-radius: 8px;
+    color: #f3faf5;
+    background: #07100d;
+    box-shadow: 0 24px 72px rgba(0,0,0,.34), inset 0 0 54px color-mix(in srgb,var(--bath-accent) 7%,transparent);
+    overflow: visible;
+}
+
+.bath-premium-layout {
+    display: grid;
+    grid-template-columns: minmax(0,1.32fr) minmax(350px,.68fr);
+    gap: clamp(18px,2.5vw,30px);
+    align-items: start;
+}
+
+.bath-main,
+.bath-ranking {
+    min-width: 0;
+    border: 1px solid var(--bath-line);
+    border-radius: 8px;
+    background: color-mix(in srgb,var(--bath-panel) 94%,transparent);
+    box-shadow: inset 0 0 34px rgba(0,0,0,.22);
+}
+
+.bath-main {
+    padding: clamp(14px,2vw,24px);
+}
+
+.bath-hero {
+    min-height: 180px;
+    display: grid;
+    grid-template-columns: minmax(0,1fr) minmax(180px,34%);
+    align-items: center;
+    gap: 18px;
+    padding: 4px 4px 18px;
+    border-bottom: 1px solid rgba(255,255,255,.08);
+}
+
+.bath-hero-copy {
+    min-width: 0;
+}
+
+.bath-kicker {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--bath-purple);
+    font-size: .72rem;
+    font-weight: 900;
+    letter-spacing: 0;
+}
+
+.bath-hero h2 {
+    margin: 0;
+    color: #fff;
+    font-size: clamp(2rem,4vw,3.35rem);
+    line-height: .98;
+    letter-spacing: 0;
+}
+
+.bath-hero h2 em {
+    color: color-mix(in srgb,var(--bath-accent) 72%,#dfff59);
+    font-style: normal;
+}
+
+.bath-hero p {
+    max-width: 610px;
+    margin: 12px 0 0;
+    color: rgba(240,249,243,.78);
+    line-height: 1.55;
+}
+
+.bath-illustration {
+    position: relative;
+    min-width: 0;
+    height: 162px;
+    margin: 0;
+    border: 1px solid color-mix(in srgb,var(--bath-blue) 44%,transparent);
+    border-radius: 8px;
+    background: rgba(255,255,255,.05);
+    box-shadow: 0 0 28px color-mix(in srgb,var(--bath-blue) 16%,transparent);
+    overflow: hidden;
+}
+
+.bath-illustration img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    object-position: center 43%;
+    filter: saturate(1.06) contrast(1.02);
+}
+
+.bath-stats {
+    display: grid;
+    grid-template-columns: repeat(3,minmax(0,1fr));
+    gap: 10px;
+    margin: 16px 0 12px;
+}
+
+.bath-stats > div {
+    min-height: 82px;
+    display: grid;
+    align-content: center;
+    gap: 3px;
+    padding: 11px 13px;
+    border: 1px solid rgba(255,255,255,.11);
+    border-radius: 8px;
+    background: rgba(255,255,255,.025);
+}
+
+.bath-stats span,
+.bath-stats small {
+    color: rgba(240,249,243,.58);
+    font-size: .68rem;
+}
+
+.bath-stats strong {
+    color: color-mix(in srgb,var(--bath-accent) 70%,#e6ff5e);
+    font-size: clamp(1.15rem,2.5vw,1.55rem);
+    font-variant-numeric: tabular-nums;
+}
+
+.bath-stats > div:nth-child(2) strong {
+    color: var(--bath-purple);
+}
+
+.bath-stats > div:nth-child(3) strong {
+    color: #ffd94d;
+}
+
+.bath-progress {
+    display: grid;
+    grid-template-columns: minmax(0,1fr) minmax(180px,52%);
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+    padding: 10px 12px;
+    border: 1px solid var(--bath-line);
+    border-radius: 8px;
+    background: rgba(255,255,255,.02);
+}
+
+.bath-progress > div {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    color: rgba(240,249,243,.7);
+    font-size: .72rem;
+}
+
+.bath-progress strong {
+    color: #fff;
+}
+
+.bath-progress b {
+    height: 10px;
+    border-radius: 999px;
+    background: rgba(255,255,255,.08);
+    overflow: hidden;
+}
+
+.bath-progress i {
+    display: block;
+    width: 0;
+    height: 100%;
+    border-radius: inherit;
+    background: var(--bath-accent);
+    box-shadow: 0 0 18px color-mix(in srgb,var(--bath-accent) 74%,transparent);
+    transition: width .2s ease;
+}
+
+.bath-stage {
+    position: relative;
+    width: 100%;
+    min-height: 430px;
+    border: 1px solid color-mix(in srgb,var(--bath-blue) 34%,rgba(255,255,255,.1));
+    border-radius: 8px;
+    background:
+        linear-gradient(rgba(71,181,145,.045) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(71,181,145,.045) 1px,transparent 1px),
+        #071610;
+    background-size: 30px 30px;
+    box-shadow: inset 0 0 46px rgba(0,0,0,.35);
+    overflow: hidden;
+    touch-action: none;
+    cursor: crosshair;
+}
+
+.bath-stage::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: rgba(95,62,34,.08);
+    opacity: .75;
+    pointer-events: none;
+    transition: opacity .25s ease;
+}
+
+.bath-stage.is-clean::before {
+    opacity: 0;
+}
+
+.bath-stage-grid {
+    position: absolute;
+    inset: auto 5% 9% 5%;
+    height: 20%;
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 50%;
+    background: color-mix(in srgb,var(--bath-blue) 9%,transparent);
+    box-shadow: 0 0 28px color-mix(in srgb,var(--bath-blue) 12%,transparent);
+}
+
+.bath-pet-zone {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    z-index: 3;
+    width: 64px;
+    height: 64px;
+    transform: translate(-50%,-42%);
+}
+
+.bath-pet-zone .pet-sprite-stack,
+.bath-pet-zone .bath-pet-sprite {
+    width: 64px !important;
+    height: 64px !important;
+    display: block !important;
+    transform: scale(4.45) !important;
+    transform-origin: center center !important;
+    filter: drop-shadow(0 12px 8px rgba(0,0,0,.32)) saturate(1);
+    image-rendering: pixelated;
+}
+
+.bath-pet-fallback {
+    width: 64px;
+    height: 64px;
+    display: block;
+    background: url("assets/sprites/Sprite-0001-Sheet.png") left center / 500% 100% no-repeat;
+    image-rendering: pixelated;
+    transform: scale(4.45);
+    filter: drop-shadow(0 12px 8px rgba(0,0,0,.32));
+}
+
+.bath-stage[data-mood="happy"] .bath-pet-zone,
+.bath-stage[data-mood="complete"] .bath-pet-zone {
+    animation: bath-pet-happy .5s ease;
+}
+
+.bath-stage[data-mood="oops"] .bath-pet-zone {
+    animation: bath-pet-oops .3s ease;
+}
+
+.bath-spots {
+    position: absolute;
+    inset: 0;
+    z-index: 5;
+}
+
+.bath-spot {
+    position: absolute;
+    width: 54px;
+    height: 54px;
+    display: grid;
+    place-items: center;
+    border: 1px solid rgba(255,255,255,.14);
+    border-radius: 50%;
+    color: #fff;
+    background: rgba(4,12,8,.74);
+    box-shadow: 0 6px 18px rgba(0,0,0,.3);
+    font-size: 1.65rem;
+    cursor: inherit;
+    transform: translate(-50%,-50%);
+    touch-action: none;
+    transition: opacity .18s ease, transform .18s ease, border-color .18s ease;
+}
+
+.bath-spot::after {
+    content: "";
+    position: absolute;
+    inset: -5px;
+    border: 1px solid currentColor;
+    border-radius: inherit;
+    opacity: .18;
+}
+
+.bath-spot-mud {
+    color: #d39859;
+    background: rgba(73,43,20,.82);
+}
+
+.bath-spot-stain {
+    color: #f4c74f;
+}
+
+.bath-spot-foam {
+    color: #dff9ff;
+    background: rgba(47,122,148,.38);
+    animation: bath-foam-float 1.8s ease-in-out infinite;
+}
+
+.bath-spot-flea {
+    color: #ff6058;
+    background: rgba(92,11,14,.52);
+    animation: bath-flea-move 1.25s ease-in-out infinite;
+}
+
+.bath-spot-drop {
+    color: #5dc6ff;
+    background: rgba(16,69,112,.56);
+}
+
+.bath-spot.partly-clean {
+    transform: translate(-50%,-50%) scale(.82);
+    opacity: .72;
+}
+
+.bath-spot.cleaned {
+    opacity: 0;
+    transform: translate(-50%,-50%) scale(1.45) rotate(14deg);
+    border-color: var(--bath-accent);
+    box-shadow: 0 0 26px color-mix(in srgb,var(--bath-accent) 58%,transparent);
+}
+
+.bath-spot.wrong-tool {
+    border-color: #ff6b62;
+    animation: bath-wrong .28s ease;
+}
+
+.bath-bubbles i {
+    position: absolute;
+    z-index: 2;
+    width: 22px;
+    height: 22px;
+    border: 1px solid rgba(133,221,255,.52);
+    border-radius: 50%;
+    background: rgba(167,232,255,.06);
+    box-shadow: inset 4px 4px 6px rgba(255,255,255,.12);
+    animation: bath-bubble 4s ease-in-out infinite;
+}
+
+.bath-bubbles i:nth-child(1) { left: 9%; bottom: 12%; }
+.bath-bubbles i:nth-child(2) { left: 22%; bottom: 6%; width: 14px; height: 14px; animation-delay: .7s; }
+.bath-bubbles i:nth-child(3) { right: 14%; bottom: 9%; width: 31px; height: 31px; animation-delay: 1.2s; }
+.bath-bubbles i:nth-child(4) { right: 30%; bottom: 4%; width: 12px; height: 12px; animation-delay: 1.8s; }
+.bath-bubbles i:nth-child(5) { left: 50%; bottom: 2%; width: 19px; height: 19px; animation-delay: 2.4s; }
+
+.bath-reaction {
+    position: absolute;
+    left: 50%;
+    bottom: 12px;
+    z-index: 8;
+    max-width: calc(100% - 28px);
+    transform: translateX(-50%);
+    padding: 8px 12px;
+    border: 1px solid rgba(255,255,255,.14);
+    border-radius: 7px;
+    color: rgba(245,251,247,.82);
+    background: rgba(4,12,8,.88);
+    font-size: .72rem;
+    line-height: 1.3;
+    text-align: center;
+    pointer-events: none;
+}
+
+.bath-tool-panel {
+    margin-top: 14px;
+    padding: 13px;
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: 8px;
+    background: rgba(255,255,255,.02);
+}
+
+.bath-tool-heading {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 10px;
+}
+
+.bath-tool-heading strong {
+    color: #fff;
+    font-size: .88rem;
+}
+
+.bath-tool-heading span {
+    color: rgba(240,249,243,.52);
+    font-size: .68rem;
+}
+
+.bath-tools {
+    display: grid;
+    grid-template-columns: repeat(5,minmax(0,1fr));
+    gap: 9px;
+}
+
+#game-clean .bath-tools button {
+    position: relative;
+    min-width: 0;
+    min-height: 96px;
+    display: grid;
+    place-items: center;
+    align-content: center;
+    gap: 3px;
+    border: 1px solid rgba(255,255,255,.13);
+    border-radius: 8px;
+    color: rgba(245,251,247,.76);
+    background: rgba(4,13,9,.74);
+    cursor: pointer;
+    touch-action: manipulation;
+}
+
+#game-clean .bath-tools button span {
+    font-size: 1.8rem;
+    filter: drop-shadow(0 5px 7px rgba(0,0,0,.25));
+}
+
+#game-clean .bath-tools button strong {
+    color: #fff;
+    font-size: .75rem;
+}
+
+#game-clean .bath-tools button small {
+    color: rgba(240,249,243,.46);
+    font-size: .6rem;
+}
+
+#game-clean .bath-tools button:hover,
+#game-clean .bath-tools button:focus-visible {
+    outline: none;
+    border-color: var(--bath-accent);
+    box-shadow: 0 0 0 2px color-mix(in srgb,var(--bath-accent) 30%,transparent);
+}
+
+#game-clean .bath-tools button.active {
+    border-color: color-mix(in srgb,var(--bath-accent) 78%,#fff);
+    color: var(--bath-accent);
+    background: color-mix(in srgb,var(--bath-accent) 13%,#07100d);
+    box-shadow: 0 0 22px color-mix(in srgb,var(--bath-accent) 25%,transparent), inset 0 0 18px color-mix(in srgb,var(--bath-accent) 8%,transparent);
+    transform: translateY(-2px);
+}
+
+#game-clean .bath-tools button.active::after {
+    content: "";
+    position: absolute;
+    left: 18%;
+    right: 18%;
+    bottom: 6px;
+    height: 3px;
+    border-radius: 999px;
+    background: var(--bath-accent);
+    box-shadow: 0 0 9px var(--bath-accent);
+}
+
+#game-clean .bath-start {
+    width: min(350px,100%);
+    min-height: 54px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    margin: 18px auto 0;
+    border: 1px solid color-mix(in srgb,var(--bath-coral) 72%,#fff);
+    border-radius: 8px;
+    color: #fff;
+    background: var(--bath-coral);
+    box-shadow: 0 12px 30px color-mix(in srgb,var(--bath-coral) 28%,transparent);
+    font-size: 1rem;
+    font-weight: 900;
+    cursor: pointer;
+}
+
+#game-clean .bath-start:hover,
+#game-clean .bath-start:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 3px;
+    filter: brightness(1.07);
+}
+
+#game-clean .bath-start.running {
+    background: color-mix(in srgb,var(--bath-coral) 72%,#222);
+}
+
+.bath-help {
+    margin: 9px 0 0;
+    color: rgba(240,249,243,.56);
+    font-size: .7rem;
+    text-align: center;
+}
+
+.bath-ranking {
+    overflow: hidden;
+}
+
+.bath-ranking-tabs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    padding: 10px;
+    border-bottom: 1px solid rgba(255,255,255,.08);
+}
+
+#game-clean .bath-ranking-tabs button {
+    min-height: 42px;
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 7px;
+    color: rgba(240,249,243,.68);
+    background: transparent;
+    font-size: .76rem;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+#game-clean .bath-ranking-tabs button.active {
+    color: #fff;
+    border-color: var(--bath-accent);
+    background: color-mix(in srgb,var(--bath-accent) 16%,transparent);
+}
+
+.bath-ranking-title {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 14px 15px 10px;
+}
+
+.bath-ranking-title strong {
+    color: color-mix(in srgb,var(--bath-accent) 68%,#e8ff6a);
+}
+
+.bath-ranking-title span {
+    color: rgba(240,249,243,.5);
+    font-size: .72rem;
+}
+
+.bath-ranking-table {
+    min-height: 450px;
+    padding: 0 9px 10px;
+    overflow-x: auto;
+}
+
+.bath-rank-row {
+    min-width: 510px;
+    display: grid;
+    grid-template-columns: 34px minmax(112px,1.35fr) 82px 68px 55px 58px;
+    align-items: center;
+    min-height: 43px;
+    border-bottom: 1px solid rgba(255,255,255,.06);
+    color: rgba(240,249,243,.8);
+    font-size: .7rem;
+    font-variant-numeric: tabular-nums;
+}
+
+.bath-rank-row.is-mine {
+    border: 1px solid color-mix(in srgb,var(--bath-accent) 58%,transparent);
+    border-radius: 7px;
+    background: color-mix(in srgb,var(--bath-accent) 10%,transparent);
+}
+
+.bath-rank-head {
+    min-height: 34px;
+    color: rgba(240,249,243,.46);
+    font-size: .62rem;
+    font-weight: 800;
+}
+
+.bath-rank-place {
+    text-align: center;
+}
+
+.bath-rank-name {
+    min-width: 0;
+    overflow: hidden;
+    color: #fff;
+    font-weight: 800;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.bath-rank-time {
+    color: color-mix(in srgb,var(--bath-accent) 72%,#fff);
+    font-weight: 900;
+}
+
+.bath-ranking-empty {
+    min-height: 370px;
+    display: grid;
+    place-items: center;
+    padding: 22px;
+    color: rgba(240,249,243,.52);
+    line-height: 1.55;
+    text-align: center;
+}
+
+.bath-ranking-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 12px;
+    border-top: 1px solid rgba(255,255,255,.08);
+}
+
+.bath-ranking-footer small {
+    color: rgba(240,249,243,.46);
+    font-size: .64rem;
+}
+
+#game-clean .bath-ranking-footer button {
+    flex: 0 0 auto;
+    min-height: 36px;
+    border: 1px solid rgba(255,100,91,.52);
+    border-radius: 7px;
+    padding: 7px 10px;
+    color: #ff887f;
+    background: transparent;
+    font-size: .66rem;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.bath-result-modal[hidden] {
+    display: none !important;
+}
+
+.bath-result-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 12000;
+    display: grid;
+    place-items: center;
+    padding: 18px;
+}
+
+.bath-result-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,.8);
+    backdrop-filter: blur(7px);
+}
+
+.bath-result-card {
+    position: relative;
+    z-index: 1;
+    width: min(570px,100%);
+    max-height: min(92vh,760px);
+    overflow-y: auto;
+    padding: clamp(20px,4vw,32px);
+    border: 1px solid color-mix(in srgb,var(--bath-purple) 54%,rgba(255,255,255,.15));
+    border-radius: 8px;
+    color: #fff;
+    background: #08110e;
+    box-shadow: 0 34px 100px rgba(0,0,0,.6), inset 0 0 52px color-mix(in srgb,var(--bath-purple) 8%,transparent);
+    text-align: center;
+}
+
+.bath-result-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 4;
+    width: 40px;
+    height: 40px;
+    border: 1px solid rgba(255,255,255,.2);
+    border-radius: 8px;
+    color: #fff;
+    background: rgba(0,0,0,.36);
+    font-size: 1.45rem;
+    cursor: pointer;
+}
+
+.bath-result-visual {
+    position: relative;
+    width: min(260px,72%);
+    height: 180px;
+    margin: 0 auto 10px;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.bath-result-visual img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    object-position: center 43%;
+}
+
+.bath-result-visual span {
+    position: absolute;
+    right: 8px;
+    bottom: 5px;
+    font-size: 3.3rem;
+    filter: drop-shadow(0 0 18px rgba(255,210,52,.5));
+}
+
+.bath-result-card h2 {
+    margin: 0;
+    color: color-mix(in srgb,var(--bath-accent) 70%,#e9ff5d);
+    font-size: clamp(1.55rem,5vw,2.25rem);
+}
+
+.bath-result-subtitle {
+    margin: 6px 0 16px;
+    color: rgba(240,249,243,.75);
+}
+
+.bath-result-stats {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.bath-result-stats > div {
+    display: grid;
+    gap: 4px;
+    padding: 11px 7px;
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 8px;
+    background: rgba(255,255,255,.025);
+}
+
+.bath-result-stats span {
+    color: rgba(240,249,243,.55);
+    font-size: .66rem;
+}
+
+.bath-result-stats strong {
+    color: #fff;
+    font-size: .98rem;
+    font-variant-numeric: tabular-nums;
+}
+
+.bath-record-note {
+    min-height: 20px;
+    margin: 0 0 10px;
+    color: #ffd94d;
+    font-size: .72rem;
+    font-weight: 800;
+}
+
+.bath-result-card label {
+    display: block;
+    margin-bottom: 7px;
+    color: rgba(240,249,243,.72);
+    font-size: .76rem;
+    text-align: left;
+}
+
+.bath-nickname-row {
+    position: relative;
+}
+
+.bath-nickname-row input {
+    width: 100%;
+    min-height: 48px;
+    border: 1px solid rgba(255,255,255,.17);
+    border-radius: 8px;
+    padding: 10px 58px 10px 13px;
+    color: #fff;
+    background: rgba(255,255,255,.04);
+    font: inherit;
+}
+
+.bath-nickname-row input:focus {
+    outline: 2px solid var(--bath-purple);
+    outline-offset: 1px;
+}
+
+.bath-nickname-row span {
+    position: absolute;
+    top: 50%;
+    right: 13px;
+    transform: translateY(-50%);
+    color: rgba(240,249,243,.42);
+    font-size: .66rem;
+}
+
+.bath-nickname-error {
+    min-height: 19px;
+    margin: 5px 0;
+    color: #ff8b83;
+    font-size: .7rem;
+    text-align: left;
+}
+
+.bath-result-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 9px;
+}
+
+.bath-save-result,
+.bath-play-again {
+    min-height: 46px;
+    border-radius: 8px;
+    font: inherit;
+    font-size: .8rem;
+    font-weight: 900;
+    cursor: pointer;
+}
+
+.bath-save-result {
+    border: 1px solid color-mix(in srgb,var(--bath-purple) 70%,#fff);
+    color: #fff;
+    background: var(--bath-purple);
+    box-shadow: 0 10px 26px color-mix(in srgb,var(--bath-purple) 25%,transparent);
+}
+
+.bath-play-again {
+    border: 1px solid color-mix(in srgb,var(--bath-accent) 60%,#fff);
+    color: #fff;
+    background: var(--bath-accent-strong);
+}
+
+.bath-result-sparkles i {
+    position: absolute;
+    width: 7px;
+    height: 13px;
+    border-radius: 2px;
+    background: #ffd94d;
+    animation: bath-confetti 1.8s ease-in-out infinite;
+}
+
+.bath-result-sparkles i:nth-child(1) { left: 9%; top: 12%; }
+.bath-result-sparkles i:nth-child(2) { left: 20%; top: 26%; background:#5dc6ff; animation-delay:.35s; }
+.bath-result-sparkles i:nth-child(3) { right: 12%; top: 16%; background:#a95cff; animation-delay:.7s; }
+.bath-result-sparkles i:nth-child(4) { right: 24%; top: 31%; background:#78dd48; animation-delay:1.05s; }
+.bath-result-sparkles i:nth-child(5) { left: 42%; top: 7%; background:#ff7267; animation-delay:1.4s; }
+
+body.bath-modal-open {
+    overflow: hidden;
+}
+
+@keyframes bath-bubble {
+    0%,100% { opacity:.2; transform:translateY(0) scale(.9); }
+    50% { opacity:.76; transform:translateY(-34px) scale(1.08); }
+}
+
+@keyframes bath-flea-move {
+    0%,100% { transform:translate(-50%,-50%) rotate(-7deg); }
+    50% { transform:translate(calc(-50% + 8px),calc(-50% - 5px)) rotate(8deg); }
+}
+
+@keyframes bath-foam-float {
+    0%,100% { transform:translate(-50%,-50%) scale(.94); }
+    50% { transform:translate(-50%,calc(-50% - 6px)) scale(1.04); }
+}
+
+@keyframes bath-pet-happy {
+    0%,100% { transform:translate(-50%,-42%) rotate(0); }
+    35% { transform:translate(-50%,calc(-42% - 7px)) rotate(-3deg); }
+    70% { transform:translate(-50%,calc(-42% - 3px)) rotate(3deg); }
+}
+
+@keyframes bath-pet-oops {
+    0%,100% { transform:translate(-50%,-42%); }
+    33% { transform:translate(calc(-50% - 5px),-42%); }
+    66% { transform:translate(calc(-50% + 5px),-42%); }
+}
+
+@keyframes bath-wrong {
+    0%,100% { margin-left:0; }
+    35% { margin-left:-6px; }
+    70% { margin-left:6px; }
+}
+
+@keyframes bath-confetti {
+    0%,100% { opacity:.2; transform:translateY(0) rotate(0); }
+    50% { opacity:1; transform:translateY(14px) rotate(130deg); }
+}
+
+@media (max-width: 1080px) {
+    .bath-premium-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .bath-ranking-table {
+        min-height: 280px;
+    }
+
+    .bath-ranking-empty {
+        min-height: 210px;
+    }
+}
+
+@media (max-width: 700px) {
+    #game-clean.bath-premium {
+        padding: 10px;
+        border-left: 0;
+        border-right: 0;
+    }
+
+    .bath-main {
+        padding: 12px;
+    }
+
+    .bath-hero {
+        min-height: 142px;
+        grid-template-columns: minmax(0,1fr) 112px;
+        gap: 10px;
+    }
+
+    .bath-hero h2 {
+        font-size: 2rem;
+    }
+
+    .bath-hero p {
+        font-size: .76rem;
+    }
+
+    .bath-illustration {
+        height: 118px;
+    }
+
+    .bath-stats {
+        gap: 6px;
+    }
+
+    .bath-stats > div {
+        min-height: 68px;
+        padding: 8px;
+    }
+
+    .bath-stats span,
+    .bath-stats small {
+        font-size: .58rem;
+    }
+
+    .bath-stats strong {
+        font-size: .92rem;
+    }
+
+    .bath-progress {
+        grid-template-columns: 1fr;
+        gap: 7px;
+    }
+
+    .bath-stage {
+        min-height: 390px;
+    }
+
+    .bath-pet-zone .pet-sprite-stack,
+    .bath-pet-zone .bath-pet-sprite,
+    .bath-pet-fallback {
+        transform: scale(3.65) !important;
+    }
+
+    .bath-spot {
+        width: 48px;
+        height: 48px;
+        font-size: 1.45rem;
+    }
+
+    .bath-tool-heading {
+        display: grid;
+        gap: 3px;
+    }
+
+    .bath-tools {
+        grid-auto-flow: column;
+        grid-auto-columns: 92px;
+        grid-template-columns: none;
+        overflow-x: auto;
+        padding: 2px 2px 7px;
+        scrollbar-width: thin;
+    }
+
+    #game-clean .bath-tools button {
+        min-height: 92px;
+    }
+
+    .bath-ranking-title {
+        display: grid;
+        gap: 3px;
+    }
+
+    .bath-ranking-table {
+        min-height: 0;
+        overflow: visible;
+    }
+
+    .bath-rank-head {
+        display: none;
+    }
+
+    .bath-rank-row {
+        min-width: 0;
+        grid-template-columns: 32px minmax(0,1fr) 76px 42px;
+        gap: 5px;
+        padding: 6px 2px;
+    }
+
+    .bath-rank-row > span:nth-child(4),
+    .bath-rank-row > span:nth-child(6) {
+        display: none;
+    }
+
+    .bath-ranking-footer {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    #game-clean .bath-ranking-footer button {
+        width: 100%;
+    }
+
+    .bath-result-modal {
+        align-items: end;
+        padding: 8px;
+    }
+
+    .bath-result-card {
+        width: 100%;
+        max-height: 95vh;
+        padding: 18px 14px calc(16px + env(safe-area-inset-bottom));
+    }
+
+    .bath-result-visual {
+        height: 150px;
+    }
+
+    .bath-result-actions {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 390px) {
+    .bath-hero {
+        grid-template-columns: 1fr 92px;
+    }
+
+    .bath-illustration {
+        height: 104px;
+    }
+
+    .bath-stage {
+        min-height: 365px;
+    }
+
+    .bath-pet-zone .pet-sprite-stack,
+    .bath-pet-zone .bath-pet-sprite,
+    .bath-pet-fallback {
+        transform: scale(3.25) !important;
+    }
+
+    .bath-spot {
+        width: 44px;
+        height: 44px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .bath-bubbles i,
+    .bath-spot-flea,
+    .bath-spot-foam,
+    .bath-pet-zone,
+    .bath-result-sparkles i {
+        animation: none !important;
+    }
+
+    .bath-progress i,
+    .bath-spot,
+    #game-clean .bath-tools button {
+        transition: none !important;
+    }
+}
