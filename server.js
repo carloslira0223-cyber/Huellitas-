@@ -45,6 +45,7 @@ const config = readConfig();
 const adminTokens = new Map();
 const adminAttempts = new Map();
 const simonSubmissions = new Map();
+const challengeSubmissions = new Map();
 const simonSubmissionWindow = 10 * 60 * 1000;
 const simonSubmissionLimit = 8;
 const adminTokenLifetime = 8 * 60 * 60 * 1000;
@@ -202,6 +203,140 @@ function publicSimonScore(item, rank, currentId) {
     };
 }
 
+
+function isChallengeRateLimited(req, gameName, anonymousId) {
+    const now = Date.now();
+    const key = gameName + ":" + requestIp(req) + ":" + anonymousId;
+    const state = challengeSubmissions.get(key);
+
+    if (!state || now - state.startedAt > simonSubmissionWindow) {
+        challengeSubmissions.set(key, { count: 1, startedAt: now });
+        return false;
+    }
+
+    state.count += 1;
+    return state.count > simonSubmissionLimit;
+}
+
+function validateGuardiansScore(body) {
+    const nickname = normalizeSimonNickname(body.nickname);
+    const anonymousId = cleanText(body.anonymousId);
+    const score = Number(body.score);
+    const attended = Number(body.attended);
+    const errors = Number(body.errors);
+    const wellbeing = Number(body.wellbeing);
+    const security = Number(body.security);
+    const reputation = Number(body.reputation);
+    const combo = Number(body.combo);
+    const duration = Number(body.duration);
+
+    if (!/^guardian-[a-z0-9-]{8,80}$/i.test(anonymousId)) {
+        return { error: "Identificador anonimo invalido." };
+    }
+
+    if (hasBlockedSimonNickname(nickname)) {
+        return { error: "Elige otro apodo." };
+    }
+
+    if (!Number.isInteger(score) || score < 0 || score > 20000 ||
+        !Number.isInteger(attended) || attended < 0 || attended > 25 ||
+        !Number.isInteger(errors) || errors < 0 || errors > 80 ||
+        !Number.isInteger(wellbeing) || wellbeing < 0 || wellbeing > 100 ||
+        !Number.isInteger(security) || security < 0 || security > 100 ||
+        !Number.isInteger(reputation) || reputation < 0 || reputation > 100 ||
+        !Number.isInteger(combo) || combo < 0 || combo > 25 ||
+        !Number.isInteger(duration) || duration < 1 || duration > 180) {
+        return { error: "Resultado fuera de los limites permitidos." };
+    }
+
+    return { value: { nickname, anonymousId, score, attended, errors, wellbeing, security, reputation, combo, duration } };
+}
+
+function compareGuardiansScores(a, b) {
+    return Number(b.score || 0) - Number(a.score || 0) ||
+        Number(b.wellbeing || 0) - Number(a.wellbeing || 0) ||
+        Number(a.errors || 0) - Number(b.errors || 0) ||
+        Number(b.attended || 0) - Number(a.attended || 0) ||
+        Number(b.combo || 0) - Number(a.combo || 0) ||
+        String(a.date || "").localeCompare(String(b.date || ""));
+}
+
+function publicGuardiansScore(item, rank, currentId) {
+    return {
+        rank,
+        nickname: normalizeSimonNickname(item.nickname),
+        score: Number(item.score || 0),
+        attended: Number(item.attended || 0),
+        errors: Number(item.errors || 0),
+        wellbeing: Number(item.wellbeing || 0),
+        security: Number(item.security || 0),
+        reputation: Number(item.reputation || 0),
+        combo: Number(item.combo || 0),
+        duration: Number(item.duration || 0),
+        date: item.date || "",
+        current: Boolean(currentId && item.anonymousId === currentId)
+    };
+}
+
+function validateDetectiveScore(body) {
+    const nickname = normalizeSimonNickname(body.nickname);
+    const anonymousId = cleanText(body.anonymousId);
+    const cases = Number(body.cases);
+    const score = Number(body.score);
+    const time = Number(body.time);
+    const hints = Number(body.hints);
+    const combo = Number(body.combo);
+    const words = Number(body.words);
+    const caseId = Number(body.caseId);
+    const completed = body.completed === true;
+
+    if (!/^detective-[a-z0-9-]{8,80}$/i.test(anonymousId)) {
+        return { error: "Identificador anonimo invalido." };
+    }
+
+    if (hasBlockedSimonNickname(nickname)) {
+        return { error: "Elige otro apodo." };
+    }
+
+    if (!completed ||
+        !Number.isInteger(cases) || cases < 1 || cases > 5000 ||
+        !Number.isInteger(score) || score < 0 || score > 100000 ||
+        !Number.isInteger(time) || time < 1 || time > 180 ||
+        !Number.isInteger(hints) || hints < 0 || hints > 3 ||
+        !Number.isInteger(combo) || combo < 0 || combo > 5 ||
+        !Number.isInteger(words) || words !== 5 ||
+        !Number.isInteger(caseId) || caseId < 1 || caseId > 4) {
+        return { error: "Resultado fuera de los limites permitidos." };
+    }
+
+    return { value: { nickname, anonymousId, cases, score, time, hints, combo, words, caseId, completed: true } };
+}
+
+function compareDetectiveScores(a, b) {
+    return Number(b.cases || 0) - Number(a.cases || 0) ||
+        Number(b.score || 0) - Number(a.score || 0) ||
+        Number(a.time || 999) - Number(b.time || 999) ||
+        Number(a.hints || 0) - Number(b.hints || 0) ||
+        Number(b.combo || 0) - Number(a.combo || 0) ||
+        String(a.date || "").localeCompare(String(b.date || ""));
+}
+
+function publicDetectiveScore(item, rank, currentId) {
+    return {
+        rank,
+        nickname: normalizeSimonNickname(item.nickname),
+        cases: Number(item.cases || 0),
+        score: Number(item.score || 0),
+        time: Number(item.time || 0),
+        hints: Number(item.hints || 0),
+        combo: Number(item.combo || 0),
+        words: Number(item.words || 0),
+        caseId: Number(item.caseId || 0),
+        date: item.date || "",
+        current: Boolean(currentId && item.anonymousId === currentId)
+    };
+}
+
 function isAdminRateLimited(req) {
     const key = requestIp(req);
     const now = Date.now();
@@ -285,6 +420,8 @@ function defaultDb() {
         sessions: {},
         scores: [],
         simonScores: [],
+        guardiansScores: [],
+        detectiveScores: [],
         adoptions: [],
         messages: [],
         reports: [],
@@ -310,7 +447,7 @@ function ensureDb() {
 function normalizeDb(db) {
     const base = defaultDb();
     const next = Object.assign(base, db || {});
-    const arrayKeys = ["users", "scores", "simonScores", "adoptions", "messages", "reports", "notifications", "mailbox", "pets", "centers"];
+    const arrayKeys = ["users", "scores", "simonScores", "guardiansScores", "detectiveScores", "adoptions", "messages", "reports", "notifications", "mailbox", "pets", "centers"];
 
     arrayKeys.forEach((key) => {
         if (!Array.isArray(next[key])) {
@@ -1094,6 +1231,133 @@ async function handleApi(req, res, pathname) {
             savedBest,
             scores,
             current: currentIndex >= 0 ? publicSimonScore(ordered[currentIndex], currentIndex + 1, score.anonymousId) : null,
+            updatedAt: now
+        });
+        return;
+    }
+
+
+    if (req.method === "GET" && pathname === "/api/guardians-ranking") {
+        const currentId = cleanText(req.headers["x-huellitas-player"]);
+        const ordered = db.guardiansScores.slice().sort(compareGuardiansScores);
+        const scores = ordered.slice(0, 10).map((item, index) => publicGuardiansScore(item, index + 1, currentId));
+        const currentIndex = currentId ? ordered.findIndex((item) => item.anonymousId === currentId) : -1;
+
+        sendJson(res, 200, {
+            ok: true,
+            title: "Mejores Guardianes",
+            scores,
+            current: currentIndex >= 0 ? publicGuardiansScore(ordered[currentIndex], currentIndex + 1, currentId) : null,
+            updatedAt: ordered.length ? ordered[0].date : null
+        });
+        return;
+    }
+
+    if (req.method === "POST" && pathname === "/api/guardians-ranking") {
+        const parsed = validateGuardiansScore(body);
+
+        if (parsed.error) {
+            sendJson(res, 400, { ok: false, error: parsed.error });
+            return;
+        }
+
+        const score = parsed.value;
+        if (isChallengeRateLimited(req, "guardians", score.anonymousId)) {
+            sendJson(res, 429, { ok: false, error: "Demasiados envios. Espera unos minutos." });
+            return;
+        }
+
+        const now = new Date().toISOString();
+        const existingIndex = db.guardiansScores.findIndex((item) => item.anonymousId === score.anonymousId);
+        let savedBest = true;
+
+        if (existingIndex >= 0) {
+            const existing = db.guardiansScores[existingIndex];
+            savedBest = compareGuardiansScores(score, existing) < 0;
+            existing.nickname = score.nickname;
+            existing.lastPlayedAt = now;
+            if (savedBest) Object.assign(existing, score, { date: now, lastPlayedAt: now });
+        } else {
+            db.guardiansScores.push(Object.assign({
+                id: "guardian-" + sha256(score.anonymousId).slice(0, 16)
+            }, score, { date: now, lastPlayedAt: now }));
+        }
+
+        db.guardiansScores = db.guardiansScores.slice().sort(compareGuardiansScores).slice(0, 500);
+        writeDb(db);
+        const ordered = db.guardiansScores.slice().sort(compareGuardiansScores);
+        const scores = ordered.slice(0, 10).map((item, index) => publicGuardiansScore(item, index + 1, score.anonymousId));
+        const currentIndex = ordered.findIndex((item) => item.anonymousId === score.anonymousId);
+
+        sendJson(res, 200, {
+            ok: true,
+            savedBest,
+            scores,
+            current: currentIndex >= 0 ? publicGuardiansScore(ordered[currentIndex], currentIndex + 1, score.anonymousId) : null,
+            updatedAt: now
+        });
+        return;
+    }
+
+    if (req.method === "GET" && pathname === "/api/detective-ranking") {
+        const currentId = cleanText(req.headers["x-huellitas-player"]);
+        const ordered = db.detectiveScores.slice().sort(compareDetectiveScores);
+        const scores = ordered.slice(0, 10).map((item, index) => publicDetectiveScore(item, index + 1, currentId));
+        const currentIndex = currentId ? ordered.findIndex((item) => item.anonymousId === currentId) : -1;
+
+        sendJson(res, 200, {
+            ok: true,
+            title: "Mejores Detectives Huellitas",
+            scores,
+            current: currentIndex >= 0 ? publicDetectiveScore(ordered[currentIndex], currentIndex + 1, currentId) : null,
+            updatedAt: ordered.length ? ordered[0].date : null
+        });
+        return;
+    }
+
+    if (req.method === "POST" && pathname === "/api/detective-ranking") {
+        const parsed = validateDetectiveScore(body);
+
+        if (parsed.error) {
+            sendJson(res, 400, { ok: false, error: parsed.error });
+            return;
+        }
+
+        const score = parsed.value;
+        if (isChallengeRateLimited(req, "detective", score.anonymousId)) {
+            sendJson(res, 429, { ok: false, error: "Demasiados envios. Espera unos minutos." });
+            return;
+        }
+
+        const now = new Date().toISOString();
+        const existingIndex = db.detectiveScores.findIndex((item) => item.anonymousId === score.anonymousId);
+        let savedBest = true;
+
+        if (existingIndex >= 0) {
+            const existing = db.detectiveScores[existingIndex];
+            score.cases = Math.min(score.cases, Number(existing.cases || 0) + 1);
+            savedBest = compareDetectiveScores(score, existing) < 0;
+            existing.nickname = score.nickname;
+            existing.lastPlayedAt = now;
+            if (savedBest) Object.assign(existing, score, { date: now, lastPlayedAt: now });
+        } else {
+            score.cases = 1;
+            db.detectiveScores.push(Object.assign({
+                id: "detective-" + sha256(score.anonymousId).slice(0, 16)
+            }, score, { date: now, lastPlayedAt: now }));
+        }
+
+        db.detectiveScores = db.detectiveScores.slice().sort(compareDetectiveScores).slice(0, 500);
+        writeDb(db);
+        const ordered = db.detectiveScores.slice().sort(compareDetectiveScores);
+        const scores = ordered.slice(0, 10).map((item, index) => publicDetectiveScore(item, index + 1, score.anonymousId));
+        const currentIndex = ordered.findIndex((item) => item.anonymousId === score.anonymousId);
+
+        sendJson(res, 200, {
+            ok: true,
+            savedBest,
+            scores,
+            current: currentIndex >= 0 ? publicDetectiveScore(ordered[currentIndex], currentIndex + 1, score.anonymousId) : null,
             updatedAt: now
         });
         return;
