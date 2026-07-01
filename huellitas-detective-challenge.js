@@ -49,8 +49,11 @@
     let pointerEnd = null;
 
     function onReady(callback) {
-        if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", callback, { once: true });
-        else callback();
+        if (document.readyState === "complete") {
+            window.setTimeout(callback, 0);
+            return;
+        }
+        window.addEventListener("load", callback, { once: true });
     }
 
     function loadStyles() {
