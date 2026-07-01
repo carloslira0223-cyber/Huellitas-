@@ -5,7 +5,7 @@
 (function () {
     "use strict";
 
-    const version = "20260630-light-v15";
+    const version = "20260630-games-v16";
     const scripts = [
         "huellitas-original.js",
         "huellitas-fixes.js",
@@ -29,6 +29,8 @@
         "huellitas-catch-challenge.js",
         "huellitas-bath-challenge.js",
         "huellitas-simon-challenge.js",
+        "huellitas-guardians-challenge.js",
+        "huellitas-detective-challenge.js",
         "huellitas-light-polish.js"
     ];
 
