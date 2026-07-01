@@ -772,3 +772,29 @@ body.catch-modal-open {
         transition: none !important;
     }
 }
+
+/* Evita cruces entre el tablero y la clasificacion en escritorios medianos. */
+.catch-premium-layout > .catch-play-surface,
+.catch-premium-layout > .catch-ranking {
+    min-width: 0;
+    max-width: 100%;
+    position: relative;
+    isolation: isolate;
+}
+
+.catch-ranking-table,
+.catch-stats,
+#game-catch .catch-board {
+    min-width: 0;
+    max-width: 100%;
+}
+
+@media (min-width: 981px) and (max-width: 1140px) {
+    .catch-premium-layout {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .catch-ranking {
+        width: 100%;
+    }
+}
