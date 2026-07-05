@@ -1,0 +1,439 @@
+/*!
+ * Proyecto Huellitas - Carlos Alexis Lira Alcala - 2026.
+ * Estructura visual Huellitas 2.0.
+ */
+
+.huellitas-structure-more {
+    position: relative;
+    min-width: 0;
+}
+
+.huellitas-structure-more > summary {
+    list-style: none;
+    cursor: pointer;
+}
+
+.huellitas-structure-more > summary::-webkit-details-marker {
+    display: none;
+}
+
+.structure-more-icon,
+.structure-link-symbol {
+    display: grid;
+    place-items: center;
+    color: var(--huellitas-nav-accent, var(--leaf-dark));
+    font-weight: 900;
+    letter-spacing: 0;
+}
+
+.structure-more-icon {
+    width: 30px;
+    height: 30px;
+    font-size: 15px;
+}
+
+.structure-link-symbol {
+    width: 38px;
+    height: 38px;
+    border: 1px solid var(--leaf);
+    border-radius: 50%;
+    background: var(--sky);
+    font-size: 15px;
+}
+
+.huellitas-structure-more-panel {
+    z-index: 20;
+}
+
+.huellitas-structure-more.has-active > summary {
+    color: #fff !important;
+    border-color: var(--huellitas-nav-accent) !important;
+    background: var(--huellitas-nav-accent) !important;
+}
+
+body.dark .structure-link-symbol {
+    color: #fff;
+    background: color-mix(in srgb, var(--huellitas-nav-accent) 40%, #151d18);
+}
+
+@media (min-width: 901px) {
+    html body .site-nav.huellitas-safe-nav .nav-links.huellitas-nav-list,
+    html body.nav-full .site-nav.huellitas-safe-nav .nav-links.huellitas-nav-list {
+        overflow: visible !important;
+    }
+
+    .huellitas-structure-more {
+        width: 64px;
+        min-width: 64px;
+        flex: 0 0 64px;
+    }
+
+    .huellitas-structure-more > summary {
+        width: 64px;
+        min-height: 58px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1px;
+        padding: 3px;
+        border: 1px solid transparent;
+        border-radius: 8px;
+        color: var(--cocoa);
+        background: transparent;
+        text-align: center;
+    }
+
+    .huellitas-structure-more > summary:hover,
+    .huellitas-structure-more[open] > summary {
+        color: var(--huellitas-nav-accent);
+        border-color: var(--huellitas-nav-primary);
+        background: transparent;
+    }
+
+    .huellitas-structure-more > summary .huellitas-nav-copy strong {
+        display: block;
+        font-size: 10px;
+        line-height: 1.15;
+    }
+
+    .huellitas-structure-more > summary .huellitas-nav-copy small {
+        display: none;
+    }
+
+    .huellitas-structure-more-panel {
+        position: absolute;
+        top: calc(100% + 8px);
+        right: 0;
+        width: min(340px, 82vw);
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 5px;
+        padding: 8px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--cream);
+        box-shadow: 0 18px 42px rgba(35, 31, 40, 0.18);
+    }
+
+    .huellitas-structure-more:not([open]) .huellitas-structure-more-panel {
+        display: none;
+    }
+
+    html body .huellitas-structure-more-panel .huellitas-nav-item {
+        width: 100%;
+        min-width: 0;
+        min-height: 54px;
+        display: grid !important;
+        grid-template-columns: 38px minmax(0, 1fr);
+        gap: 8px;
+        padding: 6px 8px !important;
+        text-align: left;
+    }
+
+    .huellitas-structure-more-panel .huellitas-nav-item .huellitas-nav-icon {
+        width: 34px;
+        height: 34px;
+        flex-basis: 34px;
+    }
+
+    .huellitas-structure-more-panel .huellitas-nav-copy strong {
+        font-size: 12px !important;
+    }
+
+    .huellitas-structure-more-panel .huellitas-nav-copy small {
+        display: block !important;
+        overflow: hidden;
+        color: var(--muted);
+        font-size: 9px;
+        line-height: 1.2;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    body.dark .huellitas-structure-more > summary {
+        color: #f2f7f4;
+    }
+
+    body.dark .huellitas-structure-more-panel {
+        border-color: rgba(225, 235, 229, 0.14);
+        background: #151d18;
+        box-shadow: 0 20px 46px rgba(0, 0, 0, 0.34);
+    }
+}
+
+@media (max-width: 900px) {
+    .huellitas-structure-more {
+        width: 100%;
+        flex: 0 0 auto;
+    }
+
+    .huellitas-structure-more > summary {
+        width: 100%;
+        min-height: 58px;
+        display: grid;
+        grid-template-columns: 42px minmax(0, 1fr);
+        align-items: center;
+        gap: 11px;
+        padding: 7px 10px;
+        border: 1px solid rgba(91, 63, 163, 0.15);
+        border-radius: 8px;
+        color: #2f2c34;
+        background: rgba(247, 245, 250, 0.8);
+        text-align: left;
+    }
+
+    .huellitas-structure-more > summary .structure-more-icon {
+        width: 38px;
+        height: 38px;
+        border: 1px solid var(--huellitas-nav-primary);
+        border-radius: 50%;
+        background: var(--huellitas-nav-soft);
+    }
+
+    .huellitas-structure-more > summary .huellitas-nav-copy {
+        display: grid;
+        gap: 2px;
+    }
+
+    .huellitas-structure-more > summary .huellitas-nav-copy strong {
+        font-size: 14px;
+        line-height: 1.2;
+    }
+
+    .huellitas-structure-more > summary .huellitas-nav-copy small {
+        display: block;
+        color: #77717f;
+        font-size: 11px;
+        line-height: 1.2;
+    }
+
+    .huellitas-structure-more-panel {
+        display: grid;
+        gap: 6px;
+        padding: 6px 0 0 12px;
+    }
+
+    .huellitas-structure-more:not([open]) .huellitas-structure-more-panel {
+        display: none;
+    }
+
+    html body .huellitas-structure-more-panel .huellitas-nav-item {
+        display: grid !important;
+    }
+
+    body.dark .huellitas-structure-more > summary {
+        color: #f1f5f2;
+        border-color: rgba(225, 235, 229, 0.12);
+        background: rgba(255, 255, 255, 0.045);
+    }
+
+    body.dark .huellitas-structure-more > summary .huellitas-nav-copy small {
+        color: #aebbb3;
+    }
+}
+
+.huellitas-home-v2 .home-hero .hero-inner > p {
+    max-width: 720px;
+}
+
+.huellitas-home-v2 .home-hero .hero-actions {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    align-items: stretch;
+    gap: 8px;
+}
+
+.huellitas-home-v2 .home-hero .hero-actions .button-link {
+    min-width: 0;
+    min-height: 48px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 9px 12px;
+    white-space: normal;
+    text-align: center;
+}
+
+.huellitas-home-v2 .featured-pet {
+    min-width: 0;
+}
+
+.home-main-actions {
+    display: block !important;
+}
+
+.home-structure-action-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.home-structure-action {
+    min-width: 0;
+    min-height: 118px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 7px;
+    padding: 16px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    color: var(--cocoa);
+    background: var(--paper);
+    box-shadow: 0 8px 22px rgba(53, 43, 34, 0.07);
+    text-decoration: none;
+}
+
+.home-structure-action:hover,
+.home-structure-action:focus-visible {
+    border-color: var(--leaf);
+    outline: 2px solid color-mix(in srgb, var(--leaf) 36%, transparent);
+    outline-offset: 2px;
+}
+
+.home-structure-action strong {
+    color: var(--leaf-dark);
+    font-size: 1rem;
+}
+
+.home-structure-action span {
+    color: var(--muted);
+    font-size: 0.78rem;
+    line-height: 1.45;
+}
+
+body.dark .home-structure-action {
+    color: var(--text);
+    border-color: var(--line);
+    background: var(--paper);
+    box-shadow: none;
+}
+
+.structure-footer-main {
+    width: min(1180px, 100%);
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(190px, 1fr);
+    gap: 28px;
+    margin: 0 auto;
+    padding: 26px clamp(16px, 4vw, 48px);
+    text-align: left;
+}
+
+.structure-footer-about {
+    max-width: 720px;
+    display: grid;
+    gap: 6px;
+}
+
+.structure-footer-main span,
+.structure-footer-links > span {
+    color: var(--leaf-dark);
+    font-size: 0.7rem;
+    font-weight: 900;
+    text-transform: uppercase;
+}
+
+.structure-footer-about strong {
+    color: var(--cocoa);
+    font-size: 1.25rem;
+}
+
+.structure-footer-about p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.82rem;
+    line-height: 1.55;
+}
+
+.structure-footer-links {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-content: start;
+    gap: 8px 14px;
+}
+
+.structure-footer-links > span {
+    grid-column: 1 / -1;
+}
+
+.structure-footer-links a {
+    color: var(--cocoa);
+    font-size: 0.78rem;
+    font-weight: 800;
+    text-decoration: none;
+}
+
+.structure-footer-links a:hover,
+.structure-footer-links a:focus-visible {
+    color: var(--leaf-dark);
+    text-decoration: underline;
+}
+
+.structure-footer-bottom {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 8px 22px;
+    padding: 12px 16px;
+    border-top: 1px solid var(--line);
+    color: var(--muted);
+    font-size: 0.68rem;
+    text-align: center;
+}
+
+body.dark .structure-footer-about strong,
+body.dark .structure-footer-links a {
+    color: var(--text);
+}
+
+#panelLogin[data-huellitas-auth2="true"] .link {
+    min-height: 40px;
+    display: grid;
+    place-items: center;
+    margin-top: 5px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    color: var(--leaf-dark);
+    background: var(--paper);
+    cursor: pointer;
+    font-weight: 850;
+}
+
+#panelLogin[data-huellitas-auth2="true"] button:disabled {
+    cursor: wait;
+    opacity: 0.68;
+}
+
+@media (max-width: 760px) {
+    .huellitas-home-v2 .home-hero .hero-actions,
+    .home-structure-action-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .home-structure-action {
+        min-height: 104px;
+        padding: 13px;
+    }
+
+    .structure-footer-main {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .structure-footer-bottom {
+        align-items: center;
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 410px) {
+    .huellitas-home-v2 .home-hero .hero-actions,
+    .home-structure-action-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .home-structure-action {
+        min-height: 88px;
+    }
+}
