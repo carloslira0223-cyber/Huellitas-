@@ -6,7 +6,7 @@
     "use strict";
 
     const STYLE_ID = "huellitas-structure-2-css";
-    const STYLE_URL = "huellitas-structure-2.css?v=20260705-structure-v1";
+    const STYLE_URL = "huellitas-structure-2.css?v=20260705-structure-v2";
     const PRIMARY_LINKS = [
         { href: "pagina.html", label: "Inicio", description: "Vista principal" },
         { href: "adoptar.html", label: "Adoptar", description: "Inicia una solicitud" },
@@ -16,13 +16,13 @@
     ];
     const SECONDARY_LINKS = [
         { href: "adopcion_huellitas.html", label: "Mascotas disponibles", description: "Conoce a quienes buscan hogar" },
-        { href: "mi_adopcion.html", label: "Mi adopcion", description: "Consulta tu seguimiento" },
+        { href: "mi_adopcion.html", label: "Mi adopción", description: "Consulta tu seguimiento" },
         { href: "pagina.html#favoritos", label: "Favoritos", description: "Vuelve a tus guardados" },
-        { href: "domesticos.html", label: "Guia de cuidados", description: "Bienestar para mascotas" },
-        { href: "areas.html", label: "Areas naturales", description: "Naturaleza y participacion" },
-        { href: "leyes.html", label: "Leyes", description: "Proteccion animal" },
+        { href: "domesticos.html", label: "Guía de cuidados", description: "Bienestar para mascotas" },
+        { href: "areas.html", label: "Áreas naturales", description: "Naturaleza y participacion" },
+        { href: "leyes.html", label: "Leyes", description: "Protección animal" },
         { href: "equipo.html", label: "Equipo", description: "Conoce el proyecto" },
-        { href: "presentacion.html", label: "Presentacion", description: "Consulta la exposicion" }
+        { href: "presentacion.html", label: "Presentación", description: "Consulta la exposicion" }
     ];
 
     function onReady(callback) {
@@ -157,10 +157,10 @@
         }
 
         const summary = document.createElement("summary");
-        summary.setAttribute("aria-label", "Abrir mas opciones");
+        summary.setAttribute("aria-label", "Abrir más opciones");
         summary.innerHTML = [
             '<span class="structure-more-icon" aria-hidden="true">•••</span>',
-            '<span class="huellitas-nav-copy"><strong>Mas</strong><small>Informacion y proyecto</small></span>'
+            '<span class="huellitas-nav-copy"><strong>Más</strong><small>Información y proyecto</small></span>'
         ].join("");
 
         const panel = document.createElement("div");
@@ -225,10 +225,10 @@
             const actions = hero.querySelector(".hero-actions");
             const quick = hero.querySelector(".home-quick-actions");
             if (eyebrow) {
-                eyebrow.textContent = "Adopcion, reportes y educacion animal";
+                eyebrow.textContent = "Adopción, reportes y educación animal";
             }
             if (paragraph) {
-                paragraph.textContent = "Huellitas es una plataforma para encontrar mascotas en adopcion, reportar casos, localizar centros de apoyo y aprender sobre cuidado animal.";
+                paragraph.textContent = "Huellitas es una plataforma para encontrar mascotas en adopción, reportar casos, localizar centros de apoyo y aprender sobre cuidado animal.";
             }
             if (actions) {
                 actions.innerHTML = [
@@ -256,7 +256,7 @@
                 heading.textContent = "Mascotas destacadas";
             }
             if (intro) {
-                intro.textContent = "Conoce algunas mascotas disponibles y entra directamente a su proceso de adopcion.";
+                intro.textContent = "Conoce algunas mascotas disponibles y entra directamente a su proceso de adopción.";
             }
             featured.querySelectorAll(".featured-pet .button-link").forEach(function (link) {
                 link.textContent = "Adoptar";
@@ -275,8 +275,8 @@
                 '</div>',
                 '<div class="home-structure-action-grid">',
                 makeHomeAction("adopcion_huellitas.html", "Mascotas disponibles", "Explora perfiles de mascotas que buscan hogar."),
-                makeHomeAction("adoptar.html", "Adoptar", "Completa una solicitud de adopcion responsable."),
-                makeHomeAction("mi_adopcion.html", "Mi adopcion", "Consulta el avance de tu solicitud."),
+                makeHomeAction("adoptar.html", "Adoptar", "Completa una solicitud de adopción responsable."),
+                makeHomeAction("mi_adopcion.html", "Mi adopción", "Consulta el avance de tu solicitud."),
                 makeHomeAction("pagina.html#favoritos", "Favoritos", "Revisa las mascotas y centros que guardaste."),
                 '</div>'
             ].join("");
@@ -292,7 +292,7 @@
                 heading.textContent = "Temas educativos";
             }
             if (intro) {
-                intro.textContent = "Aprende sobre cuidado responsable, areas naturales y leyes de proteccion animal.";
+                intro.textContent = "Aprende sobre cuidado responsable, áreas naturales y leyes de protección animal.";
             }
             const teamLink = topics.querySelector('.section-actions a[href="equipo.html"]');
             if (teamLink) {
@@ -311,7 +311,7 @@
             contactHeading.textContent = "Contacto";
         }
         if (contactIntro) {
-            contactIntro.textContent = "Comparte una duda, propuesta o situacion que necesite seguimiento.";
+            contactIntro.textContent = "Comparte una duda, propuesta o situación que necesite seguimiento.";
         }
     }
 
@@ -326,19 +326,19 @@
                 '<div class="structure-footer-about">',
                 '<span>Sobre el proyecto</span>',
                 '<strong>Huellitas 2.0</strong>',
-                '<p>Huellitas nacio como un proyecto escolar, pero busca convertirse en una plataforma util para promover la adopcion, el cuidado animal y la participacion comunitaria.</p>',
+                '<p>Huellitas nació como un proyecto escolar, pero busca convertirse en una plataforma útil para promover la adopción, el cuidado animal y la participación comunitaria.</p>',
                 '</div>',
                 '<div class="structure-footer-links">',
                 '<span>Explora</span>',
-                '<a href="areas.html">Areas</a>',
+                '<a href="areas.html">Áreas</a>',
                 '<a href="leyes.html">Leyes</a>',
                 '<a href="equipo.html">Equipo</a>',
-                '<a href="presentacion.html">Presentacion</a>',
+                '<a href="presentacion.html">Presentación</a>',
                 '</div>',
                 '</div>',
                 '<div class="structure-footer-bottom">',
                 '<strong>© 2026 Carlos Alexis Lira Alcala - Huellitas.</strong>',
-                '<span>Origen: proyecto escolar de CECyTEM Tultitlan, Grupo 404, Equipo Huellitas.</span>',
+                '<span>Origen: proyecto escolar de CECyTEM Tultitlán, Grupo 404, Equipo Huellitas.</span>',
                 '</div>'
             ].join("");
         });
@@ -388,7 +388,7 @@
         const email = String(emailInput && emailInput.value || "").trim().toLowerCase();
         const pass = String(passwordInput && passwordInput.value || "");
         if (!email || !pass) {
-            showAuthMessage("Escribe tu correo y contrasena.", "error");
+            showAuthMessage("Escribe tu correo y contraseña.", "error");
             return;
         }
 
@@ -403,7 +403,7 @@
             const data = await requestWithRetry("/api/login", {
                 method: "POST",
                 body: JSON.stringify({ email: email, pass: pass })
-            }, "El servidor esta despertando. Seguimos intentando...");
+            }, "El servidor está despertando. Seguimos intentando...");
             window.huellitasApi.setToken(data.token);
             localStorage.setItem("sesion", JSON.stringify(data.user));
             showAuthMessage("Bienvenido " + data.user.nombre, "success");
@@ -415,7 +415,7 @@
                 window.huellitasMountProfile();
             }
         } catch (error) {
-            showAuthMessage(error.message || "No fue posible iniciar sesion.", "error");
+            showAuthMessage(error.message || "No fue posible iniciar sesión.", "error");
         } finally {
             if (submit) {
                 submit.disabled = false;
@@ -465,7 +465,7 @@
                     color: color,
                     foto: photo
                 })
-            }, "El servidor esta despertando. Tu cuenta se creara en un momento...");
+            }, "El servidor está despertando. Tu cuenta se creará en un momento...");
             window.huellitasApi.setToken(data.token);
             localStorage.setItem("sesion", JSON.stringify(data.user));
             showAuthMessage("Cuenta creada correctamente.", "success");
@@ -550,7 +550,7 @@
                 }
             } else if (typeof window.abrirLogin === "function") {
                 window.abrirLogin();
-                showAuthMessage("Inicia sesion para ver tus favoritos.", "");
+                showAuthMessage("Inicia sesión para ver tus favoritos.", "");
             }
         }, 450);
     }
