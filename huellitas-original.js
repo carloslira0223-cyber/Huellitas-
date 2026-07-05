@@ -155,19 +155,40 @@
             "Content-Type": "application/json"
         }, requestOptions.headers || {});
         const token = getApiToken();
+        let timeoutController = null;
+        let timeoutTimer = 0;
 
         if (token) {
             headers.Authorization = "Bearer " + token;
         }
 
-        const response = await fetch(apiUrl(path), Object.assign({}, requestOptions, { headers }));
-        const data = await response.json().catch(() => ({}));
-
-        if (!response.ok || data.ok === false) {
-            throw new Error(data.error || "No se pudo completar la accion.");
+        if (!requestOptions.signal && window.AbortController) {
+            timeoutController = new AbortController();
+            requestOptions.signal = timeoutController.signal;
+            timeoutTimer = window.setTimeout(function () {
+                timeoutController.abort();
+            }, 30000);
         }
 
-        return data;
+        try {
+            const response = await fetch(apiUrl(path), Object.assign({}, requestOptions, { headers }));
+            const data = await response.json().catch(() => ({}));
+
+            if (!response.ok || data.ok === false) {
+                throw new Error(data.error || "No se pudo completar la accion.");
+            }
+
+            return data;
+        } catch (error) {
+            if (error && error.name === "AbortError") {
+                throw new Error("El servidor esta tardando en responder. Intenta nuevamente.");
+            }
+            throw error;
+        } finally {
+            if (timeoutTimer) {
+                window.clearTimeout(timeoutTimer);
+            }
+        }
     }
 
     window.huellitasApi = {
