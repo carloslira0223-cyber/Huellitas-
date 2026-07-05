@@ -130,7 +130,7 @@
         if (!window.huellitasApi || !window.huellitasApi.enabled) {
             return Promise.resolve(false);
         }
-        const timeout = timedAdminSignal(45000);
+        const timeout = timedAdminSignal(8000);
         window.huellitasServerWarmPromise = window.huellitasApi.request("/api/health", {
             signal: timeout.signal
         }).then(function () {
@@ -150,7 +150,7 @@
             throw new Error("El servidor seguro no esta disponible.");
         }
 
-        const waits = [16000, 35000];
+        const waits = [9000];
         let lastError;
         for (let attempt = 0; attempt < waits.length; attempt += 1) {
             const timeout = timedAdminSignal(waits[attempt]);
@@ -173,14 +173,14 @@
                     throw error;
                 }
                 if (typeof onProgress === "function") {
-                    onProgress("El servidor se esta despertando. Reintentando acceso...");
+                    onProgress("El servidor seguro no respondio. No se haran mas esperas automaticas.");
                 }
                 await new Promise(function (resolve) { setTimeout(resolve, 1200); });
             } finally {
                 timeout.clear();
             }
         }
-        throw lastError || new Error("No fue posible conectar con el panel.");
+        throw lastError || new Error("El servidor seguro no esta disponible ahora.");
     }
 
     function showAdminMessage(title, message) {
