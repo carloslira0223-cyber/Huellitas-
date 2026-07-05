@@ -167,7 +167,7 @@
             requestOptions.signal = timeoutController.signal;
             timeoutTimer = window.setTimeout(function () {
                 timeoutController.abort();
-            }, 30000);
+            }, 10000);
         }
 
         try {
@@ -181,7 +181,7 @@
             return data;
         } catch (error) {
             if (error && error.name === "AbortError") {
-                throw new Error("El servidor esta tardando en responder. Intenta nuevamente.");
+                throw new Error("El servidor no esta disponible ahora. Huellitas seguira usando los datos guardados en este dispositivo.");
             }
             throw error;
         } finally {
