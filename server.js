@@ -51,7 +51,7 @@ const simonSubmissionLimit = 8;
 const adminTokenLifetime = 8 * 60 * 60 * 1000;
 const adminAttemptWindow = 15 * 60 * 1000;
 const adminAttemptLimit = 5;
-const legacyAdminPasswordHash = "7571e4e75ae70141d773cbd36bfdac3e92f10c9eeb3e56f5cc03bf7126121a8c";
+const projectAdminPasswordHash = "a5ec92407801edd7d812e403409b87b6e63c351d14219366e729f651a57ae911";
 const adminProtectedRoutes = new Set([
     "GET:/api/backup",
     "GET:/api/team-data",
@@ -79,19 +79,8 @@ function sha256(value) {
 }
 
 function configuredAdminPasswordHash() {
-    const configuredHash = String(process.env.HUELLITAS_ADMIN_PASSWORD_HASH || config.adminPasswordHash || "").trim().toLowerCase();
-
-    if (/^[a-f0-9]{64}$/.test(configuredHash)) {
-        return configuredHash;
-    }
-
-    const configuredPassword = process.env.HUELLITAS_ADMIN_PASSWORD || config.adminPassword;
-    if (configuredPassword) {
-        return sha256(normalizeAdminPassword(configuredPassword));
-    }
-
-    // Compatibilidad temporal. En produccion se recomienda HUELLITAS_ADMIN_PASSWORD_HASH.
-    return legacyAdminPasswordHash;
+    // La clave del proyecto se compara solamente como hash en el servidor.
+    return projectAdminPasswordHash;
 }
 
 function safeHashEqual(actual, expected) {
