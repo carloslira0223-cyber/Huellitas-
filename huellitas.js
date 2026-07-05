@@ -5,7 +5,7 @@
 (function () {
     "use strict";
 
-    const version = "20260705-structure-v19";
+    const version = "20260705-structure-v20";
     const scripts = [
         "huellitas-original.js",
         "huellitas-fixes.js",
