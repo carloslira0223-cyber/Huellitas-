@@ -6,7 +6,7 @@
     "use strict";
 
     const STYLE_ID = "huellitas-tuesday-mobile-css";
-    const STYLE_URL = "huellitas-tuesday-mobile.css?v=20260705-tuesday-v1";
+    const STYLE_URL = "huellitas-tuesday-mobile.css?v=20260705-tuesday-v2";
     const LOCAL_ACCOUNTS_KEY = "huellitasLocalAccountsV2";
     const API_FALLBACK = "https://huellitas-vi7v.onrender.com";
     const MAIN_NAV = [
