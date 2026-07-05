@@ -5,7 +5,7 @@
 (function () {
     "use strict";
 
-    const version = "20260705-structure-v20";
+    const version = "20260705-tuesday-v21";
     const scripts = [
         "huellitas-original.js",
         "huellitas-fixes.js",
@@ -32,7 +32,8 @@
         "huellitas-guardians-challenge.js",
         "huellitas-detective-challenge.js",
         "huellitas-light-polish.js",
-        "huellitas-structure-2.js"
+        "huellitas-structure-2.js",
+        "huellitas-tuesday-mobile.js"
     ];
 
     function scriptUrl(src) {
