@@ -6,7 +6,7 @@
     "use strict";
 
     const STYLE_ID = "huellitas-tuesday-mobile-css";
-    const STYLE_URL = "huellitas-tuesday-mobile.css?v=20260705-tuesday-v2";
+    const STYLE_URL = "huellitas-tuesday-mobile.css?v=20260705-tuesday-v3";
     const LOCAL_ACCOUNTS_KEY = "huellitasLocalAccountsV2";
     const API_FALLBACK = "https://huellitas-vi7v.onrender.com";
     const MAIN_NAV = [
@@ -121,6 +121,79 @@
         document.body.classList.add("tuesday-app-shell");
     }
 
+    function closeMobileNavigation(nav) {
+        if (!nav) {
+            return;
+        }
+        nav.classList.remove("nav-open");
+        const toggle = nav.querySelector(".nav-menu-toggle");
+        if (toggle) {
+            toggle.setAttribute("aria-expanded", "false");
+        }
+        if (!document.querySelector(".site-nav.nav-open")) {
+            document.body.classList.remove("mobile-nav-open");
+        }
+    }
+
+    function removeBottomNavigation() {
+        document.querySelectorAll(".tuesday-bottom-nav").forEach(function (bar) {
+            bar.remove();
+        });
+        document.body.classList.remove("tuesday-app-shell");
+    }
+
+    function ensureHamburgerNavigation() {
+        document.querySelectorAll(".site-nav").forEach(function (nav) {
+            const toggle = nav.querySelector(".nav-menu-toggle");
+            if (!toggle || toggle.dataset.tuesdayMenuReady === "true") {
+                return;
+            }
+
+            toggle.dataset.tuesdayMenuReady = "true";
+            toggle.addEventListener("click", function (event) {
+                if (window.matchMedia && !window.matchMedia("(max-width: 900px)").matches) {
+                    return;
+                }
+
+                event.preventDefault();
+                event.stopImmediatePropagation();
+                const shouldOpen = !nav.classList.contains("nav-open");
+                document.querySelectorAll(".site-nav.nav-open").forEach(function (other) {
+                    closeMobileNavigation(other);
+                });
+                nav.classList.toggle("nav-open", shouldOpen);
+                document.body.classList.toggle("mobile-nav-open", shouldOpen);
+                toggle.setAttribute("aria-expanded", shouldOpen ? "true" : "false");
+            }, true);
+        });
+
+        if (document.documentElement.dataset.tuesdayMenuDelegation === "true") {
+            return;
+        }
+        document.documentElement.dataset.tuesdayMenuDelegation = "true";
+
+        document.addEventListener("click", function (event) {
+            const close = event.target.closest && event.target.closest(".huellitas-mobile-close");
+            const navLink = event.target.closest && event.target.closest(".site-nav .nav-links a");
+            if (close || navLink) {
+                closeMobileNavigation((close || navLink).closest(".site-nav"));
+                return;
+            }
+
+            document.querySelectorAll(".site-nav.nav-open").forEach(function (nav) {
+                if (!nav.contains(event.target)) {
+                    closeMobileNavigation(nav);
+                }
+            });
+        });
+
+        document.addEventListener("keydown", function (event) {
+            if (event.key === "Escape") {
+                document.querySelectorAll(".site-nav.nav-open").forEach(closeMobileNavigation);
+            }
+        });
+    }
+
     function manageVirtualKeyboard() {
         if (!window.visualViewport) {
             return;
@@ -160,31 +233,38 @@
         if (window.huellitasServerWarmPromise) {
             return window.huellitasServerWarmPromise;
         }
-        const timeout = timeoutController(45000);
+        const timeout = timeoutController(7000);
         window.huellitasServerWarmPromise = fetch(apiBase() + "/api/health", {
             method: "GET",
             cache: "no-store",
             signal: timeout.signal
         }).then(function (response) {
-            return response.ok;
+            const online = response.ok;
+            window.huellitasServerOfflineUntil = online ? 0 : Date.now() + 5 * 60 * 1000;
+            return online;
         }).catch(function () {
+            window.huellitasServerOfflineUntil = Date.now() + 5 * 60 * 1000;
             return false;
         }).finally(timeout.clear);
         return window.huellitasServerWarmPromise;
     }
 
     async function fastApiRequest(path, options, milliseconds) {
+        if (window.huellitasServerOfflineUntil && Date.now() < window.huellitasServerOfflineUntil) {
+            throw new Error("El servidor no está disponible ahora. Puedes seguir usando los datos guardados en este teléfono.");
+        }
         if (!window.huellitasApi || !window.huellitasApi.enabled) {
             throw new Error("El servidor de Huellitas no está disponible.");
         }
-        const timeout = timeoutController(milliseconds || 18000);
+        const timeout = timeoutController(Math.min(milliseconds || 7000, 7000));
         try {
             return await window.huellitasApi.request(path, Object.assign({}, options || {}, {
                 signal: timeout.signal
             }));
         } catch (error) {
             if (error && error.name === "AbortError") {
-                throw new Error("El servidor está despertando. Intenta nuevamente en unos segundos.");
+                window.huellitasServerOfflineUntil = Date.now() + 5 * 60 * 1000;
+                throw new Error("El servidor no está disponible ahora. Puedes seguir usando los datos guardados en este teléfono.");
             }
             throw error;
         } finally {
@@ -499,7 +579,8 @@
 
     function init() {
         ensureStyles();
-        buildBottomNavigation();
+        removeBottomNavigation();
+        ensureHamburgerNavigation();
         manageVirtualKeyboard();
         wireFastAuth();
         markTouchReady();
@@ -514,7 +595,8 @@
                 scheduled = true;
                 setTimeout(function () {
                     scheduled = false;
-                    buildBottomNavigation();
+                    removeBottomNavigation();
+                    ensureHamburgerNavigation();
                     markTouchReady();
                 }, 80);
             }).observe(document.body, { childList: true, subtree: true });
