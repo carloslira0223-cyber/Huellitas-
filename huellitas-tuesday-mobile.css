@@ -512,3 +512,46 @@ canvas {
         animation: none !important;
     }
 }
+
+/* Controles de carrusel con area tactil real, manteniendo el punto visual compacto. */
+@media (max-width: 900px) {
+    .carousel-control,
+    .featured-carousel-controls > button {
+        width: 44px !important;
+        min-width: 44px !important;
+        height: 44px !important;
+        min-height: 44px !important;
+        padding: 0 !important;
+    }
+
+    .carousel-dots button,
+    .featured-carousel-dots button {
+        position: relative;
+        width: 44px !important;
+        min-width: 44px !important;
+        height: 44px !important;
+        min-height: 44px !important;
+        padding: 0 !important;
+        border: 0 !important;
+        background: transparent !important;
+        box-shadow: none !important;
+    }
+
+    .carousel-dots button::after,
+    .featured-carousel-dots button::after {
+        content: "";
+        width: 10px;
+        height: 10px;
+        display: block;
+        margin: auto;
+        border-radius: 50%;
+        background: color-mix(in srgb, var(--leaf) 44%, transparent);
+    }
+
+    .carousel-dots button.active::after,
+    .featured-carousel-dots button.active::after {
+        width: 18px;
+        border-radius: 8px;
+        background: var(--leaf-dark);
+    }
+}
