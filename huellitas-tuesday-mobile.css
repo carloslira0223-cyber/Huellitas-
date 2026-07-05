@@ -555,3 +555,30 @@ canvas {
         background: var(--leaf-dark);
     }
 }
+
+
+/* Navegacion movil simplificada: solo se usa el menu de tres lineas. */
+html {
+    scroll-padding-bottom: 16px;
+}
+
+body.tuesday-app-shell {
+    padding-bottom: 0 !important;
+}
+
+.tuesday-bottom-nav {
+    display: none !important;
+}
+
+@media (max-width: 900px) {
+    .site-nav .nav-menu-toggle {
+        min-width: 48px !important;
+        min-height: 48px !important;
+        touch-action: manipulation;
+    }
+
+    .site-nav.nav-open .nav-links {
+        visibility: visible !important;
+        pointer-events: auto !important;
+    }
+}
