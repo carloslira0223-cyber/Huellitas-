@@ -112,24 +112,75 @@
         window.huellitasApi.adminSecureWrapped = true;
     }
 
-    async function loginWithBackend(password) {
+    function timedAdminSignal(milliseconds) {
+        const controller = new AbortController();
+        const timer = setTimeout(function () {
+            controller.abort();
+        }, milliseconds);
+        return {
+            signal: controller.signal,
+            clear: function () { clearTimeout(timer); }
+        };
+    }
+
+    function warmAdminServer() {
+        if (window.huellitasServerWarmPromise) {
+            return window.huellitasServerWarmPromise;
+        }
+        if (!window.huellitasApi || !window.huellitasApi.enabled) {
+            return Promise.resolve(false);
+        }
+        const timeout = timedAdminSignal(45000);
+        window.huellitasServerWarmPromise = window.huellitasApi.request("/api/health", {
+            signal: timeout.signal
+        }).then(function () {
+            return true;
+        }).catch(function () {
+            return false;
+        }).finally(timeout.clear);
+        return window.huellitasServerWarmPromise;
+    }
+
+    function isSlowServerError(error) {
+        return Boolean(error && (error.name === "AbortError" || /(failed to fetch|network|load failed|timeout|aborted)/i.test(String(error.message || ""))));
+    }
+
+    async function loginWithBackend(password, onProgress) {
         if (!window.huellitasApi || !window.huellitasApi.enabled || typeof window.huellitasApi.request !== "function") {
             throw new Error("El servidor seguro no esta disponible.");
         }
 
-        const data = await window.huellitasApi.request("/api/admin/login", {
-            method: "POST",
-            body: JSON.stringify({ password: String(password || "") })
-        });
-
-        if (!data || !data.token) {
-            throw new Error("El servidor no entrego una sesion valida.");
+        const waits = [16000, 35000];
+        let lastError;
+        for (let attempt = 0; attempt < waits.length; attempt += 1) {
+            const timeout = timedAdminSignal(waits[attempt]);
+            try {
+                const data = await window.huellitasApi.request("/api/admin/login", {
+                    method: "POST",
+                    signal: timeout.signal,
+                    body: JSON.stringify({ password: String(password || "") })
+                });
+                if (!data || !data.token) {
+                    throw new Error("El servidor no entrego una sesion valida.");
+                }
+                setAdminToken(data.token);
+                sessionStorage.setItem(adminAccessKey, "true");
+                wrapApiRequest();
+                return true;
+            } catch (error) {
+                lastError = error;
+                if (!isSlowServerError(error) || attempt === waits.length - 1) {
+                    throw error;
+                }
+                if (typeof onProgress === "function") {
+                    onProgress("El servidor se esta despertando. Reintentando acceso...");
+                }
+                await new Promise(function (resolve) { setTimeout(resolve, 1200); });
+            } finally {
+                timeout.clear();
+            }
         }
-
-        setAdminToken(data.token);
-        sessionStorage.setItem(adminAccessKey, "true");
-        wrapApiRequest();
-        return true;
+        throw lastError || new Error("No fue posible conectar con el panel.");
     }
 
     function showAdminMessage(title, message) {
@@ -185,7 +236,14 @@
             }
 
             try {
-                await loginWithBackend(passwordInput && passwordInput.value);
+                await loginWithBackend(passwordInput && passwordInput.value, function (message) {
+                    if (feedback) {
+                        feedback.textContent = message;
+                    }
+                    if (submit) {
+                        submit.textContent = "Conectando...";
+                    }
+                });
                 if (feedback) {
                     feedback.textContent = "Acceso concedido.";
                 }
@@ -239,6 +297,7 @@
         }
 
         wrapApiRequest();
+        warmAdminServer();
         wrapLogout();
         secureAdminForm();
         removeDangerButtons();
