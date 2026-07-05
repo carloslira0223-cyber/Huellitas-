@@ -7,10 +7,12 @@ const fs = require("fs");
 const path = require("path");
 const crypto = require("crypto");
 const tls = require("tls");
+const os = require("os");
 
 const root = __dirname;
-const dataDir = path.resolve(process.env.DATA_DIR || path.join(root, "data"));
-const dbPath = path.join(dataDir, "huellitas-db.json");
+const configuredDataDir = path.resolve(process.env.DATA_DIR || path.join(root, "data"));
+let dataDir = configuredDataDir;
+let dbPath = path.join(dataDir, "huellitas-db.json");
 const configPath = path.join(root, "server-config.json");
 const port = Number(process.env.PORT || 3000);
 
@@ -423,10 +425,36 @@ function defaultDb() {
     };
 }
 
-function ensureDb() {
-    if (!fs.existsSync(dataDir)) {
-        fs.mkdirSync(dataDir, { recursive: true });
+function selectWritableDataDirectory() {
+    const candidates = Array.from(new Set([
+        configuredDataDir,
+        path.join(root, "data"),
+        path.join(os.tmpdir(), "huellitas-data")
+    ].map((candidate) => path.resolve(candidate))));
+
+    let lastError = null;
+    for (const candidate of candidates) {
+        try {
+            fs.mkdirSync(candidate, { recursive: true });
+            fs.accessSync(candidate, fs.constants.W_OK);
+            dataDir = candidate;
+            dbPath = path.join(dataDir, "huellitas-db.json");
+
+            if (candidate !== configuredDataDir) {
+                console.warn("DATA_DIR no es escribible. Huellitas usara temporalmente: " + candidate);
+            }
+            return;
+        } catch (error) {
+            lastError = error;
+            console.warn("No se puede usar el directorio de datos " + candidate + ": " + error.message);
+        }
     }
+
+    throw lastError || new Error("No existe un directorio escribible para Huellitas.");
+}
+
+function ensureDb() {
+    selectWritableDataDirectory();
 
     if (!fs.existsSync(dbPath)) {
         writeDb(defaultDb());
