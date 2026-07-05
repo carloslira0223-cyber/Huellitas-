@@ -1,0 +1,12 @@
+# Proyecto Huellitas - Carlos Alexis Lira Alcala - 2026.
+# Configuracion reproducible del servidor. Todos los derechos reservados.
+services:
+  - type: web
+    name: huellitas
+    runtime: node
+    plan: free
+    branch: main
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/health
+    autoDeployTrigger: commit
