@@ -6,7 +6,7 @@
     "use strict";
 
     const STYLE_ID = "huellitas-tuesday-mobile-css";
-    const STYLE_URL = "huellitas-tuesday-mobile.css?v=20260705-tuesday-v3";
+    const STYLE_URL = "huellitas-tuesday-mobile.css?v=20260705-profile-v4";
     const LOCAL_ACCOUNTS_KEY = "huellitasLocalAccountsV2";
     const API_FALLBACK = "https://huellitas-vi7v.onrender.com";
     const MAIN_NAV = [
@@ -351,7 +351,7 @@
         account.passHash = passHash;
         account.pendingSync = Boolean(pendingSync);
         account.updatedAt = new Date().toISOString();
-        writeJson(LOCAL_ACCOUNTS_KEY, accounts);
+        writeAccountsWithQuotaRecovery(accounts, email);
         return account;
     }
 
@@ -376,11 +376,22 @@
         element.textContent = message || "";
     }
 
+    function safeStoreSession(user) {
+        try {
+            localStorage.setItem("sesion", JSON.stringify(user));
+            return user;
+        } catch (error) {
+            const compact = Object.assign({}, user, { foto: "" });
+            localStorage.setItem("sesion", JSON.stringify(compact));
+            return compact;
+        }
+    }
+
     function finishLogin(user, token, message) {
         if (token && window.huellitasApi) {
             window.huellitasApi.setToken(token);
         }
-        localStorage.setItem("sesion", JSON.stringify(user));
+        safeStoreSession(user);
         showAuthMessage(message || "Sesión iniciada correctamente.", "success");
         const panel = document.getElementById("panelLogin");
         if (panel) {
@@ -410,14 +421,257 @@
                 resolve("");
                 return;
             }
-            if (file.size > 1600000) {
-                reject(new Error("La foto es muy pesada. Usa una imagen menor a 1.6 MB."));
+            if (!/^image\//i.test(file.type || "") || file.size > 8000000) {
+                reject(new Error("Selecciona una imagen válida menor a 8 MB."));
                 return;
             }
+
             const reader = new FileReader();
-            reader.onload = function () { resolve(reader.result); };
-            reader.onerror = reject;
+            reader.onerror = function () {
+                reject(new Error("No se pudo leer la foto."));
+            };
+            reader.onload = function () {
+                const image = new Image();
+                image.onerror = function () {
+                    reject(new Error("La foto no tiene un formato compatible."));
+                };
+                image.onload = function () {
+                    const maxSide = 256;
+                    const scale = Math.min(1, maxSide / Math.max(image.naturalWidth || 1, image.naturalHeight || 1));
+                    const width = Math.max(1, Math.round((image.naturalWidth || 1) * scale));
+                    const height = Math.max(1, Math.round((image.naturalHeight || 1) * scale));
+                    const canvas = document.createElement("canvas");
+                    canvas.width = width;
+                    canvas.height = height;
+                    const context = canvas.getContext("2d");
+                    context.fillStyle = "#ffffff";
+                    context.fillRect(0, 0, width, height);
+                    context.drawImage(image, 0, 0, width, height);
+                    resolve(canvas.toDataURL("image/jpeg", 0.72));
+                };
+                image.src = String(reader.result || "");
+            };
             reader.readAsDataURL(file);
+        });
+    }
+
+    function writeAccountsWithQuotaRecovery(accounts, currentEmail) {
+        try {
+            writeJson(LOCAL_ACCOUNTS_KEY, accounts);
+            return;
+        } catch (error) {
+            try {
+                const legacy = readJson("usuarios", []).map(function (item) {
+                    const clean = Object.assign({}, item);
+                    if (/^data:image/i.test(clean.foto || "") && String(clean.foto).length > 120000) {
+                        clean.foto = "";
+                    }
+                    return clean;
+                });
+                localStorage.setItem("usuarios", JSON.stringify(legacy));
+                const session = readJson("sesion", null);
+                if (session && /^data:image/i.test(session.foto || "") && String(session.foto).length > 120000) {
+                    session.foto = "";
+                    localStorage.setItem("sesion", JSON.stringify(session));
+                }
+            } catch (ignored) {}
+
+            const compact = accounts.map(function (item) {
+                const clean = Object.assign({}, item);
+                if (clean.email !== currentEmail && /^data:image/i.test(clean.foto || "")) {
+                    clean.foto = "";
+                }
+                return clean;
+            });
+            try {
+                writeJson(LOCAL_ACCOUNTS_KEY, compact);
+                return;
+            } catch (secondError) {
+                const current = compact.find(function (item) { return item.email === currentEmail; });
+                if (current) {
+                    current.foto = "";
+                }
+                writeJson(LOCAL_ACCOUNTS_KEY, compact);
+            }
+        }
+    }
+
+    function updateProfileStores(user) {
+        const email = String(user.email || "").trim().toLowerCase();
+        const accounts = localAccounts();
+        const account = accounts.find(function (item) { return item.email === email; });
+        if (account) {
+            account.nombre = user.nombre;
+            account.color = user.color || account.color || "#5f9d63";
+            account.foto = user.foto || account.foto || "";
+            account.updatedAt = new Date().toISOString();
+            writeAccountsWithQuotaRecovery(accounts, email);
+        }
+
+        const legacy = readJson("usuarios", []);
+        const legacyIndex = legacy.findIndex(function (item) {
+            return String(item.email || "").trim().toLowerCase() === email;
+        });
+        const publicUser = publicLocalUser(Object.assign({}, account || user, user));
+        if (legacyIndex >= 0) {
+            legacy[legacyIndex] = Object.assign({}, legacy[legacyIndex], publicUser);
+        } else {
+            legacy.push(publicUser);
+        }
+        try {
+            writeJson("usuarios", legacy);
+        } catch (ignored) {}
+        safeStoreSession(publicUser);
+        return publicUser;
+    }
+
+    function closeEditPanel() {
+        const panel = document.getElementById("editarPanel");
+        if (panel) {
+            panel.classList.remove("active");
+        }
+        document.body.classList.remove("mobile-modal-open");
+    }
+
+    function openEditProfile(event) {
+        if (event) {
+            event.preventDefault();
+            event.stopImmediatePropagation();
+        }
+        const user = readJson("sesion", null);
+        const panel = document.getElementById("editarPanel");
+        if (!user || !panel) {
+            return;
+        }
+
+        document.querySelectorAll(".profile-popover").forEach(function (popover) {
+            popover.style.display = "none";
+        });
+        document.body.classList.remove("profile-sheet-open");
+        const loginPanel = document.getElementById("panelLogin");
+        if (loginPanel) {
+            loginPanel.classList.remove("active");
+        }
+        const name = document.getElementById("editNombre");
+        const color = document.getElementById("editColor");
+        if (name) {
+            name.value = user.nombre || "";
+        }
+        if (color) {
+            color.value = user.color || "#5f9d63";
+        }
+        panel.classList.add("active");
+        panel.scrollTop = 0;
+        document.body.classList.add("mobile-modal-open");
+    }
+
+    async function saveEditedProfile(event) {
+        if (event) {
+            event.preventDefault();
+            event.stopImmediatePropagation();
+        }
+        const user = readJson("sesion", null);
+        if (!user) {
+            return;
+        }
+        const nameInput = document.getElementById("editNombre");
+        const colorInput = document.getElementById("editColor");
+        const photoInput = document.getElementById("editFoto");
+        const name = String(nameInput && nameInput.value || "").trim();
+        if (!name) {
+            showAuthMessage("Escribe un nombre para tu perfil.", "error");
+            return;
+        }
+
+        try {
+            const photo = await fileAsDataUrl(photoInput);
+            const updated = Object.assign({}, user, {
+                nombre: name,
+                color: String(colorInput && colorInput.value || user.color || "#5f9d63")
+            });
+            if (photo) {
+                updated.foto = photo;
+            }
+            const localUser = updateProfileStores(updated);
+            closeEditPanel();
+            if (typeof window.cargarUsuario === "function") {
+                window.cargarUsuario();
+            }
+            if (typeof window.huellitasMountProfile === "function") {
+                window.huellitasMountProfile();
+            }
+            showAuthMessage("Perfil actualizado correctamente.", "success");
+
+            if (window.huellitasApi && window.huellitasApi.enabled) {
+                window.huellitasApi.request("/api/profile", {
+                    method: "POST",
+                    body: JSON.stringify(localUser)
+                }).then(function (data) {
+                    if (data && data.user) {
+                        updateProfileStores(data.user);
+                    }
+                }).catch(function () {});
+            }
+        } catch (error) {
+            showAuthMessage(error.message || "No se pudo actualizar el perfil.", "error");
+        }
+    }
+
+    function wireProfileEditing() {
+        window.abrirEditar = openEditProfile;
+        window.guardarCambios = saveEditedProfile;
+        if (document.documentElement.dataset.profileEditDelegated === "true") {
+            return;
+        }
+        document.documentElement.dataset.profileEditDelegated = "true";
+        document.addEventListener("click", function (event) {
+            const edit = event.target.closest && event.target.closest('.profile-edit-link[href*="#editar-perfil"], [onclick*="abrirEditar"]');
+            if (edit) {
+                openEditProfile(event);
+                return;
+            }
+            const close = event.target.closest && event.target.closest("#editarPanel [data-account-panel-close]");
+            if (close) {
+                closeEditPanel();
+            }
+        }, true);
+    }
+
+    function wireMoreMenus() {
+        document.querySelectorAll(".huellitas-structure-more").forEach(function (details) {
+            const summary = details.querySelector(":scope > summary");
+            const panel = details.querySelector(":scope > .huellitas-structure-more-panel");
+            if (!summary || summary.dataset.tuesdayMoreReady === "true") {
+                return;
+            }
+            summary.dataset.tuesdayMoreReady = "true";
+            if (panel) {
+                panel.querySelectorAll(".huellitas-extra").forEach(function (link) {
+                    link.classList.remove("huellitas-extra");
+                });
+            }
+            summary.setAttribute("aria-expanded", details.open ? "true" : "false");
+            summary.addEventListener("click", function (event) {
+                event.preventDefault();
+                event.stopImmediatePropagation();
+                const opening = !details.open;
+                document.querySelectorAll(".huellitas-structure-more[open]").forEach(function (other) {
+                    if (other !== details) {
+                        other.open = false;
+                        const otherSummary = other.querySelector(":scope > summary");
+                        if (otherSummary) {
+                            otherSummary.setAttribute("aria-expanded", "false");
+                        }
+                    }
+                });
+                details.open = opening;
+                summary.setAttribute("aria-expanded", opening ? "true" : "false");
+                if (opening && window.innerWidth > 900) {
+                    const rect = summary.getBoundingClientRect();
+                    details.style.setProperty("--more-panel-top", Math.round(rect.bottom + 8) + "px");
+                    details.style.setProperty("--more-panel-right", Math.max(12, Math.round(window.innerWidth - rect.right)) + "px");
+                }
+            }, true);
         });
     }
 
@@ -437,7 +691,7 @@
             if (data.token && window.huellitasApi) {
                 window.huellitasApi.setToken(data.token);
             }
-            localStorage.setItem("sesion", JSON.stringify(publicLocalUser(saved)));
+            safeStoreSession(publicLocalUser(saved));
         } catch (error) {
             if (/registrado/i.test(String(error && error.message || ""))) {
                 try {
@@ -502,7 +756,7 @@
             if (data.token && window.huellitasApi) {
                 window.huellitasApi.setToken(data.token);
             }
-            localStorage.setItem("sesion", JSON.stringify(data.user));
+            safeStoreSession(data.user);
         } catch (ignored) {}
     }
 
@@ -583,6 +837,8 @@
         ensureHamburgerNavigation();
         manageVirtualKeyboard();
         wireFastAuth();
+        wireProfileEditing();
+        wireMoreMenus();
         markTouchReady();
         warmServer();
 
@@ -597,6 +853,8 @@
                     scheduled = false;
                     removeBottomNavigation();
                     ensureHamburgerNavigation();
+                    wireProfileEditing();
+                    wireMoreMenus();
                     markTouchReady();
                 }, 80);
             }).observe(document.body, { childList: true, subtree: true });
