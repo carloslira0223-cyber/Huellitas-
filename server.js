@@ -13,6 +13,7 @@ const root = __dirname;
 const configuredDataDir = path.resolve(process.env.DATA_DIR || path.join(root, "data"));
 let dataDir = configuredDataDir;
 let dbPath = path.join(dataDir, "huellitas-db.json");
+let dataDirectoryReady = false;
 const configPath = path.join(root, "server-config.json");
 const port = Number(process.env.PORT || 3000);
 
@@ -426,6 +427,10 @@ function defaultDb() {
 }
 
 function selectWritableDataDirectory() {
+    if (dataDirectoryReady) {
+        return;
+    }
+
     const candidates = Array.from(new Set([
         configuredDataDir,
         path.join(root, "data"),
@@ -443,6 +448,7 @@ function selectWritableDataDirectory() {
             if (candidate !== configuredDataDir) {
                 console.warn("DATA_DIR no es escribible. Huellitas usara temporalmente: " + candidate);
             }
+            dataDirectoryReady = true;
             return;
         } catch (error) {
             lastError = error;
