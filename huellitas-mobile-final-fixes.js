@@ -1,14 +1,16 @@
 /*!
  * Proyecto Huellitas - Carlos Alexis Lira Alcala - 2026.
- * Refuerzo final para bugs moviles de cuenta, menu, perfil y carrusel.
+ * Refuerzo final de navegacion, cuenta, perfil y sincronizacion movil.
  */
 (function () {
     "use strict";
 
     const STYLE_ID = "huellitas-mobile-final-fixes-css";
-    const STYLE_URL = "huellitas-mobile-final-fixes.css?v=20260806-mobile-v1";
+    const STYLE_URL = "huellitas-mobile-final-fixes.css?v=20260806-mobile-v2";
     const ACCOUNTS_KEY = "huellitasLocalAccountsV2";
     const API_FALLBACK = "https://huellitas-vi7v.onrender.com";
+    const PENDING_API_KEY = "huellitasPendingApiWritesV1";
+    let flushingPendingWrites = false;
     const IMAGE_KEYS = [
         "usuarios",
         "sesion",
@@ -77,15 +79,59 @@
     }
 
     function cleanupStorage(keepCurrentSessionPhoto) {
+        const keys = [];
+        for (let index = 0; index < localStorage.length; index += 1) {
+            const key = localStorage.key(index);
+            if (key && keys.indexOf(key) < 0) {
+                keys.push(key);
+            }
+        }
         IMAGE_KEYS.forEach(function (key) {
+            if (keys.indexOf(key) < 0) {
+                keys.push(key);
+            }
+        });
+
+        keys.forEach(function (key) {
             try {
                 const value = localStorage.getItem(key);
                 if (!value || value.indexOf("data:image/") < 0) {
                     return;
                 }
                 const parsed = JSON.parse(value);
-                const cleaned = stripLargeImages(parsed, key === "sesion" && keepCurrentSessionPhoto);
+                const preserveSessionImage = key === "sesion" && keepCurrentSessionPhoto;
+                const cleaned = stripLargeImages(parsed, preserveSessionImage);
                 localStorage.setItem(key, JSON.stringify(cleaned));
+            } catch (ignored) {
+                try {
+                    const raw = localStorage.getItem(key);
+                    if (/^data:image\//i.test(String(raw || ""))) {
+                        localStorage.removeItem(key);
+                    }
+                } catch (ignoredAgain) {}
+            }
+        });
+    }
+
+    function makeRoomForAccount() {
+        cleanupStorage(false);
+        [
+            "huellitasNotificaciones",
+            "huellitasBuzon",
+            "huellitasFavoritos",
+            "huellitasReportes",
+            "huellitasSolicitudesAdopcion",
+            "huellitasMascotasExtra",
+            "huellitasMascotasPerdidas",
+            "huellitasCentrosRevision"
+        ].forEach(function (key) {
+            try {
+                const value = readJson(key, null);
+                if (Array.isArray(value) && value.length > 30) {
+                    localStorage.setItem(key, JSON.stringify(stripLargeImages(value.slice(0, 30), false)));
+                } else if (value && typeof value === "object") {
+                    localStorage.setItem(key, JSON.stringify(stripLargeImages(value, false)));
+                }
             } catch (ignored) {}
         });
     }
@@ -101,9 +147,20 @@
                 localStorage.setItem(key, text);
                 return value;
             } catch (secondError) {
+                makeRoomForAccount();
                 const compact = stripLargeImages(value, false);
-                localStorage.setItem(key, JSON.stringify(compact));
-                return compact;
+                try {
+                    localStorage.setItem(key, JSON.stringify(compact));
+                    return compact;
+                } catch (lastError) {
+                    try {
+                        localStorage.removeItem(key);
+                        localStorage.setItem(key, JSON.stringify(compact));
+                        return compact;
+                    } catch (finalError) {
+                        throw new Error("No queda espacio para guardar este perfil. Quita fotos pesadas e intenta de nuevo.");
+                    }
+                }
             }
         }
     }
@@ -250,7 +307,7 @@
                 const image = new Image();
                 image.onerror = function () { reject(new Error("La foto no tiene un formato compatible.")); };
                 image.onload = function () {
-                    const maxSide = 144;
+                    const maxSide = 112;
                     const scale = Math.min(1, maxSide / Math.max(image.naturalWidth || 1, image.naturalHeight || 1));
                     const width = Math.max(1, Math.round((image.naturalWidth || 1) * scale));
                     const height = Math.max(1, Math.round((image.naturalHeight || 1) * scale));
@@ -261,11 +318,11 @@
                     context.fillStyle = "#ffffff";
                     context.fillRect(0, 0, width, height);
                     context.drawImage(image, 0, 0, width, height);
-                    let output = canvas.toDataURL("image/jpeg", 0.6);
+                    let output = canvas.toDataURL("image/jpeg", 0.52);
                     if (output.length > 65000) {
-                        output = canvas.toDataURL("image/jpeg", 0.48);
+                        output = canvas.toDataURL("image/jpeg", 0.4);
                     }
-                    resolve(output.length > 85000 ? "" : output);
+                    resolve(output.length > 52000 ? "" : output);
                 };
                 image.src = String(reader.result || "");
             };
@@ -280,20 +337,140 @@
         return API_FALLBACK;
     }
 
+    function pendingServerWrites() {
+        const pending = readJson(PENDING_API_KEY, []);
+        return Array.isArray(pending) ? pending : [];
+    }
+
+    function canQueueServerWrite(path, options) {
+        const method = String(options && options.method || "GET").toUpperCase();
+        if (method !== "POST" || !/^\/api\//.test(String(path || ""))) {
+            return false;
+        }
+        return !/^\/api\/(login|register|health|admin(?:\/|$))/.test(String(path || ""));
+    }
+
+    function queueServerWrite(path, options) {
+        if (!canQueueServerWrite(path, options) || options && options.skipQueue) {
+            return;
+        }
+        const body = String(options && options.body || "");
+        if (!body || body.length > 180000) {
+            return;
+        }
+        const key = String(path) + "|" + body;
+        const pending = pendingServerWrites().filter(function (item) {
+            return item && item.key !== key;
+        });
+        pending.push({
+            key: key,
+            path: String(path),
+            method: String(options && options.method || "POST").toUpperCase(),
+            body: body,
+            savedAt: Date.now()
+        });
+        safeSetJson(PENDING_API_KEY, pending.slice(-24), { keepCurrentSessionPhoto: false });
+    }
+
+    function flushPendingServerWrites() {
+        if (flushingPendingWrites || !window.huellitasApi || !window.huellitasApi.enabled) {
+            return;
+        }
+        const pending = pendingServerWrites();
+        if (!pending.length) {
+            return;
+        }
+        flushingPendingWrites = true;
+        let remaining = pending.slice();
+
+        function nextWrite() {
+            const entry = remaining.shift();
+            if (!entry) {
+                safeSetJson(PENDING_API_KEY, [], { keepCurrentSessionPhoto: false });
+                flushingPendingWrites = false;
+                return;
+            }
+            apiRequest(entry.path, {
+                method: entry.method || "POST",
+                body: entry.body || "",
+                skipQueue: true
+            }, 55000).then(function () {
+                nextWrite();
+            }).catch(function () {
+                const untouched = [entry].concat(remaining);
+                safeSetJson(PENDING_API_KEY, untouched.slice(-24), { keepCurrentSessionPhoto: false });
+                flushingPendingWrites = false;
+            });
+        }
+
+        nextWrite();
+    }
+
     function apiRequest(path, options, milliseconds) {
-        if (!window.huellitasApi || !window.huellitasApi.enabled || typeof window.huellitasApi.request !== "function") {
+        if (!window.huellitasApi || !window.huellitasApi.enabled) {
             return Promise.reject(new Error("El servidor no esta disponible ahora."));
         }
-        const controller = new AbortController();
-        const timer = setTimeout(function () { controller.abort(); }, Math.min(milliseconds || 7000, 7000));
-        return window.huellitasApi.request(path, Object.assign({}, options || {}, { signal: controller.signal }))
-            .finally(function () { clearTimeout(timer); });
+
+        const controller = window.AbortController ? new AbortController() : null;
+        const timeout = Math.max(12000, Math.min(Number(milliseconds || 50000), 60000));
+        const requestOptions = Object.assign({ method: "GET" }, options || {});
+        const skipQueue = Boolean(requestOptions.skipQueue);
+        delete requestOptions.skipQueue;
+        const headers = Object.assign({ "Content-Type": "application/json" }, requestOptions.headers || {});
+        const token = localStorage.getItem("huellitasToken") || "";
+        const timer = controller ? setTimeout(function () { controller.abort(); }, timeout) : 0;
+
+        if (token && !headers.Authorization) {
+            headers.Authorization = "Bearer " + token;
+        }
+
+        return fetch(apiBase() + path, Object.assign({}, requestOptions, {
+            headers: headers,
+            cache: "no-store",
+            signal: controller ? controller.signal : requestOptions.signal
+        })).then(function (response) {
+            return response.json().catch(function () { return {}; }).then(function (data) {
+                if (!response.ok || data.ok === false) {
+                    throw new Error(data.error || "No se pudo completar la accion.");
+                }
+                return data;
+            });
+        }).catch(function (error) {
+            if (!skipQueue) {
+                queueServerWrite(path, options);
+            }
+            if (error && error.name === "AbortError") {
+                throw new Error("El servidor tarda en responder. Tu informacion queda en este dispositivo y se sincronizara cuando Huellitas este disponible.");
+            }
+            throw error;
+        }).finally(function () {
+            if (timer) {
+                clearTimeout(timer);
+            }
+        });
     }
 
     function warmServer() {
         try {
             fetch(apiBase() + "/api/health", { cache: "no-store" }).catch(function () {});
         } catch (ignored) {}
+    }
+
+    function improveServerTransport() {
+        if (!window.huellitasApi || window.huellitasApi.mobileFinalTransport) {
+            return;
+        }
+        window.huellitasApi.request = function (path, options) {
+            return apiRequest(path, options, 50000);
+        };
+        window.huellitasApi.mobileFinalTransport = true;
+        window.addEventListener("online", flushPendingServerWrites);
+        window.addEventListener("visibilitychange", function () {
+            if (document.visibilityState === "visible") {
+                flushPendingServerWrites();
+            }
+        });
+        setTimeout(flushPendingServerWrites, 1800);
     }
 
     async function finalRegister(event) {
@@ -309,16 +486,18 @@
             showAuthMessage("Completa nombre, correo y una contrasena de al menos 6 caracteres.", "error");
             return;
         }
+
         setSubmitState("registerForm", true, "Creando...", "Crear cuenta");
-        showAuthMessage("Creando tu perfil en este telefono...", "");
+        showAuthMessage("Creando tu perfil. Tambien lo sincronizaremos con Huellitas.", "");
         try {
-            cleanupStorage(true);
+            makeRoomForAccount();
             const foto = await compressPhoto(document.getElementById("foto"));
             if (localAccounts().some(function (item) { return item.email === email; })) {
                 throw new Error("Ese correo ya tiene una cuenta en este dispositivo.");
             }
             const account = await saveLocalAccount({ nombre: nombre, email: email, color: color, foto: foto }, password, true);
             const user = publicUser(account);
+            user.foto = foto || user.foto;
             const legacy = readJson("usuarios", []);
             if (Array.isArray(legacy) && !legacy.some(function (item) { return String(item.email || "").toLowerCase() === email; })) {
                 legacy.push(user);
@@ -326,16 +505,22 @@
             }
             finishLogin(user, "", "Cuenta creada. Ya puedes usar Huellitas.");
             warmServer();
+
             apiRequest("/api/register", {
                 method: "POST",
                 body: JSON.stringify({ nombre: nombre, email: email, pass: password, color: color, foto: foto })
-            }, 7000).then(function (data) {
-                if (data && data.user) {
-                    saveLocalAccount(data.user, password, false).then(function (saved) {
-                        finishLogin(publicUser(saved), data.token || "", "Cuenta sincronizada.");
-                    });
+            }, 55000).then(function (data) {
+                if (!data || !data.user) {
+                    return;
                 }
-            }).catch(function () {});
+                saveLocalAccount(data.user, password, false).then(function (saved) {
+                    const syncedUser = publicUser(saved);
+                    syncedUser.foto = data.user.foto || user.foto || "";
+                    finishLogin(syncedUser, data.token || "", "Cuenta sincronizada con Huellitas.");
+                });
+            }).catch(function () {
+                // El perfil local queda disponible; no guardamos la contrasena en una cola del navegador.
+            });
         } catch (error) {
             showAuthMessage(error.message || "No fue posible crear la cuenta.", "error");
         } finally {
@@ -354,6 +539,7 @@
             showAuthMessage("Escribe tu correo y contrasena.", "error");
             return;
         }
+
         setSubmitState("loginForm", true, "Ingresando...", "Ingresar");
         showAuthMessage("Verificando tu cuenta...", "");
         try {
@@ -364,7 +550,7 @@
                 apiRequest("/api/login", {
                     method: "POST",
                     body: JSON.stringify({ email: email, pass: password })
-                }, 7000).then(function (data) {
+                }, 55000).then(function (data) {
                     if (data && data.user) {
                         saveLocalAccount(data.user, password, false);
                         if (data.token && window.huellitasApi) {
@@ -374,16 +560,51 @@
                 }).catch(function () {});
                 return;
             }
+
+            showAuthMessage("Conectando con Huellitas. Puede tardar un momento al iniciar el servidor...", "");
             const data = await apiRequest("/api/login", {
                 method: "POST",
                 body: JSON.stringify({ email: email, pass: password })
-            }, 7000);
+            }, 55000);
             const account = await saveLocalAccount(data.user, password, false);
-            finishLogin(publicUser(account), data.token || "", "Bienvenido " + account.nombre + ".");
+            const user = publicUser(account);
+            user.foto = data.user && data.user.foto || user.foto;
+            finishLogin(user, data.token || "", "Bienvenido " + account.nombre + ".");
         } catch (error) {
             showAuthMessage(error.message || "No fue posible iniciar sesion.", "error");
         } finally {
             setSubmitState("loginForm", false, "Ingresando...", "Ingresar");
+        }
+    }
+
+    function enhanceAuthPanel() {
+        const panel = document.getElementById("panelLogin");
+        if (!panel || panel.dataset.mobileFinalAuthReady === "true") {
+            return;
+        }
+        panel.dataset.mobileFinalAuthReady = "true";
+        panel.classList.add("huellitas-auth-panel");
+
+        const close = panel.querySelector("[data-account-panel-close]");
+        if (close) {
+            close.setAttribute("aria-label", "Cerrar acceso");
+        }
+
+        panel.querySelectorAll('input[type="email"]').forEach(function (input) {
+            input.setAttribute("autocomplete", input.id === "email" ? "email" : "username");
+            input.setAttribute("inputmode", "email");
+        });
+        panel.querySelectorAll('input[type="password"]').forEach(function (input) {
+            input.setAttribute("autocomplete", input.id === "newPass" ? "new-password" : "current-password");
+            input.setAttribute("minlength", "6");
+        });
+
+        const register = document.getElementById("registerForm");
+        if (register && !register.querySelector(".auth-storage-note")) {
+            const note = document.createElement("p");
+            note.className = "auth-storage-note";
+            note.textContent = "Tu perfil queda disponible en este dispositivo y se sincroniza cuando Huellitas responde.";
+            register.appendChild(note);
         }
     }
 
@@ -393,6 +614,7 @@
         }
         window.registro = finalRegister;
         window.login = finalLogin;
+        enhanceAuthPanel();
     }
 
     function updateProfileStores(user) {
@@ -472,7 +694,7 @@
             return;
         }
         try {
-            cleanupStorage(true);
+            makeRoomForAccount();
             const foto = await compressPhoto(document.getElementById("editFoto"));
             const updated = Object.assign({}, user, {
                 nombre: name,
@@ -490,10 +712,63 @@
                 window.huellitasMountProfile();
             }
             showAuthMessage("Perfil actualizado correctamente.", "success");
-            apiRequest("/api/profile", { method: "POST", body: JSON.stringify(saved) }, 7000).catch(function () {});
+            apiRequest("/api/profile", { method: "POST", body: JSON.stringify(saved) }, 55000).catch(function () {});
         } catch (error) {
             showAuthMessage(error.message || "No se pudo actualizar el perfil.", "error");
         }
+    }
+
+    function simplifyProfile(popover) {
+        if (!popover || popover.dataset.mobileFinalProfileReady === "true") {
+            return;
+        }
+        popover.dataset.mobileFinalProfileReady = "true";
+
+        const tabs = popover.querySelector(".profile-tabs");
+        if (tabs) {
+            const extraTabs = Array.from(tabs.querySelectorAll("[data-profile-tab]")).filter(function (button) {
+                return ["logros", "patitas", "buzon"].indexOf(button.dataset.profileTab || "") >= 0;
+            });
+
+            if (extraTabs.length) {
+                const details = document.createElement("details");
+                details.className = "profile-secondary-tabs";
+                details.innerHTML = '<summary><span>Mas del perfil</span><small>Logros, patitas y buzon</small></summary><div class="profile-secondary-tab-list"></div>';
+                const list = details.querySelector(".profile-secondary-tab-list");
+                extraTabs.forEach(function (button) {
+                    list.appendChild(button);
+                });
+                list.addEventListener("click", function (event) {
+                    if (event.target.closest("[data-profile-tab]")) {
+                        details.open = false;
+                    }
+                });
+                tabs.insertAdjacentElement("afterend", details);
+            }
+        }
+
+        Array.from(popover.querySelectorAll(".profile-section")).forEach(function (section) {
+            const heading = section.querySelector(":scope > h3");
+            const title = String(heading && heading.textContent || "").trim().toLowerCase();
+            if (title.indexOf("preferencias") >= 0 && !section.querySelector(".profile-preferences")) {
+                const details = document.createElement("details");
+                details.className = "profile-preferences";
+                details.innerHTML = '<summary>Preferencias</summary><div class="profile-preferences-content"></div>';
+                const content = details.querySelector(".profile-preferences-content");
+                Array.from(section.children).forEach(function (child) {
+                    if (child !== heading) {
+                        content.appendChild(child);
+                    }
+                });
+                if (heading) {
+                    heading.remove();
+                }
+                section.appendChild(details);
+            }
+            if (title.indexOf("accesos") >= 0) {
+                section.classList.add("profile-quick-access");
+            }
+        });
     }
 
     function wireProfile() {
@@ -502,6 +777,7 @@
         document.querySelectorAll("#menuPerfil,.profile-popover").forEach(function (popover) {
             popover.setAttribute("role", "dialog");
             popover.style.maxWidth = "";
+            simplifyProfile(popover);
         });
     }
 
@@ -545,29 +821,31 @@
 
     function wireMore() {
         document.querySelectorAll(".huellitas-structure-more").forEach(function (details) {
-            const summary = details.querySelector(":scope > summary");
+            const oldSummary = details.querySelector(":scope > summary");
             const panel = details.querySelector(":scope > .huellitas-structure-more-panel");
+
             if (panel) {
                 panel.querySelectorAll(".huellitas-extra").forEach(function (link) {
                     link.classList.remove("huellitas-extra");
                 });
             }
-            if (!summary || summary.dataset.mobileFinalMoreReady === "true") {
+
+            if (!oldSummary || details.dataset.mobileFinalMoreVersion === "2") {
                 return;
             }
-            summary.dataset.mobileFinalMoreReady = "true";
+
+            const summary = oldSummary.cloneNode(true);
+            oldSummary.replaceWith(summary);
+            details.dataset.mobileFinalMoreVersion = "2";
+            summary.setAttribute("role", "button");
+            summary.setAttribute("tabindex", "0");
             summary.setAttribute("aria-expanded", details.open ? "true" : "false");
-            summary.addEventListener("click", function (event) {
-                event.preventDefault();
-                event.stopPropagation();
-                if (typeof event.stopImmediatePropagation === "function") {
-                    event.stopImmediatePropagation();
-                }
+
+            function setOpen(opening) {
                 const nav = details.closest(".site-nav");
                 if (window.innerWidth <= 900) {
                     openMobileNav(nav);
                 }
-                const opening = !details.open;
                 document.querySelectorAll(".huellitas-structure-more[open]").forEach(function (other) {
                     if (other !== details) {
                         other.open = false;
@@ -583,9 +861,27 @@
                 summary.setAttribute("aria-expanded", opening ? "true" : "false");
                 if (opening) {
                     positionMorePanel(details);
-                    if (window.innerWidth <= 900) {
-                        setTimeout(function () { details.scrollIntoView({ block: "nearest" }); }, 40);
-                    }
+                    window.requestAnimationFrame(function () {
+                        if (window.innerWidth <= 900) {
+                            details.scrollIntoView({ block: "nearest", behavior: "smooth" });
+                        }
+                    });
+                }
+            }
+
+            function activate(event) {
+                event.preventDefault();
+                event.stopPropagation();
+                if (typeof event.stopImmediatePropagation === "function") {
+                    event.stopImmediatePropagation();
+                }
+                setOpen(!details.open);
+            }
+
+            summary.addEventListener("click", activate, true);
+            summary.addEventListener("keydown", function (event) {
+                if (event.key === "Enter" || event.key === " ") {
+                    activate(event);
                 }
             }, true);
         });
@@ -665,6 +961,7 @@
     }
 
     function refresh() {
+        improveServerTransport();
         wireAuth();
         wireProfile();
         wireMore();
@@ -675,6 +972,7 @@
     function init() {
         ensureStyles();
         cleanupStorage(true);
+        warmServer();
         refresh();
         handleClicks();
         setTimeout(refresh, 250);
