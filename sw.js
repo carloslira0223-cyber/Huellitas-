@@ -2,7 +2,7 @@
  * Proyecto Huellitas - Carlos Alexis Lira Alcala - 2026.
  * Service worker para uso instalable y respaldo sin conexion.
  */
-const CACHE_NAME = "huellitas-pwa-20260705-v14";
+const CACHE_NAME = "huellitas-pwa-20260806-v15";
 const APP_SHELL = [
     "./",
     "./app.html",
@@ -28,6 +28,8 @@ const APP_SHELL = [
     "./huellitas-structure-2.css",
     "./huellitas-tuesday-mobile.js",
     "./huellitas-tuesday-mobile.css",
+    "./huellitas-mobile-final-fixes.js",
+    "./huellitas-mobile-final-fixes.css",
     "./pwa-icon.svg",
     "./offline.html"
 ];
