@@ -938,3 +938,122 @@ body.dark .auth-storage-note {
         font-size: 11px;
     }
 }
+
+
+/* Menu responsive: evita que el encabezado y las opciones de "Mas" se compriman. */
+@media (max-width: 900px) {
+    html body .site-nav.huellitas-safe-nav .huellitas-mobile-head {
+        grid-template-columns: 44px minmax(0, 1fr) 44px !important;
+    }
+
+    html body .site-nav.huellitas-safe-nav .huellitas-mobile-head > .huellitas-mobile-brand {
+        grid-column: 1 / 3 !important;
+        grid-row: 1 !important;
+        width: auto !important;
+        max-width: none !important;
+        min-width: 0 !important;
+        overflow: hidden !important;
+    }
+
+    html body .site-nav.huellitas-safe-nav .huellitas-mobile-brand > img {
+        width: 42px !important;
+        height: 42px !important;
+        min-width: 42px !important;
+        flex: 0 0 42px !important;
+    }
+
+    html body .site-nav.huellitas-safe-nav .huellitas-mobile-brand > div {
+        min-width: 0 !important;
+        overflow: hidden !important;
+    }
+
+    html body .site-nav.huellitas-safe-nav .huellitas-mobile-brand strong,
+    html body .site-nav.huellitas-safe-nav .huellitas-mobile-brand span {
+        display: block !important;
+        min-width: 0 !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        white-space: nowrap !important;
+    }
+
+    html body .site-nav.huellitas-safe-nav .huellitas-mobile-close {
+        position: static !important;
+        top: auto !important;
+        right: auto !important;
+        inset: auto !important;
+        grid-column: 3 !important;
+        grid-row: 1 !important;
+        align-self: center !important;
+        justify-self: end !important;
+        width: 42px !important;
+        min-width: 42px !important;
+        height: 42px !important;
+        min-height: 42px !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        transform: none !important;
+        z-index: 3 !important;
+    }
+
+    html body .site-nav.huellitas-safe-nav .huellitas-structure-more {
+        width: 100% !important;
+        min-width: 0 !important;
+        max-width: 100% !important;
+        flex: 0 0 auto !important;
+    }
+
+    html body .site-nav.huellitas-safe-nav .huellitas-structure-more-panel {
+        width: 100% !important;
+        min-width: 0 !important;
+        max-width: 100% !important;
+        display: none !important;
+        grid-template-columns: minmax(0, 1fr) !important;
+        box-sizing: border-box !important;
+    }
+
+    html body .site-nav.huellitas-safe-nav .huellitas-structure-more[open] > .huellitas-structure-more-panel,
+    html body .site-nav.huellitas-safe-nav .huellitas-structure-more.huellitas-more-open > .huellitas-structure-more-panel {
+        display: grid !important;
+    }
+
+    html body .site-nav.huellitas-safe-nav .huellitas-structure-more-panel .huellitas-nav-item {
+        width: 100% !important;
+        min-width: 0 !important;
+        max-width: 100% !important;
+        display: grid !important;
+        grid-template-columns: 42px minmax(0, 1fr) !important;
+        grid-template-areas: "icon copy" !important;
+        align-items: center !important;
+        gap: 10px !important;
+        box-sizing: border-box !important;
+    }
+
+    html body .site-nav.huellitas-safe-nav .huellitas-structure-more-panel .huellitas-nav-icon {
+        grid-area: icon !important;
+        width: 38px !important;
+        height: 38px !important;
+        min-width: 38px !important;
+    }
+
+    html body .site-nav.huellitas-safe-nav .huellitas-structure-more-panel .huellitas-nav-copy {
+        grid-area: copy !important;
+        width: auto !important;
+        min-width: 0 !important;
+        max-width: none !important;
+        justify-self: stretch !important;
+        overflow: visible !important;
+    }
+
+    html body .site-nav.huellitas-safe-nav .huellitas-structure-more-panel .huellitas-nav-copy strong,
+    html body .site-nav.huellitas-safe-nav .huellitas-structure-more-panel .huellitas-nav-copy small {
+        display: block !important;
+        min-width: 0 !important;
+        max-width: 100% !important;
+        overflow: visible !important;
+        text-overflow: clip !important;
+        white-space: normal !important;
+        word-break: normal !important;
+        overflow-wrap: normal !important;
+        hyphens: none !important;
+    }
+}
