@@ -1057,3 +1057,125 @@ body.dark .auth-storage-note {
         hyphens: none !important;
     }
 }
+
+
+/* Perfil de escritorio y control compacto de "Mas". */
+.site-nav.huellitas-safe-nav.huellitas-profile-open {
+    z-index: 2800 !important;
+}
+
+[data-global-profile].profile-open > .profile-popover {
+    display: block !important;
+    pointer-events: auto !important;
+}
+
+@media (min-width: 901px) {
+    html body .site-nav.huellitas-safe-nav [data-global-profile] {
+        position: relative !important;
+        z-index: 2;
+        min-width: 0;
+    }
+
+    html body .site-nav.huellitas-safe-nav [data-global-profile] .profile-chip {
+        min-height: 48px !important;
+        max-width: min(250px, 20vw);
+        padding: 7px 11px !important;
+        border-color: color-mix(in srgb, var(--huellitas-nav-primary, var(--leaf, #5f9d63)) 42%, var(--line)) !important;
+        background: var(--paper, #ffffff) !important;
+        box-shadow: none !important;
+        cursor: pointer;
+    }
+
+    html body .site-nav.huellitas-safe-nav [data-global-profile] .profile-chip:hover,
+    html body .site-nav.huellitas-safe-nav [data-global-profile] .profile-chip:focus-visible {
+        border-color: var(--huellitas-nav-accent, var(--leaf-dark, #2f6b43)) !important;
+        outline: 2px solid color-mix(in srgb, var(--huellitas-nav-primary, var(--leaf, #5f9d63)) 28%, transparent);
+        outline-offset: 2px;
+        transform: none !important;
+    }
+
+    html body .site-nav.huellitas-safe-nav [data-global-profile] .profile-chip > span {
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    html body .site-nav.huellitas-safe-nav [data-global-profile] > .profile-popover {
+        position: fixed !important;
+        z-index: 3100 !important;
+        top: 72px !important;
+        right: 18px !important;
+        bottom: 18px !important;
+        left: auto !important;
+        width: min(500px, calc(100vw - 36px)) !important;
+        max-width: none !important;
+        max-height: none !important;
+        pointer-events: auto !important;
+    }
+
+    html body .site-nav.huellitas-safe-nav .huellitas-structure-more {
+        width: 50px !important;
+        min-width: 50px !important;
+        flex: 0 0 50px !important;
+    }
+
+    html body .site-nav.huellitas-safe-nav .huellitas-structure-more > summary {
+        width: 50px !important;
+        min-height: 50px !important;
+        display: grid !important;
+        place-items: center !important;
+        padding: 0 !important;
+        border: 1px solid transparent !important;
+        border-radius: 8px !important;
+        background: transparent !important;
+    }
+
+    html body .site-nav.huellitas-safe-nav .huellitas-structure-more > summary .huellitas-nav-copy {
+        display: none !important;
+    }
+
+    html body .site-nav.huellitas-safe-nav .huellitas-structure-more > summary .structure-more-icon {
+        width: 34px !important;
+        height: 34px !important;
+        display: grid !important;
+        place-items: center !important;
+        border: 1px solid var(--line) !important;
+        border-radius: 8px !important;
+        background: transparent !important;
+        color: var(--huellitas-nav-accent, var(--leaf-dark, #2f6b43)) !important;
+        font-size: 20px !important;
+        font-weight: 900 !important;
+        letter-spacing: 1px !important;
+        line-height: 1 !important;
+        transition: border-color 160ms ease, color 160ms ease, box-shadow 160ms ease, background 160ms ease;
+    }
+
+    html body .site-nav.huellitas-safe-nav .huellitas-structure-more > summary:hover,
+    html body .site-nav.huellitas-safe-nav .huellitas-structure-more > summary:focus-visible {
+        border-color: transparent !important;
+        background: transparent !important;
+        color: inherit !important;
+        outline: none !important;
+    }
+
+    html body .site-nav.huellitas-safe-nav .huellitas-structure-more > summary:hover .structure-more-icon,
+    html body .site-nav.huellitas-safe-nav .huellitas-structure-more > summary:focus-visible .structure-more-icon {
+        border-color: var(--huellitas-nav-accent, var(--leaf-dark, #2f6b43)) !important;
+        background: transparent !important;
+        box-shadow: 0 0 0 3px color-mix(in srgb, var(--huellitas-nav-primary, var(--leaf, #5f9d63)) 18%, transparent);
+    }
+
+    html body .site-nav.huellitas-safe-nav .huellitas-structure-more[open] > summary .structure-more-icon,
+    html body .site-nav.huellitas-safe-nav .huellitas-structure-more.huellitas-more-open > summary .structure-more-icon {
+        border-color: var(--huellitas-nav-accent, var(--leaf-dark, #2f6b43)) !important;
+        background: var(--huellitas-nav-accent, var(--leaf-dark, #2f6b43)) !important;
+        color: #ffffff !important;
+        box-shadow: none !important;
+    }
+
+    html body.dark .site-nav.huellitas-safe-nav [data-global-profile] .profile-chip {
+        background: #17211b !important;
+        color: #f4fbf5 !important;
+    }
+}
