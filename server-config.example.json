@@ -3,5 +3,7 @@
     "https://carloslira0223-cyber.github.io",
     "http://localhost:3000"
   ],
-  "teamEmail": ""
+  "teamEmail": "",
+  "databaseUrl": "",
+  "adminPasswordHash": ""
 }
