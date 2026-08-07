@@ -6,7 +6,7 @@
     "use strict";
 
     const STYLE_ID = "huellitas-mobile-final-fixes-css";
-    const STYLE_URL = "huellitas-mobile-final-fixes.css?v=20260806-mobile-v3";
+    const STYLE_URL = "huellitas-mobile-final-fixes.css?v=20260806-mobile-v4";
     const ACCOUNTS_KEY = "huellitasLocalAccountsV2";
     const API_FALLBACK = "https://huellitas-vi7v.onrender.com";
     const PENDING_API_KEY = "huellitasPendingApiWritesV1";
@@ -887,6 +887,135 @@
         });
     }
 
+
+    function getStableProfileParts(wrap) {
+        if (!wrap) {
+            return { chip: null, popover: null, nav: null };
+        }
+        return {
+            chip: wrap.querySelector(":scope > .profile-chip"),
+            popover: wrap.querySelector(":scope > .profile-popover"),
+            nav: wrap.closest(".site-nav")
+        };
+    }
+
+    function setStableProfileOpen(wrap, opening) {
+        const parts = getStableProfileParts(wrap);
+        const chip = parts.chip;
+        const popover = parts.popover;
+        const nav = parts.nav;
+
+        if (!chip || !popover) {
+            return;
+        }
+
+        if (opening) {
+            document.querySelectorAll("[data-global-profile].profile-open").forEach(function (other) {
+                if (other !== wrap) {
+                    setStableProfileOpen(other, false);
+                }
+            });
+
+            popover.classList.remove("mobile-profile-panel");
+            if (popover.parentNode !== wrap) {
+                wrap.appendChild(popover);
+            }
+            popover.style.display = "block";
+            popover.scrollTop = 0;
+            wrap.classList.add("profile-open");
+            if (nav) {
+                nav.classList.add("huellitas-profile-open");
+            }
+            document.body.classList.add("profile-sheet-open");
+            document.body.classList.add("mobile-modal-open");
+            chip.setAttribute("aria-expanded", "true");
+            return;
+        }
+
+        popover.style.display = "none";
+        popover.classList.remove("mobile-profile-panel");
+        if (popover.parentNode !== wrap) {
+            wrap.appendChild(popover);
+        }
+        wrap.classList.remove("profile-open");
+        chip.setAttribute("aria-expanded", "false");
+
+        if (nav && !nav.querySelector("[data-global-profile].profile-open")) {
+            nav.classList.remove("huellitas-profile-open");
+        }
+
+        if (!document.querySelector("[data-global-profile].profile-open")) {
+            document.body.classList.remove("profile-sheet-open");
+            document.body.classList.remove("mobile-modal-open");
+        }
+    }
+
+    function stabilizeGlobalProfile() {
+        document.querySelectorAll("[data-global-profile]").forEach(function (wrap, index) {
+            const parts = getStableProfileParts(wrap);
+            const chip = parts.chip;
+            const popover = parts.popover;
+            const close = popover && popover.querySelector("[data-profile-close], .profile-close");
+
+            if (!chip || !popover || chip.dataset.mobileFinalProfileVersion === "4") {
+                return;
+            }
+
+            chip.dataset.mobileFinalProfileVersion = "4";
+            if (!popover.id) {
+                popover.id = "huellitas-profile-panel-" + index;
+            }
+            chip.setAttribute("aria-controls", popover.id);
+            chip.setAttribute("aria-haspopup", "dialog");
+
+            chip.addEventListener("click", function (event) {
+                event.preventDefault();
+                event.stopImmediatePropagation();
+                setStableProfileOpen(wrap, chip.getAttribute("aria-expanded") !== "true");
+            }, true);
+
+            if (close) {
+                close.addEventListener("click", function (event) {
+                    event.preventDefault();
+                    event.stopImmediatePropagation();
+                    setStableProfileOpen(wrap, false);
+                }, true);
+            }
+
+            popover.addEventListener("click", function (event) {
+                event.stopPropagation();
+            }, true);
+        });
+
+        if (document.documentElement.dataset.mobileFinalProfileOutside !== "true") {
+            document.documentElement.dataset.mobileFinalProfileOutside = "true";
+
+            document.addEventListener("pointerdown", function (event) {
+                document.querySelectorAll("[data-global-profile].profile-open").forEach(function (wrap) {
+                    const parts = getStableProfileParts(wrap);
+                    if (!wrap.contains(event.target) && !(parts.popover && parts.popover.contains(event.target))) {
+                        setStableProfileOpen(wrap, false);
+                    }
+                });
+            }, true);
+
+            document.addEventListener("keydown", function (event) {
+                if (event.key === "Escape") {
+                    document.querySelectorAll("[data-global-profile].profile-open").forEach(function (wrap) {
+                        setStableProfileOpen(wrap, false);
+                    });
+                }
+            }, true);
+        }
+    }
+
+    function polishMoreControl() {
+        document.querySelectorAll(".huellitas-structure-more > summary").forEach(function (summary) {
+            summary.setAttribute("title", "Más opciones");
+            summary.setAttribute("aria-label", "Abrir más opciones");
+        });
+    }
+
     function stabilizeProfileOpening() {
         const originalToggle = window.toggleMenu;
         if (typeof originalToggle === "function" && !originalToggle.mobileFinalWrapped) {
@@ -1017,7 +1146,9 @@
         improveServerTransport();
         wireAuth();
         wireProfile();
+        stabilizeGlobalProfile();
         wireMore();
+        polishMoreControl();
         stabilizeProfileOpening();
         stabilizeCarousel();
     }
