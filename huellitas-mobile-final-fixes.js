@@ -6,7 +6,7 @@
     "use strict";
 
     const STYLE_ID = "huellitas-mobile-final-fixes-css";
-    const STYLE_URL = "huellitas-mobile-final-fixes.css?v=20260806-mobile-v2";
+    const STYLE_URL = "huellitas-mobile-final-fixes.css?v=20260806-mobile-v3";
     const ACCOUNTS_KEY = "huellitasLocalAccountsV2";
     const API_FALLBACK = "https://huellitas-vi7v.onrender.com";
     const PENDING_API_KEY = "huellitasPendingApiWritesV1";
