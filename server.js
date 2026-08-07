@@ -52,7 +52,10 @@ const persistence = {
     ready: false,
     syncing: false,
     queuedSnapshot: null,
+    backingUp: false,
+    queuedBackup: null,
     lastSyncedAt: null,
+    lastBackupAt: null,
     lastError: ""
 };
 
@@ -448,8 +451,10 @@ function persistenceSummary() {
         persistent: persistence.ready,
         configured: persistence.enabled,
         lastSyncedAt: persistence.lastSyncedAt,
+        lastBackupAt: persistence.lastBackupAt,
+        backupRetention: persistence.ready ? 30 : 0,
         message: persistence.ready
-            ? "Datos sincronizados con PostgreSQL."
+            ? "Datos sincronizados con PostgreSQL y respaldos automáticos."
             : (persistence.enabled
                 ? "La base de datos esta configurada, pero no se pudo conectar. Se usa el respaldo temporal del servidor."
                 : "El servidor usa un respaldo temporal. Configura DATABASE_URL para conservar datos tras reinicios.")
@@ -497,6 +502,50 @@ function queuePersistentSnapshot(db) {
     });
 }
 
+function queuePersistentBackup(db, force) {
+    if (!persistence.ready || !persistence.pool) {
+        return;
+    }
+
+    const backupInterval = 12 * 60 * 60 * 1000;
+    const lastBackupTime = persistence.lastBackupAt ? Date.parse(persistence.lastBackupAt) : 0;
+    if (!force && lastBackupTime && Date.now() - lastBackupTime < backupInterval) {
+        return;
+    }
+
+    persistence.queuedBackup = JSON.stringify(normalizeDb(db));
+    if (persistence.backingUp) {
+        return;
+    }
+
+    persistence.backingUp = true;
+    Promise.resolve().then(async function () {
+        while (persistence.queuedBackup && persistence.pool) {
+            const snapshot = persistence.queuedBackup;
+            persistence.queuedBackup = null;
+
+            try {
+                await persistence.pool.query(
+                    "INSERT INTO huellitas_backups (payload, created_at) VALUES ($1::jsonb, NOW())",
+                    [snapshot]
+                );
+                await persistence.pool.query(
+                    "DELETE FROM huellitas_backups WHERE id NOT IN (" +
+                    "SELECT id FROM huellitas_backups ORDER BY created_at DESC, id DESC LIMIT 30)"
+                );
+                persistence.lastBackupAt = new Date().toISOString();
+                persistence.lastError = "";
+            } catch (error) {
+                persistence.lastError = error.message || "No se pudo crear el respaldo automático.";
+                console.error("No se pudo crear el respaldo automático:", persistence.lastError);
+                break;
+            }
+        }
+    }).finally(function () {
+        persistence.backingUp = false;
+    });
+}
+
 async function initializePersistentStore() {
     if (!persistence.enabled) {
         return;
@@ -525,6 +574,13 @@ async function initializePersistentStore() {
             "updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()" +
             ")"
         );
+        await pool.query(
+            "CREATE TABLE IF NOT EXISTS huellitas_backups (" +
+            "id BIGSERIAL PRIMARY KEY, " +
+            "payload JSONB NOT NULL, " +
+            "created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()" +
+            ")"
+        );
 
         const result = await pool.query("SELECT payload, updated_at FROM huellitas_state WHERE id = 1");
         if (result.rowCount && result.rows[0] && result.rows[0].payload) {
@@ -537,6 +593,15 @@ async function initializePersistentStore() {
 
         if (!result.rowCount) {
             queuePersistentSnapshot(readDb());
+        }
+
+        const latestBackup = await pool.query(
+            "SELECT created_at FROM huellitas_backups ORDER BY created_at DESC, id DESC LIMIT 1"
+        );
+        if (latestBackup.rowCount) {
+            persistence.lastBackupAt = new Date(latestBackup.rows[0].created_at).toISOString();
+        } else {
+            queuePersistentBackup(readDb(), true);
         }
     } catch (error) {
         persistence.lastError = error.message || "No se pudo iniciar PostgreSQL.";
@@ -629,6 +694,7 @@ function writeDbFile(db) {
 function writeDb(db) {
     writeDbFile(db);
     queuePersistentSnapshot(db);
+    queuePersistentBackup(db, false);
 }
 
 function sendJson(res, status, payload) {
