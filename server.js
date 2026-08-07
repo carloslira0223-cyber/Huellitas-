@@ -45,6 +45,17 @@ function readConfig() {
 }
 
 const config = readConfig();
+const databaseUrl = String(process.env.DATABASE_URL || config.databaseUrl || "").trim();
+const persistence = {
+    enabled: Boolean(databaseUrl),
+    pool: null,
+    ready: false,
+    syncing: false,
+    queuedSnapshot: null,
+    lastSyncedAt: null,
+    lastError: ""
+};
+
 const adminTokens = new Map();
 const adminAttempts = new Map();
 const simonSubmissions = new Map();
@@ -82,8 +93,12 @@ function sha256(value) {
 }
 
 function configuredAdminPasswordHash() {
-    // La clave del proyecto se compara solamente como hash en el servidor.
-    return projectAdminPasswordHash;
+    // En produccion se puede cambiar sin publicar la clave usando ADMIN_PASSWORD_HASH.
+    const candidate = String(process.env.ADMIN_PASSWORD_HASH || config.adminPasswordHash || projectAdminPasswordHash)
+        .trim()
+        .toLowerCase();
+
+    return /^[a-f0-9]{64}$/.test(candidate) ? candidate : projectAdminPasswordHash;
 }
 
 function safeHashEqual(actual, expected) {
@@ -426,6 +441,113 @@ function defaultDb() {
     };
 }
 
+
+function persistenceSummary() {
+    return {
+        provider: persistence.ready ? "postgresql" : "json",
+        persistent: persistence.ready,
+        configured: persistence.enabled,
+        lastSyncedAt: persistence.lastSyncedAt,
+        message: persistence.ready
+            ? "Datos sincronizados con PostgreSQL."
+            : (persistence.enabled
+                ? "La base de datos esta configurada, pero no se pudo conectar. Se usa el respaldo temporal del servidor."
+                : "El servidor usa un respaldo temporal. Configura DATABASE_URL para conservar datos tras reinicios.")
+    };
+}
+
+function usesRemoteSsl(url) {
+    return !/(localhost|127\.0\.0\.1|::1)/i.test(String(url || ""));
+}
+
+function queuePersistentSnapshot(db) {
+    if (!persistence.ready || !persistence.pool) {
+        return;
+    }
+
+    persistence.queuedSnapshot = JSON.stringify(normalizeDb(db));
+
+    if (persistence.syncing) {
+        return;
+    }
+
+    persistence.syncing = true;
+    Promise.resolve().then(async function () {
+        while (persistence.queuedSnapshot && persistence.pool) {
+            const snapshot = persistence.queuedSnapshot;
+            persistence.queuedSnapshot = null;
+
+            try {
+                await persistence.pool.query(
+                    "INSERT INTO huellitas_state (id, payload, updated_at) VALUES (1, $1::jsonb, NOW()) " +
+                    "ON CONFLICT (id) DO UPDATE SET payload = EXCLUDED.payload, updated_at = NOW()",
+                    [snapshot]
+                );
+                persistence.lastSyncedAt = new Date().toISOString();
+                persistence.lastError = "";
+            } catch (error) {
+                persistence.queuedSnapshot = snapshot;
+                persistence.lastError = error.message || "No se pudo sincronizar PostgreSQL.";
+                console.error("No se pudo sincronizar PostgreSQL:", persistence.lastError);
+                break;
+            }
+        }
+    }).finally(function () {
+        persistence.syncing = false;
+    });
+}
+
+async function initializePersistentStore() {
+    if (!persistence.enabled) {
+        return;
+    }
+
+    let Pool;
+    try {
+        Pool = require("pg").Pool;
+    } catch (error) {
+        persistence.lastError = "No se encontro el paquete pg.";
+        console.error("PostgreSQL no esta disponible:", persistence.lastError);
+        return;
+    }
+
+    const pool = new Pool({
+        connectionString: databaseUrl,
+        ssl: usesRemoteSsl(databaseUrl) ? { rejectUnauthorized: false } : false
+    });
+    persistence.pool = pool;
+
+    try {
+        await pool.query(
+            "CREATE TABLE IF NOT EXISTS huellitas_state (" +
+            "id INTEGER PRIMARY KEY CHECK (id = 1), " +
+            "payload JSONB NOT NULL, " +
+            "updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()" +
+            ")"
+        );
+
+        const result = await pool.query("SELECT payload, updated_at FROM huellitas_state WHERE id = 1");
+        if (result.rowCount && result.rows[0] && result.rows[0].payload) {
+            writeDbFile(normalizeDb(result.rows[0].payload));
+            persistence.lastSyncedAt = new Date(result.rows[0].updated_at || Date.now()).toISOString();
+            console.log("Datos de Huellitas restaurados desde PostgreSQL.");
+        }
+
+        persistence.ready = true;
+
+        if (!result.rowCount) {
+            queuePersistentSnapshot(readDb());
+        }
+    } catch (error) {
+        persistence.lastError = error.message || "No se pudo iniciar PostgreSQL.";
+        console.error("Huellitas seguira con respaldo temporal:", persistence.lastError);
+        persistence.pool = null;
+        try {
+            await pool.end();
+        } catch (ignored) {}
+    }
+}
+
 function selectWritableDataDirectory() {
     if (dataDirectoryReady) {
         return;
@@ -494,7 +616,7 @@ function readDb() {
     return normalizeDb(JSON.parse(fs.readFileSync(dbPath, "utf8")));
 }
 
-function writeDb(db) {
+function writeDbFile(db) {
     if (!fs.existsSync(dataDir)) {
         fs.mkdirSync(dataDir, { recursive: true });
     }
@@ -502,6 +624,11 @@ function writeDb(db) {
     const tmp = dbPath + ".tmp";
     fs.writeFileSync(tmp, JSON.stringify(db, null, 2), "utf8");
     fs.renameSync(tmp, dbPath);
+}
+
+function writeDb(db) {
+    writeDbFile(db);
+    queuePersistentSnapshot(db);
 }
 
 function sendJson(res, status, payload) {
@@ -1121,6 +1248,7 @@ async function handleApi(req, res, pathname) {
             users: db.users.length,
             adoptions: db.adoptions.length,
             reports: db.reports.length,
+            storage: persistenceSummary(),
             updatedAt: new Date().toISOString()
         });
         return;
@@ -1996,7 +2124,6 @@ const server = http.createServer(async (req, res) => {
     }
 });
 
-ensureDb();
 server.on("error", (error) => {
     if (error.code === "EADDRINUSE") {
         console.error("El puerto " + port + " ya esta ocupado. Si Huellitas ya esta abierto, usa http://localhost:" + port + ". Si no, cierra la otra ventana del servidor e intenta de nuevo.");
@@ -2008,6 +2135,17 @@ server.on("error", (error) => {
     process.exit(1);
 });
 
-server.listen(port, "0.0.0.0", () => {
-    console.log("Huellitas listo en http://localhost:" + port);
+async function startServer() {
+    ensureDb();
+    await initializePersistentStore();
+
+    server.listen(port, "0.0.0.0", () => {
+        const storage = persistenceSummary();
+        console.log("Huellitas listo en http://localhost:" + port + " (" + storage.provider + ").");
+    });
+}
+
+startServer().catch((error) => {
+    console.error("No se pudo iniciar Huellitas:", error);
+    process.exit(1);
 });
