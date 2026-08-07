@@ -830,13 +830,13 @@
                 });
             }
 
-            if (!oldSummary || details.dataset.mobileFinalMoreVersion === "2") {
+            if (!oldSummary || details.dataset.mobileFinalMoreVersion === "3") {
                 return;
             }
 
             const summary = oldSummary.cloneNode(true);
             oldSummary.replaceWith(summary);
-            details.dataset.mobileFinalMoreVersion = "2";
+            details.dataset.mobileFinalMoreVersion = "3";
             summary.setAttribute("role", "button");
             summary.setAttribute("tabindex", "0");
             summary.setAttribute("aria-expanded", details.open ? "true" : "false");
@@ -924,6 +924,59 @@
         });
     }
 
+    function closeMorePanel(details) {
+        if (!details) {
+            return;
+        }
+        details.open = false;
+        details.classList.remove("huellitas-more-open");
+        const summary = details.querySelector(":scope > summary");
+        if (summary) {
+            summary.setAttribute("aria-expanded", "false");
+        }
+    }
+
+    function handleTransientNavigation() {
+        if (document.documentElement.dataset.mobileFinalTransientNavigation === "true") {
+            return;
+        }
+        document.documentElement.dataset.mobileFinalTransientNavigation = "true";
+
+        document.addEventListener("pointerdown", function (event) {
+            document.querySelectorAll(".huellitas-structure-more[open]").forEach(function (details) {
+                if (!details.contains(event.target)) {
+                    closeMorePanel(details);
+                }
+            });
+        }, true);
+
+        document.addEventListener("click", function (event) {
+            const close = event.target.closest && event.target.closest(".site-nav .huellitas-mobile-close");
+            if (close) {
+                event.preventDefault();
+                event.stopPropagation();
+                const nav = close.closest(".site-nav");
+                closeMobileNav(nav);
+                return;
+            }
+
+            const secondaryLink = event.target.closest && event.target.closest(".huellitas-structure-more-panel a");
+            if (secondaryLink) {
+                const details = secondaryLink.closest(".huellitas-structure-more");
+                closeMorePanel(details);
+                closeMobileNav(secondaryLink.closest(".site-nav"));
+            }
+        }, true);
+
+        document.addEventListener("keydown", function (event) {
+            if (event.key !== "Escape") {
+                return;
+            }
+            document.querySelectorAll(".huellitas-structure-more[open]").forEach(closeMorePanel);
+            document.querySelectorAll(".site-nav.nav-open").forEach(closeMobileNav);
+        }, true);
+    }
+
     function handleClicks() {
         if (document.documentElement.dataset.mobileFinalClicks === "true") {
             return;
@@ -974,6 +1027,7 @@
         cleanupStorage(true);
         warmServer();
         refresh();
+        handleTransientNavigation();
         handleClicks();
         setTimeout(refresh, 250);
         setTimeout(refresh, 900);
