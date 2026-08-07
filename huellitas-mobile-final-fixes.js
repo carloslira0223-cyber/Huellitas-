@@ -1180,4 +1180,56 @@
 
     ensureStyles();
     onReady(init);
+    function enhanceServerWaitState() {
+        const api = window.huellitasApi;
+        if (!api || api.__huellitasWaitState || typeof api.request !== "function") {
+            return;
+        }
+
+        const request = api.request.bind(api);
+        let activeRequests = 0;
+        let revealTimer = 0;
+        const getNotice = function () {
+            let notice = document.getElementById("huellitas-server-wait");
+            if (!notice) {
+                notice = document.createElement("div");
+                notice.id = "huellitas-server-wait";
+                notice.className = "huellitas-server-wait";
+                notice.setAttribute("role", "status");
+                notice.setAttribute("aria-live", "polite");
+                notice.innerHTML = "<span class=\"huellitas-server-wait__dot\" aria-hidden=\"true\"></span><span>Conectando con Huellitas...</span>";
+                document.body.appendChild(notice);
+            }
+            return notice;
+        };
+
+        api.request = async function () {
+            activeRequests += 1;
+            if (!revealTimer) {
+                revealTimer = window.setTimeout(function () {
+                    if (activeRequests > 0) {
+                        getNotice().classList.add("is-visible");
+                    }
+                }, 1200);
+            }
+
+            try {
+                return await request.apply(null, arguments);
+            } finally {
+                activeRequests = Math.max(0, activeRequests - 1);
+                if (!activeRequests) {
+                    window.clearTimeout(revealTimer);
+                    revealTimer = 0;
+                    const notice = document.getElementById("huellitas-server-wait");
+                    if (notice) {
+                        notice.classList.remove("is-visible");
+                    }
+                }
+            }
+        };
+        api.__huellitasWaitState = true;
+    }
+
+    enhanceServerWaitState();
+
 })();
