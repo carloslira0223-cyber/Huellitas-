@@ -1,12 +1,30 @@
 # Proyecto Huellitas - Carlos Alexis Lira Alcala - 2026.
 # Configuracion reproducible del servidor. Todos los derechos reservados.
+#
+# La URL interna de PostgreSQL se inyecta por Render; nunca se guarda una clave
+# de base de datos dentro de este repositorio.
+databases:
+  - name: huellitas-db
+    plan: free
+    region: oregon
+    databaseName: huellitas
+    user: huellitas
+
 services:
   - type: web
     name: huellitas
     runtime: node
     plan: free
+    region: oregon
     branch: main
     buildCommand: npm install
     startCommand: npm start
     healthCheckPath: /api/health
     autoDeployTrigger: commit
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        fromDatabase:
+          name: huellitas-db
+          property: connectionString
