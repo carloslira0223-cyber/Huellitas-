@@ -87,6 +87,11 @@
 .admin-pro-tools{display:grid;grid-template-columns:minmax(190px,1fr) repeat(3,minmax(130px,.55fr));gap:10px;align-items:end}
 .admin-pro-tools label{display:grid;gap:6px;color:var(--cocoa);font-size:12px;font-weight:950}
 .admin-pro-tools input,.admin-pro-tools select{width:100%;min-height:42px;border:1px solid var(--line);border-radius:12px;padding:8px 10px;background:#fff;color:var(--text)}
+.admin-pro-quick{display:flex;flex-wrap:wrap;gap:7px;grid-column:1/-1;padding-top:2px}
+.admin-pro-quick button{min-height:36px;margin:0;padding:7px 11px;border:1px solid var(--line);border-radius:8px;background:rgba(246,251,245,.86);color:var(--cocoa);font-size:12px;font-weight:900}
+.admin-pro-quick button:hover,.admin-pro-quick button:focus-visible{border-color:var(--leaf);background:rgba(95,157,99,.12);box-shadow:0 0 0 3px rgba(95,157,99,.12)}
+.admin-pro-quick button[aria-pressed="true"]{border-color:var(--leaf);background:var(--leaf);color:#fff}
+.admin-pro-filter-empty{grid-column:1/-1;margin:0;padding:10px 11px;border:1px dashed rgba(95,157,99,.42);border-radius:8px;background:rgba(246,251,245,.62);color:var(--muted);font-size:13px;font-weight:800}
 .admin-pro-activity h3{margin:0 0 10px;color:var(--cocoa);font-size:18px}
 .admin-pro-activity-list{display:grid;gap:8px;max-height:255px;overflow:auto;padding-right:2px}
 .admin-pro-activity-item{display:grid;gap:2px;padding:9px;border:1px solid var(--line);border-radius:12px;background:rgba(207,231,244,.18)}
@@ -105,6 +110,9 @@
 body.dark .admin-pro-kpi,body.dark .admin-pro-tools,body.dark .admin-pro-activity,body.dark .admin-pro-note,body.dark .admin-pro-manual article{background:rgba(255,255,255,.06);border-color:rgba(220,235,215,.14)}
 body.dark .admin-pro-kpi strong,body.dark .admin-pro-tools label,body.dark .admin-pro-activity h3,body.dark .admin-pro-activity-item strong,body.dark .admin-pro-manual strong{color:#f5fff7}
 body.dark .admin-pro-tools input,body.dark .admin-pro-tools select,body.dark .admin-pro-note textarea{background:#17211b;color:#f5fff7;border-color:rgba(220,235,215,.18)}
+body.dark .admin-pro-quick button{background:rgba(255,255,255,.05);border-color:rgba(220,235,215,.18);color:#f5fff7}
+body.dark .admin-pro-quick button[aria-pressed="true"]{border-color:var(--leaf);background:var(--leaf);color:#fff}
+body.dark .admin-pro-filter-empty{background:rgba(255,255,255,.05);border-color:rgba(220,235,215,.2);color:#c9d6cc}
 body.dark .admin-pro-activity-item{background:rgba(255,255,255,.05);border-color:rgba(220,235,215,.12)}
 @media(max-width:760px){.admin-pro-console,.admin-pro-tools{grid-template-columns:1fr}.admin-pro-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.admin-pro-shell{margin-top:14px}.admin-pro-tools,.admin-pro-activity{padding:10px}.admin-pro-extra-actions{display:grid;grid-template-columns:1fr 1fr}.admin-pro-extra-actions button{width:100%}}
 @media(max-width:390px){.admin-pro-kpis,.admin-pro-extra-actions{grid-template-columns:1fr}}
@@ -190,6 +198,13 @@ body.dark .admin-pro-activity-item{background:rgba(255,255,255,.05);border-color
             '<label>Estado<select id="adminProStatus"><option value="">Todos</option><option value="enviada">Nueva</option><option value="revisando">En revision</option><option value="aprobada">Aprobada</option><option value="rechazada">Rechazada</option><option value="cita">Cita</option><option value="finalizada">Finalizada</option><option value="disponible">Disponible</option><option value="adoptada">Adoptada</option><option value="archivado">Archivado</option></select></label>',
             '<label>Tipo<select id="adminProType"><option value="">Todos</option><option value="perro">Perro</option><option value="gato">Gato</option><option value="reporte">Reporte</option><option value="mensaje">Mensaje</option></select></label>',
             '<label>Seccion<select id="adminProSection"><option value="">Vista actual</option><option value="todo">Todo</option><option value="mascotas">Mascotas</option><option value="solicitudes">Solicitudes</option><option value="citas">Citas</option><option value="reportes">Reportes</option><option value="mensajes">Mensajes</option><option value="centros">Centros</option><option value="puntajes">Puntajes</option><option value="manual">Manual</option></select></label>',
+            '<div class="admin-pro-quick" role="group" aria-label="Vista rápida de la bandeja">',
+            '<button type="button" data-admin-pro-quick="" aria-pressed="true">Todo</button>',
+            '<button type="button" data-admin-pro-quick="pendiente" aria-pressed="false">Pendientes</button>',
+            '<button type="button" data-admin-pro-quick="aprobado" aria-pressed="false">Aprobados</button>',
+            '<button type="button" data-admin-pro-quick="cerrado" aria-pressed="false">Cerrados</button>',
+            '</div>',
+            '<p class="admin-pro-filter-empty" id="adminProFilterEmpty" hidden>No hay elementos con estos filtros. Prueba otra vista o limpia la búsqueda.</p>',
             '</div>',
             '<aside class="admin-pro-activity"><h3>Actividad reciente</h3><div class="admin-pro-activity-list" id="adminProActivity"></div></aside>',
             '</div>'
@@ -203,6 +218,21 @@ body.dark .admin-pro-activity-item{background:rgba(255,255,255,.05);border-color
                 control.addEventListener("input", applyFilters);
                 control.addEventListener("change", applyFilters);
             }
+        });
+
+        document.querySelectorAll("[data-admin-pro-quick]").forEach((button) => {
+            button.addEventListener("click", () => {
+                const quick = button.dataset.adminProQuick || "";
+                shell.dataset.quickStatus = quick;
+                document.querySelectorAll("[data-admin-pro-quick]").forEach((item) => {
+                    item.setAttribute("aria-pressed", item === button ? "true" : "false");
+                });
+                const statusControl = document.getElementById("adminProStatus");
+                if (statusControl) {
+                    statusControl.value = "";
+                }
+                applyFilters();
+            });
         });
 
         const sectionControl = document.getElementById("adminProSection");
@@ -249,15 +279,33 @@ body.dark .admin-pro-activity-item{background:rgba(255,255,255,.05);border-color
         const search = normalizeText((document.getElementById("adminProSearch") || {}).value || "");
         const status = normalizeText((document.getElementById("adminProStatus") || {}).value || "");
         const type = normalizeText((document.getElementById("adminProType") || {}).value || "");
+        const shell = document.getElementById("adminProShell");
+        const quick = normalizeText((shell && shell.dataset.quickStatus) || "");
+        const quickStates = {
+            pendiente: ["nueva", "enviada", "recibido", "revisando", "revision", "cita", "pendiente", "nuevo"],
+            aprobado: ["aprobada", "aceptada", "atendido", "respondido", "disponible"],
+            cerrado: ["rechazada", "finalizada", "completada", "archivado", "adoptada", "cerrado"]
+        };
         const cards = document.querySelectorAll(".admin-section:not([hidden]) .saved-list article,.admin-section:not([hidden]) .pet-admin-item,.admin-section:not([hidden]) .mailbox-admin-item,.admin-section:not([hidden]) .report-saved-item,.admin-section:not([hidden]) .adoption-request-admin");
+        let visible = 0;
 
         cards.forEach((card) => {
             const text = normalizeText(card.textContent);
             const matchesSearch = !search || text.includes(search);
             const matchesStatus = !status || text.includes(status);
             const matchesType = !type || text.includes(type);
-            card.classList.toggle("admin-pro-filter-hidden", !(matchesSearch && matchesStatus && matchesType));
+            const matchesQuick = !quick || (quickStates[quick] || []).some((state) => text.includes(state));
+            const matches = matchesSearch && matchesStatus && matchesType && matchesQuick;
+            card.classList.toggle("admin-pro-filter-hidden", !matches);
+            if (matches) {
+                visible += 1;
+            }
         });
+
+        const empty = document.getElementById("adminProFilterEmpty");
+        if (empty) {
+            empty.hidden = cards.length === 0 || visible > 0;
+        }
     }
 
     function parseActionId(card, functionName) {
@@ -657,6 +705,7 @@ body.dark .admin-pro-activity-item{background:rgba(255,255,255,.05);border-color
             enhanceCards();
             updateKpis();
             renderActivity();
+            applyFilters();
         }, 120);
     }
 
