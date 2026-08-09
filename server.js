@@ -61,13 +61,17 @@ const persistence = {
 
 const adminTokens = new Map();
 const adminAttempts = new Map();
+const userAuthAttempts = new Map();
 const simonSubmissions = new Map();
 const challengeSubmissions = new Map();
 const simonSubmissionWindow = 10 * 60 * 1000;
 const simonSubmissionLimit = 8;
 const adminTokenLifetime = 8 * 60 * 60 * 1000;
+const userSessionLifetime = 30 * 24 * 60 * 60 * 1000;
 const adminAttemptWindow = 15 * 60 * 1000;
 const adminAttemptLimit = 5;
+const userAuthAttemptWindow = 15 * 60 * 1000;
+const userAuthAttemptLimit = 8;
 const projectAdminPasswordHash = "a5ec92407801edd7d812e403409b87b6e63c351d14219366e729f651a57ae911";
 const adminProtectedRoutes = new Set([
     "GET:/api/backup",
@@ -375,6 +379,36 @@ function registerFailedAdminAttempt(req) {
 
 function clearAdminAttempts(req) {
     adminAttempts.delete(requestIp(req));
+}
+
+function isUserAuthRateLimited(req) {
+    const key = requestIp(req);
+    const now = Date.now();
+    const attempt = userAuthAttempts.get(key);
+
+    if (!attempt || now - attempt.startedAt > userAuthAttemptWindow) {
+        userAuthAttempts.set(key, { count: 0, startedAt: now });
+        return false;
+    }
+
+    return attempt.count >= userAuthAttemptLimit;
+}
+
+function registerFailedUserAuthAttempt(req) {
+    const key = requestIp(req);
+    const now = Date.now();
+    const attempt = userAuthAttempts.get(key);
+
+    if (!attempt || now - attempt.startedAt > userAuthAttemptWindow) {
+        userAuthAttempts.set(key, { count: 1, startedAt: now });
+        return;
+    }
+
+    attempt.count += 1;
+}
+
+function clearUserAuthAttempts(req) {
+    userAuthAttempts.delete(requestIp(req));
 }
 
 function purgeAdminTokens() {
@@ -788,8 +822,14 @@ function verifyPassword(password, stored) {
     }
 
     const [salt, expected] = parts;
+    if (!/^[a-f0-9]{32}$/i.test(salt) || !/^[a-f0-9]{64}$/i.test(expected)) {
+        return false;
+    }
+
     const actual = crypto.pbkdf2Sync(String(password), salt, 160000, 32, "sha256").toString("hex");
-    return crypto.timingSafeEqual(Buffer.from(actual, "hex"), Buffer.from(expected, "hex"));
+    const actualBuffer = Buffer.from(actual, "hex");
+    const expectedBuffer = Buffer.from(expected, "hex");
+    return actualBuffer.length === expectedBuffer.length && crypto.timingSafeEqual(actualBuffer, expectedBuffer);
 }
 
 function publicUser(user) {
@@ -803,11 +843,38 @@ function publicUser(user) {
     };
 }
 
+function purgeUserSessions(db) {
+    if (!db.sessions || typeof db.sessions !== "object") {
+        db.sessions = {};
+        return true;
+    }
+
+    let changed = false;
+    const now = Date.now();
+    Object.keys(db.sessions).forEach((token) => {
+        const session = db.sessions[token];
+        const expiresAt = Date.parse(session && session.expiresAt || "");
+        if (session && Number.isFinite(expiresAt) && expiresAt > now) {
+            return;
+        }
+        if (session && !session.expiresAt) {
+            session.expiresAt = new Date(now + userSessionLifetime).toISOString();
+            changed = true;
+            return;
+        }
+        delete db.sessions[token];
+        changed = true;
+    });
+    return changed;
+}
+
 function createSession(db, user) {
+    purgeUserSessions(db);
     const token = crypto.randomBytes(32).toString("hex");
     db.sessions[token] = {
         email: user.email,
-        createdAt: new Date().toISOString()
+        createdAt: new Date().toISOString(),
+        expiresAt: new Date(Date.now() + userSessionLifetime).toISOString()
     };
     return token;
 }
@@ -815,9 +882,21 @@ function createSession(db, user) {
 function getAuthUser(req, db) {
     const auth = req.headers.authorization || "";
     const token = auth.startsWith("Bearer ") ? auth.slice(7) : req.headers["x-huellitas-token"];
-    const session = token ? db.sessions[token] : null;
+    const session = token && db.sessions ? db.sessions[token] : null;
 
     if (!session) {
+        return null;
+    }
+
+    if (!session.expiresAt) {
+        session.expiresAt = new Date(Date.now() + userSessionLifetime).toISOString();
+        writeDb(db);
+    }
+
+    const expiresAt = Date.parse(session.expiresAt);
+    if (!Number.isFinite(expiresAt) || expiresAt <= Date.now()) {
+        delete db.sessions[token];
+        writeDb(db);
         return null;
     }
 
@@ -1320,6 +1399,13 @@ async function handleApi(req, res, pathname) {
         return;
     }
 
+    if ((req.method === "POST" && pathname === "/api/register") || (req.method === "POST" && pathname === "/api/login")) {
+        if (isUserAuthRateLimited(req)) {
+            sendJson(res, 429, { ok: false, error: "Demasiados intentos. Espera unos minutos antes de volver a intentar." });
+            return;
+        }
+    }
+
     if (req.method === "POST" && pathname === "/api/register") {
         const nombre = cleanText(body.nombre);
         const email = normalizeEmail(body.email);
@@ -1348,6 +1434,7 @@ async function handleApi(req, res, pathname) {
 
         db.users.push(user);
         const token = createSession(db, user);
+        clearUserAuthAttempts(req);
         writeDb(db);
         sendJson(res, 201, { ok: true, token, user: publicUser(user) });
         return;
@@ -1358,11 +1445,13 @@ async function handleApi(req, res, pathname) {
         const user = db.users.find((item) => item.email === email);
 
         if (!user || !verifyPassword(body.pass || "", user.passHash)) {
+            registerFailedUserAuthAttempt(req);
             sendJson(res, 401, { ok: false, error: "Correo o contrasena incorrectos." });
             return;
         }
 
         const token = createSession(db, user);
+        clearUserAuthAttempts(req);
         writeDb(db);
         sendJson(res, 200, { ok: true, token, user: publicUser(user) });
         return;
