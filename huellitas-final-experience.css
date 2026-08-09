@@ -1,0 +1,321 @@
+/*!
+ * Proyecto Huellitas - Creado por Carlos Alexis Lira Alcala - 2026.
+ * Todos los derechos reservados.
+ */
+
+html {
+    scroll-padding-top: 88px;
+}
+
+html,
+body {
+    max-width: 100%;
+    overflow-x: clip;
+}
+
+.huellitas-skip-link {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    z-index: 10000;
+    padding: 10px 14px;
+    border: 1px solid var(--accent, #5f9d63);
+    border-radius: 8px;
+    background: var(--paper, #ffffff);
+    color: var(--text, #173222);
+    font-weight: 800;
+    transform: translateY(-160%);
+    transition: transform .16s ease;
+}
+
+.huellitas-skip-link:focus {
+    transform: translateY(0);
+}
+
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+    outline: 3px solid color-mix(in srgb, var(--accent, #5f9d63) 68%, #ffffff);
+    outline-offset: 3px;
+}
+
+img {
+    max-width: 100%;
+}
+
+.huellitas-friendly-empty {
+    display: grid;
+    gap: 6px;
+    place-items: start;
+    min-height: 112px;
+    align-content: center;
+    padding: 16px;
+    border: 1px dashed color-mix(in srgb, var(--accent, #5f9d63) 45%, var(--line, #d8e2d8));
+    border-radius: 8px;
+    background: color-mix(in srgb, var(--paper, #ffffff) 88%, var(--accent, #5f9d63) 12%);
+    color: var(--text, #173222);
+}
+
+.huellitas-friendly-empty strong {
+    font-size: 1rem;
+}
+
+.huellitas-friendly-empty span {
+    color: var(--muted, #647268);
+    line-height: 1.45;
+}
+
+.profile-final-experience .profile-stats {
+    display: none !important;
+}
+
+.profile-priority-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 8px;
+    margin: 12px;
+}
+
+.profile-priority-button {
+    display: grid;
+    min-width: 0;
+    min-height: 68px;
+    gap: 4px;
+    padding: 10px;
+    border: 1px solid color-mix(in srgb, var(--accent, #5f9d63) 36%, var(--line, #d8e2d8));
+    border-radius: 8px;
+    background: color-mix(in srgb, var(--paper, #ffffff) 94%, var(--accent, #5f9d63) 6%);
+    color: var(--text, #173222);
+    text-align: left;
+    cursor: pointer;
+    transition: border-color .16s ease, box-shadow .16s ease, transform .16s ease;
+}
+
+.profile-priority-button:hover {
+    border-color: var(--accent, #5f9d63);
+    box-shadow: 0 4px 14px color-mix(in srgb, var(--accent, #5f9d63) 18%, transparent);
+    transform: translateY(-1px);
+}
+
+.profile-priority-label {
+    min-width: 0;
+    overflow: hidden;
+    color: var(--muted, #647268);
+    font-size: .68rem;
+    font-weight: 800;
+    line-height: 1.2;
+    text-overflow: ellipsis;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.profile-priority-value {
+    min-width: 0;
+    overflow: hidden;
+    color: var(--cocoa, var(--text, #173222));
+    font-size: 1rem;
+    line-height: 1.2;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.profile-final-experience .profile-tabs {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 6px;
+}
+
+.profile-final-experience .profile-tabs button {
+    min-width: 0;
+    min-height: 40px;
+    padding-inline: 6px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.profile-final-experience .profile-secondary-tabs {
+    margin-inline: 12px;
+}
+
+.profile-final-experience .profile-secondary-tabs summary,
+.profile-utility-links summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 40px;
+    padding: 8px 10px;
+    border: 1px solid var(--line, #d8e2d8);
+    border-radius: 8px;
+    color: var(--text, #173222);
+    cursor: pointer;
+    font-weight: 800;
+    list-style: none;
+}
+
+.profile-final-experience .profile-secondary-tabs summary::-webkit-details-marker,
+.profile-utility-links summary::-webkit-details-marker {
+    display: none;
+}
+
+.profile-final-experience .profile-secondary-tabs summary small {
+    color: var(--muted, #647268);
+    font-weight: 700;
+}
+
+.profile-final-experience .profile-secondary-tab-list {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 7px;
+    margin-top: 8px;
+}
+
+.profile-final-experience .profile-secondary-tab-list button {
+    min-width: 0;
+    min-height: 38px;
+    padding: 7px 8px;
+    border-radius: 8px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.profile-final-experience .profile-quick-access .profile-actions-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.profile-final-experience .profile-quick-access .profile-actions-grid a {
+    min-width: 0;
+    min-height: 42px;
+    overflow-wrap: anywhere;
+}
+
+.profile-utility-links {
+    margin-top: 10px;
+}
+
+.profile-utility-links > div {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 7px;
+    margin-top: 8px;
+}
+
+.profile-utility-links a {
+    display: grid;
+    align-items: center;
+    min-height: 38px;
+    padding: 8px 10px;
+    border: 1px solid var(--line, #d8e2d8);
+    border-radius: 8px;
+    color: var(--text, #173222);
+    text-decoration: none;
+}
+
+.profile-utility-links a:hover {
+    border-color: var(--accent, #5f9d63);
+}
+
+body.dark .huellitas-friendly-empty,
+body.dark .profile-priority-button,
+body.dark .profile-final-experience .profile-secondary-tabs summary,
+body.dark .profile-utility-links summary,
+body.dark .profile-utility-links a {
+    background: color-mix(in srgb, #17211b 90%, var(--accent, #5f9d63));
+    border-color: color-mix(in srgb, var(--accent, #5f9d63) 40%, #405049);
+    color: #f5fff7;
+}
+
+body.dark .profile-priority-label,
+body.dark .huellitas-friendly-empty span,
+body.dark .profile-final-experience .profile-secondary-tabs summary small {
+    color: #c9d6cc;
+}
+
+body.dark .profile-priority-value {
+    color: #ffffff;
+}
+
+@media (max-width: 900px) {
+    .site-nav .huellitas-structure-more,
+    .site-nav .huellitas-structure-more-panel {
+        width: 100% !important;
+        min-width: 0 !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+    }
+
+    .site-nav .huellitas-structure-more-panel {
+        grid-template-columns: minmax(0, 1fr) !important;
+    }
+
+    .site-nav .huellitas-structure-more-panel .huellitas-nav-item {
+        width: 100% !important;
+        min-width: 0 !important;
+        grid-template-columns: 42px minmax(0, 1fr) !important;
+        box-sizing: border-box !important;
+    }
+
+    .site-nav .huellitas-structure-more-panel .huellitas-nav-copy {
+        min-width: 0 !important;
+    }
+
+    .site-nav .huellitas-structure-more-panel .huellitas-nav-copy strong,
+    .site-nav .huellitas-structure-more-panel .huellitas-nav-copy small {
+        max-width: 100% !important;
+        overflow-wrap: normal !important;
+        word-break: normal !important;
+    }
+
+    .profile-priority-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        margin-inline: 12px;
+    }
+
+    .profile-priority-button {
+        min-height: 64px;
+    }
+
+    .profile-final-experience .profile-tabs {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        margin-inline: 12px !important;
+    }
+
+    .profile-final-experience .profile-tabs button {
+        font-size: .78rem !important;
+    }
+
+    .profile-final-experience .profile-secondary-tab-list,
+    .profile-utility-links > div,
+    .profile-final-experience .profile-quick-access .profile-actions-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .profile-final-experience .profile-secondary-tabs summary small {
+        display: none;
+    }
+
+    .profile-final-experience .profile-tab-panel,
+    .profile-final-experience .profile-section {
+        margin-inline: 12px !important;
+    }
+}
+
+@media (max-width: 390px) {
+    .profile-priority-label {
+        font-size: .61rem;
+    }
+
+    .profile-priority-value {
+        font-size: .92rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+    }
+}
