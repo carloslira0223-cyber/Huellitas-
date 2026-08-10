@@ -7,7 +7,7 @@
     "use strict";
 
     const STYLE_ID = "huellitas-final-experience-style";
-    const STYLE_URL = "huellitas-final-experience.css?v=20260808-final-v1";
+    const STYLE_URL = "huellitas-final-experience.css?v=20260808-final-v2";
     let refreshPending = false;
 
     function onReady(callback) {
@@ -56,7 +56,10 @@
 
         const summary = details.querySelector("summary");
         if (summary) {
-            summary.innerHTML = "<span>Más detalles</span><small>Reportes, logros y buzón</small>";
+            if (summary.dataset.finalExperienceCopy !== "true") {
+                summary.innerHTML = "<span>Más detalles</span><small>Reportes, logros y buzón</small>";
+                summary.dataset.finalExperienceCopy = "true";
+            }
             summary.setAttribute("aria-label", "Abrir más detalles del perfil");
         }
 
@@ -159,8 +162,11 @@
             const tab = button.dataset.profilePriority;
             const value = button.querySelector(".profile-priority-value");
             if (value && values[tab] !== undefined) {
-                value.textContent = values[tab];
-                button.setAttribute("aria-label", labels[tab] + ": " + values[tab]);
+                const nextValue = String(values[tab]);
+                if (value.textContent !== nextValue) {
+                    value.textContent = nextValue;
+                }
+                button.setAttribute("aria-label", labels[tab] + ": " + nextValue);
             }
         });
 
@@ -190,6 +196,10 @@
         const grid = section && section.querySelector(".profile-actions-grid");
 
         if (!section || !grid) {
+            return;
+        }
+
+        if (section.dataset.finalExperienceQuick === "true") {
             return;
         }
 
@@ -229,6 +239,10 @@
                 list.appendChild(link);
             });
         }
+
+        if (primary.length || utilityLinks.length) {
+            section.dataset.finalExperienceQuick = "true";
+        }
     }
 
     function enhanceProfile(popover) {
@@ -238,7 +252,12 @@
 
         popover.classList.add("profile-final-experience");
         popover.setAttribute("aria-label", "Perfil Huellitas");
-        reorganizeProfileTabs(popover);
+
+        if (popover.dataset.finalExperienceProfileStructure !== "true") {
+            reorganizeProfileTabs(popover);
+            popover.dataset.finalExperienceProfileStructure = "true";
+        }
+
         updatePrioritySummary(popover);
         organizeQuickAccess(popover);
     }
