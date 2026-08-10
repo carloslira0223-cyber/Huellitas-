@@ -30,6 +30,15 @@ La configuración quedó lista cuando el resultado incluya:
 }
 ```
 
+
+## Seguridad del modo administrador
+
+En **Environment** de Render agrega también `ADMIN_PASSWORD_HASH` con el hash SHA-256 de una contraseña nueva y privada. Esa variable reemplaza la clave de respaldo del proyecto sin dejar la contraseña escrita en GitHub.
+
+- Elige una contraseña distinta de `huellitas0524`.
+- No uses `ADMIN_PASSWORD` ni escribas la contraseña en texto normal.
+- Guarda la variable solo en Render y vuelve a desplegar el servicio.
+
 ## Respaldos
 
 - Cada cambio se sincroniza con PostgreSQL.
