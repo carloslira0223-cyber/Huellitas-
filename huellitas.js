@@ -5,7 +5,7 @@
 (function () {
     "use strict";
 
-    const version = "20260808-final-experience-v31";
+    const version = "20260810-profile-contact-v32";
     const scripts = [
         "huellitas-original.js",
         "huellitas-fixes.js",
