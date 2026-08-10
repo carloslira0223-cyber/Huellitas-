@@ -7,7 +7,7 @@
     "use strict";
 
     const STYLE_ID = "huellitas-final-experience-style";
-    const STYLE_URL = "huellitas-final-experience.css?v=20260808-final-v2";
+    const STYLE_URL = "huellitas-final-experience.css?v=20260810-final-v3";
     let refreshPending = false;
 
     function onReady(callback) {
@@ -262,6 +262,199 @@
         organizeQuickAccess(popover);
     }
 
+    function findProfilePopover(owner) {
+        if (!owner) {
+            return null;
+        }
+
+        const local = owner.querySelector && owner.querySelector(".profile-popover");
+        if (local) {
+            return local;
+        }
+
+        return Array.from(document.querySelectorAll(".profile-popover.huellitas-profile-overlay")).find(function (popover) {
+            return popover.__huellitasProfileHome === owner;
+        }) || null;
+    }
+
+    function closeReliableProfile(popover) {
+        if (!popover) {
+            return;
+        }
+
+        const owner = popover.__huellitasProfileHome;
+        const trigger = popover.__huellitasProfileTrigger;
+
+        popover.style.display = "none";
+        popover.classList.remove("huellitas-profile-overlay", "mobile-profile-panel");
+
+        if (owner && owner.isConnected && popover.parentNode !== owner) {
+            owner.appendChild(popover);
+        }
+
+        if (owner && owner.classList) {
+            owner.classList.remove("profile-open", "huellitas-profile-open");
+        }
+
+        if (trigger) {
+            trigger.setAttribute("aria-expanded", "false");
+        }
+
+        if (!document.querySelector(".profile-popover.huellitas-profile-overlay")) {
+            document.body.classList.remove("profile-sheet-open", "mobile-modal-open");
+        }
+    }
+
+    function openReliableProfile(owner, trigger, popover) {
+        const open = popover.classList.contains("huellitas-profile-overlay") &&
+            document.body.contains(popover) &&
+            getComputedStyle(popover).display !== "none";
+
+        if (open) {
+            closeReliableProfile(popover);
+            return;
+        }
+
+        document.querySelectorAll(".profile-popover.huellitas-profile-overlay").forEach(closeReliableProfile);
+
+        popover.__huellitasProfileHome = owner;
+        popover.__huellitasProfileTrigger = trigger;
+
+        if (popover.parentNode !== document.body) {
+            document.body.appendChild(popover);
+        }
+
+        popover.classList.remove("mobile-profile-panel");
+        popover.classList.add("huellitas-profile-overlay");
+        popover.style.display = "block";
+        popover.scrollTop = 0;
+
+        if (owner && owner.classList) {
+            owner.classList.add("profile-open", "huellitas-profile-open");
+        }
+
+        document.body.classList.add("profile-sheet-open", "mobile-modal-open");
+        trigger.setAttribute("aria-expanded", "true");
+    }
+
+    function installReliableProfileLauncher() {
+        if (document.documentElement.dataset.huellitasReliableProfile === "true") {
+            return;
+        }
+
+        document.documentElement.dataset.huellitasReliableProfile = "true";
+
+        document.addEventListener("click", function (event) {
+            const target = event.target && event.target.closest ? event.target : null;
+            if (!target) {
+                return;
+            }
+
+            const close = target.closest("[data-profile-close], .profile-close");
+            const closePopover = close && close.closest(".huellitas-profile-overlay");
+            if (closePopover) {
+                event.preventDefault();
+                event.stopImmediatePropagation();
+                closeReliableProfile(closePopover);
+                return;
+            }
+
+            const chip = target.closest("[data-global-profile] > .profile-chip");
+            if (chip) {
+                const owner = chip.closest("[data-global-profile]");
+                const popover = findProfilePopover(owner);
+                if (popover) {
+                    event.preventDefault();
+                    event.stopImmediatePropagation();
+                    openReliableProfile(owner, chip, popover);
+                    return;
+                }
+            }
+
+            const legacyTrigger = target.closest("#fotoNav");
+            if (legacyTrigger) {
+                const legacyPopover = document.getElementById("menuPerfil");
+                const legacyOwner = document.getElementById("perfil");
+                if (legacyPopover && legacyOwner) {
+                    event.preventDefault();
+                    event.stopImmediatePropagation();
+                    openReliableProfile(legacyOwner, legacyTrigger, legacyPopover);
+                    return;
+                }
+            }
+
+            if (!target.closest(".huellitas-profile-overlay")) {
+                document.querySelectorAll(".profile-popover.huellitas-profile-overlay").forEach(closeReliableProfile);
+            }
+        }, true);
+
+        document.addEventListener("keydown", function (event) {
+            if (event.key === "Escape") {
+                document.querySelectorAll(".profile-popover.huellitas-profile-overlay").forEach(closeReliableProfile);
+            }
+        }, true);
+    }
+
+    function compactContact() {
+        const contact = document.querySelector(".contacto");
+        if (!contact || contact.dataset.huellitasCompactContact === "true") {
+            return;
+        }
+
+        contact.dataset.huellitasCompactContact = "true";
+        if (!contact.id) {
+            contact.id = "huellitas-contacto";
+        }
+
+        const section = contact.closest("section");
+        if (section) {
+            section.classList.add("huellitas-contact-section");
+        }
+
+        const launcher = document.createElement("div");
+        launcher.className = "huellitas-contact-launcher";
+        launcher.innerHTML = '<button class="huellitas-contact-toggle" type="button" aria-expanded="false" aria-controls="' + contact.id + '" title="Abrir contacto"><span class="huellitas-contact-icon" aria-hidden="true">&#9742;</span><span class="huellitas-contact-label">Contacto</span></button>';
+        contact.insertAdjacentElement("beforebegin", launcher);
+
+        const toggle = launcher.querySelector(".huellitas-contact-toggle");
+        const close = document.createElement("button");
+        close.type = "button";
+        close.className = "huellitas-contact-close";
+        close.setAttribute("aria-label", "Cerrar contacto");
+        close.innerHTML = "&times;";
+        contact.insertAdjacentElement("afterbegin", close);
+
+        function setOpen(open) {
+            contact.hidden = !open;
+            contact.classList.toggle("huellitas-contact-open", open);
+            if (section) {
+                section.classList.toggle("huellitas-contact-expanded", open);
+            }
+            toggle.setAttribute("aria-expanded", open ? "true" : "false");
+
+            if (open) {
+                window.setTimeout(function () {
+                    contact.scrollIntoView({ block: "nearest", behavior: "smooth" });
+                    const firstField = contact.querySelector("input, select, textarea");
+                    if (firstField) {
+                        firstField.focus({ preventScroll: true });
+                    }
+                }, 0);
+            }
+        }
+
+        toggle.addEventListener("click", function () {
+            setOpen(contact.hidden);
+        });
+
+        close.addEventListener("click", function () {
+            setOpen(false);
+            toggle.focus();
+        });
+
+        contact.hidden = true;
+    }
+
     function strengthenEmptyStates() {
         document.querySelectorAll(".mini-empty, .empty-state").forEach(function (state) {
             state.classList.add("huellitas-friendly-empty");
@@ -320,6 +513,8 @@
         ensureStyles();
         installSkipLink();
         document.querySelectorAll("#menuPerfil, .profile-popover").forEach(enhanceProfile);
+        installReliableProfileLauncher();
+        compactContact();
         strengthenEmptyStates();
         strengthenMoreMenu();
         improveFormAccessibility();
